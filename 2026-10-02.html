@@ -26,7 +26,7 @@ header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border
 .hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
 .hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
 .hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
-nav.tabs{display:flex;gap:8px;margin:14px 0;position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0}
+nav.tabs{display:flex;gap:8px}
 nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
 nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
 section.panel[hidden]{display:none}
@@ -139,7 +139,7 @@ input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
 .result{text-align:center;margin:10px 0}
 .result .score{margin:2px 0}
 .band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
-.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:60px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
 .rdhead .timer{font-size:1.3rem}
 .split{display:block}
 .pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
@@ -148,9 +148,37 @@ input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
   .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
   .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
 }
-@media (max-width:899px){.pane.qs{padding-top:4px}.rdhead{top:56px}}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
 @media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
 .fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
 
 </style>
 </head>
@@ -159,17 +187,23 @@ input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
   <header class="hero">
     <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
     <div class="date" id="hDate"></div>
-    <h1 id="hTitle"></h1>
-    <a id="hSrc" target="_blank" rel="noopener noreferrer"></a>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
   </header>
-  <nav class="tabs" role="tablist">
-    <button role="tab" aria-selected="true" data-tab="listen">🎧 Listening</button>
-    <button role="tab" aria-selected="false" data-tab="read">📖 Reading</button>
-    <button role="tab" aria-selected="false" data-tab="vocab">🗂 單字</button>
-  </nav>
-
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
   <!-- LISTENING -->
-  <section class="panel" id="listen">
+  <section class="panel" id="listen" data-sec="listen" hidden>
     <div class="card">
       <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
       <div class="modes" role="group" aria-label="模式">
@@ -214,7 +248,7 @@ input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
   </section>
 
   <!-- READING -->
-  <section class="panel" id="read" hidden>
+  <section class="panel" id="read" data-sec="read" hidden>
     <div class="rdhead">
       <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
       <div class="row"><span class="timer" id="tmShow">20:00</span>
@@ -239,7 +273,7 @@ input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
   </section>
 
   <!-- VOCAB -->
-  <section class="panel" id="vocab" hidden>
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
     <div class="card">
       <h2>🗂 單字卡 <small id="fcCount"></small></h2>
       <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
@@ -260,739 +294,1422 @@ input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
     </div>
     <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
   </section>
-  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度儲存在本機 (localStorage)</footer>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
 </div>
-
 <script>
-/* ============ DATA（每天只需修改這個物件；請用 _src/build.py 產生）============ */
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
 /*DATA_START*/
 const DATA = {
  "id": "2026-10-02",
  "date": "2026-10-02",
- "title": "Micron’s Record Quarter and the Memory Squeeze",
- "source": {
-  "name": "Electronic Times / Micron / Aju Press / TrendForce",
-  "url": "https://en.etnews.com/20261002200001"
- },
- "script": [
-  [
-   "Good morning, everyone.",
-   "Today I'd like to examine one of the most notoriously cyclical industries in the world, memory chips, and to ask why the current cycle looks so unusual.",
-   "I'll begin with some figures, because they really are remarkable; then I'll turn to the outlook; and finally I'll consider why the shortage may well persist."
-  ],
-  [
-   "So, let's start with Micron, the American manufacturer, which reported its fiscal fourth-quarter results on the thirtieth of September.",
-   "Revenue came in at around fifty-one billion dollars — no, sorry, that was the figure analysts had been forecasting, according to LSEG.",
-   "The actual figure was fifty-four point two billion dollars, which comfortably beat the consensus.",
-   "That is up thirty-one per cent on the previous quarter, but the comparison that really matters is year on year, and there the increase was three hundred and seventy-nine per cent.",
-   "In other words, revenue is nearly five times what it was a year earlier, and it is the sixth consecutive record quarter.",
-   "Operating profit tells an even more dramatic story: at about forty-three point eight billion dollars, it was roughly twelve times the previous year's figure.",
-   "Now, what's interesting is where this surge is coming from.",
-   "Two business units dominate: cloud memory, which includes high bandwidth memory, brought in sixteen point three billion dollars, while the core data centre unit contributed eighteen billion.",
-   "Together, they accounted for more than sixty per cent of total revenue."
-  ],
-  [
-   "Right, moving on to the outlook.",
-   "For the first quarter of its next fiscal year, Micron has guided for revenue of between sixty and sixty-three billion dollars.",
-   "The market, by contrast, had been expecting only about fifty-seven billion, so even the bottom of that range sits well above the consensus.",
-   "The chief executive, Sanjay Mehrotra, went further.",
-   "He said that demand should outstrip supply in both twenty twenty-seven and twenty twenty-eight, and that the company has no visibility on when the two will return to balance."
-  ],
-  [
-   "Now, why should the shortage be so persistent?",
-   "The first factor is the product mix.",
-   "High bandwidth memory, the specialised chips used in AI accelerators, consumes considerably more wafer capacity than conventional DRAM, so every wafer devoted to it is a wafer unavailable for ordinary memory.",
-   "Micron expects shipments of this memory to grow faster than conventional DRAM right through to twenty twenty-eight, which compounds the problem.",
-   "The second factor is time.",
-   "Building new capacity is no quick fix.",
-   "Micron's first Idaho fab is due to produce its first wafers in the middle of twenty twenty-seven, with a second fab scheduled for the end of twenty twenty-eight.",
-   "And even once a cleanroom opens, as Mr Mehrotra pointed out, meaningful supply growth takes a few quarters to follow."
-  ],
-  [
-   "Of course, Micron isn't alone in racing to add capacity.",
-   "Samsung is targeting twenty twenty-eight for its P5 fab in Pyeongtaek, while SK hynix has brought forward the opening of the first cleanroom at its Yongin site, from May to February of twenty twenty-seven.",
-   "You might expect all of this to ease the squeeze quite quickly.",
-   "Not so, according to the research firm TrendForce: it anticipates that new capacity may come on stream from the second half of twenty twenty-seven, but that a meaningful increase in supply will not materialise until twenty twenty-eight."
-  ],
-  [
-   "I should add a note of caution, though.",
-   "A sharp slowdown in spending on AI infrastructure could eventually weaken demand, while aggressive expansion of capacity could loosen supply further out.",
-   "So these forecasts are best treated as probabilities rather than certainties.",
-   "In next week's session, we'll look at long-term supply agreements, and how they are changing the way this industry manages risk."
-  ]
- ],
- "listening": {
-  "minutes": 0,
-  "title": "SECTION 4",
-  "groups": [
-   {
-    "type": "blanks",
-    "title": "Questions 31–40",
-    "instruction": [
-     "Complete the notes below.",
-     "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+ "title": "Micron’s Record Quarter and the Memory Squeeze · Bond Yields at 24-Year Highs",
+ "stories": [
+  {
+   "title": "Micron’s Record Quarter and the Memory Squeeze",
+   "source": {
+    "name": "Electronic Times / Micron / Aju Press / TrendForce",
+    "url": "https://en.etnews.com/20261002200001"
+   },
+   "script": [
+    [
+     "Good morning, everyone.",
+     "Today I'd like to examine one of the most notoriously cyclical industries in the world, memory chips, and to ask why the current cycle looks so unusual.",
+     "I'll begin with some figures, because they really are remarkable; then I'll turn to the outlook; and finally I'll consider why the shortage may well persist."
     ],
-    "heading": "The Memory Chip Cycle",
-    "bullets": true,
-    "lines": [
+    [
+     "So, let's start with Micron, the American manufacturer, which reported its fiscal fourth-quarter results on the thirtieth of September.",
+     "Revenue came in at around fifty-one billion dollars — no, sorry, that was the figure analysts had been forecasting, according to LSEG.",
+     "The actual figure was fifty-four point two billion dollars, which comfortably beat the consensus.",
+     "That is up thirty-one per cent on the previous quarter, but the comparison that really matters is year on year, and there the increase was three hundred and seventy-nine per cent.",
+     "In other words, revenue is nearly five times what it was a year earlier, and it is the sixth consecutive record quarter.",
+     "Operating profit tells an even more dramatic story: at about forty-three point eight billion dollars, it was roughly twelve times the previous year's figure.",
+     "Now, what's interesting is where this surge is coming from.",
+     "Two business units dominate: cloud memory, which includes high bandwidth memory, brought in sixteen point three billion dollars, while the core data centre unit contributed eighteen billion.",
+     "Together, they accounted for more than sixty per cent of total revenue."
+    ],
+    [
+     "Right, moving on to the outlook.",
+     "For the first quarter of its next fiscal year, Micron has guided for revenue of between sixty and sixty-three billion dollars.",
+     "The market, by contrast, had been expecting only about fifty-seven billion, so even the bottom of that range sits well above the consensus.",
+     "The chief executive, Sanjay Mehrotra, went further.",
+     "He said that demand should outstrip supply in both twenty twenty-seven and twenty twenty-eight, and that the company has no visibility on when the two will return to balance."
+    ],
+    [
+     "Now, why should the shortage be so persistent?",
+     "The first factor is the product mix.",
+     "High bandwidth memory, the specialised chips used in AI accelerators, consumes considerably more wafer capacity than conventional DRAM, so every wafer devoted to it is a wafer unavailable for ordinary memory.",
+     "Micron expects shipments of this memory to grow faster than conventional DRAM right through to twenty twenty-eight, which compounds the problem.",
+     "The second factor is time.",
+     "Building new capacity is no quick fix.",
+     "Micron's first Idaho fab is due to produce its first wafers in the middle of twenty twenty-seven, with a second fab scheduled for the end of twenty twenty-eight.",
+     "And even once a cleanroom opens, as Mr Mehrotra pointed out, meaningful supply growth takes a few quarters to follow."
+    ],
+    [
+     "Of course, Micron isn't alone in racing to add capacity.",
+     "Samsung is targeting twenty twenty-eight for its P5 fab in Pyeongtaek, while SK hynix has brought forward the opening of the first cleanroom at its Yongin site, from May to February of twenty twenty-seven.",
+     "You might expect all of this to ease the squeeze quite quickly.",
+     "Not so, according to the research firm TrendForce: it anticipates that new capacity may come on stream from the second half of twenty twenty-seven, but that a meaningful increase in supply will not materialise until twenty twenty-eight."
+    ],
+    [
+     "I should add a note of caution, though.",
+     "A sharp slowdown in spending on AI infrastructure could eventually weaken demand, while aggressive expansion of capacity could loosen supply further out.",
+     "So these forecasts are best treated as probabilities rather than certainties.",
+     "In next week's session, we'll look at long-term supply agreements, and how they are changing the way this industry manages risk."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
      {
-      "h": "Micron’s results (fiscal fourth quarter)"
+      "type": "blanks",
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "The Memory Chip Cycle",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Micron’s results (fiscal fourth quarter)"
+       },
+       {
+        "t": "Revenue: $[[1]] billion – beat analysts’ forecast"
+       },
+       {
+        "t": "Increase compared with a year earlier: [[2]] %"
+       },
+       {
+        "t": "Operating profit: about [[3]] times the previous year’s figure"
+       },
+       {
+        "t": "Core data centre unit contributed $[[4]] billion"
+       },
+       {
+        "h": "Outlook"
+       },
+       {
+        "t": "Market had expected about $[[5]] billion for next quarter"
+       },
+       {
+        "t": "CEO: company has no [[6]] on when supply and demand will balance"
+       },
+       {
+        "h": "Reasons for the shortage"
+       },
+       {
+        "t": "High bandwidth memory takes up much more [[7]] than conventional DRAM"
+       },
+       {
+        "t": "Idaho fab 1: first wafers expected in mid-[[8]]"
+       },
+       {
+        "t": "SK hynix: first cleanroom at Yongin now due to open in [[9]]"
+       },
+       {
+        "t": "TrendForce: no meaningful rise in supply until [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "54.2",
+         "54.2 billion"
+        ],
+        "ref": "The actual figure was fifty-four",
+        "ev": "The actual figure was fifty-four point two billion dollars, which comfortably beat the consensus.",
+        "zh": "講者先說 “around fifty-one billion dollars”，隨即更正：“no, sorry, that was the figure analysts had been forecasting”（51 億是分析師預測值，是陷阱）。實際營收為 fifty-four point two billion = 54.2，故填 54.2。"
+       },
+       {
+        "a": [
+         "379",
+         "379%"
+        ],
+        "ref": "year on year, and there the increase",
+        "ev": "…the comparison that really matters is year on year, and there the increase was three hundred and seventy-nine per cent.",
+        "zh": "先出現的 thirty-one per cent 是「與上一季比」（sequential），題目問的是與去年同期比（a year earlier = year on year），所以答案是 379。"
+       },
+       {
+        "a": [
+         "12",
+         "twelve"
+        ],
+        "ref": "Operating profit tells",
+        "ev": "…at about forty-three point eight billion dollars, it was roughly twelve times the previous year's figure.",
+        "zh": "營業利潤約為去年的 roughly twelve times。注意前一句的 “nearly five times” 是營收倍數，不是營業利潤，是干擾項。"
+       },
+       {
+        "a": [
+         "18",
+         "18 billion"
+        ],
+        "ref": "Two business units dominate",
+        "ev": "…cloud memory… brought in sixteen point three billion dollars, while the core data centre unit contributed eighteen billion.",
+        "zh": "題目問 core data centre unit：eighteen billion = 18。16.3 是 cloud memory 的營收（干擾項）；sixty per cent 則是兩者合計占比。"
+       },
+       {
+        "a": [
+         "57",
+         "57 billion"
+        ],
+        "ref": "had been expecting only about fifty-seven",
+        "ev": "The market, by contrast, had been expecting only about fifty-seven billion…",
+        "zh": "Micron 的指引是 sixty to sixty-three billion（公司自己的預測）；題目問的是 market expectation（市場預期），也就是 about fifty-seven billion = 57。"
+       },
+       {
+        "a": [
+         "visibility"
+        ],
+        "ref": "has no visibility on when",
+        "ev": "…the company has no visibility on when the two will return to balance.",
+        "zh": "“return to balance” = 題目的 “supply and demand will balance”；執行長說公司對何時回到平衡 “has no visibility”，填 visibility。"
+       },
+       {
+        "a": [
+         "wafer capacity"
+        ],
+        "ref": "consumes considerably more wafer capacity",
+        "ev": "High bandwidth memory… consumes considerably more wafer capacity than conventional DRAM…",
+        "zh": "HBM “consumes considerably more wafer capacity”，題目以 “uses much more ___” 改寫，答案 wafer capacity（兩個字，符合字數限制）。"
+       },
+       {
+        "a": [
+         "2027"
+        ],
+        "ref": "Idaho fab is due to produce",
+        "ev": "Micron's first Idaho fab is due to produce its first wafers in the middle of twenty twenty-seven, with a second fab scheduled for the end of twenty twenty-eight.",
+        "zh": "“the middle of twenty twenty-seven” = mid-2027，答案 2027。第二座廠是 end of 2028（干擾項）。"
+       },
+       {
+        "a": [
+         "February",
+         "Feb"
+        ],
+        "ref": "from May to February",
+        "ev": "…SK hynix has brought forward the opening of the first cleanroom at its Yongin site, from May to February of twenty twenty-seven.",
+        "zh": "brought forward「提前」：from May to February，新的開幕時間是 February，故填 February（May 是舊時程，為干擾項）。"
+       },
+       {
+        "a": [
+         "2028"
+        ],
+        "ref": "will not materialise until",
+        "ev": "…a meaningful increase in supply will not materialise until twenty twenty-eight.",
+        "zh": "TrendForce：新產能最快 2027 下半年上線 (come on stream)，但 “meaningful increase in supply will not materialise until 2028”，答案 2028。"
+       }
+      ],
+      "from": 31
+     }
+    ]
+   },
+   "reading": {
+    "title": "The Memory Squeeze: Why Chip Shortages May Outlast the Boom",
+    "intro": "The surge in demand for artificial intelligence has pushed memory manufacturers to record earnings, but expanding supply is proving far slower than expanding demand.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "When Micron Technology announced its results for the fiscal fourth quarter of 2026, the figures were striking. Revenue reached $54.2 billion, an increase of 379 per cent on the same period a year earlier and the sixth consecutive quarterly record. The market consensus compiled by the London Stock Exchange Group (LSEG) had been $51.07 billion, so the outcome represented a considerable surprise. Operating profit, at $43.75 billion, was roughly twelve times the previous year’s total. Yet the company’s commentary was arguably more significant than the headline numbers: its chief executive, Sanjay Mehrotra, warned that supply-demand conditions in the memory market would be “much tighter” in 2027 and 2028 than they were in 2026."
      },
      {
-      "t": "Revenue: $[[1]] billion – beat analysts’ forecast"
+      "label": "B",
+      "text": "The principal source of this expansion is the construction of data centres for artificial intelligence. Micron’s Cloud Memory unit, which includes sales of high bandwidth memory (HBM), generated $16.3 billion, and its Core Data Center unit $18 billion; together they accounted for more than 60 per cent of total revenue. Nor is the demand confined to the servers that exist today. Larger AI models, longer context windows, more simultaneous users and the spread of AI agents are all increasing the quantity of memory that each system requires, while Micron expects server unit shipments to grow at a rate in the high teens in both 2026 and 2027. Looking further ahead, the company anticipates that demand will extend beyond data centres to what it terms “physical AI”, such as autonomous vehicles and humanoid robots, the latter of which, according to Mr Mehrotra, are expected to require levels of memory and storage similar to those of autonomous vehicles."
      },
      {
-      "t": "Increase compared with a year earlier: [[2]] %"
+      "label": "C",
+      "text": "Demand alone, however, does not account for the scarcity; the composition of production matters as much. HBM consumes considerably more wafer capacity than conventional DRAM, so each increase in HBM output reduces the capacity available for the memory used in ordinary servers, personal computers and mobile products. Industry HBM shipments are expected to grow faster than those of conventional DRAM through to 2028, and the transition from HBM3E to HBM4 and HBM4E will, in Mr Mehrotra’s words, create additional “headwinds with respect to supply growth”. Future manufacturing process transitions, moreover, are delivering smaller productivity gains per wafer. The principal constraint, he said, is cleanroom space. The pressure is already influencing product design. According to TrendForce, a market research firm, developers of graphics processors and custom AI chips are considering HBM stacks with eight layers of memory instead of the 12 originally planned. The firm interprets this as a response to supply and cost constraints rather than to any weakening of end-market demand, although thinner stacks carry a penalty of their own: because each requires a base die, eight-layer products are expected to command a premium of roughly 10 to 20 per cent per gigabit over 12-layer versions in 2027."
      },
      {
-      "t": "Operating profit: about [[3]] times the previous year’s figure"
+      "label": "D",
+      "text": "Customers, for their part, appear increasingly unwilling to wait for additional capacity. Micron reported that it had signed 26 Strategic Customer Agreements, with customer commitments totalling $32 billion, compared with 16 agreements and $22 billion at the time of its previous quarterly report. More than 75 per cent of its fiscal 2027 shipments are already committed, which has allowed executives to begin shifting some allocation discussions into 2028. Its Korean rivals, Samsung Electronics and SK hynix, have likewise been expanding long-term agreements with major AI and cloud customers. As for HBM, Mr Mehrotra said that the vast majority of Micron’s calendar 2027 supply had already been contracted, at prices significantly higher than those negotiated for 2026."
      },
      {
-      "t": "Core data centre unit contributed $[[4]] billion"
+      "label": "E",
+      "text": "The obvious remedy is to build more, and producers are doing so, but the timetable is long. Micron expects its first Idaho fabrication plant to produce its first wafers in mid-2027 and a second in late 2028, with a New York plant to follow in 2030. Samsung is targeting 2028 for full-scale operation at its P5 plant in Pyeongtaek, while SK hynix has brought forward the opening of the first cleanroom at its Yongin complex from May to February 2027. Yet the opening of a cleanroom marks the beginning rather than the end of the process: Mr Mehrotra noted that output increases only gradually, and that meaningful supply growth takes a few quarters after the first wafers emerge. TrendForce takes a similar view, anticipating that although new capacity may come on stream from the second half of 2027, a significant rise in supply volumes will not materialise until 2028."
      },
      {
-      "h": "Outlook"
-     },
-     {
-      "t": "Market had expected about $[[5]] billion for next quarter"
-     },
-     {
-      "t": "CEO: company has no [[6]] on when supply and demand will balance"
-     },
-     {
-      "h": "Reasons for the shortage"
-     },
-     {
-      "t": "High bandwidth memory takes up much more [[7]] than conventional DRAM"
-     },
-     {
-      "t": "Idaho fab 1: first wafers expected in mid-[[8]]"
-     },
-     {
-      "t": "SK hynix: first cleanroom at Yongin now due to open in [[9]]"
-     },
-     {
-      "t": "TrendForce: no meaningful rise in supply until [[10]]"
+      "label": "F",
+      "text": "Mr Mehrotra’s own assessment is unequivocal: he expects demand to exceed supply in both 2027 and 2028, and he told analysts that, even allowing for plans for additional cleanroom space, the company has no visibility on when the two will regain balance. Such forecasts are not without qualification, however. A sharp slowdown in spending on AI infrastructure could eventually weaken demand, while an aggressive expansion of capacity could loosen supply further into the future. Some observers regard the moment when new capacity begins to reach the market in earnest as the possible first inflection point of the current cycle; if demand grows faster than capacity is added, however, the shortage could persist beyond 2028."
      }
     ],
-    "items": [
+    "groups": [
      {
-      "a": [
-       "54.2",
-       "54.2 billion"
+      "type": "match",
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
       ],
-      "ref": "The actual figure was fifty-four",
-      "ev": "The actual figure was fifty-four point two billion dollars, which comfortably beat the consensus.",
-      "zh": "講者先說 “around fifty-one billion dollars”，隨即更正：“no, sorry, that was the figure analysts had been forecasting”（51 億是分析師預測值，是陷阱）。實際營收為 fifty-four point two billion = 54.2，故填 54.2。"
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reference to a possible change in the design of a product prompted by scarcity",
+        "a": "C",
+        "ev": "…developers of graphics processors and custom AI chips are considering HBM stacks with eight layers of memory instead of the 12 originally planned. The firm interprets this as a response to supply and cost constraints…",
+        "ref": "C",
+        "zh": "C 段：因供給與成本限制，AI 晶片開發商考慮把 HBM 堆疊由 12 層改為 8 層，即「因稀缺而改變產品設計」。"
+       },
+       {
+        "q": "a description of how purchasers have tried to guarantee future availability of supply",
+        "a": "D",
+        "ev": "Micron reported that it had signed 26 Strategic Customer Agreements, with customer commitments totalling $32 billion…",
+        "ref": "D",
+        "zh": "D 段：客戶簽下長期的 Strategic Customer Agreements、提前承諾出貨量，即「買方設法確保未來供貨」。"
+       },
+       {
+        "q": "two circumstances that might undermine the predicted outlook",
+        "a": "F",
+        "ev": "A sharp slowdown in spending on AI infrastructure could eventually weaken demand, while an aggressive expansion of capacity could loosen supply further into the future.",
+        "ref": "F",
+        "zh": "F 段列出兩種可能推翻預測的情況：AI 基礎設施支出大幅放緩（需求減弱）、產能激進擴張（供給放寬）。"
+       },
+       {
+        "q": "a comparison between a company’s reported sales and what the market had anticipated",
+        "a": "A",
+        "ev": "The market consensus compiled by the London Stock Exchange Group (LSEG) had been $51.07 billion, so the outcome represented a considerable surprise.",
+        "ref": "A",
+        "zh": "A 段把 Micron 實際營收 $54.2B 與 LSEG 市場共識 $51.07B 相比，屬「銷售與市場預期的比較」。"
+       },
+       {
+        "q": "a prediction that demand for memory will spread to applications outside data centres",
+        "a": "B",
+        "ev": "…the company anticipates that demand will extend beyond data centres to what it terms “physical AI”, such as autonomous vehicles and humanoid robots…",
+        "ref": "B",
+        "zh": "B 段預期需求將擴及資料中心之外的「實體 AI」（自駕車、人形機器人）。"
+       }
+      ],
+      "from": 1
      },
      {
-      "a": [
-       "379",
-       "379%"
+      "type": "tfng",
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
       ],
-      "ref": "year on year, and there the increase",
-      "ev": "…the comparison that really matters is year on year, and there the increase was three hundred and seventy-nine per cent.",
-      "zh": "先出現的 thirty-one per cent 是「與上一季比」（sequential），題目問的是與去年同期比（a year earlier = year on year），所以答案是 379。"
+      "items": [
+       {
+        "q": "The move towards eight-layer HBM stacks shows that demand for AI hardware is declining.",
+        "a": "False",
+        "ev": "The firm interprets this as a response to supply and cost constraints rather than to any weakening of end-market demand…",
+        "ref": "C",
+        "zh": "C 段明確指出這是對供給與成本限制的反應，「而非」終端需求轉弱，與題目相反，所以是 False。"
+       },
+       {
+        "q": "Micron’s customer commitments under long-term agreements were larger at its latest results than at its previous quarterly report.",
+        "a": "True",
+        "ev": "…customer commitments totalling $32 billion, compared with 16 agreements and $22 billion at the time of its previous quarterly report.",
+        "ref": "D",
+        "zh": "D 段：承諾金額由 $22B 增至 $32B（協議數由 16 增至 26），與題目一致，是 True。"
+       },
+       {
+        "q": "Micron has concluded more long-term supply agreements than either Samsung Electronics or SK hynix.",
+        "a": "Not Given",
+        "ev": "Its Korean rivals, Samsung Electronics and SK hynix, have likewise been expanding long-term agreements…",
+        "ref": "D",
+        "zh": "文章只說兩家韓國對手「同樣在擴大」長期協議，並未比較誰簽得較多，所以是 Not Given（典型陷阱：看似相關但沒有比較資訊）。"
+       },
+       {
+        "q": "Mr Mehrotra believes that additional cleanroom capacity will restore the balance between supply and demand by 2028.",
+        "a": "False",
+        "ev": "…he expects demand to exceed supply in both 2027 and 2028, and he told analysts that, even allowing for plans for additional cleanroom space, the company has no visibility on when the two will regain balance.",
+        "ref": "F",
+        "zh": "F 段：他預期 2027、2028 年需求仍超過供給，且即使計入新增無塵室，也看不到何時恢復平衡，與題目相反，是 False。"
+       }
+      ],
+      "from": 6
      },
      {
-      "a": [
-       "12",
-       "twelve"
+      "type": "blanks",
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
       ],
-      "ref": "Operating profit tells",
-      "ev": "…at about forty-three point eight billion dollars, it was roughly twelve times the previous year's figure.",
-      "zh": "營業利潤約為去年的 roughly twelve times。注意前一句的 “nearly five times” 是營收倍數，不是營業利潤，是干擾項。"
-     },
-     {
-      "a": [
-       "18",
-       "18 billion"
+      "heading": "Constraints on memory supply",
+      "lines": [
+       {
+        "t": "Making HBM absorbs far more [[1]] than making ordinary DRAM, and the shift to successive HBM generations creates further [[2]] for supply growth. Newer manufacturing processes also offer only limited [[3]] for each wafer. According to Micron’s chief executive, however, the main limiting factor is available [[4]] space."
+       }
       ],
-      "ref": "Two business units dominate",
-      "ev": "…cloud memory… brought in sixteen point three billion dollars, while the core data centre unit contributed eighteen billion.",
-      "zh": "題目問 core data centre unit：eighteen billion = 18。16.3 是 cloud memory 的營收（干擾項）；sixty per cent 則是兩者合計占比。"
-     },
-     {
-      "a": [
-       "57",
-       "57 billion"
+      "items": [
+       {
+        "a": [
+         "wafer capacity"
+        ],
+        "ev": "HBM consumes considerably more wafer capacity than conventional DRAM…",
+        "ref": "C",
+        "zh": "absorbs far more = consumes considerably more；答案 wafer capacity（C 段）。"
+       },
+       {
+        "a": [
+         "headwinds"
+        ],
+        "ev": "…the transition from HBM3E to HBM4 and HBM4E will… create additional “headwinds with respect to supply growth”.",
+        "ref": "C",
+        "zh": "successive HBM generations = HBM3E→HBM4→HBM4E；further ___ for supply growth 對應 additional “headwinds”。"
+       },
+       {
+        "a": [
+         "productivity gains"
+        ],
+        "ev": "Future manufacturing process transitions, moreover, are delivering smaller productivity gains per wafer.",
+        "ref": "C",
+        "zh": "limited = smaller；答案 productivity gains（兩個字）。"
+       },
+       {
+        "a": [
+         "cleanroom"
+        ],
+        "ev": "The principal constraint, he said, is cleanroom space.",
+        "ref": "C",
+        "zh": "main limiting factor = principal constraint；題目已有 space，只需填 cleanroom。"
+       }
       ],
-      "ref": "had been expecting only about fifty-seven",
-      "ev": "The market, by contrast, had been expecting only about fifty-seven billion…",
-      "zh": "Micron 的指引是 sixty to sixty-three billion（公司自己的預測）；題目問的是 market expectation（市場預期），也就是 about fifty-seven billion = 57。"
-     },
-     {
-      "a": [
-       "visibility"
-      ],
-      "ref": "has no visibility on when",
-      "ev": "…the company has no visibility on when the two will return to balance.",
-      "zh": "“return to balance” = 題目的 “supply and demand will balance”；執行長說公司對何時回到平衡 “has no visibility”，填 visibility。"
-     },
-     {
-      "a": [
-       "wafer capacity"
-      ],
-      "ref": "consumes considerably more wafer capacity",
-      "ev": "High bandwidth memory… consumes considerably more wafer capacity than conventional DRAM…",
-      "zh": "HBM “consumes considerably more wafer capacity”，題目以 “uses much more ___” 改寫，答案 wafer capacity（兩個字，符合字數限制）。"
-     },
-     {
-      "a": [
-       "2027"
-      ],
-      "ref": "Idaho fab is due to produce",
-      "ev": "Micron's first Idaho fab is due to produce its first wafers in the middle of twenty twenty-seven, with a second fab scheduled for the end of twenty twenty-eight.",
-      "zh": "“the middle of twenty twenty-seven” = mid-2027，答案 2027。第二座廠是 end of 2028（干擾項）。"
-     },
-     {
-      "a": [
-       "February",
-       "Feb"
-      ],
-      "ref": "from May to February",
-      "ev": "…SK hynix has brought forward the opening of the first cleanroom at its Yongin site, from May to February of twenty twenty-seven.",
-      "zh": "brought forward「提前」：from May to February，新的開幕時間是 February，故填 February（May 是舊時程，為干擾項）。"
-     },
-     {
-      "a": [
-       "2028"
-      ],
-      "ref": "will not materialise until",
-      "ev": "…a meaningful increase in supply will not materialise until twenty twenty-eight.",
-      "zh": "TrendForce：新產能最快 2027 下半年上線 (come on stream)，但 “meaningful increase in supply will not materialise until 2028”，答案 2028。"
+      "from": 10
      }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "outstrip",
+     "pos": "v.",
+     "def": "to become greater or faster than something else",
+     "zh": "超過；供不應求地勝過",
+     "example": "Demand should outstrip supply in both 2027 and 2028.",
+     "match": [
+      "outstrip"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "cyclical",
+     "pos": "adj.",
+     "def": "following a repeating pattern of rises and falls",
+     "zh": "週期性的",
+     "example": "Memory chips are a notoriously cyclical industry.",
+     "match": [
+      "cyclical"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "consensus",
+     "pos": "n.",
+     "def": "a general agreement; the average expectation of analysts",
+     "zh": "共識；市場普遍預期",
+     "example": "Revenue comfortably beat the market consensus.",
+     "match": [
+      "consensus"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "surge",
+     "pos": "n./v.",
+     "def": "a sudden, large increase",
+     "zh": "激增；暴漲",
+     "example": "Where is this surge in revenue coming from?",
+     "match": [
+      "surge"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "compound",
+     "pos": "v.",
+     "def": "to make a problem worse by adding to it",
+     "zh": "使（問題）惡化",
+     "example": "Faster HBM growth compounds the shortage problem.",
+     "match": [
+      "compounds"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "persist",
+     "pos": "v.",
+     "def": "to continue to exist, especially longer than expected",
+     "zh": "持續存在",
+     "example": "The shortage may well persist beyond 2028.",
+     "match": [
+      "persist",
+      "persistent"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "bottleneck",
+     "pos": "n.",
+     "def": "a point of congestion that limits the whole process",
+     "zh": "瓶頸",
+     "example": "Cleanroom space is the main bottleneck for new supply.",
+     "match": [
+      "bottleneck"
+     ],
+     "src": "字彙延伸"
+    },
+    {
+     "word": "come on stream",
+     "pos": "phr. v.",
+     "def": "to start operating or producing",
+     "zh": "（產能）開始投產",
+     "example": "New capacity may come on stream in late 2027.",
+     "match": [
+      "come on stream"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "materialise",
+     "pos": "v.",
+     "def": "to actually happen or appear",
+     "zh": "實現；成真",
+     "example": "A meaningful increase in supply will not materialise until 2028.",
+     "match": [
+      "materialise"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "headwind",
+     "pos": "n.",
+     "def": "a force or factor that slows progress",
+     "zh": "逆風；不利因素",
+     "example": "The shift to HBM4 creates additional headwinds for supply growth.",
+     "match": [
+      "headwinds"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "constrain",
+     "pos": "v.",
+     "def": "to limit or restrict",
+     "zh": "限制；制約",
+     "example": "Limited cleanroom space continues to constrain output.",
+     "match": [
+      "constrain",
+      "constrained"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "commitment",
+     "pos": "n.",
+     "def": "a formal promise to buy, supply or do something",
+     "zh": "承諾；（購買）約定",
+     "example": "Customer commitments under the agreements totalled $32 billion.",
+     "match": [
+      "commitment"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "unequivocal",
+     "pos": "adj.",
+     "def": "clear and leaving no doubt",
+     "zh": "明確的；毫不含糊的",
+     "example": "The chief executive’s assessment was unequivocal.",
+     "match": [
+      "unequivocal"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "inflection point",
+     "pos": "n.",
+     "def": "a moment when a trend changes direction",
+     "zh": "轉折點",
+     "example": "New capacity could mark the first inflection point of the cycle.",
+     "match": [
+      "inflection point"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "hedge (against)",
+     "pos": "v.",
+     "def": "to protect yourself against loss or risk",
+     "zh": "對沖；防範（風險）",
+     "example": "Buyers sign long-term contracts to hedge against shortages.",
+     "match": [
+      "hedge"
+     ],
+     "src": "延伸搭配"
+    }
+   ],
+   "topic": "Tech · memory chips",
+   "audio": {
+    "src": "audio/2026-10-02-1.mp3",
+    "times": [
+     [
+      0.35,
+      1.83
+     ],
+     [
+      2.25,
+      10.75
+     ],
+     [
+      11.17,
+      19.23
+     ],
+     [
+      20.18,
+      27.72
+     ],
+     [
+      28.14,
+      36.51
+     ],
+     [
+      36.93,
+      42.25
+     ],
+     [
+      42.67,
+      51.76
+     ],
+     [
+      52.18,
+      59.04
+     ],
+     [
+      59.46,
+      67.98
+     ],
+     [
+      68.4,
+      71.56
+     ],
+     [
+      71.98,
+      82.85
+     ],
+     [
+      83.27,
+      86.91
+     ],
+     [
+      87.86,
+      89.88
+     ],
+     [
+      90.3,
+      97.36
+     ],
+     [
+      97.78,
+      105.57
+     ],
+     [
+      105.99,
+      109.46
+     ],
+     [
+      109.88,
+      118.91
+     ],
+     [
+      119.86,
+      122.52
+     ],
+     [
+      122.94,
+      125.05
+     ],
+     [
+      125.47,
+      137.66
+     ],
+     [
+      138.08,
+      145.55
+     ],
+     [
+      145.97,
+      147.54
+     ],
+     [
+      147.96,
+      150.51
+     ],
+     [
+      150.93,
+      159.51
+     ],
+     [
+      159.93,
+      166.92
+     ],
+     [
+      167.87,
+      171.45
+     ],
+     [
+      171.87,
+      183.3
+     ],
+     [
+      183.72,
+      186.75
+     ],
+     [
+      187.17,
+      200.24
+     ],
+     [
+      201.19,
+      203.02
+     ],
+     [
+      203.44,
+      211.66
+     ],
+     [
+      212.08,
+      216.39
+     ],
+     [
+      216.81,
+      223.56
+     ]
     ],
-    "from": 31
+    "duration": 224.2,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-5%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-10-02-1-words/"
    }
-  ]
- },
- "reading": {
-  "title": "The Memory Squeeze: Why Chip Shortages May Outlast the Boom",
-  "intro": "The surge in demand for artificial intelligence has pushed memory manufacturers to record earnings, but expanding supply is proving far slower than expanding demand.",
-  "minutes": 20,
-  "passage": [
-   {
-    "label": "A",
-    "text": "When Micron Technology announced its results for the fiscal fourth quarter of 2026, the figures were striking. Revenue reached $54.2 billion, an increase of 379 per cent on the same period a year earlier and the sixth consecutive quarterly record. The market consensus compiled by the London Stock Exchange Group (LSEG) had been $51.07 billion, so the outcome represented a considerable surprise. Operating profit, at $43.75 billion, was roughly twelve times the previous year’s total. Yet the company’s commentary was arguably more significant than the headline numbers: its chief executive, Sanjay Mehrotra, warned that supply-demand conditions in the memory market would be “much tighter” in 2027 and 2028 than they were in 2026."
+  },
+  {
+   "title": "Bond Yields at 24-Year Highs: Why Borrowing Costs Are Surging While Stocks Hold Up",
+   "source": {
+    "name": "Reuters (1 Oct 2026: explainer, bond-market report, US market close)",
+    "url": "https://ca.investing.com/news/economy-news/explainerwhy-are-world-bond-markets-selling-off-again-4861946",
+    "links": [
+     {
+      "name": "Reuters: Global bond rout deepens, pushes US Treasury yields to 24-year peak",
+      "url": "https://www.investing.com/news/economy-news/bonds-teeter-after-us-treasuries-worst-quarter-since-1994-4926346"
+     },
+     {
+      "name": "Reuters: Yields fall after US 10-year hits highest since 2002; US stocks inch up",
+      "url": "https://www.marketscreener.com/news/yields-fall-after-us-10-year-hits-highest-since-2002-us-stocks-inch-up-ce785ddada8aff24"
+     },
+     {
+      "name": "Reuters: S&P 500 dips, Nasdaq higher after data shows moderate inflation rise (30 Sep)",
+      "url": "https://www.streetinsider.com/General+News/S%26P+500+dips%2C+Nasdaq+higher+after+data+shows+moderate+inflation+rise/27124419.html"
+     }
+    ]
    },
-   {
-    "label": "B",
-    "text": "The principal source of this expansion is the construction of data centres for artificial intelligence. Micron’s Cloud Memory unit, which includes sales of high bandwidth memory (HBM), generated $16.3 billion, and its Core Data Center unit $18 billion; together they accounted for more than 60 per cent of total revenue. Nor is the demand confined to the servers that exist today. Larger AI models, longer context windows, more simultaneous users and the spread of AI agents are all increasing the quantity of memory that each system requires, while Micron expects server unit shipments to grow at a rate in the high teens in both 2026 and 2027. Looking further ahead, the company anticipates that demand will extend beyond data centres to what it terms “physical AI”, such as autonomous vehicles and humanoid robots, the latter of which, according to Mr Mehrotra, are expected to require levels of memory and storage similar to those of autonomous vehicles."
+   "topic": "Markets · bonds",
+   "script": [
+    [
+     "Good morning, everyone.",
+     "Today I want to move to the long end of the market, and ask why government bond yields around the world have climbed so sharply, and why share prices have, so far, shrugged it off.",
+     "I'll start with the numbers, then explain the causes, and finally consider what it all means for investors."
+    ],
+    [
+     "So, let's begin with the United States.",
+     "On Thursday, the benchmark ten-year Treasury yield reached five point three four per cent, which is its highest level since two thousand and two.",
+     "Over the three months to September, the yield rose by about ninety basis points, or, to be more precise, eighty-seven, according to data from LSEG.",
+     "That was the sharpest quarterly rise since nineteen ninety-four.",
+     "And remember that when yields rise, bond prices fall, so this has been a painful period for anyone holding long-dated bonds."
+    ],
+    [
+     "Now, what is driving this? I'd point to three factors.",
+     "The first is energy.",
+     "The war in the Middle East is now in its seventh month, and Brent crude settled at just over one hundred and two dollars a barrel on Thursday, while the American benchmark finished at just under ninety-three.",
+     "Dearer oil feeds inflation, and inflation keeps interest rates high.",
+     "The second factor, and this is the one I find most interesting, is artificial intelligence.",
+     "The boom in data centre construction has raised expectations for economic growth, and growth tends to push up the level at which short-term interest rates eventually settle.",
+     "It is also thirsty for money: five of the biggest technology companies, Alphabet, Amazon, Meta, Microsoft and Oracle, have already issued two hundred and twenty billion dollars of bonds this year, more than twice the total for the whole of last year.",
+     "The third factor is government borrowing.",
+     "The American national debt has now passed forty trillion dollars, and across the Group of Seven, debt is at or above one hundred per cent of economic output in every member except Germany.",
+     "When governments and companies all need to borrow at once, lenders can demand a higher return."
+    ],
+    [
+     "Of course, this isn't only an American story.",
+     "In Britain, the thirty-year government bond yield rose above six per cent on Thursday, for the first time since nineteen ninety-eight.",
+     "France has had a worse time still: its ten-year bonds have just recorded their worst quarter since nineteen eighty-seven, with the yield approaching the symbolic level of five per cent."
+    ],
+    [
+     "What does the Federal Reserve make of all this?",
+     "It raised rates by a quarter of a percentage point last month, its first increase since two thousand and twenty-three, and traders now expect at least three more increases before the middle of twenty twenty-seven.",
+     "Meanwhile, the International Monetary Fund said on Thursday that bond markets are still functioning in an orderly fashion, even though borrowing costs are at their highest for decades.",
+     "Share prices, for their part, have held up.",
+     "The S&P 500 edged higher on Thursday, because strong company earnings have offset the higher cost of money.",
+     "But the picture is uneven: in September the Nasdaq rose by almost two per cent, while the Dow fell by more than four.",
+     "One investment adviser described the sell-off as probably overdone, though he was careful to add that it may not be over."
+    ],
+    [
+     "I should add a note of caution, though.",
+     "Higher long-term yields tighten financial conditions, and some analysts warn that this could eventually increase the risk of a slowdown.",
+     "At this stage, nobody knows which view will prove right.",
+     "Next week we'll look at what all of this means for mortgage rates, which passed seven per cent in the United States last month."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Global Bond Markets",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "US Treasury yields"
+       },
+       {
+        "t": "Ten-year yield peaked at [[1]] % on Thursday"
+       },
+       {
+        "t": "This is the highest level since [[2]]"
+       },
+       {
+        "t": "Quarterly rise: [[3]] basis points"
+       },
+       {
+        "h": "Causes"
+       },
+       {
+        "t": "Energy: Brent crude settled at about $[[4]] a barrel"
+       },
+       {
+        "t": "AI boom: five technology firms have issued $[[5]] billion of bonds this year"
+       },
+       {
+        "t": "Government debt in the US now above $[[6]] trillion"
+       },
+       {
+        "h": "Other countries"
+       },
+       {
+        "t": "Britain: thirty-year yield above [[7]] % for the first time since 1998"
+       },
+       {
+        "t": "France: worst quarter since [[8]]"
+       },
+       {
+        "h": "Fed and markets"
+       },
+       {
+        "t": "Traders expect at least [[9]] more US rate rises before mid-2027"
+       },
+       {
+        "t": "IMF says bond markets are working in an [[10]] fashion"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "5.34"
+        ],
+        "ref": "reached five point three four",
+        "ev": "On Thursday, the benchmark ten-year Treasury yield reached five point three four per cent, which is its highest level since two thousand and two.",
+        "zh": "十年期美債殖利率在週四達到 five point three four per cent = 5.34%。後面的 two thousand and two（2002）是「自何時以來最高」，不是殖利率。"
+       },
+       {
+        "a": [
+         "2002"
+        ],
+        "ref": "reached five point three four",
+        "ev": "…which is its highest level since two thousand and two.",
+        "zh": "“highest level since two thousand and two” = 自 2002 年以來最高。下一句的 nineteen ninety-four（1994）是「單季漲幅最大」的比較年份，是干擾項。"
+       },
+       {
+        "a": [
+         "87"
+        ],
+        "ref": "to be more precise, eighty-seven",
+        "ev": "…the yield rose by about ninety basis points, or, to be more precise, eighty-seven, according to data from LSEG.",
+        "zh": "講者先說 about ninety（約 90），隨即用 “to be more precise” 更正為 eighty-seven = 87。要填較精確的 87。"
+       },
+       {
+        "a": [
+         "102"
+        ],
+        "ref": "Brent crude settled at",
+        "ev": "…Brent crude settled at just over one hundred and two dollars a barrel on Thursday, while the American benchmark finished at just under ninety-three.",
+        "zh": "題目問 Brent：just over one hundred and two = 102。美國基準油價（WTI）約 93 是干擾項。"
+       },
+       {
+        "a": [
+         "220"
+        ],
+        "ref": "have already issued",
+        "ev": "…have already issued two hundred and twenty billion dollars of bonds this year, more than twice the total for the whole of last year.",
+        "zh": "五大科技公司今年已發行 two hundred and twenty billion = 220 十億美元；“more than twice the total for last year” 是比較，不是答案。"
+       },
+       {
+        "a": [
+         "40"
+        ],
+        "ref": "has now passed forty trillion",
+        "ev": "The American national debt has now passed forty trillion dollars…",
+        "zh": "美國國債 passed forty trillion dollars = 40 兆。後面 “one hundred per cent” 是 G7 債務占產出的比例，不要誤填。"
+       },
+       {
+        "a": [
+         "6",
+         "six"
+        ],
+        "ref": "rose above six per cent",
+        "ev": "In Britain, the thirty-year government bond yield rose above six per cent on Thursday, for the first time since nineteen ninety-eight.",
+        "zh": "英國 30 年期公債殖利率升破 six per cent = 6%；題目已提供 1998，不要把 1998 當答案。"
+       },
+       {
+        "a": [
+         "1987"
+        ],
+        "ref": "worst quarter since nineteen eighty-seven",
+        "ev": "…its ten-year bonds have just recorded their worst quarter since nineteen eighty-seven…",
+        "zh": "法國十年期公債「自 1987 年以來最差的一季」。前一句的 1998 屬於英國，是干擾項。"
+       },
+       {
+        "a": [
+         "3",
+         "three"
+        ],
+        "ref": "at least three more increases",
+        "ev": "…traders now expect at least three more increases before the middle of twenty twenty-seven.",
+        "zh": "交易員預期在 2027 年中前至少還會升息 three more 次。注意 “a quarter of a percentage point” 是升幅，不是次數。"
+       },
+       {
+        "a": [
+         "orderly"
+        ],
+        "ref": "still functioning in an orderly fashion",
+        "ev": "…bond markets are still functioning in an orderly fashion…",
+        "zh": "IMF 說債市仍 “functioning in an orderly fashion”，題目以 “working in an ___ fashion” 改寫，答案 orderly。"
+       }
+      ]
+     }
+    ]
    },
-   {
-    "label": "C",
-    "text": "Demand alone, however, does not account for the scarcity; the composition of production matters as much. HBM consumes considerably more wafer capacity than conventional DRAM, so each increase in HBM output reduces the capacity available for the memory used in ordinary servers, personal computers and mobile products. Industry HBM shipments are expected to grow faster than those of conventional DRAM through to 2028, and the transition from HBM3E to HBM4 and HBM4E will, in Mr Mehrotra’s words, create additional “headwinds with respect to supply growth”. Future manufacturing process transitions, moreover, are delivering smaller productivity gains per wafer. The principal constraint, he said, is cleanroom space. The pressure is already influencing product design. According to TrendForce, a market research firm, developers of graphics processors and custom AI chips are considering HBM stacks with eight layers of memory instead of the 12 originally planned. The firm interprets this as a response to supply and cost constraints rather than to any weakening of end-market demand, although thinner stacks carry a penalty of their own: because each requires a base die, eight-layer products are expected to command a premium of roughly 10 to 20 per cent per gigabit over 12-layer versions in 2027."
+   "reading": {
+    "title": "The Price of Money: Why the World’s Bond Markets Are Under Strain",
+    "intro": "Government borrowing costs have reached levels not seen for decades, yet share prices have so far held firm. What explains the divergence, and how long can it last?",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "In early trading on Thursday 1 October, the yield on the benchmark ten-year US Treasury note climbed to 5.34 per cent, its highest level since 2002. The figure marked the culmination of a remarkable quarter: according to LSEG data, the yield rose by 87 basis points between July and September, the sharpest quarterly increase since 1994. Because yields rise when prices fall, the bond market has been reeling from its worst quarter this century. Later in the session, however, buyers returned and the yield retreated to about 5.24 per cent, ending a run of seven consecutive sessions of gains. Since the ten-year yield serves as a yardstick for borrowing costs and asset prices throughout the world, its trajectory matters far beyond Wall Street."
+     },
+     {
+      "label": "B",
+      "text": "Several forces lie behind the move. The most immediate is energy. Oil prices have stayed high during a seven-month war in the Middle East, and Brent crude settled at $102.31 a barrel on Thursday after China suspended exports of oil products. Dearer fuel feeds inflation, and persistent inflation has left traders braced for further interest rate increases: the Federal Reserve raised rates last month for the first time since 2023, and investors now expect at least three more rises before the middle of 2027. A second force is the boom in artificial intelligence. The construction of data centres has raised expectations for economic growth and, with them, forecasts of where short-term interest rates will eventually settle. It has also created greater competition for capital. “Stronger growth has encouraged markets to conclude that the economy can sustain higher rates for longer,” said Afonso Borges, a fixed income analyst at Julius Baer."
+     },
+     {
+      "label": "C",
+      "text": "The third force is the sheer volume of borrowing. The American national debt has passed $40 trillion, and across the Group of Seven, debt is at or above 100 per cent of economic output in every member except Germany. Companies are adding to the supply: five of the largest technology groups, Alphabet, Amazon, Meta, Microsoft and Oracle, have already issued $220 billion of debt this year, more than double the total for all of last year, according to LSEG data. Analysts point to the laws of supply and demand: when the need for borrowing jumps, lenders can demand higher interest rates. The Institute of International Finance estimates that advanced economies paid more than $3.3 trillion in interest on internationally traded government bonds alone over the past year. That exceeds the estimated global spending on defence ($3.1 trillion), on artificial intelligence ($2.6 trillion) and on clean energy ($2.3 trillion)."
+     },
+     {
+      "label": "D",
+      "text": "The pressure is global. France has attracted particular attention: its ten-year yield rose to 4.96 per cent on Thursday, the highest since 2002, after the worst quarterly performance for French bonds since 1987. The European Central Bank has faced questions about whether it might step in to support the market, although market players regard this as unlikely for now, and the governor of the Bank of France, Emmanuel Moulin, said last week that it would be misguided to expect the ECB to ride to the rescue. In Britain, sovereign yields have also surged: the thirty-year rate rose above 6 per cent, its highest since 1998, while house prices are growing at their slowest rate in nearly two years, underscoring the effect of higher rates on the real economy."
+     },
+     {
+      "label": "E",
+      "text": "Equities, by contrast, have so far held up. The S&P 500 recovered from early losses on Thursday to close about 0.2 per cent higher, helped by Micron Technology, whose shares rose 3 per cent after a better-than-expected revenue forecast. Strong earnings have kept shares buoyant and near record levels, yet the strength is uneven. In September the Nasdaq Composite rose 1.86 per cent while the Dow Jones Industrial Average fell 4.29 per cent, and the S&P 500 lost 0.45 per cent. Elsewhere, signs of strain are more visible: the pan-European STOXX 600 index ended Thursday down 1.3 per cent, and the euro fell below $1.13 for the first time since May 2025. “I’m not suggesting the global bond selloff is over. I am suggesting it’s probably overdone,” said Oliver Pursche of Wealthspire Advisors."
+     },
+     {
+      "label": "F",
+      "text": "Whether the strain will intensify is disputed. The International Monetary Fund said on Thursday that global bond markets were still functioning in an orderly fashion. Danny Zaid, a portfolio manager at TwentyFour Asset Management, was more guarded: “As yields have crept higher, that is going to tighten financial conditions and could increase the risk of a slowdown.” Treasury Secretary Scott Bessent has argued that worries about rising debt and yields overlook the strength of the US economy. Many investors say that lower oil prices would help in the short term, but that longer-term borrowing costs will fall durably only if governments bring down debt or boost growth. Unless they do, so-called bond vigilantes, investors who seek to impose fiscal discipline on governments they perceive as profligate by demanding higher compensation, will remain on alert."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reference to an international organisation’s view that a market is not malfunctioning",
+        "a": "F",
+        "ref": "F",
+        "ev": "The International Monetary Fund said on Thursday that global bond markets were still functioning in an orderly fashion.",
+        "zh": "F 段引用 IMF 的看法：全球債市仍「運作有序」(orderly)，即「國際組織認為市場沒有失靈」。"
+       },
+       {
+        "q": "a comparison between the cost of servicing public debt and spending in other areas",
+        "a": "C",
+        "ref": "C",
+        "ev": "That exceeds the estimated global spending on defence ($3.1 trillion), on artificial intelligence ($2.6 trillion) and on clean energy ($2.3 trillion).",
+        "zh": "C 段把已開發國家付給政府債券的利息（逾 3.3 兆美元）與全球國防、AI、潔淨能源支出相比。"
+       },
+       {
+        "q": "an example of higher borrowing costs affecting the housing market",
+        "a": "D",
+        "ref": "D",
+        "ev": "…while house prices are growing at their slowest rate in nearly two years, underscoring the effect of higher rates on the real economy.",
+        "zh": "D 段：英國房價成長是近兩年來最慢，作為「較高利率影響實體經濟」的例子。"
+       },
+       {
+        "q": "an explanation of how an investment boom has changed expectations about interest rates",
+        "a": "B",
+        "ref": "B",
+        "ev": "The construction of data centres has raised expectations for economic growth and, with them, forecasts of where short-term interest rates will eventually settle.",
+        "zh": "B 段：資料中心建設（AI 投資熱潮）提高了成長預期，也改變了對短期利率最終落點的預測。"
+       },
+       {
+        "q": "a description of how different groups of shares have performed unevenly",
+        "a": "E",
+        "ref": "E",
+        "ev": "In September the Nasdaq Composite rose 1.86 per cent while the Dow Jones Industrial Average fell 4.29 per cent, and the S&P 500 lost 0.45 per cent.",
+        "zh": "E 段：9 月那斯達克上漲 1.86%、道瓊下跌 4.29%、S&P 500 下跌 0.45%，顯示股市表現不一。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The latest quarterly rise in the US ten-year yield was the largest since 1994.",
+        "a": "True",
+        "ref": "A",
+        "ev": "the yield rose by 87 basis points between July and September, the sharpest quarterly increase since 1994.",
+        "zh": "A 段：87 個基點是「自 1994 年以來最劇烈的單季漲幅」，與題目一致，True。"
+       },
+       {
+        "q": "Large technology companies have issued fewer bonds this year than they did last year.",
+        "a": "False",
+        "ref": "C",
+        "ev": "have already issued $220 billion of debt this year, more than double the total for all of last year",
+        "zh": "C 段：今年發行 2,200 億美元，是去年全年的兩倍多，題目說「較少」，與原文相反，False。"
+       },
+       {
+        "q": "French borrowing costs have risen by a larger amount than British borrowing costs over the past three months.",
+        "a": "Not Given",
+        "ref": "D",
+        "ev": "its ten-year yield rose to 4.96 per cent on Thursday, the highest since 2002, after the worst quarterly performance for French bonds since 1987.",
+        "zh": "D 段分別描述法國（10 年期）與英國（30 年期）的殖利率，但沒有比較哪一國這一季上升較多，所以是 Not Given（陷阱：兩者看似可比，其實文中未比較）。"
+       },
+       {
+        "q": "The governor of the Bank of France has urged the ECB to intervene in the French bond market.",
+        "a": "False",
+        "ref": "D",
+        "ev": "said last week that it would be misguided to expect the ECB to ride to the rescue.",
+        "zh": "D 段：Moulin 說期待 ECB 出手相救是 “misguided”（不明智），與「呼籲 ECB 介入」相反，False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Why bond yields have risen",
+      "lines": [
+       {
+        "t": "Expensive fuel has fuelled [[1]], so traders are preparing for more rate increases. Data-centre construction has also created greater [[2]] for capital, and heavy bond sales by technology firms add to the supply of debt. Investors known as [[3]] may demand higher returns from governments they regard as spendthrift. Yields are likely to fall durably only if governments reduce debt or boost [[4]]."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "inflation"
+        ],
+        "ref": "B",
+        "ev": "Dearer fuel feeds inflation, and persistent inflation has left traders braced for further interest rate increases",
+        "zh": "Expensive fuel = Dearer fuel；fuelled = feeds；答案 inflation（B 段）。"
+       },
+       {
+        "a": [
+         "competition"
+        ],
+        "ref": "B",
+        "ev": "It has also created greater competition for capital.",
+        "zh": "題目 “greater ___ for capital” 對應原句 “greater competition for capital”，答案 competition。"
+       },
+       {
+        "a": [
+         "bond vigilantes"
+        ],
+        "ref": "F",
+        "ev": "so-called bond vigilantes, investors who seek to impose fiscal discipline on governments they perceive as profligate",
+        "zh": "regard as spendthrift = perceive as profligate；答案 bond vigilantes（兩個字，F 段）。"
+       },
+       {
+        "a": [
+         "growth"
+        ],
+        "ref": "F",
+        "ev": "longer-term borrowing costs will fall durably only if governments bring down debt or boost growth.",
+        "zh": "reduce debt or boost ___ 對應 “bring down debt or boost growth”，答案 growth。"
+       }
+      ]
+     }
+    ]
    },
-   {
-    "label": "D",
-    "text": "Customers, for their part, appear increasingly unwilling to wait for additional capacity. Micron reported that it had signed 26 Strategic Customer Agreements, with customer commitments totalling $32 billion, compared with 16 agreements and $22 billion at the time of its previous quarterly report. More than 75 per cent of its fiscal 2027 shipments are already committed, which has allowed executives to begin shifting some allocation discussions into 2028. Its Korean rivals, Samsung Electronics and SK hynix, have likewise been expanding long-term agreements with major AI and cloud customers. As for HBM, Mr Mehrotra said that the vast majority of Micron’s calendar 2027 supply had already been contracted, at prices significantly higher than those negotiated for 2026."
-   },
-   {
-    "label": "E",
-    "text": "The obvious remedy is to build more, and producers are doing so, but the timetable is long. Micron expects its first Idaho fabrication plant to produce its first wafers in mid-2027 and a second in late 2028, with a New York plant to follow in 2030. Samsung is targeting 2028 for full-scale operation at its P5 plant in Pyeongtaek, while SK hynix has brought forward the opening of the first cleanroom at its Yongin complex from May to February 2027. Yet the opening of a cleanroom marks the beginning rather than the end of the process: Mr Mehrotra noted that output increases only gradually, and that meaningful supply growth takes a few quarters after the first wafers emerge. TrendForce takes a similar view, anticipating that although new capacity may come on stream from the second half of 2027, a significant rise in supply volumes will not materialise until 2028."
-   },
-   {
-    "label": "F",
-    "text": "Mr Mehrotra’s own assessment is unequivocal: he expects demand to exceed supply in both 2027 and 2028, and he told analysts that, even allowing for plans for additional cleanroom space, the company has no visibility on when the two will regain balance. Such forecasts are not without qualification, however. A sharp slowdown in spending on AI infrastructure could eventually weaken demand, while an aggressive expansion of capacity could loosen supply further into the future. Some observers regard the moment when new capacity begins to reach the market in earnest as the possible first inflection point of the current cycle; if demand grows faster than capacity is added, however, the shortage could persist beyond 2028."
+   "vocab": [
+    {
+     "word": "culmination",
+     "pos": "n.",
+     "def": "the final result or highest point of a process",
+     "zh": "頂點；最終結果",
+     "example": "The figure marked the culmination of a remarkable quarter.",
+     "match": [
+      "culmination"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "yardstick",
+     "pos": "n.",
+     "def": "a standard used for measuring or judging something",
+     "zh": "衡量標準；基準",
+     "example": "The ten-year yield serves as a yardstick for borrowing costs.",
+     "match": [
+      "yardstick"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "trajectory",
+     "pos": "n.",
+     "def": "the path or direction of development over time",
+     "zh": "走勢；發展軌跡",
+     "example": "Its trajectory matters far beyond Wall Street.",
+     "match": [
+      "trajectory"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "braced (for)",
+     "pos": "adj.",
+     "def": "prepared for something unpleasant that is expected",
+     "zh": "做好（壞事發生）準備的",
+     "example": "Inflation has left traders braced for further rate increases.",
+     "match": [
+      "braced"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "intensify",
+     "pos": "v.",
+     "def": "to become stronger, or to make something stronger",
+     "zh": "加劇；強化",
+     "example": "Whether the strain will intensify is disputed.",
+     "match": [
+      "intensify"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sovereign",
+     "pos": "adj.",
+     "def": "relating to a national government, as in sovereign debt",
+     "zh": "主權的（國家政府的）",
+     "example": "Japan has recorded gains in its sovereign yields.",
+     "match": [
+      "sovereign"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "buoyant",
+     "pos": "adj.",
+     "def": "(of markets) rising or staying strong; cheerful and optimistic",
+     "zh": "（市場）堅挺的；樂觀的",
+     "example": "Strong earnings have kept shares buoyant.",
+     "match": [
+      "buoyant"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "fiscal",
+     "pos": "adj.",
+     "def": "relating to government spending, taxes and debt",
+     "zh": "財政的",
+     "example": "Investors seek to impose fiscal discipline on governments.",
+     "match": [
+      "fiscal"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "profligate",
+     "pos": "adj.",
+     "def": "wastefully extravagant, especially with money",
+     "zh": "揮霍的；浪費公帑的",
+     "example": "They perceive some governments as profligate.",
+     "match": [
+      "profligate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "durably",
+     "pos": "adv.",
+     "def": "in a way that lasts for a long time",
+     "zh": "持久地",
+     "example": "Borrowing costs will fall durably only if governments act.",
+     "match": [
+      "durably"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "shrug off",
+     "pos": "phr. v.",
+     "def": "to treat something as unimportant; to be unaffected by it",
+     "zh": "不當一回事；毫不受影響",
+     "example": "Why have share prices shrugged it off?",
+     "match": [
+      "shrugged it off",
+      "shrug off"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "long-dated",
+     "pos": "adj.",
+     "def": "(of a bond) maturing many years in the future",
+     "zh": "長天期的",
+     "example": "A painful period for anyone holding long-dated bonds.",
+     "match": [
+      "long-dated"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "benchmark",
+     "pos": "adj.",
+     "def": "used as a standard against which others are compared",
+     "zh": "基準的",
+     "example": "The benchmark ten-year Treasury yield reached 5.34 per cent.",
+     "match": [
+      "benchmark"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "offset",
+     "pos": "v.",
+     "def": "to balance or cancel out the effect of something",
+     "zh": "抵銷；彌補",
+     "example": "Strong earnings have offset the higher cost of money.",
+     "match": [
+      "offset"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "sustain",
+     "pos": "v.",
+     "def": "to keep something going at the same level over time",
+     "zh": "維持；承受得住",
+     "example": "The economy can sustain higher rates for longer.",
+     "match": [
+      "sustain"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-02-2.mp3",
+    "times": [
+     [
+      0.35,
+      1.78
+     ],
+     [
+      2.2,
+      12.84
+     ],
+     [
+      13.26,
+      19.42
+     ],
+     [
+      20.37,
+      22.96
+     ],
+     [
+      23.38,
+      31.45
+     ],
+     [
+      31.87,
+      41.73
+     ],
+     [
+      42.15,
+      45.72
+     ],
+     [
+      46.14,
+      53.73
+     ],
+     [
+      54.68,
+      59.0
+     ],
+     [
+      59.42,
+      60.78
+     ],
+     [
+      61.2,
+      72.55
+     ],
+     [
+      72.97,
+      77.28
+     ],
+     [
+      77.7,
+      83.16
+     ],
+     [
+      83.58,
+      93.35
+     ],
+     [
+      93.77,
+      108.61
+     ],
+     [
+      109.03,
+      111.28
+     ],
+     [
+      111.7,
+      122.93
+     ],
+     [
+      123.35,
+      128.87
+     ],
+     [
+      129.82,
+      132.7
+     ],
+     [
+      133.12,
+      140.74
+     ],
+     [
+      141.16,
+      151.34
+     ],
+     [
+      152.29,
+      154.67
+     ],
+     [
+      155.09,
+      167.08
+     ],
+     [
+      167.5,
+      177.98
+     ],
+     [
+      178.4,
+      181.13
+     ],
+     [
+      181.55,
+      188.48
+     ],
+     [
+      188.9,
+      195.95
+     ],
+     [
+      196.37,
+      203.24
+     ],
+     [
+      204.19,
+      206.46
+     ],
+     [
+      206.88,
+      214.49
+     ],
+     [
+      214.91,
+      218.16
+     ],
+     [
+      218.58,
+      225.27
+     ]
+    ],
+    "duration": 225.9,
+    "voice": "en-US-AriaNeural",
+    "rate": "-5%",
+    "accent": "🇺🇸 American English · Aria · female",
+    "words": "audio/2026-10-02-2-words/"
    }
-  ],
-  "groups": [
-   {
-    "type": "match",
-    "title": "Questions 1–5",
-    "instruction": [
-     "Reading Passage 1 has six paragraphs, **A–F**.",
-     "Which paragraph contains the following information?",
-     "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
-     "**NB** You may use any letter more than once."
-    ],
-    "options": [
-     "A",
-     "B",
-     "C",
-     "D",
-     "E",
-     "F"
-    ],
-    "items": [
-     {
-      "q": "a reference to a possible change in the design of a product prompted by scarcity",
-      "a": "C",
-      "ev": "…developers of graphics processors and custom AI chips are considering HBM stacks with eight layers of memory instead of the 12 originally planned. The firm interprets this as a response to supply and cost constraints…",
-      "ref": "C",
-      "zh": "C 段：因供給與成本限制，AI 晶片開發商考慮把 HBM 堆疊由 12 層改為 8 層，即「因稀缺而改變產品設計」。"
-     },
-     {
-      "q": "a description of how purchasers have tried to guarantee future availability of supply",
-      "a": "D",
-      "ev": "Micron reported that it had signed 26 Strategic Customer Agreements, with customer commitments totalling $32 billion…",
-      "ref": "D",
-      "zh": "D 段：客戶簽下長期的 Strategic Customer Agreements、提前承諾出貨量，即「買方設法確保未來供貨」。"
-     },
-     {
-      "q": "two circumstances that might undermine the predicted outlook",
-      "a": "F",
-      "ev": "A sharp slowdown in spending on AI infrastructure could eventually weaken demand, while an aggressive expansion of capacity could loosen supply further into the future.",
-      "ref": "F",
-      "zh": "F 段列出兩種可能推翻預測的情況：AI 基礎設施支出大幅放緩（需求減弱）、產能激進擴張（供給放寬）。"
-     },
-     {
-      "q": "a comparison between a company’s reported sales and what the market had anticipated",
-      "a": "A",
-      "ev": "The market consensus compiled by the London Stock Exchange Group (LSEG) had been $51.07 billion, so the outcome represented a considerable surprise.",
-      "ref": "A",
-      "zh": "A 段把 Micron 實際營收 $54.2B 與 LSEG 市場共識 $51.07B 相比，屬「銷售與市場預期的比較」。"
-     },
-     {
-      "q": "a prediction that demand for memory will spread to applications outside data centres",
-      "a": "B",
-      "ev": "…the company anticipates that demand will extend beyond data centres to what it terms “physical AI”, such as autonomous vehicles and humanoid robots…",
-      "ref": "B",
-      "zh": "B 段預期需求將擴及資料中心之外的「實體 AI」（自駕車、人形機器人）。"
-     }
-    ],
-    "from": 1
-   },
-   {
-    "type": "tfng",
-    "title": "Questions 6–9",
-    "instruction": [
-     "Do the following statements agree with the information given in Reading Passage 1?",
-     "In boxes 6–9 on your answer sheet, write",
-     "**TRUE**        if the statement agrees with the information",
-     "**FALSE**       if the statement contradicts the information",
-     "**NOT GIVEN**   if there is no information on this"
-    ],
-    "items": [
-     {
-      "q": "The move towards eight-layer HBM stacks shows that demand for AI hardware is declining.",
-      "a": "False",
-      "ev": "The firm interprets this as a response to supply and cost constraints rather than to any weakening of end-market demand…",
-      "ref": "C",
-      "zh": "C 段明確指出這是對供給與成本限制的反應，「而非」終端需求轉弱，與題目相反，所以是 False。"
-     },
-     {
-      "q": "Micron’s customer commitments under long-term agreements were larger at its latest results than at its previous quarterly report.",
-      "a": "True",
-      "ev": "…customer commitments totalling $32 billion, compared with 16 agreements and $22 billion at the time of its previous quarterly report.",
-      "ref": "D",
-      "zh": "D 段：承諾金額由 $22B 增至 $32B（協議數由 16 增至 26），與題目一致，是 True。"
-     },
-     {
-      "q": "Micron has concluded more long-term supply agreements than either Samsung Electronics or SK hynix.",
-      "a": "Not Given",
-      "ev": "Its Korean rivals, Samsung Electronics and SK hynix, have likewise been expanding long-term agreements…",
-      "ref": "D",
-      "zh": "文章只說兩家韓國對手「同樣在擴大」長期協議，並未比較誰簽得較多，所以是 Not Given（典型陷阱：看似相關但沒有比較資訊）。"
-     },
-     {
-      "q": "Mr Mehrotra believes that additional cleanroom capacity will restore the balance between supply and demand by 2028.",
-      "a": "False",
-      "ev": "…he expects demand to exceed supply in both 2027 and 2028, and he told analysts that, even allowing for plans for additional cleanroom space, the company has no visibility on when the two will regain balance.",
-      "ref": "F",
-      "zh": "F 段：他預期 2027、2028 年需求仍超過供給，且即使計入新增無塵室，也看不到何時恢復平衡，與題目相反，是 False。"
-     }
-    ],
-    "from": 6
-   },
-   {
-    "type": "blanks",
-    "title": "Questions 10–13",
-    "bullets": false,
-    "instruction": [
-     "Complete the summary below.",
-     "Choose **NO MORE THAN TWO WORDS** from the passage for each answer.",
-     "Write your answers in boxes 10–13 on your answer sheet."
-    ],
-    "heading": "Constraints on memory supply",
-    "lines": [
-     {
-      "t": "Making HBM absorbs far more [[1]] than making ordinary DRAM, and the shift to successive HBM generations creates further [[2]] for supply growth. Newer manufacturing processes also offer only limited [[3]] for each wafer. According to Micron’s chief executive, however, the main limiting factor is available [[4]] space."
-     }
-    ],
-    "items": [
-     {
-      "a": [
-       "wafer capacity"
-      ],
-      "ev": "HBM consumes considerably more wafer capacity than conventional DRAM…",
-      "ref": "C",
-      "zh": "absorbs far more = consumes considerably more；答案 wafer capacity（C 段）。"
-     },
-     {
-      "a": [
-       "headwinds"
-      ],
-      "ev": "…the transition from HBM3E to HBM4 and HBM4E will… create additional “headwinds with respect to supply growth”.",
-      "ref": "C",
-      "zh": "successive HBM generations = HBM3E→HBM4→HBM4E；further ___ for supply growth 對應 additional “headwinds”。"
-     },
-     {
-      "a": [
-       "productivity gains"
-      ],
-      "ev": "Future manufacturing process transitions, moreover, are delivering smaller productivity gains per wafer.",
-      "ref": "C",
-      "zh": "limited = smaller；答案 productivity gains（兩個字）。"
-     },
-     {
-      "a": [
-       "cleanroom"
-      ],
-      "ev": "The principal constraint, he said, is cleanroom space.",
-      "ref": "C",
-      "zh": "main limiting factor = principal constraint；題目已有 space，只需填 cleanroom。"
-     }
-    ],
-    "from": 10
-   }
-  ]
- },
- "vocab": [
-  {
-   "word": "outstrip",
-   "pos": "v.",
-   "def": "to become greater or faster than something else",
-   "zh": "超過；供不應求地勝過",
-   "example": "Demand should outstrip supply in both 2027 and 2028.",
-   "match": [
-    "outstrip"
-   ],
-   "src": "聽力"
-  },
-  {
-   "word": "cyclical",
-   "pos": "adj.",
-   "def": "following a repeating pattern of rises and falls",
-   "zh": "週期性的",
-   "example": "Memory chips are a notoriously cyclical industry.",
-   "match": [
-    "cyclical"
-   ],
-   "src": "聽力"
-  },
-  {
-   "word": "consensus",
-   "pos": "n.",
-   "def": "a general agreement; the average expectation of analysts",
-   "zh": "共識；市場普遍預期",
-   "example": "Revenue comfortably beat the market consensus.",
-   "match": [
-    "consensus"
-   ],
-   "src": "聽力"
-  },
-  {
-   "word": "surge",
-   "pos": "n./v.",
-   "def": "a sudden, large increase",
-   "zh": "激增；暴漲",
-   "example": "Where is this surge in revenue coming from?",
-   "match": [
-    "surge"
-   ],
-   "src": "聽力"
-  },
-  {
-   "word": "compound",
-   "pos": "v.",
-   "def": "to make a problem worse by adding to it",
-   "zh": "使（問題）惡化",
-   "example": "Faster HBM growth compounds the shortage problem.",
-   "match": [
-    "compounds"
-   ],
-   "src": "聽力"
-  },
-  {
-   "word": "persist",
-   "pos": "v.",
-   "def": "to continue to exist, especially longer than expected",
-   "zh": "持續存在",
-   "example": "The shortage may well persist beyond 2028.",
-   "match": [
-    "persist",
-    "persistent"
-   ],
-   "src": "聽力"
-  },
-  {
-   "word": "bottleneck",
-   "pos": "n.",
-   "def": "a point of congestion that limits the whole process",
-   "zh": "瓶頸",
-   "example": "Cleanroom space is the main bottleneck for new supply.",
-   "match": [
-    "bottleneck"
-   ],
-   "src": "字彙延伸"
-  },
-  {
-   "word": "come on stream",
-   "pos": "phr. v.",
-   "def": "to start operating or producing",
-   "zh": "（產能）開始投產",
-   "example": "New capacity may come on stream in late 2027.",
-   "match": [
-    "come on stream"
-   ],
-   "src": "聽力"
-  },
-  {
-   "word": "materialise",
-   "pos": "v.",
-   "def": "to actually happen or appear",
-   "zh": "實現；成真",
-   "example": "A meaningful increase in supply will not materialise until 2028.",
-   "match": [
-    "materialise"
-   ],
-   "src": "聽力"
-  },
-  {
-   "word": "headwind",
-   "pos": "n.",
-   "def": "a force or factor that slows progress",
-   "zh": "逆風；不利因素",
-   "example": "The shift to HBM4 creates additional headwinds for supply growth.",
-   "match": [
-    "headwinds"
-   ],
-   "src": "閱讀"
-  },
-  {
-   "word": "constrain",
-   "pos": "v.",
-   "def": "to limit or restrict",
-   "zh": "限制；制約",
-   "example": "Limited cleanroom space continues to constrain output.",
-   "match": [
-    "constrain",
-    "constrained"
-   ],
-   "src": "閱讀"
-  },
-  {
-   "word": "commitment",
-   "pos": "n.",
-   "def": "a formal promise to buy, supply or do something",
-   "zh": "承諾；（購買）約定",
-   "example": "Customer commitments under the agreements totalled $32 billion.",
-   "match": [
-    "commitment"
-   ],
-   "src": "閱讀"
-  },
-  {
-   "word": "unequivocal",
-   "pos": "adj.",
-   "def": "clear and leaving no doubt",
-   "zh": "明確的；毫不含糊的",
-   "example": "The chief executive’s assessment was unequivocal.",
-   "match": [
-    "unequivocal"
-   ],
-   "src": "閱讀"
-  },
-  {
-   "word": "inflection point",
-   "pos": "n.",
-   "def": "a moment when a trend changes direction",
-   "zh": "轉折點",
-   "example": "New capacity could mark the first inflection point of the cycle.",
-   "match": [
-    "inflection point"
-   ],
-   "src": "閱讀"
-  },
-  {
-   "word": "hedge (against)",
-   "pos": "v.",
-   "def": "to protect yourself against loss or risk",
-   "zh": "對沖；防範（風險）",
-   "example": "Buyers sign long-term contracts to hedge against shortages.",
-   "match": [
-    "hedge"
-   ],
-   "src": "延伸搭配"
   }
- ],
- "audio": {
-  "src": "audio/2026-10-02.mp3",
-  "times": [
-   [
-    0.35,
-    1.83
-   ],
-   [
-    2.25,
-    10.75
-   ],
-   [
-    11.17,
-    19.23
-   ],
-   [
-    20.18,
-    27.72
-   ],
-   [
-    28.14,
-    36.51
-   ],
-   [
-    36.93,
-    42.25
-   ],
-   [
-    42.67,
-    51.76
-   ],
-   [
-    52.18,
-    59.04
-   ],
-   [
-    59.46,
-    67.98
-   ],
-   [
-    68.4,
-    71.56
-   ],
-   [
-    71.98,
-    82.85
-   ],
-   [
-    83.27,
-    86.91
-   ],
-   [
-    87.86,
-    89.88
-   ],
-   [
-    90.3,
-    97.36
-   ],
-   [
-    97.78,
-    105.57
-   ],
-   [
-    105.99,
-    109.46
-   ],
-   [
-    109.88,
-    118.91
-   ],
-   [
-    119.86,
-    122.52
-   ],
-   [
-    122.94,
-    125.05
-   ],
-   [
-    125.47,
-    137.66
-   ],
-   [
-    138.08,
-    145.55
-   ],
-   [
-    145.97,
-    147.54
-   ],
-   [
-    147.96,
-    150.51
-   ],
-   [
-    150.93,
-    159.51
-   ],
-   [
-    159.93,
-    166.92
-   ],
-   [
-    167.87,
-    171.45
-   ],
-   [
-    171.87,
-    183.3
-   ],
-   [
-    183.72,
-    186.75
-   ],
-   [
-    187.17,
-    200.24
-   ],
-   [
-    201.19,
-    203.02
-   ],
-   [
-    203.44,
-    211.66
-   ],
-   [
-    212.08,
-    216.39
-   ],
-   [
-    216.81,
-    223.56
-   ]
-  ],
-  "duration": 224.2,
-  "voice": "en-GB-RyanNeural",
-  "words": "audio/2026-10-02-words/"
- }
+ ]
 };
 /*DATA_END*/
 (function(){
 "use strict";
-const $=id=>document.getElementById(id);
+const gid=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
-const KEY="ielts-news:v2:"+DATA.id;
-let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
-store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
 const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
 const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
-const SENTS=[].concat(...DATA.script);
-const PARA_START=[];{let n=0;DATA.script.forEach(p=>{PARA_START.push(n);n+=p.length})}
-
-/* header */
-(function(){
-  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
-  $("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
-  $("hTitle").textContent=DATA.title;
-  $("hSrc").href=DATA.source.url;$("hSrc").textContent="來源："+DATA.source.name+" ↗";
-  document.title=DATA.title+" | IELTS";
-})();
-
-/* tabs */
-function showTab(t){
-  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x.dataset.tab===t));
-  ["listen","read","vocab"].forEach(id=>$(id).hidden=(id!==t));
-  $("wrap").classList.toggle("wide",t==="read");
-}
-document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>{
-  if(b.dataset.tab!=="listen"&&mode==="practice")au.pause();showTab(b.dataset.tab);
-}));
-
 /* ================= generic exam engine ================= */
 const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
 const BANDS={
@@ -1003,7 +1720,8 @@ function bandOf(kind,raw,total){
   for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
   return {s40,b:b.toFixed(1)};
 }
-function buildTest(o){ // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
   const Qs=[];const kind=o.kind;
   const html=o.groups.map((g,gi)=>{
     let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
@@ -1011,22 +1729,22 @@ function buildTest(o){ // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBt
       h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
       g.lines.forEach(l=>{
         if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
-        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${kind}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
       });
       h+=`</div>`;
       g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
     }else{
       g.items.forEach((it,i)=>{
         const n=g.from+i;Qs.push({n,g,it,gi});
-        h+=`<div class="qi" id="${kind}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
-        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${kind}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
         h+=`</div>`;
         if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
         if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
         h+=`</div>`;
       });
     }
-    h+=`<div class="review" id="${kind}rv${gi}"></div></div>`;
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
     return h;
   }).join("");
   o.root.innerHTML=html;
@@ -1040,7 +1758,7 @@ function buildTest(o){ // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBt
   };
   const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
   const field=n=>{
-    return o.root.querySelector(`#${kind}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
   };
   function renderSheet(){
     o.sheet.innerHTML=Qs.map(x=>{
@@ -1051,23 +1769,23 @@ function buildTest(o){ // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBt
     const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
     o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
   }
-  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(kind+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
-  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;save();renderSheet()});
-  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;save();renderSheet()});
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
   function restore(){
     Qs.forEach(x=>{
       const v=ans[x.n];if(v===undefined)return;
-      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${kind}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
       else{const f=field(x.n);if(f)f.value=v}
     });
   }
   function review(){
     o.groups.forEach((g,gi)=>{
-      const box=document.getElementById(`${kind}rv${gi}`);
+      const box=document.getElementById(`${K}rv${gi}`);
       box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
         const v=ans[x.n],ok=correct(x,v);
         const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
-        const f=x.g.type==="blanks"?document.querySelector(`#${kind}q${x.n}`):o.root.querySelector(`#${kind}q${x.n} select`);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
         if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
         const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
         return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
@@ -1082,7 +1800,7 @@ function buildTest(o){ // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBt
     return raw;
   }
   function finish(){
-    o.st.done=true;save();lock(true);review();renderSheet();const raw=result();
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
     o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
   }
   o.submitBtn.onclick=()=>{
@@ -1092,31 +1810,41 @@ function buildTest(o){ // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBt
     finish();
   };
   o.resetBtn.onclick=()=>{
-    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;save();
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
     o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
   };
   restore();renderSheet();
   o.submitBtn.disabled=false;o.result.innerHTML="";
   if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
-  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs};
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
   return o.api;
 }
 
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
 /* ================= LISTENING ================= */
-const au=$("au");au.src=DATA.audio.src;
-const TM=DATA.audio.times;
-const L=DATA.listening;
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
 let mode=store.mode,phase="idle",cdH=null,stopAt=null;
 $("lTitle").textContent=L.title;
-$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(DATA.audio.duration)}`;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
 // resolve evidence sentence for each listening item
 L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
 let Ltest=null;
 function mountL(){
-  Ltest=buildTest({kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
     submitBtn:$("lSubmit"),resetBtn:$("lReset"),
     extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
-    onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done")},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL()}});
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
 }
 function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
 function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
@@ -1148,6 +1876,7 @@ function refreshL(){
 
 }
 function startExam(){
+  if(!guardOthers())return;
   // unlock audio on iOS/Safari within the user gesture
   au.muted=true;const p=au.play();
   const un=()=>{au.pause();au.currentTime=0;au.muted=false};
@@ -1172,15 +1901,15 @@ $("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice"
 let curSent=-1;
 function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
 function paint(){
-  const t=au.currentTime,d=au.duration||DATA.audio.duration;
+  const t=au.currentTime,d=au.duration||S.audio.duration;
   $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
   $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
   if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
   const si=au.paused&&t===0?-1:sentAt(t);
   if(si!==curSent){curSent=si;
-    document.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
     $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
-    const cur=document.querySelector(".sent.cur");
+    const cur=root.querySelector(".sent.cur");
     if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
   }
   $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
@@ -1193,12 +1922,12 @@ au.addEventListener("ended",()=>{
   paint();
   if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
 });
-function playFrom(t,end){stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
-$("btnPlay").onclick=()=>{if(au.paused){au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
 $("btnReplay").onclick=()=>{playFrom(0)};
 $("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
-$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||DATA.audio.duration)*$("seek").value/1000});
-document.addEventListener("click",e=>{
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
   const b=e.target.closest(".ps");
   if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
 });
@@ -1206,13 +1935,13 @@ document.addEventListener("click",e=>{
 /* transcript */
 const VR=(function(){
   const items=[];
-  DATA.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
   items.sort((a,b)=>b.m.length-a.m.length);
   return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
 })();
 (function(){
   const box=$("transcript");let gi=0;
-  DATA.script.forEach(para=>{
+  S.script.forEach(para=>{
     const p=document.createElement("p");p.style.margin="0 0 12px";
     para.forEach(s=>{
       const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
@@ -1225,7 +1954,7 @@ const VR=(function(){
 })();
 $("transcript").addEventListener("click",e=>{
   const vw=e.target.closest(".vw");
-  if(vw){const v=DATA.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
     d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
   const se=e.target.closest(".sent");
   if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
@@ -1239,13 +1968,13 @@ phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
 setPhase(phase);paint();
 
 /* ================= READING ================= */
-const R=DATA.reading;
+const R=S.reading;
 $("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
 (function(){
   const box=$("passage");
   R.passage.forEach((p,pi)=>{
     const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
-    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id="para"+p.label;el.appendChild(lab);
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
     p.text.split(/(\s+)/).forEach((t,ti)=>{
       if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
       const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
@@ -1259,7 +1988,7 @@ $("passage").addEventListener("click",e=>{
   w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
   if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
 });
-$("hlClear").onclick=()=>{store.R.hl=[];save();document.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
 /* timer */
 const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
 function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
@@ -1271,16 +2000,16 @@ $("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
 $("tmPause").onclick=stopTimer;
 const Rtest={api:null};
 function mountR(){
-  Rtest.api=buildTest({kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
     submitBtn:$("rSubmit"),resetBtn:$("rReset"),
     extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
-    onSubmit:()=>{stopTimer()},onReset:()=>{tmReset()}});
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
 }
 mountR();tmRender();
 
 /* ================= VOCAB ================= */
-const V=DATA.vocab;let fc=0;
-const wordAudio=i=>DATA.audio.words?DATA.audio.words+String(i).padStart(2,"0")+".mp3":null;
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
 function renderCard(){
   const v=V[fc];if(!v)return;$("flip").classList.remove("on");
   $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
@@ -1295,13 +2024,83 @@ $("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
 $("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
 let wa=null;
 $("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
-if(!DATA.audio.words)$("fcSpeak").hidden=true;
+if(!S.audio.words)$("fcSpeak").hidden=true;
 function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
   if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
 $("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
 $("fcReset").onclick=()=>{store.known=[];save();renderCard()};
 if(V.length)renderCard();
 $("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
 })();
 </script>
 </body>
