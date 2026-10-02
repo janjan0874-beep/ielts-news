@@ -16,6 +16,7 @@
   --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
@@ -97,54 +98,152 @@ input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
 .instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
 footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
 @media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:60px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}.rdhead{top:56px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="wrap">
   <header class="hero">
     <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
     <div class="date" id="hDate"></div>
     <h1 id="hTitle"></h1>
     <a id="hSrc" target="_blank" rel="noopener noreferrer"></a>
   </header>
-
   <nav class="tabs" role="tablist">
-    <button role="tab" id="tabL" aria-selected="true" data-tab="listen">🎧 聽力</button>
-    <button role="tab" id="tabR" aria-selected="false" data-tab="read">📖 閱讀</button>
+    <button role="tab" aria-selected="true" data-tab="listen">🎧 Listening</button>
+    <button role="tab" aria-selected="false" data-tab="read">📖 Reading</button>
+    <button role="tab" aria-selected="false" data-tab="vocab">🗂 單字</button>
   </nav>
 
   <!-- LISTENING -->
   <section class="panel" id="listen">
     <div class="card">
-      <h2>🎧 聽力播放器 <small id="plInfo"></small></h2>
-      <div class="row">
-        <button class="btn primary" id="btnPlay">▶ 播放</button>
-        <button class="btn" id="btnReplay">⟲ 重播</button>
-        <label class="row muted">速度
-          <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
-        </label>
-        <label class="row muted">口音
-          <select id="selAccent" aria-label="口音"><option value="en-US">美式</option><option value="en-GB">英式</option></select>
-        </label>
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
       </div>
-      <div class="bar"><i id="plBar"></i></div>
-      <div class="muted" id="plText">第 0 / 0 句</div>
-      <div class="warn" id="ttsWarn" hidden>此瀏覽器不支援語音合成（Web Speech API），請改用 Chrome、Edge 或 Safari。</div>
-      <div class="row" style="margin-top:12px">
-        <button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button>
-        <span class="muted" id="transHint">先聽，再答題，最後才看逐字稿。</span>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
       </div>
-      <div id="transWrap" hidden>
-        <div class="transcript" id="transcript"></div>
-        <div class="defbox" id="defbox" hidden></div>
-        <p class="muted">點選藍色底線的單字可查看解釋；點選句子可從該句開始播放。</p>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
       </div>
     </div>
+  </section>
 
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" hidden>
     <div class="card">
       <h2>🗂 單字卡 <small id="fcCount"></small></h2>
       <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
-        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="hint">點擊翻面</div></div>
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
         <div class="face back" id="fcBack"></div>
       </div></button>
       <div class="row spread" style="margin-top:12px">
@@ -159,287 +258,725 @@ footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
       <div class="bar"><i id="fcBar"></i></div>
       <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
     </div>
-
-    <div class="card" id="quizCard">
-      <h2>📝 聽力測驗 <small id="qzInfo"></small></h2>
-      <div id="qzBody"></div>
-    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
   </section>
-
-  <!-- READING -->
-  <section class="panel" id="read" hidden>
-    <div class="card">
-      <h2>⏱ 計時器 <small>（選用，建議 <span id="tmSug"></span> 分鐘）</small></h2>
-      <div class="row spread">
-        <label class="row"><input type="checkbox" id="tmOn"> 啟用計時</label>
-        <span class="timer" id="tmShow">--:--</span>
-      </div>
-      <div class="row" id="tmBtns" style="margin-top:8px" hidden>
-        <button class="btn primary" id="tmStart">開始</button>
-        <button class="btn" id="tmPause">暫停</button>
-        <button class="btn" id="tmReset">重設</button>
-      </div>
-    </div>
-    <div class="card">
-      <h2>📖 閱讀文章 <small id="rdTitle"></small></h2>
-      <div class="row spread"><span class="muted">點擊單字即可標記／取消螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
-      <div class="passage" id="passage" style="margin-top:12px"></div>
-    </div>
-    <div class="card">
-      <h2>✍️ 閱讀題目 <small id="rdScore"></small></h2>
-      <div id="rdQs"></div>
-      <div id="rdSummary"></div>
-      <div class="row" style="margin-top:12px"><button class="btn" id="rdReset">重新作答</button></div>
-    </div>
-  </section>
-  <footer>語音依瀏覽器與系統提供的語音而異 · 進度儲存在本機 (localStorage)</footer>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度儲存在本機 (localStorage)</footer>
 </div>
 
 <script>
-/* ============ DATA（每天只需修改這個物件）============ */
+/* ============ DATA（每天只需修改這個物件；請用 _src/build.py 產生）============ */
 /*DATA_START*/
 const DATA = {
-  "id": "2026-10-02",
-  "date": "2026-10-02",
-  "title": "Micron Posts Another Record Quarter as Memory Shortage Deepens",
-  "source": {
-    "name": "Electronic Times",
-    "url": "https://en.etnews.com/20261002200001"
-  },
-  "script": [
-    "Micron, the American memory chip maker, has reported another record quarter.",
-    "On September 30, the company announced that its revenue for the three months ending in August reached about $54 billion.",
-    "That is nearly five times higher than the same period last year, and it is the sixth quarter in a row that the company has set a record.",
-    "Analysts had expected a smaller figure, so the result surprised the market.",
-    "The main reason for this growth is demand from artificial intelligence data centers, which need a special type of memory called high bandwidth memory.",
-    "Because producing this memory takes up so much factory capacity, there is now a shortage of ordinary memory chips as well.",
-    "The chief executive said that supply will be even tighter in the next two years, and that it is unclear when supply and demand will return to balance.",
-    "Looking ahead, Micron forecast revenue of $60 to $63 billion for the next quarter.",
-    "However, its new factory in Idaho will not begin production until the middle of 2027, so relief for buyers may be slow to arrive."
+ "id": "2026-10-02",
+ "date": "2026-10-02",
+ "title": "Micron’s Record Quarter and the Memory Squeeze",
+ "source": {
+  "name": "Electronic Times / Micron / Aju Press / TrendForce",
+  "url": "https://en.etnews.com/20261002200001"
+ },
+ "script": [
+  [
+   "Good morning, everyone.",
+   "Today I'd like to examine one of the most notoriously cyclical industries in the world, memory chips, and to ask why the current cycle looks so unusual.",
+   "I'll begin with some figures, because they really are remarkable; then I'll turn to the outlook; and finally I'll consider why the shortage may well persist."
   ],
-  "vocab": [
-    {
-      "word": "record",
-      "pos": "adj.",
-      "zh": "創紀錄的",
-      "example": "...another record quarter.",
-      "match": [
-        "record"
-      ],
-      "def": "the highest ever achieved"
-    },
-    {
-      "word": "in a row",
-      "pos": "phr.",
-      "zh": "連續",
-      "example": "the sixth quarter in a row",
-      "match": [
-        "in a row"
-      ],
-      "def": "one after another"
-    },
-    {
-      "word": "surprise",
-      "pos": "v.",
-      "zh": "使驚訝、超出預期",
-      "example": "the result surprised the market",
-      "match": [
-        "surprised"
-      ],
-      "def": "to be better or different than expected"
-    },
-    {
-      "word": "demand",
-      "pos": "n.",
-      "zh": "需求",
-      "example": "demand from artificial intelligence data centers",
-      "match": [
-        "demand"
-      ],
-      "def": "the amount of a product people want to buy"
-    },
-    {
-      "word": "capacity",
-      "pos": "n.",
-      "zh": "產能",
-      "example": "takes up so much factory capacity",
-      "match": [
-        "capacity"
-      ],
-      "def": "the amount that can be produced"
-    },
-    {
-      "word": "shortage",
-      "pos": "n.",
-      "zh": "短缺",
-      "example": "a shortage of ordinary memory chips",
-      "match": [
-        "shortage"
-      ],
-      "def": "not enough of something"
-    },
-    {
-      "word": "tight",
-      "pos": "adj.",
-      "zh": "供應緊張的",
-      "example": "supply will be even tighter",
-      "match": [
-        "tighter"
-      ],
-      "def": "hard to get because supply is limited"
-    },
-    {
-      "word": "return to balance",
-      "pos": "phr.",
-      "zh": "回到平衡",
-      "example": "supply and demand will return to balance",
-      "match": [
-        "return to balance"
-      ],
-      "def": "become stable or equal again"
-    },
-    {
-      "word": "forecast",
-      "pos": "v./n.",
-      "zh": "預測",
-      "example": "Micron forecast revenue of $60 to $63 billion",
-      "match": [
-        "forecast"
-      ],
-      "def": "to predict"
-    },
-    {
-      "word": "relief",
-      "pos": "n.",
-      "zh": "緩解",
-      "example": "relief for buyers may be slow to arrive",
-      "match": [
-        "relief"
-      ],
-      "def": "the end or easing of a problem"
-    }
+  [
+   "So, let's start with Micron, the American manufacturer, which reported its fiscal fourth-quarter results on the thirtieth of September.",
+   "Revenue came in at around fifty-one billion dollars — no, sorry, that was the figure analysts had been forecasting, according to LSEG.",
+   "The actual figure was fifty-four point two billion dollars, which comfortably beat the consensus.",
+   "That is up thirty-one per cent on the previous quarter, but the comparison that really matters is year on year, and there the increase was three hundred and seventy-nine per cent.",
+   "In other words, revenue is nearly five times what it was a year earlier, and it is the sixth consecutive record quarter.",
+   "Operating profit tells an even more dramatic story: at about forty-three point eight billion dollars, it was roughly twelve times the previous year's figure.",
+   "Now, what's interesting is where this surge is coming from.",
+   "Two business units dominate: cloud memory, which includes high bandwidth memory, brought in sixteen point three billion dollars, while the core data centre unit contributed eighteen billion.",
+   "Together, they accounted for more than sixty per cent of total revenue."
   ],
-  "questions": [
-    {
-      "type": "fill",
-      "q": "Micron's revenue was nearly ___ times higher than last year.",
-      "answer": [
-        "five",
-        "5"
-      ],
-      "explanation": "錄音提到 “nearly five times higher than the same period last year”，所以答案是 five（也接受數字 5）。"
-    },
-    {
-      "type": "mc",
-      "q": "What is the main reason for the growth?",
-      "options": [
-        "Cheaper factories",
-        "Demand from AI data centers",
-        "A new CEO"
-      ],
-      "answer": 1,
-      "explanation": "錄音說 “The main reason for this growth is demand from artificial intelligence data centers”，故選 B。"
-    },
-    {
-      "type": "mc",
-      "q": "When will the new Idaho factory begin production?",
-      "options": [
-        "This year",
-        "Early 2027",
-        "Mid-2027"
-      ],
-      "answer": 2,
-      "explanation": "錄音說 “will not begin production until the middle of 2027”，middle of 2027 = mid-2027，故選 C。"
-    }
+  [
+   "Right, moving on to the outlook.",
+   "For the first quarter of its next fiscal year, Micron has guided for revenue of between sixty and sixty-three billion dollars.",
+   "The market, by contrast, had been expecting only about fifty-seven billion, so even the bottom of that range sits well above the consensus.",
+   "The chief executive, Sanjay Mehrotra, went further.",
+   "He said that demand should outstrip supply in both twenty twenty-seven and twenty twenty-eight, and that the company has no visibility on when the two will return to balance."
   ],
-  "reading": {
-    "title": "Micron's Record Quarter and the Memory Shortage",
-    "minutes": 8,
-    "passage": [
-      {
-        "label": "A",
-        "text": "Micron Technology, a leading American manufacturer of memory chips, has reported record revenue of about $54 billion for the three months ending in August, according to an announcement made on 30 September. The figure was almost five times that of the same period a year earlier, and it marked the sixth consecutive quarter in which the company had set a new record. Analysts had predicted a lower result, and the announcement therefore surprised financial markets. Taken together, these results extend a sustained period of strong growth for the company."
-      },
-      {
-        "label": "B",
-        "text": "The principal driver of this expansion is demand from data centres that run artificial intelligence applications. These facilities require a specialised product known as high bandwidth memory, the production of which consumes a large proportion of factory capacity. As a consequence, less capacity is available for conventional memory chips, and a shortage of those products has now emerged. Micron's chief executive stated that supply will become tighter still over the next two years, and he acknowledged that it is uncertain when supply and demand will return to equilibrium. In other words, the imbalance between the two is expected to persist for the foreseeable future."
-      },
-      {
-        "label": "C",
-        "text": "Micron has forecast revenue of between $60 billion and $63 billion for the coming quarter. Nevertheless, relief for customers may be slow in coming. The company's new factory in Idaho is not scheduled to begin production until the middle of 2027, so additional supply from that site will not be available for some time. Buyers who had hoped for a rapid improvement in availability may consequently need to wait considerably longer than expected."
-      }
+  [
+   "Now, why should the shortage be so persistent?",
+   "The first factor is the product mix.",
+   "High bandwidth memory, the specialised chips used in AI accelerators, consumes considerably more wafer capacity than conventional DRAM, so every wafer devoted to it is a wafer unavailable for ordinary memory.",
+   "Micron expects shipments of this memory to grow faster than conventional DRAM right through to twenty twenty-eight, which compounds the problem.",
+   "The second factor is time.",
+   "Building new capacity is no quick fix.",
+   "Micron's first Idaho fab is due to produce its first wafers in the middle of twenty twenty-seven, with a second fab scheduled for the end of twenty twenty-eight.",
+   "And even once a cleanroom opens, as Mr Mehrotra pointed out, meaningful supply growth takes a few quarters to follow."
+  ],
+  [
+   "Of course, Micron isn't alone in racing to add capacity.",
+   "Samsung is targeting twenty twenty-eight for its P5 fab in Pyeongtaek, while SK hynix has brought forward the opening of the first cleanroom at its Yongin site, from May to February of twenty twenty-seven.",
+   "You might expect all of this to ease the squeeze quite quickly.",
+   "Not so, according to the research firm TrendForce: it anticipates that new capacity may come on stream from the second half of twenty twenty-seven, but that a meaningful increase in supply will not materialise until twenty twenty-eight."
+  ],
+  [
+   "I should add a note of caution, though.",
+   "A sharp slowdown in spending on AI infrastructure could eventually weaken demand, while aggressive expansion of capacity could loosen supply further out.",
+   "So these forecasts are best treated as probabilities rather than certainties.",
+   "In next week's session, we'll look at long-term supply agreements, and how they are changing the way this industry manages risk."
+  ]
+ ],
+ "listening": {
+  "minutes": 0,
+  "title": "SECTION 4",
+  "groups": [
+   {
+    "type": "blanks",
+    "title": "Questions 31–40",
+    "instruction": [
+     "Complete the notes below.",
+     "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
     ],
-    "questions": [
-      {
-        "type": "tfng",
-        "q": "The latest quarterly revenue was lower than analysts had predicted.",
-        "answer": "False",
-        "ref": "A",
-        "evidence": "Analysts had predicted a lower result, and the announcement therefore surprised financial markets. Taken together, these results extend a sustained period of strong growth for the company.",
-        "explanation": "分析師預期的數字「較低」，實際營收高於預期，與題目敘述相反，所以是 False。"
-      },
-      {
-        "type": "tfng",
-        "q": "Micron intends to raise the prices of its conventional memory chips next year.",
-        "answer": "Not Given",
-        "ref": "B",
-        "explanation": "文章只談供給短缺與預測營收，未提及任何調漲價格的意圖，因此是 Not Given。"
-      },
-      {
-        "type": "completion",
-        "q": "The production of high bandwidth memory uses up a large proportion of factory ________.",
-        "answers": [
-          "capacity"
-        ],
-        "ref": "B",
-        "evidence": "…the production of which consumes a large proportion of factory capacity.",
-        "explanation": "B 段明確寫出 consumes a large proportion of factory capacity，答案為 capacity。"
-      },
-      {
-        "type": "completion",
-        "q": "Micron's chief executive expects supply to become ________ over the next two years.",
-        "answers": [
-          "tighter",
-          "tighter still"
-        ],
-        "ref": "B",
-        "evidence": "…supply will become tighter still over the next two years…",
-        "explanation": "B 段：supply will become tighter still，填 tighter（tighter still 亦可，共兩個字）。"
-      },
-      {
-        "type": "mc",
-        "q": "According to the passage, why may relief for customers be slow to arrive?",
-        "options": [
-          "Analysts have lowered their forecasts.",
-          "The new Idaho factory will not start production until mid-2027.",
-          "Demand for artificial intelligence is expected to fall.",
-          "Micron has stopped producing ordinary memory chips."
-        ],
-        "answer": 1,
-        "ref": "C",
-        "evidence": "The company's new factory in Idaho is not scheduled to begin production until the middle of 2027…",
-        "explanation": "C 段指出 Idaho 新廠要到 2027 年中才開始生產，額外供給無法很快出現，故選 B。"
-      }
-    ]
+    "heading": "The Memory Chip Cycle",
+    "bullets": true,
+    "lines": [
+     {
+      "h": "Micron’s results (fiscal fourth quarter)"
+     },
+     {
+      "t": "Revenue: $[[1]] billion – beat analysts’ forecast"
+     },
+     {
+      "t": "Increase compared with a year earlier: [[2]] %"
+     },
+     {
+      "t": "Operating profit: about [[3]] times the previous year’s figure"
+     },
+     {
+      "t": "Core data centre unit contributed $[[4]] billion"
+     },
+     {
+      "h": "Outlook"
+     },
+     {
+      "t": "Market had expected about $[[5]] billion for next quarter"
+     },
+     {
+      "t": "CEO: company has no [[6]] on when supply and demand will balance"
+     },
+     {
+      "h": "Reasons for the shortage"
+     },
+     {
+      "t": "High bandwidth memory takes up much more [[7]] than conventional DRAM"
+     },
+     {
+      "t": "Idaho fab 1: first wafers expected in mid-[[8]]"
+     },
+     {
+      "t": "SK hynix: first cleanroom at Yongin now due to open in [[9]]"
+     },
+     {
+      "t": "TrendForce: no meaningful rise in supply until [[10]]"
+     }
+    ],
+    "items": [
+     {
+      "a": [
+       "54.2",
+       "54.2 billion"
+      ],
+      "ref": "The actual figure was fifty-four",
+      "ev": "The actual figure was fifty-four point two billion dollars, which comfortably beat the consensus.",
+      "zh": "講者先說 “around fifty-one billion dollars”，隨即更正：“no, sorry, that was the figure analysts had been forecasting”（51 億是分析師預測值，是陷阱）。實際營收為 fifty-four point two billion = 54.2，故填 54.2。"
+     },
+     {
+      "a": [
+       "379",
+       "379%"
+      ],
+      "ref": "year on year, and there the increase",
+      "ev": "…the comparison that really matters is year on year, and there the increase was three hundred and seventy-nine per cent.",
+      "zh": "先出現的 thirty-one per cent 是「與上一季比」（sequential），題目問的是與去年同期比（a year earlier = year on year），所以答案是 379。"
+     },
+     {
+      "a": [
+       "12",
+       "twelve"
+      ],
+      "ref": "Operating profit tells",
+      "ev": "…at about forty-three point eight billion dollars, it was roughly twelve times the previous year's figure.",
+      "zh": "營業利潤約為去年的 roughly twelve times。注意前一句的 “nearly five times” 是營收倍數，不是營業利潤，是干擾項。"
+     },
+     {
+      "a": [
+       "18",
+       "18 billion"
+      ],
+      "ref": "Two business units dominate",
+      "ev": "…cloud memory… brought in sixteen point three billion dollars, while the core data centre unit contributed eighteen billion.",
+      "zh": "題目問 core data centre unit：eighteen billion = 18。16.3 是 cloud memory 的營收（干擾項）；sixty per cent 則是兩者合計占比。"
+     },
+     {
+      "a": [
+       "57",
+       "57 billion"
+      ],
+      "ref": "had been expecting only about fifty-seven",
+      "ev": "The market, by contrast, had been expecting only about fifty-seven billion…",
+      "zh": "Micron 的指引是 sixty to sixty-three billion（公司自己的預測）；題目問的是 market expectation（市場預期），也就是 about fifty-seven billion = 57。"
+     },
+     {
+      "a": [
+       "visibility"
+      ],
+      "ref": "has no visibility on when",
+      "ev": "…the company has no visibility on when the two will return to balance.",
+      "zh": "“return to balance” = 題目的 “supply and demand will balance”；執行長說公司對何時回到平衡 “has no visibility”，填 visibility。"
+     },
+     {
+      "a": [
+       "wafer capacity"
+      ],
+      "ref": "consumes considerably more wafer capacity",
+      "ev": "High bandwidth memory… consumes considerably more wafer capacity than conventional DRAM…",
+      "zh": "HBM “consumes considerably more wafer capacity”，題目以 “uses much more ___” 改寫，答案 wafer capacity（兩個字，符合字數限制）。"
+     },
+     {
+      "a": [
+       "2027"
+      ],
+      "ref": "Idaho fab is due to produce",
+      "ev": "Micron's first Idaho fab is due to produce its first wafers in the middle of twenty twenty-seven, with a second fab scheduled for the end of twenty twenty-eight.",
+      "zh": "“the middle of twenty twenty-seven” = mid-2027，答案 2027。第二座廠是 end of 2028（干擾項）。"
+     },
+     {
+      "a": [
+       "February",
+       "Feb"
+      ],
+      "ref": "from May to February",
+      "ev": "…SK hynix has brought forward the opening of the first cleanroom at its Yongin site, from May to February of twenty twenty-seven.",
+      "zh": "brought forward「提前」：from May to February，新的開幕時間是 February，故填 February（May 是舊時程，為干擾項）。"
+     },
+     {
+      "a": [
+       "2028"
+      ],
+      "ref": "will not materialise until",
+      "ev": "…a meaningful increase in supply will not materialise until twenty twenty-eight.",
+      "zh": "TrendForce：新產能最快 2027 下半年上線 (come on stream)，但 “meaningful increase in supply will not materialise until 2028”，答案 2028。"
+     }
+    ],
+    "from": 31
+   }
+  ]
+ },
+ "reading": {
+  "title": "The Memory Squeeze: Why Chip Shortages May Outlast the Boom",
+  "intro": "The surge in demand for artificial intelligence has pushed memory manufacturers to record earnings, but expanding supply is proving far slower than expanding demand.",
+  "minutes": 20,
+  "passage": [
+   {
+    "label": "A",
+    "text": "When Micron Technology announced its results for the fiscal fourth quarter of 2026, the figures were striking. Revenue reached $54.2 billion, an increase of 379 per cent on the same period a year earlier and the sixth consecutive quarterly record. The market consensus compiled by the London Stock Exchange Group (LSEG) had been $51.07 billion, so the outcome represented a considerable surprise. Operating profit, at $43.75 billion, was roughly twelve times the previous year’s total. Yet the company’s commentary was arguably more significant than the headline numbers: its chief executive, Sanjay Mehrotra, warned that supply-demand conditions in the memory market would be “much tighter” in 2027 and 2028 than they were in 2026."
+   },
+   {
+    "label": "B",
+    "text": "The principal source of this expansion is the construction of data centres for artificial intelligence. Micron’s Cloud Memory unit, which includes sales of high bandwidth memory (HBM), generated $16.3 billion, and its Core Data Center unit $18 billion; together they accounted for more than 60 per cent of total revenue. Nor is the demand confined to the servers that exist today. Larger AI models, longer context windows, more simultaneous users and the spread of AI agents are all increasing the quantity of memory that each system requires, while Micron expects server unit shipments to grow at a rate in the high teens in both 2026 and 2027. Looking further ahead, the company anticipates that demand will extend beyond data centres to what it terms “physical AI”, such as autonomous vehicles and humanoid robots, the latter of which, according to Mr Mehrotra, are expected to require levels of memory and storage similar to those of autonomous vehicles."
+   },
+   {
+    "label": "C",
+    "text": "Demand alone, however, does not account for the scarcity; the composition of production matters as much. HBM consumes considerably more wafer capacity than conventional DRAM, so each increase in HBM output reduces the capacity available for the memory used in ordinary servers, personal computers and mobile products. Industry HBM shipments are expected to grow faster than those of conventional DRAM through to 2028, and the transition from HBM3E to HBM4 and HBM4E will, in Mr Mehrotra’s words, create additional “headwinds with respect to supply growth”. Future manufacturing process transitions, moreover, are delivering smaller productivity gains per wafer. The principal constraint, he said, is cleanroom space. The pressure is already influencing product design. According to TrendForce, a market research firm, developers of graphics processors and custom AI chips are considering HBM stacks with eight layers of memory instead of the 12 originally planned. The firm interprets this as a response to supply and cost constraints rather than to any weakening of end-market demand, although thinner stacks carry a penalty of their own: because each requires a base die, eight-layer products are expected to command a premium of roughly 10 to 20 per cent per gigabit over 12-layer versions in 2027."
+   },
+   {
+    "label": "D",
+    "text": "Customers, for their part, appear increasingly unwilling to wait for additional capacity. Micron reported that it had signed 26 Strategic Customer Agreements, with customer commitments totalling $32 billion, compared with 16 agreements and $22 billion at the time of its previous quarterly report. More than 75 per cent of its fiscal 2027 shipments are already committed, which has allowed executives to begin shifting some allocation discussions into 2028. Its Korean rivals, Samsung Electronics and SK hynix, have likewise been expanding long-term agreements with major AI and cloud customers. As for HBM, Mr Mehrotra said that the vast majority of Micron’s calendar 2027 supply had already been contracted, at prices significantly higher than those negotiated for 2026."
+   },
+   {
+    "label": "E",
+    "text": "The obvious remedy is to build more, and producers are doing so, but the timetable is long. Micron expects its first Idaho fabrication plant to produce its first wafers in mid-2027 and a second in late 2028, with a New York plant to follow in 2030. Samsung is targeting 2028 for full-scale operation at its P5 plant in Pyeongtaek, while SK hynix has brought forward the opening of the first cleanroom at its Yongin complex from May to February 2027. Yet the opening of a cleanroom marks the beginning rather than the end of the process: Mr Mehrotra noted that output increases only gradually, and that meaningful supply growth takes a few quarters after the first wafers emerge. TrendForce takes a similar view, anticipating that although new capacity may come on stream from the second half of 2027, a significant rise in supply volumes will not materialise until 2028."
+   },
+   {
+    "label": "F",
+    "text": "Mr Mehrotra’s own assessment is unequivocal: he expects demand to exceed supply in both 2027 and 2028, and he told analysts that, even allowing for plans for additional cleanroom space, the company has no visibility on when the two will regain balance. Such forecasts are not without qualification, however. A sharp slowdown in spending on AI infrastructure could eventually weaken demand, while an aggressive expansion of capacity could loosen supply further into the future. Some observers regard the moment when new capacity begins to reach the market in earnest as the possible first inflection point of the current cycle; if demand grows faster than capacity is added, however, the shortage could persist beyond 2028."
+   }
+  ],
+  "groups": [
+   {
+    "type": "match",
+    "title": "Questions 1–5",
+    "instruction": [
+     "Reading Passage 1 has six paragraphs, **A–F**.",
+     "Which paragraph contains the following information?",
+     "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+     "**NB** You may use any letter more than once."
+    ],
+    "options": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "E",
+     "F"
+    ],
+    "items": [
+     {
+      "q": "a reference to a possible change in the design of a product prompted by scarcity",
+      "a": "C",
+      "ev": "…developers of graphics processors and custom AI chips are considering HBM stacks with eight layers of memory instead of the 12 originally planned. The firm interprets this as a response to supply and cost constraints…",
+      "ref": "C",
+      "zh": "C 段：因供給與成本限制，AI 晶片開發商考慮把 HBM 堆疊由 12 層改為 8 層，即「因稀缺而改變產品設計」。"
+     },
+     {
+      "q": "a description of how purchasers have tried to guarantee future availability of supply",
+      "a": "D",
+      "ev": "Micron reported that it had signed 26 Strategic Customer Agreements, with customer commitments totalling $32 billion…",
+      "ref": "D",
+      "zh": "D 段：客戶簽下長期的 Strategic Customer Agreements、提前承諾出貨量，即「買方設法確保未來供貨」。"
+     },
+     {
+      "q": "two circumstances that might undermine the predicted outlook",
+      "a": "F",
+      "ev": "A sharp slowdown in spending on AI infrastructure could eventually weaken demand, while an aggressive expansion of capacity could loosen supply further into the future.",
+      "ref": "F",
+      "zh": "F 段列出兩種可能推翻預測的情況：AI 基礎設施支出大幅放緩（需求減弱）、產能激進擴張（供給放寬）。"
+     },
+     {
+      "q": "a comparison between a company’s reported sales and what the market had anticipated",
+      "a": "A",
+      "ev": "The market consensus compiled by the London Stock Exchange Group (LSEG) had been $51.07 billion, so the outcome represented a considerable surprise.",
+      "ref": "A",
+      "zh": "A 段把 Micron 實際營收 $54.2B 與 LSEG 市場共識 $51.07B 相比，屬「銷售與市場預期的比較」。"
+     },
+     {
+      "q": "a prediction that demand for memory will spread to applications outside data centres",
+      "a": "B",
+      "ev": "…the company anticipates that demand will extend beyond data centres to what it terms “physical AI”, such as autonomous vehicles and humanoid robots…",
+      "ref": "B",
+      "zh": "B 段預期需求將擴及資料中心之外的「實體 AI」（自駕車、人形機器人）。"
+     }
+    ],
+    "from": 1
+   },
+   {
+    "type": "tfng",
+    "title": "Questions 6–9",
+    "instruction": [
+     "Do the following statements agree with the information given in Reading Passage 1?",
+     "In boxes 6–9 on your answer sheet, write",
+     "**TRUE**        if the statement agrees with the information",
+     "**FALSE**       if the statement contradicts the information",
+     "**NOT GIVEN**   if there is no information on this"
+    ],
+    "items": [
+     {
+      "q": "The move towards eight-layer HBM stacks shows that demand for AI hardware is declining.",
+      "a": "False",
+      "ev": "The firm interprets this as a response to supply and cost constraints rather than to any weakening of end-market demand…",
+      "ref": "C",
+      "zh": "C 段明確指出這是對供給與成本限制的反應，「而非」終端需求轉弱，與題目相反，所以是 False。"
+     },
+     {
+      "q": "Micron’s customer commitments under long-term agreements were larger at its latest results than at its previous quarterly report.",
+      "a": "True",
+      "ev": "…customer commitments totalling $32 billion, compared with 16 agreements and $22 billion at the time of its previous quarterly report.",
+      "ref": "D",
+      "zh": "D 段：承諾金額由 $22B 增至 $32B（協議數由 16 增至 26），與題目一致，是 True。"
+     },
+     {
+      "q": "Micron has concluded more long-term supply agreements than either Samsung Electronics or SK hynix.",
+      "a": "Not Given",
+      "ev": "Its Korean rivals, Samsung Electronics and SK hynix, have likewise been expanding long-term agreements…",
+      "ref": "D",
+      "zh": "文章只說兩家韓國對手「同樣在擴大」長期協議，並未比較誰簽得較多，所以是 Not Given（典型陷阱：看似相關但沒有比較資訊）。"
+     },
+     {
+      "q": "Mr Mehrotra believes that additional cleanroom capacity will restore the balance between supply and demand by 2028.",
+      "a": "False",
+      "ev": "…he expects demand to exceed supply in both 2027 and 2028, and he told analysts that, even allowing for plans for additional cleanroom space, the company has no visibility on when the two will regain balance.",
+      "ref": "F",
+      "zh": "F 段：他預期 2027、2028 年需求仍超過供給，且即使計入新增無塵室，也看不到何時恢復平衡，與題目相反，是 False。"
+     }
+    ],
+    "from": 6
+   },
+   {
+    "type": "blanks",
+    "title": "Questions 10–13",
+    "bullets": false,
+    "instruction": [
+     "Complete the summary below.",
+     "Choose **NO MORE THAN TWO WORDS** from the passage for each answer.",
+     "Write your answers in boxes 10–13 on your answer sheet."
+    ],
+    "heading": "Constraints on memory supply",
+    "lines": [
+     {
+      "t": "Making HBM absorbs far more [[1]] than making ordinary DRAM, and the shift to successive HBM generations creates further [[2]] for supply growth. Newer manufacturing processes also offer only limited [[3]] for each wafer. According to Micron’s chief executive, however, the main limiting factor is available [[4]] space."
+     }
+    ],
+    "items": [
+     {
+      "a": [
+       "wafer capacity"
+      ],
+      "ev": "HBM consumes considerably more wafer capacity than conventional DRAM…",
+      "ref": "C",
+      "zh": "absorbs far more = consumes considerably more；答案 wafer capacity（C 段）。"
+     },
+     {
+      "a": [
+       "headwinds"
+      ],
+      "ev": "…the transition from HBM3E to HBM4 and HBM4E will… create additional “headwinds with respect to supply growth”.",
+      "ref": "C",
+      "zh": "successive HBM generations = HBM3E→HBM4→HBM4E；further ___ for supply growth 對應 additional “headwinds”。"
+     },
+     {
+      "a": [
+       "productivity gains"
+      ],
+      "ev": "Future manufacturing process transitions, moreover, are delivering smaller productivity gains per wafer.",
+      "ref": "C",
+      "zh": "limited = smaller；答案 productivity gains（兩個字）。"
+     },
+     {
+      "a": [
+       "cleanroom"
+      ],
+      "ev": "The principal constraint, he said, is cleanroom space.",
+      "ref": "C",
+      "zh": "main limiting factor = principal constraint；題目已有 space，只需填 cleanroom。"
+     }
+    ],
+    "from": 10
+   }
+  ]
+ },
+ "vocab": [
+  {
+   "word": "outstrip",
+   "pos": "v.",
+   "def": "to become greater or faster than something else",
+   "zh": "超過；供不應求地勝過",
+   "example": "Demand should outstrip supply in both 2027 and 2028.",
+   "match": [
+    "outstrip"
+   ],
+   "src": "聽力"
+  },
+  {
+   "word": "cyclical",
+   "pos": "adj.",
+   "def": "following a repeating pattern of rises and falls",
+   "zh": "週期性的",
+   "example": "Memory chips are a notoriously cyclical industry.",
+   "match": [
+    "cyclical"
+   ],
+   "src": "聽力"
+  },
+  {
+   "word": "consensus",
+   "pos": "n.",
+   "def": "a general agreement; the average expectation of analysts",
+   "zh": "共識；市場普遍預期",
+   "example": "Revenue comfortably beat the market consensus.",
+   "match": [
+    "consensus"
+   ],
+   "src": "聽力"
+  },
+  {
+   "word": "surge",
+   "pos": "n./v.",
+   "def": "a sudden, large increase",
+   "zh": "激增；暴漲",
+   "example": "Where is this surge in revenue coming from?",
+   "match": [
+    "surge"
+   ],
+   "src": "聽力"
+  },
+  {
+   "word": "compound",
+   "pos": "v.",
+   "def": "to make a problem worse by adding to it",
+   "zh": "使（問題）惡化",
+   "example": "Faster HBM growth compounds the shortage problem.",
+   "match": [
+    "compounds"
+   ],
+   "src": "聽力"
+  },
+  {
+   "word": "persist",
+   "pos": "v.",
+   "def": "to continue to exist, especially longer than expected",
+   "zh": "持續存在",
+   "example": "The shortage may well persist beyond 2028.",
+   "match": [
+    "persist",
+    "persistent"
+   ],
+   "src": "聽力"
+  },
+  {
+   "word": "bottleneck",
+   "pos": "n.",
+   "def": "a point of congestion that limits the whole process",
+   "zh": "瓶頸",
+   "example": "Cleanroom space is the main bottleneck for new supply.",
+   "match": [
+    "bottleneck"
+   ],
+   "src": "字彙延伸"
+  },
+  {
+   "word": "come on stream",
+   "pos": "phr. v.",
+   "def": "to start operating or producing",
+   "zh": "（產能）開始投產",
+   "example": "New capacity may come on stream in late 2027.",
+   "match": [
+    "come on stream"
+   ],
+   "src": "聽力"
+  },
+  {
+   "word": "materialise",
+   "pos": "v.",
+   "def": "to actually happen or appear",
+   "zh": "實現；成真",
+   "example": "A meaningful increase in supply will not materialise until 2028.",
+   "match": [
+    "materialise"
+   ],
+   "src": "聽力"
+  },
+  {
+   "word": "headwind",
+   "pos": "n.",
+   "def": "a force or factor that slows progress",
+   "zh": "逆風；不利因素",
+   "example": "The shift to HBM4 creates additional headwinds for supply growth.",
+   "match": [
+    "headwinds"
+   ],
+   "src": "閱讀"
+  },
+  {
+   "word": "constrain",
+   "pos": "v.",
+   "def": "to limit or restrict",
+   "zh": "限制；制約",
+   "example": "Limited cleanroom space continues to constrain output.",
+   "match": [
+    "constrain",
+    "constrained"
+   ],
+   "src": "閱讀"
+  },
+  {
+   "word": "commitment",
+   "pos": "n.",
+   "def": "a formal promise to buy, supply or do something",
+   "zh": "承諾；（購買）約定",
+   "example": "Customer commitments under the agreements totalled $32 billion.",
+   "match": [
+    "commitment"
+   ],
+   "src": "閱讀"
+  },
+  {
+   "word": "unequivocal",
+   "pos": "adj.",
+   "def": "clear and leaving no doubt",
+   "zh": "明確的；毫不含糊的",
+   "example": "The chief executive’s assessment was unequivocal.",
+   "match": [
+    "unequivocal"
+   ],
+   "src": "閱讀"
+  },
+  {
+   "word": "inflection point",
+   "pos": "n.",
+   "def": "a moment when a trend changes direction",
+   "zh": "轉折點",
+   "example": "New capacity could mark the first inflection point of the cycle.",
+   "match": [
+    "inflection point"
+   ],
+   "src": "閱讀"
+  },
+  {
+   "word": "hedge (against)",
+   "pos": "v.",
+   "def": "to protect yourself against loss or risk",
+   "zh": "對沖；防範（風險）",
+   "example": "Buyers sign long-term contracts to hedge against shortages.",
+   "match": [
+    "hedge"
+   ],
+   "src": "延伸搭配"
   }
+ ],
+ "audio": {
+  "src": "audio/2026-10-02.mp3",
+  "times": [
+   [
+    0.35,
+    1.83
+   ],
+   [
+    2.25,
+    10.75
+   ],
+   [
+    11.17,
+    19.23
+   ],
+   [
+    20.18,
+    27.72
+   ],
+   [
+    28.14,
+    36.51
+   ],
+   [
+    36.93,
+    42.25
+   ],
+   [
+    42.67,
+    51.76
+   ],
+   [
+    52.18,
+    59.04
+   ],
+   [
+    59.46,
+    67.98
+   ],
+   [
+    68.4,
+    71.56
+   ],
+   [
+    71.98,
+    82.85
+   ],
+   [
+    83.27,
+    86.91
+   ],
+   [
+    87.86,
+    89.88
+   ],
+   [
+    90.3,
+    97.36
+   ],
+   [
+    97.78,
+    105.57
+   ],
+   [
+    105.99,
+    109.46
+   ],
+   [
+    109.88,
+    118.91
+   ],
+   [
+    119.86,
+    122.52
+   ],
+   [
+    122.94,
+    125.05
+   ],
+   [
+    125.47,
+    137.66
+   ],
+   [
+    138.08,
+    145.55
+   ],
+   [
+    145.97,
+    147.54
+   ],
+   [
+    147.96,
+    150.51
+   ],
+   [
+    150.93,
+    159.51
+   ],
+   [
+    159.93,
+    166.92
+   ],
+   [
+    167.87,
+    171.45
+   ],
+   [
+    171.87,
+    183.3
+   ],
+   [
+    183.72,
+    186.75
+   ],
+   [
+    187.17,
+    200.24
+   ],
+   [
+    201.19,
+    203.02
+   ],
+   [
+    203.44,
+    211.66
+   ],
+   [
+    212.08,
+    216.39
+   ],
+   [
+    216.81,
+    223.56
+   ]
+  ],
+  "duration": 224.2,
+  "voice": "en-GB-RyanNeural",
+  "words": "audio/2026-10-02-words/"
+ }
 };
 /*DATA_END*/
-
-/* ============ App ============ */
 (function(){
 "use strict";
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const KEY="ielts-news:"+DATA.id;
-let store={};
-try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const KEY="ielts-news:v2:"+DATA.id;
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
-store.known=store.known||[];store.rd=store.rd||{ans:{},hl:[]};
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+const SENTS=[].concat(...DATA.script);
+const PARA_START=[];{let n=0;DATA.script.forEach(p=>{PARA_START.push(n);n+=p.length})}
 
 /* header */
 (function(){
-  const d=new Date(DATA.date+"T00:00:00");
-  const wk=["日","一","二","三","四","五","六"];
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
   $("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
   $("hTitle").textContent=DATA.title;
   $("hSrc").href=DATA.source.url;$("hSrc").textContent="來源："+DATA.source.name+" ↗";
@@ -447,296 +984,324 @@ store.known=store.known||[];store.rd=store.rd||{ans:{},hl:[]};
 })();
 
 /* tabs */
+function showTab(t){
+  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x.dataset.tab===t));
+  ["listen","read","vocab"].forEach(id=>$(id).hidden=(id!==t));
+  $("wrap").classList.toggle("wide",t==="read");
+}
 document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>{
-  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
-  ["listen","read"].forEach(id=>$(id).hidden=(id!==b.dataset.tab));
-  if(b.dataset.tab!=="listen")stopSpeech();
+  if(b.dataset.tab!=="listen"&&mode==="practice")au.pause();showTab(b.dataset.tab);
 }));
 
-/* ---------- speech ---------- */
-const hasTTS="speechSynthesis" in window&&"SpeechSynthesisUtterance" in window;
-let voices=[];
-function loadVoices(){if(hasTTS)voices=speechSynthesis.getVoices()||[]}
-if(hasTTS){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}else{$("ttsWarn").hidden=false}
-function pickVoice(lang){
-  const l=lang.toLowerCase();
-  return voices.find(v=>v.lang.replace("_","-").toLowerCase()===l)||voices.find(v=>v.lang.toLowerCase().startsWith(l.slice(0,2)))||null;
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
 }
-let token=0;
-function say(text,{rate=1,lang="en-US",onend}={}){
-  if(!hasTTS)return;
-  speechSynthesis.cancel();
-  const my=++token;
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang=lang;u.rate=rate;
-  const v=pickVoice(lang);if(v)u.voice=v;
-  let done=false;
-  const fin=()=>{if(done)return;done=true;if(my===token&&onend)onend()};
-  u.onend=fin;u.onerror=e=>{if(e&&(e.error==="canceled"||e.error==="interrupted"))return;fin()};
-  speechSynthesis.speak(u);
-}
-function stopSpeech(){
-  token++;if(hasTTS)speechSynthesis.cancel();
-  if(player){player.playing=false;renderPlayer()}
+function buildTest(o){ // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${kind}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${kind}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${kind}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${kind}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${kind}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(kind+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${kind}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${kind}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${kind}q${x.n}`):o.root.querySelector(`#${kind}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs};
+  return o.api;
 }
 
-/* ---------- player ---------- */
-const S=DATA.script;
-const player={idx:0,playing:false};
-function renderPlayer(){
-  $("btnPlay").textContent=player.playing?"⏸ 暫停":"▶ 播放";
-  const n=S.length,shown=Math.min(player.idx+(player.playing?1:0),n);
-  $("plBar").style.width=(n?100*Math.min(player.idx+(player.playing?0.5:0),n)/n:0)+"%";
-  $("plText").textContent=`第 ${player.playing||player.idx>0?Math.min(player.idx+1,n):0} / ${n} 句`;
-  document.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",player.playing&&i===player.idx));
-  const cur=document.querySelector(".sent.cur");
-  if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=DATA.audio.src;
+const TM=DATA.audio.times;
+const L=DATA.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(DATA.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done")},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL()}});
 }
-function speakCurrent(){
-  if(!player.playing)return;
-  if(player.idx>=S.length){player.playing=false;player.idx=0;$("plBar").style.width="100%";renderPlayer();$("plText").textContent="播放完畢 ✔";return}
-  renderPlayer();
-  say(S[player.idx],{rate:+$("selRate").value,lang:$("selAccent").value,onend:()=>{player.idx++;speakCurrent()}});
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
 }
-$("btnPlay").onclick=()=>{
-  if(!hasTTS)return;
-  if(player.playing){stopSpeech();return}
-  if(player.idx>=S.length)player.idx=0;
-  player.playing=true;speakCurrent();
-};
-$("btnReplay").onclick=()=>{if(!hasTTS)return;token++;speechSynthesis.cancel();player.idx=0;player.playing=true;speakCurrent()};
-function restartIfPlaying(){if(player.playing){token++;speechSynthesis.cancel();speakCurrent()}}
-$("selRate").onchange=restartIfPlaying;$("selAccent").onchange=restartIfPlaying;
-$("plInfo").textContent=`共 ${S.length} 句`;
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||DATA.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    document.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=document.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||DATA.audio.duration)*$("seek").value/1000});
+document.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
 
 /* transcript */
-function vocabRegex(){
+const VR=(function(){
   const items=[];
   DATA.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
   items.sort((a,b)=>b.m.length-a.m.length);
-  if(!items.length)return null;
-  return {re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items};
-}
-const VR=vocabRegex();
-function renderTranscript(){
-  const box=$("transcript");box.innerHTML="";
-  S.forEach((s,si)=>{
-    const sp=document.createElement("span");sp.className="sent";sp.dataset.i=si;
-    let html="",last=0;
-    if(VR){
-      s.replace(VR.re,(m,g,off)=>{
-        html+=esc(s.slice(last,off));
-        const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());
-        html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m;
-      });
-    }
-    html+=esc(s.slice(last));
-    sp.innerHTML=html;box.appendChild(sp);box.appendChild(document.createTextNode(" "));
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  DATA.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
   });
-}
-renderTranscript();
+})();
 $("transcript").addEventListener("click",e=>{
   const vw=e.target.closest(".vw");
-  if(vw){
-    const v=DATA.vocab[+vw.dataset.v];
-    const d=$("defbox");d.hidden=false;
-    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;
-    return;
-  }
+  if(vw){const v=DATA.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
   const se=e.target.closest(".sent");
-  if(se&&hasTTS){token++;speechSynthesis.cancel();player.idx=+se.dataset.i;player.playing=true;speakCurrent()}
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
 });
 $("btnTrans").onclick=()=>{
-  const show=$("transWrap").hidden;
-  $("transWrap").hidden=!show;
-  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";
-  $("btnTrans").setAttribute("aria-pressed",show);
-  $("transHint").hidden=show;
-  renderPlayer();
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
 };
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
 
-/* ---------- flashcards ---------- */
+/* ================= READING ================= */
+const R=DATA.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id="para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();document.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer()},onReset:()=>{tmReset()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
 const V=DATA.vocab;let fc=0;
+const wordAudio=i=>DATA.audio.words?DATA.audio.words+String(i).padStart(2,"0")+".mp3":null;
 function renderCard(){
-  const v=V[fc];if(!v)return;
-  $("flip").classList.remove("on");
-  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
   const known=store.known.includes(v.word);
-  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div>
-    <div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
   $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
-  $("fcKnown").textContent=`已會 ${store.known.filter(w=>V.some(x=>x.word===w)).length} / ${V.length}`;
-  $("fcBar").style.width=100*store.known.filter(w=>V.some(x=>x.word===w)).length/V.length+"%";
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
 }
 $("flip").onclick=()=>$("flip").classList.toggle("on");
 $("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
 $("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
-$("fcSpeak").onclick=()=>say(V[fc].word,{rate:+$("selRate").value<1?0.8:1,lang:$("selAccent").value});
-function mark(known){
-  const w=V[fc].word,i=store.known.indexOf(w);
-  if(known&&i<0)store.known.push(w);
-  if(!known&&i>=0)store.known.splice(i,1);
-  save();renderCard();
-  setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250);
-}
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!DATA.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
 $("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
 $("fcReset").onclick=()=>{store.known=[];save();renderCard()};
 if(V.length)renderCard();
-
-/* ---------- listening quiz ---------- */
-const Q=DATA.questions;let qi=0,qScore=0,qAnswered=false;
-const norm=s=>String(s).toLowerCase().trim().replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
-function qInfo(){
-  const b=store.quiz;
-  $("qzInfo").textContent=b?`上次成績 ${b.score}/${b.total}`:"";
-}
-function renderQuiz(){
-  qInfo();
-  const body=$("qzBody");
-  if(qi>=Q.length){
-    body.innerHTML=`<div class="score">${qScore} / ${Q.length}</div>
-      <p style="text-align:center">${qScore===Q.length?"太棒了！全部答對 🎉":qScore>=Q.length/2?"不錯！再聽一次逐字稿加強理解 👍":"再聽一次，專注關鍵數字與原因 💪"}</p>
-      <div class="row" style="justify-content:center"><button class="btn primary" id="qzAgain">重新作答</button></div>`;
-    $("qzAgain").onclick=()=>{qi=0;qScore=0;renderQuiz()};
-    return;
-  }
-  const q=Q[qi];qAnswered=false;
-  let h=`<div class="muted">第 ${qi+1} / ${Q.length} 題 · ${q.type==="fill"?"填空題":"選擇題"}</div><div class="q">${esc(q.q)}</div>`;
-  if(q.type==="fill"){
-    h+=`<div class="row"><input class="txt" id="qzIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="輸入答案（英文單字或數字）" aria-label="答案"><button class="btn primary" id="qzGo">送出</button></div>`;
-  }else{
-    h+=q.options.map((o,i)=>`<button class="opt" data-i="${i}"><b>${"ABCD"[i]}.</b> ${esc(o)}</button>`).join("");
-  }
-  h+=`<div id="qzFb"></div><div class="row" style="margin-top:10px"><button class="btn primary" id="qzNext" hidden>${qi===Q.length-1?"查看成績":"下一題 →"}</button></div>`;
-  body.innerHTML=h;
-  $("qzNext").onclick=()=>{qi++;renderQuiz()};
-  if(q.type==="fill"){
-    const go=()=>{
-      if(qAnswered)return;const val=$("qzIn").value;if(!norm(val))return;
-      const ok=q.answer.map(norm).includes(norm(val));
-      $("qzIn").classList.add(ok?"right":"wrong");$("qzIn").disabled=true;$("qzGo").disabled=true;
-      finishQ(ok,q,ok?"":`正確答案：<b>${esc(q.answer[0])}</b>`);
-    };
-    $("qzGo").onclick=go;$("qzIn").addEventListener("keydown",e=>{if(e.key==="Enter")go()});
-  }else{
-    body.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
-      if(qAnswered)return;const i=+b.dataset.i,ok=i===q.answer;
-      body.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(+x.dataset.i===q.answer)x.classList.add("right")});
-      if(!ok)b.classList.add("wrong");
-      finishQ(ok,q,ok?"":`正確答案：<b>${"ABCD"[q.answer]}</b>`);
-    });
-  }
-}
-function finishQ(ok,q,extra){
-  qAnswered=true;if(ok)qScore++;
-  $("qzFb").innerHTML=`<div class="fb ${ok?"right":"wrong"}"><b>${ok?"✔ 答對了！":"✘ 答錯了"}</b> ${extra||""}<div class="ex">${esc(q.explanation)}</div></div>`;
-  $("qzNext").hidden=false;$("qzNext").focus({preventScroll:true});
-  if(qi===Q.length-1){store.quiz={score:qScore,total:Q.length,at:new Date().toISOString()};save();qInfo()}
-}
-renderQuiz();
-
-/* ---------- reading ---------- */
-const R=DATA.reading;
-$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title||"";
-function renderPassage(){
-  const box=$("passage");box.innerHTML="";
-  R.passage.forEach((p,pi)=>{
-    const el=document.createElement("p");
-    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.appendChild(lab);
-    p.text.split(/(\s+)/).forEach((t,ti)=>{
-      if(!t)return;
-      if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
-      const w=document.createElement("span");w.className="w";w.textContent=t;
-      const k=pi+"-"+ti;w.dataset.k=k;if(store.rd.hl.includes(k))w.classList.add("hl");
-      el.appendChild(w);
-    });
-    box.appendChild(el);
-  });
-}
-renderPassage();
-$("passage").addEventListener("click",e=>{
-  const w=e.target.closest(".w");if(!w)return;
-  w.classList.toggle("hl");const k=w.dataset.k,i=store.rd.hl.indexOf(k);
-  if(i>=0)store.rd.hl.splice(i,1);else store.rd.hl.push(k);save();
-});
-$("hlClear").onclick=()=>{store.rd.hl=[];save();document.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
-
-const RQ=R.questions;
-const TF=["True","False","Not Given"];const TFZH={"True":"符合（True）","False":"不符（False）","Not Given":"未提及（Not Given）"};
-function isCorrect(q,val){
-  if(q.type==="tfng")return val===q.answer;
-  if(q.type==="mc")return +val===q.answer;
-  return q.answers.map(norm).includes(norm(val));
-}
-function fbHtml(q,val){
-  const ok=isCorrect(q,val);
-  let ans=q.type==="tfng"?q.answer:q.type==="mc"?"ABCD"[q.answer]:q.answers[0];
-  return `<div class="fb ${ok?"right":"wrong"}"><b>${ok?"✔ 答對了！":"✘ 答錯了"}</b>${ok?"":` 正確答案：<b>${esc(ans)}</b>`}
-    <div class="ex">${esc(q.explanation)}${q.evidence?`<br><q>${esc(q.evidence)}</q>${q.ref?`（段落 ${esc(q.ref)}）`:""}`:""}</div></div>`;
-}
-function renderReadingQs(){
-  const box=$("rdQs");box.innerHTML="";
-  RQ.forEach((q,i)=>{
-    const d=document.createElement("div");d.className="rq";
-    const typeLabel=q.type==="tfng"?"True / False / Not Given":q.type==="mc"?"選擇題":"句子填空：不超過兩個英文單字";
-    let h=`<div class="instr">${typeLabel}</div><div class="q">${i+1}. ${esc(q.q)}</div>`;
-    if(q.type==="tfng")h+=`<div class="tf">${TF.map(t=>`<button class="opt" data-v="${t}">${esc(t)}<br><span class="muted">${TFZH[t].split("（")[0]}</span></button>`).join("")}</div>`;
-    else if(q.type==="mc")h+=q.options.map((o,j)=>`<button class="opt" data-v="${j}"><b>${"ABCD"[j]}.</b> ${esc(o)}</button>`).join("");
-    else h+=`<div class="row"><input class="txt" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="NO MORE THAN TWO WORDS" aria-label="第 ${i+1} 題答案"><button class="btn primary go">檢查</button></div>`;
-    h+=`<div class="fbbox"></div>`;
-    d.innerHTML=h;box.appendChild(d);
-    const lock=val=>{
-      const ok=isCorrect(q,val);
-      if(q.type==="tfng"||q.type==="mc"){
-        d.querySelectorAll(".opt").forEach(b=>{
-          b.disabled=true;
-          const correct=q.type==="tfng"?b.dataset.v===q.answer:+b.dataset.v===q.answer;
-          if(correct)b.classList.add("right");else if(b.dataset.v===String(val))b.classList.add("wrong");
-        });
-      }else{const inp=d.querySelector("input");inp.value=val;inp.disabled=true;inp.classList.add(ok?"right":"wrong");d.querySelector(".go").disabled=true}
-      d.querySelector(".fbbox").innerHTML=fbHtml(q,val);
-    };
-    const submit=val=>{store.rd.ans[i]=String(val);save();lock(val);updateScore()};
-    if(q.type==="completion"){
-      const inp=d.querySelector("input");
-      const go=()=>{if(inp.disabled||!norm(inp.value))return;submit(inp.value.trim())};
-      d.querySelector(".go").onclick=go;inp.addEventListener("keydown",e=>{if(e.key==="Enter")go()});
-    }else d.querySelectorAll(".opt").forEach(b=>b.onclick=()=>submit(b.dataset.v));
-    if(store.rd.ans[i]!==undefined)lock(store.rd.ans[i]);
-  });
-  updateScore();
-}
-function updateScore(){
-  const answered=Object.keys(store.rd.ans).filter(k=>RQ[k]).length;
-  const score=Object.keys(store.rd.ans).filter(k=>RQ[k]&&isCorrect(RQ[k],store.rd.ans[k])).length;
-  $("rdScore").textContent=`已作答 ${answered}/${RQ.length} · 得分 ${score}`;
-  const s=$("rdSummary");
-  if(answered===RQ.length&&RQ.length){
-    store.rd.score=score;store.rd.total=RQ.length;save();
-    stopTimer();
-    s.innerHTML=`<div class="score">${score} / ${RQ.length}</div><p style="text-align:center">${score===RQ.length?"全對！閱讀掌握得很好 🎉":score>=RQ.length*0.6?"不錯！回頭檢查錯題的依據句 👍":"請重讀文章，找出關鍵詞再對照題目 💪"}${tm.on&&tm.elapsed?`<br><span class="muted">用時 ${fmt(tm.elapsed)}</span>`:""}</p>`;
-  }else s.innerHTML="";
-}
-$("rdReset").onclick=()=>{store.rd.ans={};delete store.rd.score;save();renderReadingQs();tmReset()};
-
-/* timer */
-const tm={on:false,running:false,left:R.minutes*60,elapsed:0,h:null};
-const fmt=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
-function tmRender(){
-  $("tmShow").textContent=tm.on?fmt(tm.left):"--:--";
-  $("tmShow").classList.toggle("late",tm.on&&tm.left<=0);
-  $("tmBtns").hidden=!tm.on;
-  if(tm.on&&tm.left<=0)$("tmShow").textContent="時間到";
-}
-function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false}
-function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
-$("tmOn").onchange=e=>{tm.on=e.target.checked;if(!tm.on)stopTimer();tmRender()};
-$("tmStart").onclick=()=>{
-  if(tm.running||tm.left<=0)return;tm.running=true;
-  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){stopTimer();tm.left=0}tmRender()},1000);
-};
-$("tmPause").onclick=stopTimer;$("tmReset").onclick=tmReset;
-renderReadingQs();tmRender();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
 })();
 </script>
 </body>
