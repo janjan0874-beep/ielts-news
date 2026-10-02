@@ -10,69 +10,150 @@ h1{font-size:1.4rem;margin:.2em 0}h2{font-size:1rem;margin:0 0 6px}p{margin:.4em
 .d{font-size:.88rem;color:#555}.m{color:#888}code{font-size:.75rem;color:#888;word-break:break-all}
 audio{width:100%;margin-top:8px}
 .b{display:inline-block;font-size:.72rem;font-weight:600;border-radius:999px;padding:2px 8px;vertical-align:middle;margin-left:4px}
-.used{background:#dcfce7;color:#166534}.fb{background:#fef3c7;color:#92400e}.old{background:#eee;color:#666}</style></head>
+.used{background:#dcfce7;color:#166534}.fb{background:#fef3c7;color:#92400e}.old{background:#eee;color:#666}
+body{padding-bottom:120px}
+.pick{display:block;width:100%;margin-top:10px;min-height:44px;font-size:1rem;font-weight:600;border:2px solid #2563eb;background:#fff;color:#2563eb;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pick.on{background:#2563eb;color:#fff}
+.card.picked{box-shadow:0 0 0 2px #2563eb,0 1px 3px rgba(0,0,0,.08)}
+.rk{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:2px 9px;margin-left:6px;vertical-align:middle;background:#f59e0b;color:#fff}
+#bar{position:fixed;left:0;right:0;bottom:0;z-index:10;background:#fff;border-top:1px solid #ddd;box-shadow:0 -2px 10px rgba(0,0,0,.1);padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+#bar .in{max-width:640px;margin:0 auto}
+#picks{font-size:.88rem;line-height:1.5;margin-bottom:8px;max-height:6.5em;overflow:auto}
+#picks.empty{color:#888}
+#bar .row{display:flex;gap:8px}
+#copy{flex:1;min-height:44px;font-size:1rem;font-weight:600;border:0;border-radius:10px;background:#16a34a;color:#fff;cursor:pointer}
+#copy:disabled{background:#9ca3af}
+#clr{min-height:44px;padding:0 14px;font-size:.95rem;border:1px solid #bbb;border-radius:10px;background:#fff;color:#444;cursor:pointer}
+#fb{display:none;width:100%;box-sizing:border-box;margin-top:8px;font-size:.9rem;padding:8px;border:1px solid #bbb;border-radius:8px;min-height:4.5em}
+#toast{font-size:.85rem;color:#166534;min-height:1.2em;margin-top:4px}
+</style></head>
 <body><a class="back" href="./">← 回首頁</a>
 <h1>語音樣本比較</h1>
 <p class="note"><b>目前使用的聲音</b>：2026-10-02 Story 1 用 <b>澳洲男聲 William</b>（en-AU-WilliamMultilingualNeural），Story 2 用 <b>美國女聲 Ava</b>（en-US-AvaMultilingualNeural）。之後每天由程式輪替口音，優先使用 Multilingual 聲音。Kokoro 為 edge-tts 連不上時的離線備援。<br>
 樣本內容：2026-10-02 Story 1（Micron）前約 40 秒；單聲道 mp3 64 kbps，音量約 -16 LUFS。UTMOS 是自動音質評分（上限約 4.5），只反映音質、不代表講解式語調，各候選差距不大。</p>
-<section class="card">
+<section data-id="1-ryan-old" class="card">
 <h2>Edge-TTS 線上 / 英國男聲 Ryan <span class="b old">已被取代</span></h2>
 <p class="d">en-GB-RyanNeural・逐句合成、語速 -5%、固定 0.42 秒停頓（舊流程）<br><span class="m">UTMOS：4.34</span>　<code>1-baseline-per-sentence-ryan-OLD.mp3</code></p>
 <audio controls preload="none" src="samples/1-baseline-per-sentence-ryan-OLD.mp3"></audio>
+<button type="button" class="pick" aria-pressed="false">☆ 選這個</button>
 </section>
-<section class="card">
+<section data-id="2-andrew" class="card">
 <h2>Edge-TTS 線上 / 美國男聲 Andrew </h2>
 <p class="d">en-US-AndrewMultilingualNeural・逐段合成、語速 -2%、原稿<br><span class="m">UTMOS：4.20</span>　<code>2-edge-paragraph-andrew-multilingual-US.mp3</code></p>
 <audio controls preload="none" src="samples/2-edge-paragraph-andrew-multilingual-US.mp3"></audio>
+<button type="button" class="pick" aria-pressed="false">☆ 選這個</button>
 </section>
-<section class="card">
+<section data-id="2b-ryan" class="card">
 <h2>Edge-TTS 線上 / 英國男聲 Ryan（舊聲音） </h2>
 <p class="d">en-GB-RyanNeural・逐段合成（用來區分「方法」與「聲音」的差異）<br><span class="m">UTMOS：4.40</span>　<code>2b-edge-paragraph-ryan-GB-old-voice.mp3</code></p>
 <audio controls preload="none" src="samples/2b-edge-paragraph-ryan-GB-old-voice.mp3"></audio>
+<button type="button" class="pick" aria-pressed="false">☆ 選這個</button>
 </section>
-<section class="card cur">
+<section data-id="3-william" class="card cur">
 <h2>Edge-TTS 線上 / 澳洲男聲 William <span class="b used">✅ 目前使用・Story 1（2026-10-02）</span></h2>
 <p class="d">en-AU-WilliamMultilingualNeural・逐段合成<br><span class="m">UTMOS：4.30</span>　<code>3-edge-paragraph-william-multilingual-AU.mp3</code></p>
 <audio controls preload="none" src="samples/3-edge-paragraph-william-multilingual-AU.mp3"></audio>
+<button type="button" class="pick" aria-pressed="false">☆ 選這個</button>
 </section>
-<section class="card cur">
+<section data-id="4-ava" class="card cur">
 <h2>Edge-TTS 線上 / 美國女聲 Ava <span class="b used">✅ 目前使用・Story 2（2026-10-02）</span></h2>
 <p class="d">en-US-AvaMultilingualNeural・逐段合成、稿子稍微口語化（縮寫／語氣詞）<br><span class="m">UTMOS：4.43</span>　<code>4-edge-paragraph-ava-multilingual-US-spoken-script.mp3</code></p>
 <audio controls preload="none" src="samples/4-edge-paragraph-ava-multilingual-US-spoken-script.mp3"></audio>
+<button type="button" class="pick" aria-pressed="false">☆ 選這個</button>
 </section>
-<section class="card">
+<section data-id="4b-brian" class="card">
 <h2>Edge-TTS 線上 / 美國男聲 Brian </h2>
 <p class="d">en-US-BrianMultilingualNeural・逐段合成、口語化稿子<br><span class="m">UTMOS：4.09</span>　<code>4b-edge-paragraph-brian-multilingual-US-spoken-script.mp3</code></p>
 <audio controls preload="none" src="samples/4b-edge-paragraph-brian-multilingual-US-spoken-script.mp3"></audio>
+<button type="button" class="pick" aria-pressed="false">☆ 選這個</button>
 </section>
-<section class="card">
+<section data-id="4c-emma" class="card">
 <h2>Edge-TTS 線上 / 美國女聲 Emma </h2>
 <p class="d">en-US-EmmaMultilingualNeural・逐段合成、口語化稿子<br><span class="m">UTMOS：4.43</span>　<code>4c-edge-paragraph-emma-multilingual-US-spoken-script.mp3</code></p>
 <audio controls preload="none" src="samples/4c-edge-paragraph-emma-multilingual-US-spoken-script.mp3"></audio>
+<button type="button" class="pick" aria-pressed="false">☆ 選這個</button>
 </section>
-<section class="card">
+<section data-id="5-george" class="card">
 <h2>Kokoro 離線 / 英國男聲 bm_george <span class="b fb">離線備援引擎</span></h2>
 <p class="d">Kokoro-82M・離線、逐段文字（備援引擎，不需 edge-tts）<br><span class="m">UTMOS：4.20</span>　<code>5-kokoro-bm_george-GB-offline.mp3</code></p>
 <audio controls preload="none" src="samples/5-kokoro-bm_george-GB-offline.mp3"></audio>
+<button type="button" class="pick" aria-pressed="false">☆ 選這個</button>
 </section>
-<section class="card">
+<section data-id="5b-emma" class="card">
 <h2>Kokoro 離線 / 英國女聲 bf_emma <span class="b fb">離線備援引擎</span></h2>
 <p class="d">Kokoro-82M・離線（備援引擎）<br><span class="m">UTMOS：4.36</span>　<code>5b-kokoro-bf_emma-GB-offline.mp3</code></p>
 <audio controls preload="none" src="samples/5b-kokoro-bf_emma-GB-offline.mp3"></audio>
+<button type="button" class="pick" aria-pressed="false">☆ 選這個</button>
 </section>
-<section class="card">
+<section data-id="5c-heart" class="card">
 <h2>Kokoro 離線 / 美國女聲 af_heart <span class="b fb">離線備援引擎</span></h2>
 <p class="d">Kokoro-82M・離線（備援引擎）<br><span class="m">UTMOS：4.52</span>　<code>5c-kokoro-af_heart-US-offline.mp3</code></p>
 <audio controls preload="none" src="samples/5c-kokoro-af_heart-US-offline.mp3"></audio>
+<button type="button" class="pick" aria-pressed="false">☆ 選這個</button>
 </section>
-<section class="card">
+<section data-id="6-lessac" class="card">
 <h2>Piper 離線 / 美國聲音 lessac-high </h2>
 <p class="d">Piper 高品質模型・離線<br><span class="m">UTMOS：4.17</span>　<code>6-piper-lessac-high-US-offline.mp3</code></p>
 <audio controls preload="none" src="samples/6-piper-lessac-high-US-offline.mp3"></audio>
+<button type="button" class="pick" aria-pressed="false">☆ 選這個</button>
 </section>
-<section class="card">
+<section data-id="6b-cori" class="card">
 <h2>Piper 離線 / 英國女聲 cori-high </h2>
 <p class="d">Piper 高品質模型・離線<br><span class="m">UTMOS：3.95</span>　<code>6b-piper-cori-high-GB-offline.mp3</code></p>
 <audio controls preload="none" src="samples/6b-piper-cori-high-GB-offline.mp3"></audio>
+<button type="button" class="pick" aria-pressed="false">☆ 選這個</button>
 </section>
+<div id="bar"><div class="in">
+<div id="picks" class="empty">尚未選擇（最多選 3 個，依點選順序排名）</div>
+<div class="row"><button type="button" id="copy" disabled>複製我的選擇</button><button type="button" id="clr">清除</button></div>
+<textarea id="fb" readonly aria-label="我的選擇"></textarea>
+<div id="toast" role="status"></div>
+</div></div>
+<script>
+(function(){
+var KEY="ielts-voice-picks-v1",MAX=3;
+var cards={},order=[];
+[].forEach.call(document.querySelectorAll("section.card[data-id]"),function(s){
+  var h=s.querySelector("h2").cloneNode(true);
+  [].forEach.call(h.querySelectorAll(".b,.rk"),function(x){x.remove()});
+  cards[s.getAttribute("data-id")]={el:s,label:h.textContent.replace(/\s+/g," ").trim()};
+});
+try{var v=JSON.parse(localStorage.getItem(KEY)||"[]");if(Array.isArray(v))order=v.filter(function(i,n){return cards[i]&&v.indexOf(i)===n}).slice(0,MAX)}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(order))}catch(e){}}
+function text(){return order.length?"我選的語音:"+order.map(function(i,n){return "第"+(n+1)+"名 "+i+"("+cards[i].label+")"}).join(", "):""}
+var picksEl=document.getElementById("picks"),copyBtn=document.getElementById("copy"),fb=document.getElementById("fb"),toast=document.getElementById("toast"),tt;
+function say(m){toast.textContent=m;clearTimeout(tt);tt=setTimeout(function(){toast.textContent=""},3000)}
+function render(){
+  Object.keys(cards).forEach(function(id){
+    var c=cards[id],n=order.indexOf(id),b=c.el.querySelector(".pick"),h=c.el.querySelector("h2"),r=h.querySelector(".rk");
+    if(r)r.remove();
+    if(n>=0){var sp=document.createElement("span");sp.className="rk";sp.textContent="第"+(n+1)+"名";h.appendChild(sp)}
+    b.classList.toggle("on",n>=0);c.el.classList.toggle("picked",n>=0);
+    b.setAttribute("aria-pressed",n>=0?"true":"false");
+    b.textContent=n>=0?"✓ 已選・第"+(n+1)+"名（再按取消）":"☆ 選這個";
+  });
+  if(order.length){picksEl.className="";picksEl.innerHTML="";order.forEach(function(i,n){var d=document.createElement("div");d.textContent="第"+(n+1)+"名 "+i+"（"+cards[i].label+"）";picksEl.appendChild(d)})}
+  else{picksEl.className="empty";picksEl.textContent="尚未選擇（最多選 3 個，依點選順序排名）"}
+  copyBtn.disabled=!order.length;
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest&&e.target.closest(".pick");if(!b)return;
+  var id=b.parentNode.getAttribute("data-id"),n=order.indexOf(id);
+  if(n>=0)order.splice(n,1);
+  else if(order.length>=MAX){say("最多只能選 3 個，請先取消其中一個");return}
+  else order.push(id);
+  save();render();
+});
+document.getElementById("clr").addEventListener("click",function(){order=[];save();fb.style.display="none";render()});
+function fallback(s){fb.style.display="block";fb.value=s;fb.focus();fb.select();try{fb.setSelectionRange(0,s.length)}catch(e){}
+  var ok=false;try{ok=document.execCommand("copy")}catch(e){}
+  say(ok?"已複製 ✓":"請長按上方文字手動複製")}
+copyBtn.addEventListener("click",function(){
+  var s=text();if(!s)return;
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(s).then(function(){fb.style.display="none";say("已複製 ✓")},function(){fallback(s)})}
+  else fallback(s);
+});
+render();
+})();
+</script>
 </body></html>
