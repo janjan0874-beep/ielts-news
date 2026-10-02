@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px;margin:14px 0;position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle"></h1>
+    <a id="hSrc" target="_blank" rel="noopener noreferrer"></a>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="tabL" aria-selected="true" data-tab="listen">🎧 聽力</button>
+    <button role="tab" id="tabR" aria-selected="false" data-tab="read">📖 閱讀</button>
+  </nav>
+
+  <!-- LISTENING -->
+  <section class="panel" id="listen">
+    <div class="card">
+      <h2>🎧 聽力播放器 <small id="plInfo"></small></h2>
+      <div class="row">
+        <button class="btn primary" id="btnPlay">▶ 播放</button>
+        <button class="btn" id="btnReplay">⟲ 重播</button>
+        <label class="row muted">速度
+          <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+        </label>
+        <label class="row muted">口音
+          <select id="selAccent" aria-label="口音"><option value="en-US">美式</option><option value="en-GB">英式</option></select>
+        </label>
+      </div>
+      <div class="bar"><i id="plBar"></i></div>
+      <div class="muted" id="plText">第 0 / 0 句</div>
+      <div class="warn" id="ttsWarn" hidden>此瀏覽器不支援語音合成（Web Speech API），請改用 Chrome、Edge 或 Safari。</div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button>
+        <span class="muted" id="transHint">先聽，再答題，最後才看逐字稿。</span>
+      </div>
+      <div id="transWrap" hidden>
+        <div class="transcript" id="transcript"></div>
+        <div class="defbox" id="defbox" hidden></div>
+        <p class="muted">點選藍色底線的單字可查看解釋；點選句子可從該句開始播放。</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+
+    <div class="card" id="quizCard">
+      <h2>📝 聽力測驗 <small id="qzInfo"></small></h2>
+      <div id="qzBody"></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" hidden>
+    <div class="card">
+      <h2>⏱ 計時器 <small>（選用，建議 <span id="tmSug"></span> 分鐘）</small></h2>
+      <div class="row spread">
+        <label class="row"><input type="checkbox" id="tmOn"> 啟用計時</label>
+        <span class="timer" id="tmShow">--:--</span>
+      </div>
+      <div class="row" id="tmBtns" style="margin-top:8px" hidden>
+        <button class="btn primary" id="tmStart">開始</button>
+        <button class="btn" id="tmPause">暫停</button>
+        <button class="btn" id="tmReset">重設</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📖 閱讀文章 <small id="rdTitle"></small></h2>
+      <div class="row spread"><span class="muted">點擊單字即可標記／取消螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      <div class="passage" id="passage" style="margin-top:12px"></div>
+    </div>
+    <div class="card">
+      <h2>✍️ 閱讀題目 <small id="rdScore"></small></h2>
+      <div id="rdQs"></div>
+      <div id="rdSummary"></div>
+      <div class="row" style="margin-top:12px"><button class="btn" id="rdReset">重新作答</button></div>
+    </div>
+  </section>
+  <footer>語音依瀏覽器與系統提供的語音而異 · 進度儲存在本機 (localStorage)</footer>
+</div>
+
+<script>
+/* ============ DATA（每天只需修改這個物件）============ */
+/*DATA_START*/
+const DATA = {
+  "id": "2026-10-02",
+  "date": "2026-10-02",
+  "title": "Micron Posts Another Record Quarter as Memory Shortage Deepens",
+  "source": {
+    "name": "Electronic Times",
+    "url": "https://en.etnews.com/20261002200001"
+  },
+  "script": [
+    "Micron, the American memory chip maker, has reported another record quarter.",
+    "On September 30, the company announced that its revenue for the three months ending in August reached about $54 billion.",
+    "That is nearly five times higher than the same period last year, and it is the sixth quarter in a row that the company has set a record.",
+    "Analysts had expected a smaller figure, so the result surprised the market.",
+    "The main reason for this growth is demand from artificial intelligence data centers, which need a special type of memory called high bandwidth memory.",
+    "Because producing this memory takes up so much factory capacity, there is now a shortage of ordinary memory chips as well.",
+    "The chief executive said that supply will be even tighter in the next two years, and that it is unclear when supply and demand will return to balance.",
+    "Looking ahead, Micron forecast revenue of $60 to $63 billion for the next quarter.",
+    "However, its new factory in Idaho will not begin production until the middle of 2027, so relief for buyers may be slow to arrive."
+  ],
+  "vocab": [
+    {
+      "word": "record",
+      "pos": "adj.",
+      "zh": "創紀錄的",
+      "example": "...another record quarter.",
+      "match": [
+        "record"
+      ],
+      "def": "the highest ever achieved"
+    },
+    {
+      "word": "in a row",
+      "pos": "phr.",
+      "zh": "連續",
+      "example": "the sixth quarter in a row",
+      "match": [
+        "in a row"
+      ],
+      "def": "one after another"
+    },
+    {
+      "word": "surprise",
+      "pos": "v.",
+      "zh": "使驚訝、超出預期",
+      "example": "the result surprised the market",
+      "match": [
+        "surprised"
+      ],
+      "def": "to be better or different than expected"
+    },
+    {
+      "word": "demand",
+      "pos": "n.",
+      "zh": "需求",
+      "example": "demand from artificial intelligence data centers",
+      "match": [
+        "demand"
+      ],
+      "def": "the amount of a product people want to buy"
+    },
+    {
+      "word": "capacity",
+      "pos": "n.",
+      "zh": "產能",
+      "example": "takes up so much factory capacity",
+      "match": [
+        "capacity"
+      ],
+      "def": "the amount that can be produced"
+    },
+    {
+      "word": "shortage",
+      "pos": "n.",
+      "zh": "短缺",
+      "example": "a shortage of ordinary memory chips",
+      "match": [
+        "shortage"
+      ],
+      "def": "not enough of something"
+    },
+    {
+      "word": "tight",
+      "pos": "adj.",
+      "zh": "供應緊張的",
+      "example": "supply will be even tighter",
+      "match": [
+        "tighter"
+      ],
+      "def": "hard to get because supply is limited"
+    },
+    {
+      "word": "return to balance",
+      "pos": "phr.",
+      "zh": "回到平衡",
+      "example": "supply and demand will return to balance",
+      "match": [
+        "return to balance"
+      ],
+      "def": "become stable or equal again"
+    },
+    {
+      "word": "forecast",
+      "pos": "v./n.",
+      "zh": "預測",
+      "example": "Micron forecast revenue of $60 to $63 billion",
+      "match": [
+        "forecast"
+      ],
+      "def": "to predict"
+    },
+    {
+      "word": "relief",
+      "pos": "n.",
+      "zh": "緩解",
+      "example": "relief for buyers may be slow to arrive",
+      "match": [
+        "relief"
+      ],
+      "def": "the end or easing of a problem"
+    }
+  ],
+  "questions": [
+    {
+      "type": "fill",
+      "q": "Micron's revenue was nearly ___ times higher than last year.",
+      "answer": [
+        "five",
+        "5"
+      ],
+      "explanation": "錄音提到 “nearly five times higher than the same period last year”，所以答案是 five（也接受數字 5）。"
+    },
+    {
+      "type": "mc",
+      "q": "What is the main reason for the growth?",
+      "options": [
+        "Cheaper factories",
+        "Demand from AI data centers",
+        "A new CEO"
+      ],
+      "answer": 1,
+      "explanation": "錄音說 “The main reason for this growth is demand from artificial intelligence data centers”，故選 B。"
+    },
+    {
+      "type": "mc",
+      "q": "When will the new Idaho factory begin production?",
+      "options": [
+        "This year",
+        "Early 2027",
+        "Mid-2027"
+      ],
+      "answer": 2,
+      "explanation": "錄音說 “will not begin production until the middle of 2027”，middle of 2027 = mid-2027，故選 C。"
+    }
+  ],
+  "reading": {
+    "title": "Micron's Record Quarter and the Memory Shortage",
+    "minutes": 8,
+    "passage": [
+      {
+        "label": "A",
+        "text": "Micron Technology, a leading American manufacturer of memory chips, has reported record revenue of about $54 billion for the three months ending in August, according to an announcement made on 30 September. The figure was almost five times that of the same period a year earlier, and it marked the sixth consecutive quarter in which the company had set a new record. Analysts had predicted a lower result, and the announcement therefore surprised financial markets. Taken together, these results extend a sustained period of strong growth for the company."
+      },
+      {
+        "label": "B",
+        "text": "The principal driver of this expansion is demand from data centres that run artificial intelligence applications. These facilities require a specialised product known as high bandwidth memory, the production of which consumes a large proportion of factory capacity. As a consequence, less capacity is available for conventional memory chips, and a shortage of those products has now emerged. Micron's chief executive stated that supply will become tighter still over the next two years, and he acknowledged that it is uncertain when supply and demand will return to equilibrium. In other words, the imbalance between the two is expected to persist for the foreseeable future."
+      },
+      {
+        "label": "C",
+        "text": "Micron has forecast revenue of between $60 billion and $63 billion for the coming quarter. Nevertheless, relief for customers may be slow in coming. The company's new factory in Idaho is not scheduled to begin production until the middle of 2027, so additional supply from that site will not be available for some time. Buyers who had hoped for a rapid improvement in availability may consequently need to wait considerably longer than expected."
+      }
+    ],
+    "questions": [
+      {
+        "type": "tfng",
+        "q": "The latest quarterly revenue was lower than analysts had predicted.",
+        "answer": "False",
+        "ref": "A",
+        "evidence": "Analysts had predicted a lower result, and the announcement therefore surprised financial markets. Taken together, these results extend a sustained period of strong growth for the company.",
+        "explanation": "分析師預期的數字「較低」，實際營收高於預期，與題目敘述相反，所以是 False。"
+      },
+      {
+        "type": "tfng",
+        "q": "Micron intends to raise the prices of its conventional memory chips next year.",
+        "answer": "Not Given",
+        "ref": "B",
+        "explanation": "文章只談供給短缺與預測營收，未提及任何調漲價格的意圖，因此是 Not Given。"
+      },
+      {
+        "type": "completion",
+        "q": "The production of high bandwidth memory uses up a large proportion of factory ________.",
+        "answers": [
+          "capacity"
+        ],
+        "ref": "B",
+        "evidence": "…the production of which consumes a large proportion of factory capacity.",
+        "explanation": "B 段明確寫出 consumes a large proportion of factory capacity，答案為 capacity。"
+      },
+      {
+        "type": "completion",
+        "q": "Micron's chief executive expects supply to become ________ over the next two years.",
+        "answers": [
+          "tighter",
+          "tighter still"
+        ],
+        "ref": "B",
+        "evidence": "…supply will become tighter still over the next two years…",
+        "explanation": "B 段：supply will become tighter still，填 tighter（tighter still 亦可，共兩個字）。"
+      },
+      {
+        "type": "mc",
+        "q": "According to the passage, why may relief for customers be slow to arrive?",
+        "options": [
+          "Analysts have lowered their forecasts.",
+          "The new Idaho factory will not start production until mid-2027.",
+          "Demand for artificial intelligence is expected to fall.",
+          "Micron has stopped producing ordinary memory chips."
+        ],
+        "answer": 1,
+        "ref": "C",
+        "evidence": "The company's new factory in Idaho is not scheduled to begin production until the middle of 2027…",
+        "explanation": "C 段指出 Idaho 新廠要到 2027 年中才開始生產，額外供給無法很快出現，故選 B。"
+      }
+    ]
+  }
+};
+/*DATA_END*/
+
+/* ============ App ============ */
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const KEY="ielts-news:"+DATA.id;
+let store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.rd=store.rd||{ans:{},hl:[]};
+
+/* header */
+(function(){
+  const d=new Date(DATA.date+"T00:00:00");
+  const wk=["日","一","二","三","四","五","六"];
+  $("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  $("hTitle").textContent=DATA.title;
+  $("hSrc").href=DATA.source.url;$("hSrc").textContent="來源："+DATA.source.name+" ↗";
+  document.title=DATA.title+" | IELTS";
+})();
+
+/* tabs */
+document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  ["listen","read"].forEach(id=>$(id).hidden=(id!==b.dataset.tab));
+  if(b.dataset.tab!=="listen")stopSpeech();
+}));
+
+/* ---------- speech ---------- */
+const hasTTS="speechSynthesis" in window&&"SpeechSynthesisUtterance" in window;
+let voices=[];
+function loadVoices(){if(hasTTS)voices=speechSynthesis.getVoices()||[]}
+if(hasTTS){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}else{$("ttsWarn").hidden=false}
+function pickVoice(lang){
+  const l=lang.toLowerCase();
+  return voices.find(v=>v.lang.replace("_","-").toLowerCase()===l)||voices.find(v=>v.lang.toLowerCase().startsWith(l.slice(0,2)))||null;
+}
+let token=0;
+function say(text,{rate=1,lang="en-US",onend}={}){
+  if(!hasTTS)return;
+  speechSynthesis.cancel();
+  const my=++token;
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang;u.rate=rate;
+  const v=pickVoice(lang);if(v)u.voice=v;
+  let done=false;
+  const fin=()=>{if(done)return;done=true;if(my===token&&onend)onend()};
+  u.onend=fin;u.onerror=e=>{if(e&&(e.error==="canceled"||e.error==="interrupted"))return;fin()};
+  speechSynthesis.speak(u);
+}
+function stopSpeech(){
+  token++;if(hasTTS)speechSynthesis.cancel();
+  if(player){player.playing=false;renderPlayer()}
+}
+
+/* ---------- player ---------- */
+const S=DATA.script;
+const player={idx:0,playing:false};
+function renderPlayer(){
+  $("btnPlay").textContent=player.playing?"⏸ 暫停":"▶ 播放";
+  const n=S.length,shown=Math.min(player.idx+(player.playing?1:0),n);
+  $("plBar").style.width=(n?100*Math.min(player.idx+(player.playing?0.5:0),n)/n:0)+"%";
+  $("plText").textContent=`第 ${player.playing||player.idx>0?Math.min(player.idx+1,n):0} / ${n} 句`;
+  document.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",player.playing&&i===player.idx));
+  const cur=document.querySelector(".sent.cur");
+  if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+}
+function speakCurrent(){
+  if(!player.playing)return;
+  if(player.idx>=S.length){player.playing=false;player.idx=0;$("plBar").style.width="100%";renderPlayer();$("plText").textContent="播放完畢 ✔";return}
+  renderPlayer();
+  say(S[player.idx],{rate:+$("selRate").value,lang:$("selAccent").value,onend:()=>{player.idx++;speakCurrent()}});
+}
+$("btnPlay").onclick=()=>{
+  if(!hasTTS)return;
+  if(player.playing){stopSpeech();return}
+  if(player.idx>=S.length)player.idx=0;
+  player.playing=true;speakCurrent();
+};
+$("btnReplay").onclick=()=>{if(!hasTTS)return;token++;speechSynthesis.cancel();player.idx=0;player.playing=true;speakCurrent()};
+function restartIfPlaying(){if(player.playing){token++;speechSynthesis.cancel();speakCurrent()}}
+$("selRate").onchange=restartIfPlaying;$("selAccent").onchange=restartIfPlaying;
+$("plInfo").textContent=`共 ${S.length} 句`;
+
+/* transcript */
+function vocabRegex(){
+  const items=[];
+  DATA.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  if(!items.length)return null;
+  return {re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items};
+}
+const VR=vocabRegex();
+function renderTranscript(){
+  const box=$("transcript");box.innerHTML="";
+  S.forEach((s,si)=>{
+    const sp=document.createElement("span");sp.className="sent";sp.dataset.i=si;
+    let html="",last=0;
+    if(VR){
+      s.replace(VR.re,(m,g,off)=>{
+        html+=esc(s.slice(last,off));
+        const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());
+        html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m;
+      });
+    }
+    html+=esc(s.slice(last));
+    sp.innerHTML=html;box.appendChild(sp);box.appendChild(document.createTextNode(" "));
+  });
+}
+renderTranscript();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){
+    const v=DATA.vocab[+vw.dataset.v];
+    const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;
+    return;
+  }
+  const se=e.target.closest(".sent");
+  if(se&&hasTTS){token++;speechSynthesis.cancel();player.idx=+se.dataset.i;player.playing=true;speakCurrent()}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;
+  $("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";
+  $("btnTrans").setAttribute("aria-pressed",show);
+  $("transHint").hidden=show;
+  renderPlayer();
+};
+
+/* ---------- flashcards ---------- */
+const V=DATA.vocab;let fc=0;
+function renderCard(){
+  const v=V[fc];if(!v)return;
+  $("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div>
+    <div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  $("fcKnown").textContent=`已會 ${store.known.filter(w=>V.some(x=>x.word===w)).length} / ${V.length}`;
+  $("fcBar").style.width=100*store.known.filter(w=>V.some(x=>x.word===w)).length/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+$("fcSpeak").onclick=()=>say(V[fc].word,{rate:+$("selRate").value<1?0.8:1,lang:$("selAccent").value});
+function mark(known){
+  const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);
+  if(!known&&i>=0)store.known.splice(i,1);
+  save();renderCard();
+  setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250);
+}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+
+/* ---------- listening quiz ---------- */
+const Q=DATA.questions;let qi=0,qScore=0,qAnswered=false;
+const norm=s=>String(s).toLowerCase().trim().replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+function qInfo(){
+  const b=store.quiz;
+  $("qzInfo").textContent=b?`上次成績 ${b.score}/${b.total}`:"";
+}
+function renderQuiz(){
+  qInfo();
+  const body=$("qzBody");
+  if(qi>=Q.length){
+    body.innerHTML=`<div class="score">${qScore} / ${Q.length}</div>
+      <p style="text-align:center">${qScore===Q.length?"太棒了！全部答對 🎉":qScore>=Q.length/2?"不錯！再聽一次逐字稿加強理解 👍":"再聽一次，專注關鍵數字與原因 💪"}</p>
+      <div class="row" style="justify-content:center"><button class="btn primary" id="qzAgain">重新作答</button></div>`;
+    $("qzAgain").onclick=()=>{qi=0;qScore=0;renderQuiz()};
+    return;
+  }
+  const q=Q[qi];qAnswered=false;
+  let h=`<div class="muted">第 ${qi+1} / ${Q.length} 題 · ${q.type==="fill"?"填空題":"選擇題"}</div><div class="q">${esc(q.q)}</div>`;
+  if(q.type==="fill"){
+    h+=`<div class="row"><input class="txt" id="qzIn" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="輸入答案（英文單字或數字）" aria-label="答案"><button class="btn primary" id="qzGo">送出</button></div>`;
+  }else{
+    h+=q.options.map((o,i)=>`<button class="opt" data-i="${i}"><b>${"ABCD"[i]}.</b> ${esc(o)}</button>`).join("");
+  }
+  h+=`<div id="qzFb"></div><div class="row" style="margin-top:10px"><button class="btn primary" id="qzNext" hidden>${qi===Q.length-1?"查看成績":"下一題 →"}</button></div>`;
+  body.innerHTML=h;
+  $("qzNext").onclick=()=>{qi++;renderQuiz()};
+  if(q.type==="fill"){
+    const go=()=>{
+      if(qAnswered)return;const val=$("qzIn").value;if(!norm(val))return;
+      const ok=q.answer.map(norm).includes(norm(val));
+      $("qzIn").classList.add(ok?"right":"wrong");$("qzIn").disabled=true;$("qzGo").disabled=true;
+      finishQ(ok,q,ok?"":`正確答案：<b>${esc(q.answer[0])}</b>`);
+    };
+    $("qzGo").onclick=go;$("qzIn").addEventListener("keydown",e=>{if(e.key==="Enter")go()});
+  }else{
+    body.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+      if(qAnswered)return;const i=+b.dataset.i,ok=i===q.answer;
+      body.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(+x.dataset.i===q.answer)x.classList.add("right")});
+      if(!ok)b.classList.add("wrong");
+      finishQ(ok,q,ok?"":`正確答案：<b>${"ABCD"[q.answer]}</b>`);
+    });
+  }
+}
+function finishQ(ok,q,extra){
+  qAnswered=true;if(ok)qScore++;
+  $("qzFb").innerHTML=`<div class="fb ${ok?"right":"wrong"}"><b>${ok?"✔ 答對了！":"✘ 答錯了"}</b> ${extra||""}<div class="ex">${esc(q.explanation)}</div></div>`;
+  $("qzNext").hidden=false;$("qzNext").focus({preventScroll:true});
+  if(qi===Q.length-1){store.quiz={score:qScore,total:Q.length,at:new Date().toISOString()};save();qInfo()}
+}
+renderQuiz();
+
+/* ---------- reading ---------- */
+const R=DATA.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title||"";
+function renderPassage(){
+  const box=$("passage");box.innerHTML="";
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;
+      if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;
+      const k=pi+"-"+ti;w.dataset.k=k;if(store.rd.hl.includes(k))w.classList.add("hl");
+      el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+}
+renderPassage();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.rd.hl.indexOf(k);
+  if(i>=0)store.rd.hl.splice(i,1);else store.rd.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.rd.hl=[];save();document.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+
+const RQ=R.questions;
+const TF=["True","False","Not Given"];const TFZH={"True":"符合（True）","False":"不符（False）","Not Given":"未提及（Not Given）"};
+function isCorrect(q,val){
+  if(q.type==="tfng")return val===q.answer;
+  if(q.type==="mc")return +val===q.answer;
+  return q.answers.map(norm).includes(norm(val));
+}
+function fbHtml(q,val){
+  const ok=isCorrect(q,val);
+  let ans=q.type==="tfng"?q.answer:q.type==="mc"?"ABCD"[q.answer]:q.answers[0];
+  return `<div class="fb ${ok?"right":"wrong"}"><b>${ok?"✔ 答對了！":"✘ 答錯了"}</b>${ok?"":` 正確答案：<b>${esc(ans)}</b>`}
+    <div class="ex">${esc(q.explanation)}${q.evidence?`<br><q>${esc(q.evidence)}</q>${q.ref?`（段落 ${esc(q.ref)}）`:""}`:""}</div></div>`;
+}
+function renderReadingQs(){
+  const box=$("rdQs");box.innerHTML="";
+  RQ.forEach((q,i)=>{
+    const d=document.createElement("div");d.className="rq";
+    const typeLabel=q.type==="tfng"?"True / False / Not Given":q.type==="mc"?"選擇題":"句子填空：不超過兩個英文單字";
+    let h=`<div class="instr">${typeLabel}</div><div class="q">${i+1}. ${esc(q.q)}</div>`;
+    if(q.type==="tfng")h+=`<div class="tf">${TF.map(t=>`<button class="opt" data-v="${t}">${esc(t)}<br><span class="muted">${TFZH[t].split("（")[0]}</span></button>`).join("")}</div>`;
+    else if(q.type==="mc")h+=q.options.map((o,j)=>`<button class="opt" data-v="${j}"><b>${"ABCD"[j]}.</b> ${esc(o)}</button>`).join("");
+    else h+=`<div class="row"><input class="txt" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="NO MORE THAN TWO WORDS" aria-label="第 ${i+1} 題答案"><button class="btn primary go">檢查</button></div>`;
+    h+=`<div class="fbbox"></div>`;
+    d.innerHTML=h;box.appendChild(d);
+    const lock=val=>{
+      const ok=isCorrect(q,val);
+      if(q.type==="tfng"||q.type==="mc"){
+        d.querySelectorAll(".opt").forEach(b=>{
+          b.disabled=true;
+          const correct=q.type==="tfng"?b.dataset.v===q.answer:+b.dataset.v===q.answer;
+          if(correct)b.classList.add("right");else if(b.dataset.v===String(val))b.classList.add("wrong");
+        });
+      }else{const inp=d.querySelector("input");inp.value=val;inp.disabled=true;inp.classList.add(ok?"right":"wrong");d.querySelector(".go").disabled=true}
+      d.querySelector(".fbbox").innerHTML=fbHtml(q,val);
+    };
+    const submit=val=>{store.rd.ans[i]=String(val);save();lock(val);updateScore()};
+    if(q.type==="completion"){
+      const inp=d.querySelector("input");
+      const go=()=>{if(inp.disabled||!norm(inp.value))return;submit(inp.value.trim())};
+      d.querySelector(".go").onclick=go;inp.addEventListener("keydown",e=>{if(e.key==="Enter")go()});
+    }else d.querySelectorAll(".opt").forEach(b=>b.onclick=()=>submit(b.dataset.v));
+    if(store.rd.ans[i]!==undefined)lock(store.rd.ans[i]);
+  });
+  updateScore();
+}
+function updateScore(){
+  const answered=Object.keys(store.rd.ans).filter(k=>RQ[k]).length;
+  const score=Object.keys(store.rd.ans).filter(k=>RQ[k]&&isCorrect(RQ[k],store.rd.ans[k])).length;
+  $("rdScore").textContent=`已作答 ${answered}/${RQ.length} · 得分 ${score}`;
+  const s=$("rdSummary");
+  if(answered===RQ.length&&RQ.length){
+    store.rd.score=score;store.rd.total=RQ.length;save();
+    stopTimer();
+    s.innerHTML=`<div class="score">${score} / ${RQ.length}</div><p style="text-align:center">${score===RQ.length?"全對！閱讀掌握得很好 🎉":score>=RQ.length*0.6?"不錯！回頭檢查錯題的依據句 👍":"請重讀文章，找出關鍵詞再對照題目 💪"}${tm.on&&tm.elapsed?`<br><span class="muted">用時 ${fmt(tm.elapsed)}</span>`:""}</p>`;
+  }else s.innerHTML="";
+}
+$("rdReset").onclick=()=>{store.rd.ans={};delete store.rd.score;save();renderReadingQs();tmReset()};
+
+/* timer */
+const tm={on:false,running:false,left:R.minutes*60,elapsed:0,h:null};
+const fmt=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+function tmRender(){
+  $("tmShow").textContent=tm.on?fmt(tm.left):"--:--";
+  $("tmShow").classList.toggle("late",tm.on&&tm.left<=0);
+  $("tmBtns").hidden=!tm.on;
+  if(tm.on&&tm.left<=0)$("tmShow").textContent="時間到";
+}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmOn").onchange=e=>{tm.on=e.target.checked;if(!tm.on)stopTimer();tmRender()};
+$("tmStart").onclick=()=>{
+  if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){stopTimer();tm.left=0}tmRender()},1000);
+};
+$("tmPause").onclick=stopTimer;$("tmReset").onclick=tmReset;
+renderReadingQs();tmRender();
+})();
+</script>
+</body>
+</html>
