@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-04",
+ "date": "2026-10-04",
+ "title": "Soft Jobs Cool October Fed Hike Bets · Berlin Marathon: Men Hit the Wall Twice as Often",
+ "stories": [
+  {
+   "title": "Soft September Jobs Cool October Fed Hike Bets as Stocks Rally",
+   "topic": "Markets · Fed",
+   "source": {
+    "name": "Business Insider / BeInsure / 24/7 Wall St",
+    "url": "https://www.businessinsider.com/fed-rate-hike-september-jobs-report-stock-market-today-2026-10",
+    "links": [
+     {
+      "name": "BeInsure: Nasdaq gains 1.2% as weak jobs data lifts U.S. stocks",
+      "url": "https://beinsure.com/news/nasdaq-gains-1-2-as-weak-jobs-data-lifts-u-s-stocks/"
+     },
+     {
+      "name": "24/7 Wall St: Fed may skip October but December still in play",
+      "url": "https://247wallst.com/investing/2026/10/03/the-fed-may-now-skip-october-rate-hike-but-december-is-still-very-much-in-play/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead story in markets: a softer-than-expected September jobs report has sharply cooled bets on a Federal Reserve rate hike in October, and United States stocks rallied on the news.",
+     "Here's the report."
+    ],
+    [
+     "The Labor Department said employers added just twenty-nine thousand jobs in September.",
+     "Economists surveyed by Reuters had been forecasting around ninety thousand, so the miss was substantial.",
+     "The unemployment rate ticked up to four point two per cent from four point one per cent the month before.",
+     "Wage growth also slowed, to three point zero per cent, according to twenty-four seven Wall Street.",
+     "In other words, hiring cooled without tipping into a full-blown labor emergency."
+    ],
+    [
+     "Traders moved quickly.",
+     "According to the C M E FedWatch tool cited by Business Insider, markets are now pricing roughly an eighty-three per cent chance that the Fed holds rates steady at the October meeting.",
+     "That implies only about a twenty-two per cent chance of a hike — down sharply from earlier in the week.",
+     "Meanwhile, the odds that rates stay unchanged through the end of the year rose to twenty-five per cent, up from just seven per cent last week.",
+     "December, however, is still very much in play."
+    ],
+    [
+     "Context matters.",
+     "The Fed raised its benchmark in September, lifting the upper bound from three point seven five per cent to four point zero zero per cent.",
+     "That move reversed earlier cuts that had brought the rate down from four point two five per cent a year ago.",
+     "On Friday, according to BeInsure closing levels, the Nasdaq Composite gained one point one nine per cent to twenty-seven thousand one hundred ninety point eight six.",
+     "The S and P five hundred rose zero point seven three per cent to seven thousand seven hundred twenty-two point seven two, and the Dow added zero point four nine per cent to fifty-one thousand one hundred seventy-six point nine six."
+    ],
+    [
+     "Analysts framed the report as a reason for patience, not complacency.",
+     "Michael Feroli of J P Morgan said it would now take a very strong C P I to make the October meeting live.",
+     "Seema Shah of Principal said a softer jobs print should put an October Fed hike firmly on the back foot.",
+     "Still, Bill Adams of Fifth Third argued that price data due before the October twenty-seventh to twenty-eighth meeting has more power to sway the next rate decision than this jobs report.",
+     "Looking ahead, September's consumer price index is due on October fourteenth.",
+     "Elsewhere, West Texas Intermediate crude stood at ninety-six dollars sixteen on September twenty-ninth, up thirteen point seven per cent in a month, and the ten-year Treasury had earlier peaked at five point three four per cent — its highest in twenty-four years — before closing Friday near five point two eight per cent."
+    ],
+    [
+     "There are risks on both sides, though.",
+     "Core personal consumption expenditures inflation remains above the Fed's target, and Chicago Fed President Austan Goolsbee has said inflation is still where the problem is.",
+     "Initial jobless claims of one hundred ninety-seven thousand in the week ending September twenty-sixth also suggest layoffs remain low.",
+     "So soft hiring may delay October, but sticky prices and oil could keep December on the table.",
+     "That's the market report.",
+     "Next week, we'll look at how the September inflation print reshapes the Fed's year-end path."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "September Jobs Report and Fed Outlook",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Jobs data"
+       },
+       {
+        "t": "Nonfarm payrolls: +[[1]] (vs ~90,000 expected)"
+       },
+       {
+        "t": "Unemployment rate: [[2]] %"
+       },
+       {
+        "t": "Wage growth slowed to [[3]] %"
+       },
+       {
+        "h": "Rate expectations"
+       },
+       {
+        "t": "CME FedWatch: ~[[4]] % chance Fed holds in October"
+       },
+       {
+        "t": "Odds rates unchanged through year-end: [[5]] % (from 7%)"
+       },
+       {
+        "h": "Policy backdrop and markets"
+       },
+       {
+        "t": "September hike lifted upper bound to [[6]] %"
+       },
+       {
+        "t": "Nasdaq Composite closed at [[7]] (BeInsure)"
+       },
+       {
+        "t": "10-year Treasury earlier peaked at [[8]] %"
+       },
+       {
+        "h": "What comes next"
+       },
+       {
+        "t": "September CPI due: [[9]] October"
+       },
+       {
+        "t": "WTI crude on 29 Sept: $[[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "29000",
+         "29,000",
+         "29 thousand"
+        ],
+        "ref": "added just twenty-nine thousand jobs",
+        "ev": "The Labor Department said employers added just twenty-nine thousand jobs in September.",
+        "zh": "實際新增 twenty-nine thousand = 29,000。ninety thousand 是經濟學家預期（干擾項）。"
+       },
+       {
+        "a": [
+         "4.2",
+         "4.2%"
+        ],
+        "ref": "ticked up to four point two per cent",
+        "ev": "The unemployment rate ticked up to four point two per cent from four point one per cent the month before.",
+        "zh": "失業率升至 four point two = 4.2%。4.1% 是前一個月，為干擾項。"
+       },
+       {
+        "a": [
+         "3.0",
+         "3",
+         "3.0%",
+         "three"
+        ],
+        "ref": "slowed, to three point zero per cent",
+        "ev": "Wage growth also slowed, to three point zero per cent, according to twenty-four seven Wall Street.",
+        "zh": "薪資成長放緩至 three point zero = 3.0%。不要與失業率 4.2 混淆。"
+       },
+       {
+        "a": [
+         "83",
+         "eighty-three"
+        ],
+        "ref": "eighty-three per cent chance that the Fed holds",
+        "ev": "markets are now pricing roughly an eighty-three per cent chance that the Fed holds rates steady at the October meeting.",
+        "zh": "FedWatch：約 eighty-three per cent = 83% 機率 October 維持利率。twenty-two per cent 是升息機率（干擾）。"
+       },
+       {
+        "a": [
+         "25",
+         "twenty-five"
+        ],
+        "ref": "rose to twenty-five per cent, up from just seven",
+        "ev": "the odds that rates stay unchanged through the end of the year rose to twenty-five per cent, up from just seven per cent last week.",
+        "zh": "年底前維持不變機率升至 twenty-five = 25%（上週僅 7%）。7% 是舊數字，不要填。"
+       },
+       {
+        "a": [
+         "4.00",
+         "4",
+         "4.0",
+         "four"
+        ],
+        "ref": "to four point zero zero per cent",
+        "ev": "lifting the upper bound from three point seven five per cent to four point zero zero per cent.",
+        "zh": "九月升息後上限為 four point zero zero = 4.00%。3.75% 是升息前、4.25% 是一年前，皆為干擾。"
+       },
+       {
+        "a": [
+         "27190.86",
+         "27,190.86",
+         "27190"
+        ],
+        "ref": "twenty-seven thousand one hundred ninety point eight six",
+        "ev": "the Nasdaq Composite gained one point one nine per cent to twenty-seven thousand one hundred ninety point eight six.",
+        "zh": "BeInsure 收盤：Nasdaq 至 27,190.86。S&P 7,722.72 與 Dow 51,176.96 是其他指數，不要混填。"
+       },
+       {
+        "a": [
+         "5.34",
+         "5.34%"
+        ],
+        "ref": "peaked at five point three four per cent",
+        "ev": "the ten-year Treasury had earlier peaked at five point three four per cent — its highest in twenty-four years — before closing Friday near five point two eight per cent.",
+        "zh": "十年期公債稍早觸及 five point three four = 5.34%（24 年高點）。5.28% 是週五收盤，為干擾項。"
+       },
+       {
+        "a": [
+         "14",
+         "14th",
+         "fourteenth"
+        ],
+        "ref": "due on October fourteenth",
+        "ev": "Looking ahead, September's consumer price index is due on October fourteenth.",
+        "zh": "九月 CPI 將於 October fourteenth = 14 日公布。二十-seventh to twenty-eighth 是下次 Fed 會議，為干擾項。"
+       },
+       {
+        "a": [
+         "96.16",
+         "96"
+        ],
+        "ref": "ninety-six dollars sixteen",
+        "ev": "West Texas Intermediate crude stood at ninety-six dollars sixteen on September twenty-ninth, up thirteen point seven per cent in a month",
+        "zh": "WTI 九月二十九日為 ninety-six dollars sixteen = 96.16。13.7% 是月增幅，不是油價。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "After a Soft Jobs Print: Why October Looks Less Likely — and December Does Not",
+    "intro": "A weaker September employment report has rewritten near-term Federal Reserve odds, lifted equities and left inflation data as the next decisive test.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "United States financial markets spent Friday in a familiar \"bad news is good news\" mode after the Labor Department reported that employers added only 29,000 jobs in September. Economists surveyed by Reuters had expected roughly 90,000, so the shortfall was large enough to force an immediate repricing of monetary-policy odds. The unemployment rate edged up to 4.2% from 4.1%, while wage growth slowed to 3.0%, according to reporting summarised by 24/7 Wall St. Combined with a relatively benign personal consumption expenditures reading earlier in the week, the soft payroll figure suggested the Federal Reserve might have less room — and less urgency — to raise rates again at its late-October meeting. Equity investors responded with a broad rally, particularly in technology shares that had been pressured by rising bond yields."
+     },
+     {
+      "label": "B",
+      "text": "Rate expectations shifted within hours. Business Insider, citing the CME FedWatch tool, reported that markets were pricing roughly an 83% probability that the Fed would keep rates unchanged in October — implying only about a 22% chance of a hike. The odds that policy would remain on hold through year-end rose to 25%, up from 7% the previous week. That repricing followed a September decision in which the Fed had lifted the upper bound of its benchmark from 3.75% to 4.00%, reversing earlier cuts that had taken the rate down from 4.25% a year earlier. In short, traders now treat October as largely \"off the table\" unless inflation data surprise sharply to the upside, while December remains an open question."
+     },
+     {
+      "label": "C",
+      "text": "Closing levels compiled by BeInsure captured the equity reaction with unusual clarity. The Nasdaq Composite gained 1.19% to 27,190.86, finishing close to its record; the S&P 500 rose 0.73% to 7,722.72; and the Dow Jones Industrial Average added 0.49% to 51,176.96. Midday quotes published elsewhere differed slightly, which is why analysts stressing consistency prefer the BeInsure closing marks. Beneath the headline indexes, Nvidia reached a fresh all-time high during the session, underscoring how sensitive highly valued technology names remain to any relief in rate expectations. The same session also showed that not every technology sub-sector participated equally, but the overall message was that softer labour data had restored some appetite for risk."
+     },
+     {
+      "label": "D",
+      "text": "Bond and commodity markets supplied the other half of the story. Earlier in the week the 10-year Treasury yield had touched 5.34%, its highest level in 24 years according to BeInsure, before easing to close Friday near 5.28%. Mortgage rates, which track long-term yields more than the overnight policy rate, therefore remain elevated even if October is skipped. Energy prices reinforce the caution: West Texas Intermediate crude stood at $96.16 a barrel on 29 September, up 13.7% in a month. Chicago Fed President Austan Goolsbee has repeatedly emphasised that inflation is \"where the problem is,\" and core PCE remains above the Fed's 2% target. Soft hiring may delay a hike; sticky prices and oil may yet revive one."
+     },
+     {
+      "label": "E",
+      "text": "Economists' language after the report was carefully hedged rather than celebratory. Michael Feroli of JPMorgan argued that \"it would now take a very strong CPI to make the October meeting live.\" Seema Shah, chief global strategist at Principal Asset Management, said a softer-than-expected jobs report \"should put an October Fed hike firmly on the back foot\" and take some steam out of Treasury yields. Adam Schickling of Vanguard stressed patience: the labour market, he said, has neither deteriorated sharply nor strengthened meaningfully, giving policymakers reason to wait. Bill Adams of Fifth Third countered that the price data due before the 27–28 October meeting still has \"more power to sway the next rate decision than this jobs report.\" September's consumer price index, scheduled for 14 October, is therefore the next focal point."
+     },
+     {
+      "label": "F",
+      "text": "A closer look at the labour market itself explains why December has not been taken off the table. Initial jobless claims fell to 197,000 in the week ending 26 September — a level consistent with a still-tight job market in which layoffs remain scarce even as hiring slows. Reuters attributed much of the rise in unemployment to new entrants rather than mass firings. That combination — a hiring freeze without a firing wave — argues for patience rather than emergency easing, but it does not erase inflation risk. Manufacturing prices-paid gauges have jumped, and oil's recent climb keeps goods inflation in play. The practical implication for households and investors is straightforward: softer payrolls have reduced the probability of an October hike, yet the path into year-end still hinges on inflation prints and energy prices more than on a single employment report."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "closing levels for three major US equity indexes after the employment report",
+        "a": "C",
+        "ref": "C",
+        "ev": "The Nasdaq Composite gained 1.19% to 27,190.86, finishing close to its record; the S&P 500 rose 0.73% to 7,722.72; and the Dow Jones Industrial Average added 0.49% to 51,176.96.",
+        "zh": "C 段列出 Nasdaq、S&P、Dow 三個指數的 BeInsure 收盤價。"
+       },
+       {
+        "q": "a recent peak in the 10-year Treasury yield described as a multi-decade high",
+        "a": "D",
+        "ref": "D",
+        "ev": "Earlier in the week the 10-year Treasury yield had touched 5.34%, its highest level in 24 years according to BeInsure",
+        "zh": "D 段：十年期公債稍早觸及 5.34%，為 24 年高點。"
+       },
+       {
+        "q": "quoted comments from several economists about patience versus the importance of upcoming price data",
+        "a": "E",
+        "ref": "E",
+        "ev": "Michael Feroli of JPMorgan argued that \"it would now take a very strong CPI to make the October meeting live.\" … Bill Adams of Fifth Third countered that the price data due before the 27–28 October meeting still has \"more power to sway the next rate decision than this jobs report.\"",
+        "zh": "E 段引述 Feroli、Shah、Schickling、Adams 等人對耐心與物價數據重要性的看法。"
+       },
+       {
+        "q": "evidence that layoffs remain low even though hiring has slowed",
+        "a": "F",
+        "ref": "F",
+        "ev": "Initial jobless claims fell to 197,000 in the week ending 26 September — a level consistent with a still-tight job market in which layoffs remain scarce even as hiring slows.",
+        "zh": "F 段：初次申請失業金降至 197,000，顯示裁員仍少、但招聘放緩。"
+       },
+       {
+        "q": "how the probability of unchanged rates through year-end changed compared with the previous week",
+        "a": "B",
+        "ref": "B",
+        "ev": "The odds that policy would remain on hold through year-end rose to 25%, up from 7% the previous week.",
+        "zh": "B 段：年底前維持利率不變的機率由上週 7% 升至 25%。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "September payroll growth was weaker than economists had expected.",
+        "a": "True",
+        "ref": "A",
+        "ev": "employers added only 29,000 jobs in September. Economists surveyed by Reuters had expected roughly 90,000",
+        "zh": "A 段：實際 29,000、預期約 90,000，確實弱於預期，True。"
+       },
+       {
+        "q": "Markets now assign a higher probability to an October rate hike than they did before the jobs report.",
+        "a": "False",
+        "ref": "B",
+        "ev": "markets were pricing roughly an 83% probability that the Fed would keep rates unchanged in October — implying only about a 22% chance of a hike.",
+        "zh": "B 段：十月維持不變機率約 83%、升息僅約 22%，升息機率是下降而非上升，False。"
+       },
+       {
+        "q": "The Federal Reserve has already announced that it will leave rates unchanged at the October meeting.",
+        "a": "Not Given",
+        "ref": "B",
+        "ev": "traders now treat October as largely \"off the table\" unless inflation data surprise sharply to the upside",
+        "zh": "文中只提到市場定價與交易員看法，並未說聯準會已宣布十月維持利率；是 Not Given 陷阱。"
+       },
+       {
+        "q": "West Texas Intermediate crude was higher at the end of September than it had been a month earlier.",
+        "a": "True",
+        "ref": "D",
+        "ev": "West Texas Intermediate crude stood at $96.16 a barrel on 29 September, up 13.7% in a month.",
+        "zh": "D 段：WTI 一個月上漲 13.7%，True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "What the jobs report changed — and what it did not",
+      "lines": [
+       {
+        "t": "Softer payrolls lifted the chance of a policy [[1]] in October, while December remains uncertain. Equity indexes rose, with the Nasdaq finishing close to its [[2]]. Long-term borrowing costs stay high because the 10-year yield recently touched a 24-year peak, and [[3]] prices have climbed sharply. Economists say the next key test is September's [[4]], due on 14 October."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "hold",
+         "pause"
+        ],
+        "ref": "B",
+        "ev": "an 83% probability that the Fed would keep rates unchanged in October",
+        "zh": "B 段強調 October 維持不變（hold/unchanged）；摘要用 policy hold。若填 hike 則與文意相反。"
+       },
+       {
+        "a": [
+         "record"
+        ],
+        "ref": "C",
+        "ev": "finishing close to its record",
+        "zh": "C 段：Nasdaq finishing close to its record；填 record。"
+       },
+       {
+        "a": [
+         "energy",
+         "oil"
+        ],
+        "ref": "D",
+        "ev": "Energy prices reinforce the caution: West Texas Intermediate crude stood at $96.16",
+        "zh": "D 段以 Energy prices / crude 說明油價上揚；填 energy 或 oil。"
+       },
+       {
+        "a": [
+         "consumer price",
+         "CPI"
+        ],
+        "ref": "E",
+        "ev": "September's consumer price index, scheduled for 14 October, is therefore the next focal point.",
+        "zh": "E 段：September's consumer price index；填 consumer price（兩字）或 CPI。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "repricing",
+     "pos": "n.",
+     "def": "a rapid change in what markets expect an asset or policy path to be worth",
+     "zh": "重新定價；預期的快速調整",
+     "example": "The soft payroll figure forced an immediate repricing of monetary-policy odds.",
+     "match": [
+      "repricing"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "benign",
+     "pos": "adj.",
+     "def": "not harmful or severe; milder than feared",
+     "zh": "溫和的；無害的",
+     "example": "A relatively benign PCE reading supported the case for patience.",
+     "match": [
+      "benign"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "complacency",
+     "pos": "n.",
+     "def": "a feeling of calm satisfaction that ignores remaining risks",
+     "zh": "自滿；掉以輕心",
+     "example": "Analysts framed the report as a reason for patience, not complacency.",
+     "match": [
+      "complacency"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "sticky",
+     "pos": "adj.",
+     "def": "resistant to falling; remaining high longer than expected",
+     "zh": "僵固的；不易下降的",
+     "example": "Sticky prices and oil could keep a December hike on the table.",
+     "match": [
+      "sticky"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "benchmark",
+     "pos": "n.",
+     "def": "a standard reference rate or level used for comparison",
+     "zh": "基準（利率／指標）",
+     "example": "The Fed raised its benchmark rate in September.",
+     "match": [
+      "benchmark"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "shortfall",
+     "pos": "n.",
+     "def": "an amount by which something is less than expected",
+     "zh": "短缺；低於預期的差額",
+     "example": "The shortfall versus the 90,000 forecast was large enough to move markets.",
+     "match": [
+      "shortfall"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "urgency",
+     "pos": "n.",
+     "def": "the need to act quickly",
+     "zh": "緊迫性；急迫感",
+     "example": "Softer labour data reduced the urgency for the Fed to hike in October.",
+     "match": [
+      "urgency"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "hedged",
+     "pos": "adj./v.",
+     "def": "carefully qualified; avoiding a definite commitment",
+     "zh": "有所保留的；措辭謹慎的",
+     "example": "Economists' language after the report was carefully hedged.",
+     "match": [
+      "hedged"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "focal point",
+     "pos": "n.",
+     "def": "the centre of attention or the next decisive item",
+     "zh": "焦點；關注中心",
+     "example": "September's CPI is the next focal point for markets.",
+     "match": [
+      "focal point"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "appetite",
+     "pos": "n.",
+     "def": "willingness or desire to take on risk or buy assets",
+     "zh": "（風險／買入）意願；胃口",
+     "example": "Softer labour data restored some appetite for risk.",
+     "match": [
+      "appetite"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "elevated",
+     "pos": "adj.",
+     "def": "higher than usual or desired",
+     "zh": "偏高的；居高不下的",
+     "example": "Mortgage rates remain elevated even if October is skipped.",
+     "match": [
+      "elevated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "scarce",
+     "pos": "adj.",
+     "def": "in short supply; rare",
+     "zh": "稀少的；缺乏的",
+     "example": "Layoffs remain scarce even as hiring slows.",
+     "match": [
+      "scarce"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "substantial",
+     "pos": "adj.",
+     "def": "large in amount or importance",
+     "zh": "可觀的；重大的",
+     "example": "The miss versus the forecast was substantial.",
+     "match": [
+      "substantial"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "imply",
+     "pos": "v.",
+     "def": "to suggest something as a logical consequence without stating it directly",
+     "zh": "意味著；暗示",
+     "example": "An 83% hold probability implies only about a 22% chance of a hike.",
+     "match": [
+      "implies",
+      "imply"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "decisive",
+     "pos": "adj.",
+     "def": "able to settle an outcome; critically important",
+     "zh": "決定性的；關鍵的",
+     "example": "Inflation data remain the next decisive test for December.",
+     "match": [
+      "decisive"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-04-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      10.92
+     ],
+     [
+      11.3,
+      12.35
+     ],
+     [
+      13.13,
+      17.33
+     ],
+     [
+      17.6,
+      23.09
+     ],
+     [
+      23.41,
+      28.03
+     ],
+     [
+      28.27,
+      33.71
+     ],
+     [
+      34.11,
+      38.6
+     ],
+     [
+      39.38,
+      40.76
+     ],
+     [
+      40.96,
+      50.01
+     ],
+     [
+      50.39,
+      55.82
+     ],
+     [
+      56.15,
+      63.15
+     ],
+     [
+      63.41,
+      66.54
+     ],
+     [
+      67.32,
+      68.37
+     ],
+     [
+      68.56,
+      75.36
+     ],
+     [
+      75.63,
+      80.55
+     ],
+     [
+      80.86,
+      89.32
+     ],
+     [
+      89.56,
+      101.19
+     ],
+     [
+      101.97,
+      106.15
+     ],
+     [
+      106.48,
+      112.21
+     ],
+     [
+      112.45,
+      117.58
+     ],
+     [
+      117.88,
+      126.93
+     ],
+     [
+      127.22,
+      131.73
+     ],
+     [
+      131.99,
+      148.02
+     ],
+     [
+      148.8,
+      150.99
+     ],
+     [
+      151.21,
+      160.12
+     ],
+     [
+      160.39,
+      167.33
+     ],
+     [
+      167.65,
+      173.05
+     ],
+     [
+      173.28,
+      174.62
+     ],
+     [
+      174.98,
+      179.78
+     ]
+    ],
+    "duration": 180.4,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-04-1-words/"
+   }
+  },
+  {
+   "title": "Berlin Marathon Study: Men Twice as Likely to Hit the Wall",
+   "topic": "Sport · pacing",
+   "source": {
+    "name": "Nature Scientific Reports (Seffrin et al., 2026)",
+    "url": "https://www.nature.com/articles/s41598-026-56334-7",
+    "links": [
+     {
+      "name": "Nature Scientific Reports: Sex differences in marathon pacing (open access)",
+      "url": "https://www.nature.com/articles/s41598-026-56334-7"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Hello and welcome.",
+     "In sports science: a big-data study of the Berlin Marathon finds that male runners are about twice as likely as female runners to \"hit the wall\" — that sharp second-half collapse many marathoners dread.",
+     "Here's the report."
+    ],
+    [
+     "The paper was published open access in Nature Scientific Reports on the second of July, twenty twenty-six.",
+     "Researchers led by Aldo Seffrin analysed eight hundred seventy-three thousand three hundred thirty-four finishers from nineteen ninety-nine to twenty twenty-five.",
+     "Hitting the wall was defined as a slowdown of twenty per cent or more in the second half compared with the first.",
+     "The course is famously flat and belongs to the World Marathon Majors, which helped the team reduce topographic confounders.",
+     "About seventy-five point five per cent of the sample were men — six hundred fifty-nine thousand two hundred ninety-four — and twenty-four point five per cent were women."
+    ],
+    [
+     "The gap was stark.",
+     "Men showed a mean deceleration of ten point seven three per cent, versus eight point three four per cent for women.",
+     "Wall prevalence was seventeen point six three per cent in men and nine point six six per cent in women.",
+     "That corresponds to a crude odds ratio of two point zero zero — almost exactly a doubling.",
+     "After adjusting for age and performance category, the adjusted odds ratio rose to three point eight eight.",
+     "In other words, within similar speed bands, the male disadvantage looked even larger."
+    ],
+    [
+     "Among competitive runners finishing under three hours, absolute rates were low — but the relative gap widened.",
+     "Only one point four two per cent of those men hit the wall, compared with zero point two three per cent of women — roughly a sixfold difference.",
+     "Mean finish times were four hours two minutes twenty-two seconds for men and four hours twenty-eight minutes thirty-six seconds for women.",
+     "Analysts surveying earlier smaller cohorts had sometimes put the male excess closer to fifty per cent; the Berlin archive puts the crude doubling on much firmer ground.",
+     "So men were faster overall, yet less stable in how they distributed that speed."
+    ],
+    [
+     "What might explain it?",
+     "The authors discuss physiology — including lipid oxidation and muscle-fiber differences — and a behavioral risk-taking hypothesis drawn from sports psychology.",
+     "Women, on average, appear to spare glycogen more effectively at the same relative intensity, which may delay the classic wall.",
+     "They stress, though, that they did not directly measure psychology or confidence.",
+     "Still, the sex gap looked stable across twenty-seven years: a Mann–Kendall test gave tau of zero point one four and a p-value of zero point three three, so no clear time trend.",
+     "By contrast, earlier smaller studies had left the question unsettled; this archive is large enough to make the pattern hard to dismiss."
+    ],
+    [
+     "A note of caution remains.",
+     "The dataset covers finishers only, so runners who dropped out are missing, and the same person may appear in multiple years.",
+     "Alternative wall thresholds of fifteen and twenty-five per cent left the direction of the sex effect unchanged in sensitivity checks.",
+     "Weather varied across editions, and \"hitting the wall\" is an operational threshold, not a biopsy of glycogen.",
+     "Even so, coaches hearing this may tell male athletes to start more conservatively and aim for even or negative splits.",
+     "That's the sports science briefing.",
+     "In our next edition, we'll look at how five-kilometre split data is refining advice on when paced races typically unravel."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Berlin Marathon Pacing Study",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Study design"
+       },
+       {
+        "t": "Finishers analysed: [[1]] (1999–2025)"
+       },
+       {
+        "t": "\"Hit the wall\" = ≥ [[2]] % second-half slowdown"
+       },
+       {
+        "t": "Male share of sample: about [[3]] %"
+       },
+       {
+        "h": "Main results"
+       },
+       {
+        "t": "Male mean deceleration: [[4]] %"
+       },
+       {
+        "t": "Wall prevalence — men: [[5]] %"
+       },
+       {
+        "t": "Crude odds ratio (men vs women): [[6]]"
+       },
+       {
+        "t": "Adjusted odds ratio (age + performance): [[7]]"
+       },
+       {
+        "h": "Competitive runners (<3 h)"
+       },
+       {
+        "t": "Male wall rate: [[8]] %"
+       },
+       {
+        "h": "Interpretation"
+       },
+       {
+        "t": "Authors discuss physiology and a [[9]] risk-taking hypothesis"
+       },
+       {
+        "t": "Sex gap across 27 years: Mann–Kendall p = [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "873334",
+         "873,334"
+        ],
+        "ref": "eight hundred seventy-three thousand three hundred thirty-four finishers",
+        "ev": "Researchers led by Aldo Seffrin analysed eight hundred seventy-three thousand three hundred thirty-four finishers from nineteen ninety-nine to twenty twenty-five.",
+        "zh": "樣本為 873,334 位完賽者。659,294 是男性人數，不要誤填。"
+       },
+       {
+        "a": [
+         "20",
+         "twenty"
+        ],
+        "ref": "slowdown of twenty per cent or more",
+        "ev": "Hitting the wall was defined as a slowdown of twenty per cent or more in the second half compared with the first.",
+        "zh": "操作定義：後半程相對前半程減速 ≥ twenty per cent = 20%。"
+       },
+       {
+        "a": [
+         "75.5",
+         "75.5%",
+         "seventy-five"
+        ],
+        "ref": "seventy-five point five per cent of the sample were men",
+        "ev": "About seventy-five point five per cent of the sample were men — six hundred fifty-nine thousand two hundred ninety-four — and twenty-four point five per cent were women.",
+        "zh": "男性约占 seventy-five point five = 75.5%。24.5% 是女性比例（干擾）。"
+       },
+       {
+        "a": [
+         "10.73",
+         "10.73%"
+        ],
+        "ref": "mean deceleration of ten point seven three per cent",
+        "ev": "Men showed a mean deceleration of ten point seven three per cent, versus eight point three four per cent for women.",
+        "zh": "男性平均減速 ten point seven three = 10.73%。8.34% 是女性，為干擾項。"
+       },
+       {
+        "a": [
+         "17.63",
+         "17.63%"
+        ],
+        "ref": "seventeen point six three per cent in men",
+        "ev": "Wall prevalence was seventeen point six three per cent in men and nine point six six per cent in women.",
+        "zh": "男性撞牆盛行率 seventeen point six three = 17.63%。9.66% 是女性。"
+       },
+       {
+        "a": [
+         "2.00",
+         "2",
+         "2.0"
+        ],
+        "ref": "crude odds ratio of two point zero zero",
+        "ev": "That corresponds to a crude odds ratio of two point zero zero — almost exactly a doubling.",
+        "zh": "粗勝算比 two point zero zero = 2.00。調整後 3.88 是下一題。"
+       },
+       {
+        "a": [
+         "3.88",
+         "3.88%"
+        ],
+        "ref": "adjusted odds ratio rose to three point eight eight",
+        "ev": "After adjusting for age and performance category, the adjusted odds ratio rose to three point eight eight.",
+        "zh": "調整年齡與成績組別後 OR = three point eight eight = 3.88。"
+       },
+       {
+        "a": [
+         "1.42",
+         "1.42%"
+        ],
+        "ref": "Only one point four two per cent of those men",
+        "ev": "Only one point four two per cent of those men hit the wall, compared with zero point two three per cent of women — roughly a sixfold difference.",
+        "zh": "競速組（<3h）男性撞牆率 one point four two = 1.42%。0.23% 是女性（干擾）。"
+       },
+       {
+        "a": [
+         "behavioral",
+         "behavioural"
+        ],
+        "ref": "a behavioral risk-taking hypothesis",
+        "ev": "The authors discuss physiology — including lipid oxidation and muscle-fiber differences — and a behavioral risk-taking hypothesis drawn from sports psychology.",
+        "zh": "作者同時討論生理與 behavioral risk-taking hypothesis；填 behavioral。"
+       },
+       {
+        "a": [
+         "0.33",
+         "0.33%"
+        ],
+        "ref": "p-value of zero point three three",
+        "ev": "a Mann–Kendall test gave tau of zero point one four and a p-value of zero point three three, so no clear time trend.",
+        "zh": "Mann–Kendall p = zero point three three = 0.33（無明顯時間趨勢）。tau=0.14 是另一統計量。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Why Men Hit the Wall More Often: Lessons from 873,000 Berlin Finishers",
+    "intro": "A 27-year archive of the Berlin Marathon suggests male runners are roughly twice as likely as female runners to suffer catastrophic second-half deceleration — a gap that widens among the fastest athletes.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Pacing may matter as much as raw fitness over 42.195 kilometres. In an open-access paper published in Nature Scientific Reports on 2 July 2026, Aldo Seffrin, Elias Villiger, Marília Santos Andrade, Thomas Rosemann, Katja Weiss and Beat Knechtle analysed 873,334 Berlin Marathon finishers from 1999 to 2025. They defined \"hitting the wall\" as a second-half slowdown of at least 20% relative to the first half — an operational threshold chosen to capture catastrophic deceleration rather than ordinary late-race fatigue. Berlin was selected because it is a World Marathon Major with a predominantly flat profile, reducing topographic confounders that complicate pacing comparisons on hillier courses. After excluding biologically implausible times and incomplete records, the analytical cohort remained enormous by sports-science standards."
+     },
+     {
+      "label": "B",
+      "text": "Demographics were heavily male: 75.5% of finishers were men (n = 659,294) and 24.5% were women (n = 214,040). Absolute performance still favoured men on average — mean finish times of 4:02:22 versus 4:28:36 — yet pacing stability did not. Male runners showed a mean percentage slowdown of 10.73% ± 11.41%, compared with 8.34% ± 8.91% for female runners. The prevalence of hitting the wall was 17.63% among men and 9.66% among women, yielding a crude odds ratio of 2.00 (95% CI 1.97–2.03). After multivariable adjustment for age and performance category, the male-to-female odds ratio rose to 3.88 (95% CI 3.81–3.94), indicating that the crude doubling understates the within-category disparity."
+     },
+     {
+      "label": "C",
+      "text": "Stratifying by finish-time band revealed a paradox familiar to coaches but rarely quantified at this scale. Absolute wall rates fall as runners get faster, yet the relative sex gap widens. In the Competitive category (finish under three hours), only 1.42% of men and 0.23% of women hit the wall — a roughly sixfold male excess. In slower bands the absolute incidence climbs sharply; among Casual finishers beyond 4:30, nearly half of male runners crossed the 20% threshold in some summaries of the stratified tables. Across every performance tier the within-band male disadvantage remained statistically detectable. The authors argue that superior conditioning therefore does not inoculate men against pacing failure. If anything, high-performance male runners may run closer to their physiological ceiling and accept more early-race risk, a pattern that would help explain why relative odds peak among the fastest rather than among novices."
+     },
+     {
+      "label": "D",
+      "text": "Two families of explanation dominate the discussion section. Physiologically, women on average show higher rates of lipid oxidation during sub-maximal endurance exercise and a greater relative proportion of type I muscle fibers, patterns associated with glycogen sparing and delayed catastrophic fatigue. Hormonal modulation by estradiol has also been linked to more favourable substrate use at comparable relative intensities. Behaviorally, literature from sports psychology and behavioral economics hypothesises that men more often overestimate competitive ability and tolerate higher risk — which, in a self-paced marathon, could appear as aggressive opening splits. Crucially, Seffrin and colleagues did not collect psychometric measures of risk preference or confidence, so the behavioral account is presented as a hypothesis consistent with the pacing data rather than as a directly tested mechanism. Alternative contributors — competitive density, qualification pressure, training distribution and participation demographics — are likewise left for future work pairing archival splits with individual-level measures."
+     },
+     {
+      "label": "E",
+      "text": "Temporal stability strengthens the claim that the disparity is structural rather than era-specific. Across the 27-year archive (26 editions after excluding the cancelled 2020 race), a Mann–Kendall trend test on the annual prevalence gap found no statistically detectable change (τ = 0.14, p = 0.33). Inter-annual weather and cohort mix produced a wide range in the yearly gap, yet no systematic drift emerged. Fine-grained 5 km metrics available for most runners likewise showed greater pacing irregularity and larger late-race deceleration in men. Sensitivity checks — alternative wall thresholds of 15% and 25%, a deduplicated subset to reduce repeated participation, and within-cohort percentile re-stratification — preserved the direction and approximate magnitude of the sex effect. That robustness matters because smaller prior studies had left the literature unsettled, and a single flat World Marathon Major archive of this size is uncommon."
+     },
+     {
+      "label": "F",
+      "text": "Limitations remain important for interpretation. The archive records finishers only, so athletes who did not finish after a severe collapse are absent and true starting-field prevalence is likely underestimated. Weather varied across years; net times and splits provide no direct glycogen or heart-rate measures; and name-based deduplication is imperfect. The 20% criterion itself discretises a continuous phenomenon, even though graded severity tables still show a male excess across milder and harsher bands. Even so, the practical coaching message is comparatively clear. Male runners — especially those chasing aggressive time goals — may benefit from strategies that resemble the more even female pattern: conservative early splits and attention to negative or even pacing. Absolute speed advantages do not automatically translate into pacing efficiency, and Berlin's flat, high-volume archive now supplies one of the strongest quantitative demonstrations of that distinction for mass-participation and sub-elite fields alike."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "why a flat major-city course was useful for isolating sex as a pacing variable",
+        "a": "A",
+        "ref": "A",
+        "ev": "Berlin was selected because it is a World Marathon Major with a predominantly flat profile, reducing topographic confounders that complicate pacing comparisons on hillier courses.",
+        "zh": "A 段：選擇柏林是因其為 World Marathon Major 且赛道平坦，可減少地形干擾。"
+       },
+       {
+        "q": "crude and age-/performance-adjusted odds ratios comparing male and female wall risk",
+        "a": "B",
+        "ref": "B",
+        "ev": "yielding a crude odds ratio of 2.00 (95% CI 1.97–2.03). After multivariable adjustment for age and performance category, the male-to-female odds ratio rose to 3.88",
+        "zh": "B 段同時给出粗 OR 2.00 與調整後 OR 3.88。"
+       },
+       {
+        "q": "evidence that the relative sex gap is largest among the fastest finishers",
+        "a": "C",
+        "ref": "C",
+        "ev": "In the Competitive category (finish under three hours), only 1.42% of men and 0.23% of women hit the wall — a roughly sixfold male excess.",
+        "zh": "C 段：競速組（<3h）相對差距約六倍，相對風險在最快組最大。"
+       },
+       {
+        "q": "an admission that psychological risk preference was not measured directly in this dataset",
+        "a": "D",
+        "ref": "D",
+        "ev": "Seffrin and colleagues did not collect psychometric measures of risk preference or confidence, so the behavioral account is presented as a hypothesis",
+        "zh": "D 段明確說未收集心理計量資料，行為解釋僅為假說。"
+       },
+       {
+        "q": "a statistical test showing no clear long-term change in the prevalence gap",
+        "a": "E",
+        "ref": "E",
+        "ev": "a Mann–Kendall trend test on the annual prevalence gap found no statistically detectable change (τ = 0.14, p = 0.33).",
+        "zh": "E 段：Mann–Kendall 檢定顯示差距無明顯長期趨勢。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Female runners had a lower average finish time than male runners in the Berlin sample.",
+        "a": "False",
+        "ref": "B",
+        "ev": "mean finish times of 4:02:22 versus 4:28:36",
+        "zh": "B 段：男性平均 4:02:22、女性 4:28:36，女性並未更快，False。"
+       },
+       {
+        "q": "After adjustment for age and performance category, men remained more likely than women to hit the wall.",
+        "a": "True",
+        "ref": "B",
+        "ev": "After multivariable adjustment for age and performance category, the male-to-female odds ratio rose to 3.88 (95% CI 3.81–3.94)",
+        "zh": "B 段：調整後 OR 升至 3.88，男性仍較可能撞牆，True。"
+       },
+       {
+        "q": "Runners who followed a polarised training intensity plan hit the wall less often than those on a pyramidal plan.",
+        "a": "Not Given",
+        "ref": "D",
+        "ev": "the behavioral account is presented as a hypothesis consistent with the pacing data rather than as a directly tested mechanism.",
+        "zh": "全文未比較 polarised 與 pyramidal 訓練計畫（那是另一篇波士頓研究的議題）；此為典型 Not Given 陷阱。"
+       },
+       {
+        "q": "The sex difference in wall prevalence disappeared among competitive sub-three-hour finishers.",
+        "a": "False",
+        "ref": "C",
+        "ev": "In the Competitive category (finish under three hours), only 1.42% of men and 0.23% of women hit the wall — a roughly sixfold male excess.",
+        "zh": "C 段：競速組相對差距反而擴大約六倍，並未消失，False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Design, findings and limits",
+      "lines": [
+       {
+        "t": "Researchers defined hitting the wall as a second-half [[1]] of at least 20%. Men were about twice as likely as women to meet that threshold on a crude basis, and the gap widened after adjustment for age and [[2]] category. Proposed explanations include differences in [[3]] oxidation and a behavioral risk-taking hypothesis. Because the archive includes [[4]] only, athletes who withdrew mid-race are missing."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "slowdown"
+        ],
+        "ref": "A",
+        "ev": "They defined \"hitting the wall\" as a second-half slowdown of at least 20% relative to the first half",
+        "zh": "A 段：second-half slowdown of at least 20%；填 slowdown。"
+       },
+       {
+        "a": [
+         "performance"
+        ],
+        "ref": "B",
+        "ev": "After multivariable adjustment for age and performance category, the male-to-female odds ratio rose to 3.88",
+        "zh": "B 段：adjustment for age and performance category；填 performance category（兩字）或 performance。"
+       },
+       {
+        "a": [
+         "lipid"
+        ],
+        "ref": "D",
+        "ev": "women on average show higher rates of lipid oxidation during sub-maximal endurance exercise",
+        "zh": "D 段：lipid oxidation；填 lipid。"
+       },
+       {
+        "a": [
+         "finishers"
+        ],
+        "ref": "F",
+        "ev": "The archive records finishers only, so athletes who did not finish after a severe collapse are absent",
+        "zh": "F 段：records finishers only；填 finishers。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "deceleration",
+     "pos": "n.",
+     "def": "a reduction in speed; slowing down",
+     "zh": "減速；速度下降",
+     "example": "Men showed greater mean deceleration than women in the second half.",
+     "match": [
+      "deceleration"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "prevalence",
+     "pos": "n.",
+     "def": "how common a condition or event is in a population",
+     "zh": "盛行率；普遍程度",
+     "example": "Wall prevalence was nearly twice as high in men as in women.",
+     "match": [
+      "prevalence"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "odds ratio",
+     "pos": "n.",
+     "def": "a statistic comparing the odds of an outcome in one group versus another",
+     "zh": "勝算比；比值比",
+     "example": "The crude odds ratio of 2.00 means a doubling of risk.",
+     "match": [
+      "odds ratio"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "topographic",
+     "pos": "adj.",
+     "def": "relating to the shape and elevation of the land",
+     "zh": "地形的",
+     "example": "A flat course reduces topographic confounders in pacing studies.",
+     "match": [
+      "topographic"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "confounder",
+     "pos": "n.",
+     "def": "a factor that can distort the apparent relationship between variables",
+     "zh": "混淆因子；干擾變項",
+     "example": "Hills are topographic confounders when comparing pacing by sex.",
+     "match": [
+      "confounders",
+      "confounder"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "catastrophic",
+     "pos": "adj.",
+     "def": "involving sudden severe failure or collapse",
+     "zh": "災難性的；嚴重崩盤的",
+     "example": "Hitting the wall refers to catastrophic second-half deceleration.",
+     "match": [
+      "catastrophic"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "stratifying",
+     "pos": "v.",
+     "def": "dividing a sample into layers or bands for comparison",
+     "zh": "分層；分組比較",
+     "example": "Stratifying by finish time showed the gap widens among elites.",
+     "match": [
+      "Stratifying",
+      "stratified"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "inoculate",
+     "pos": "v.",
+     "def": "to protect against something; to make immune",
+     "zh": "使免疫；使免於",
+     "example": "Faster conditioning does not inoculate men against pacing failure.",
+     "match": [
+      "inoculate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "lipid oxidation",
+     "pos": "n.",
+     "def": "the metabolic use of fat as fuel during exercise",
+     "zh": "脂質氧化（以脂肪作為運動燃料）",
+     "example": "Higher lipid oxidation may help women spare glycogen.",
+     "match": [
+      "lipid oxidation"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "hypothesis",
+     "pos": "n.",
+     "def": "a proposed explanation that still needs testing",
+     "zh": "假說；假設",
+     "example": "The behavioral risk-taking hypothesis was not measured directly.",
+     "match": [
+      "hypothesis"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "psychometric",
+     "pos": "adj.",
+     "def": "relating to the measurement of psychological traits",
+     "zh": "心理計量的",
+     "example": "The study did not collect psychometric measures of confidence.",
+     "match": [
+      "psychometric"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "robustness",
+     "pos": "n.",
+     "def": "the quality of remaining reliable under different checks",
+     "zh": "穩健性；穩定性",
+     "example": "Sensitivity checks supported the robustness of the sex effect.",
+     "match": [
+      "robustness"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "conservative",
+     "pos": "adj.",
+     "def": "cautious; avoiding unnecessary early risk",
+     "zh": "保守的；謹慎的",
+     "example": "Coaches may advise male runners to start with more conservative splits.",
+     "match": [
+      "conservatively",
+      "conservative"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "operational",
+     "pos": "adj.",
+     "def": "defined in practical measurable terms for a study",
+     "zh": "操作性的；可測量定義的",
+     "example": "A 20% slowdown is an operational definition of hitting the wall.",
+     "match": [
+      "operational"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "unravel",
+     "pos": "v.",
+     "def": "to come apart; to break down after holding together",
+     "zh": "瓦解；崩壞",
+     "example": "Split data show when paced races typically unravel.",
+     "match": [
+      "unravel"
+     ],
+     "src": "聽力"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-04-2.mp3",
+    "times": [
+     [
+      0.36,
+      1.47
+     ],
+     [
+      1.69,
+      13.48
+     ],
+     [
+      13.86,
+      14.86
+     ],
+     [
+      15.64,
+      22.16
+     ],
+     [
+      22.43,
+      31.32
+     ],
+     [
+      31.64,
+      37.37
+     ],
+     [
+      37.61,
+      44.72
+     ],
+     [
+      45.0,
+      54.39
+     ],
+     [
+      55.17,
+      56.27
+     ],
+     [
+      56.47,
+      63.1
+     ],
+     [
+      63.4,
+      69.38
+     ],
+     [
+      69.59,
+      75.29
+     ],
+     [
+      75.55,
+      81.69
+     ],
+     [
+      82.11,
+      87.31
+     ],
+     [
+      88.09,
+      94.72
+     ],
+     [
+      94.99,
+      103.22
+     ],
+     [
+      103.62,
+      111.04
+     ],
+     [
+      111.27,
+      121.08
+     ],
+     [
+      121.45,
+      126.58
+     ],
+     [
+      127.36,
+      128.58
+     ],
+     [
+      128.94,
+      138.84
+     ],
+     [
+      139.14,
+      146.89
+     ],
+     [
+      147.1,
+      151.68
+     ],
+     [
+      151.93,
+      163.61
+     ],
+     [
+      164.0,
+      172.28
+     ],
+     [
+      173.06,
+      174.71
+     ],
+     [
+      174.94,
+      182.14
+     ],
+     [
+      182.46,
+      190.12
+     ],
+     [
+      190.35,
+      197.55
+     ],
+     [
+      197.83,
+      204.66
+     ],
+     [
+      204.99,
+      206.86
+     ],
+     [
+      207.07,
+      214.16
+     ]
+    ],
+    "duration": 214.8,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-10-04-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+</body>
+</html>
