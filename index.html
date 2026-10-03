@@ -1,11 +1,102 @@
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>IELTS 每日新聞練習</title>
-<style>body{font-family:-apple-system,"Noto Sans TC","PingFang TC",sans-serif;max-width:640px;margin:0 auto;padding:24px 16px;background:#f7f8fa;color:#222}
-h1{font-size:1.5rem}p{color:#666}ul{list-style:none;padding:0}li{margin:10px 0}
-a{display:block;background:#fff;border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-a:hover{box-shadow:0 2px 8px rgba(0,0,0,.15)}.d{display:block;font-weight:600;color:#2563eb}.t{display:block;margin-top:4px;font-size:.95rem}</style></head>
-<body><h1>IELTS 每日新聞練習</h1><p>共 2 天・最新在最上面</p><ul>
-<li><a href="2026-10-03.html"><span class="d">2026-10-03</span><span class="t">TSMC Weighs Multibillion-Dollar Texas Campus · Boston Marathon Training Study</span></a></li>
-<li><a href="2026-10-02.html"><span class="d">2026-10-02</span><span class="t">Micron’s Record Quarter and the Memory Squeeze · Bond Yields at 24-Year Highs</span></a></li>
-</ul><p style="text-align:center"><a href="samples.html" style="display:inline-block">🎧 語音樣本比較</a></p></body></html>
+<style>
+*{box-sizing:border-box}
+body{font-family:-apple-system,"Noto Sans TC","PingFang TC",sans-serif;max-width:680px;margin:0 auto;padding:20px 12px 32px;background:#f7f8fa;color:#222}
+h1{font-size:1.4rem;margin:0 0 4px}h2{font-size:1.05rem;margin:24px 0 8px}p.sub{color:#666;margin:0 0 14px;font-size:.9rem}
+.cal{background:#fff;border-radius:12px;padding:10px 8px 12px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.nav b{font-size:1.1rem}
+.nav button{border:0;background:#eef2ff;color:#2563eb;width:44px;height:44px;border-radius:10px;font-size:1.3rem;cursor:pointer}
+.nav button:disabled{opacity:.3;cursor:default}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.wd{text-align:center;font-size:.75rem;color:#888;padding:2px 0}
+.c{position:relative;min-height:54px;border-radius:8px;padding:3px 3px 2px;font-size:.8rem;color:#999;overflow:hidden;display:flex;flex-direction:column}
+.c.l{background:#eff6ff;color:#1e40af;text-decoration:none;border:1px solid #bfdbfe;font-weight:600}
+.c.l:hover,.c.l:focus-visible{background:#dbeafe;outline:none}
+.c.today{box-shadow:0 0 0 2px #f59e0b}
+.c.today .n{background:#f59e0b;color:#fff;border-radius:50%;width:1.5em;height:1.5em;display:inline-flex;align-items:center;justify-content:center}
+.c .n{line-height:1.5em}
+.c .ck{position:absolute;top:2px;right:4px;color:#16a34a;font-weight:700}
+.c .ck.p{color:#d97706}
+.dots{margin-top:auto;display:flex;gap:4px;padding:2px 0}
+.dots i{flex:1;height:5px;border-radius:3px;background:#bfdbfe}.dots i.f{background:#16a34a}.dots i.p{background:#fbbf24}
+.lb{display:none;font-weight:400;font-size:.62rem;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(min-width:520px){.lb{display:block}.c{min-height:74px}}
+ul{list-style:none;padding:0;margin:0}li{margin:8px 0}
+li a{display:block;background:#fff;border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+li a:hover{box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.d{display:block;font-weight:600;color:#2563eb}.t{display:block;margin-top:4px;font-size:.92rem}.t em{font-style:normal;color:#888;margin-right:4px}
+.ok{color:#16a34a;margin-left:6px}.pt{color:#d97706;margin-left:6px;font-weight:400;font-size:.8rem}
+.legend{font-size:.75rem;color:#777;margin-top:8px}
+.samples{display:inline-block;background:#fff;border-radius:10px;padding:12px 16px;text-decoration:none;color:inherit;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+</style></head>
+<body><h1>IELTS 每日新聞練習</h1><p class="sub" id="sub"></p>
+<div class="cal"><div class="nav"><button id="prev" aria-label="上個月">‹</button><b id="mt"></b><button id="next" aria-label="下個月">›</button></div>
+<div class="grid" id="grid"></div>
+<div class="legend">週一開始 · 橘框＝今天 · ✓＝兩篇皆完成（聽力＋閱讀都已提交）· 下方兩條＝Story 1 / 2（綠＝完成、黃＝進行中）· 進度存在本機</div></div>
+<h2>全部課程（最新在最上面）</h2><ul id="list"></ul>
+<p style="text-align:center;margin-top:24px"><a class="samples" href="samples.html">🎧 語音樣本比較</a></p>
+<script>
+"use strict";
+const LESSONS=[{"d": "2026-10-03", "s": [{"t": "TSMC Weighs Multibillion-Dollar Texas Campus for AI Chips", "k": "Tech · chips"}, {"t": "Boston Marathon Study: Why Cutting Run Days Can Mean Faster Times", "k": "Sport · training"}]}, {"d": "2026-10-02", "s": [{"t": "Micron’s Record Quarter and the Memory Squeeze", "k": "Tech · memory chips"}, {"t": "Bond Yields at 24-Year Highs: Why Borrowing Costs Are Surging While Stocks Hold Up", "k": "Markets · bonds"}]}];
+const MAP={};LESSONS.forEach(l=>MAP[l.d]=l);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad=n=>String(n).padStart(2,"0");
+function rd(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}}
+/* 'f' = listening+reading both submitted, 'p' = started, '' = nothing */
+function prog(id,i){
+  const o=rd("ielts-news:v2:"+id+(i?":s"+(i+1):""));
+  if(o&&typeof o==="object"){
+    const L=o.L&&o.L.done,R=o.R&&o.R.done;
+    if(L&&R)return"f";
+    if(L||R||(o.L&&o.L.ans&&Object.keys(o.L.ans).length)||(o.R&&o.R.ans&&Object.keys(o.R.ans).length))return"p";
+    return"";
+  }
+  if(i===0){            // legacy single-story key 'ielts-news:<id>' (older pages)
+    const v=rd("ielts-news:"+id);
+    if(v&&typeof v==="object"){
+      if(v.done||(v.rd&&v.rd.done)||v.submitted)return"f";
+      if(v.rd&&v.rd.ans&&Object.keys(v.rd.ans).length)return"p";
+    }
+  }
+  return"";
+}
+function dayProg(l){const p=l.s.map((_,i)=>prog(l.d,i));return{p,all:p.length>0&&p.every(x=>x==="f"),some:p.some(x=>x)}}
+const now=new Date(),todayS=now.getFullYear()+"-"+pad(now.getMonth()+1)+"-"+pad(now.getDate());
+const months=LESSONS.map(l=>l.d.slice(0,7)).concat([todayS.slice(0,7)]).sort();
+const minM=months[0],maxM=months[months.length-1];
+let cur=todayS.slice(0,7);
+function shift(ym,d){let y=+ym.slice(0,4),m=+ym.slice(5,7)-1+d;y+=Math.floor(m/12);m=((m%12)+12)%12;return y+"-"+pad(m+1)}
+function renderCal(){
+  const y=+cur.slice(0,4),m=+cur.slice(5,7);
+  document.getElementById("mt").textContent=y+" 年 "+m+" 月";
+  document.getElementById("prev").disabled=cur<=minM;document.getElementById("next").disabled=cur>=maxM;
+  let h=["一","二","三","四","五","六","日"].map(w=>'<div class="wd">'+w+'</div>').join("");
+  const lead=(new Date(y,m-1,1).getDay()+6)%7,dim=new Date(y,m,0).getDate();
+  for(let i=0;i<lead;i++)h+='<div></div>';
+  for(let d=1;d<=dim;d++){
+    const ds=y+"-"+pad(m)+"-"+pad(d),l=MAP[ds],td=ds===todayS?" today":"";
+    if(!l){h+='<div class="c'+td+'"><span class="n">'+d+'</span></div>';continue}
+    const P=dayProg(l),tip=l.s.map((s,i)=>"Story "+(i+1)+"："+s.t).join("\n");
+    const dots=P.p.map(x=>'<i class="'+x+'"></i>').join("");
+    const lbs=l.s.map((s,i)=>'<span class="lb">'+(i+1)+" "+esc(s.k||s.t)+'</span>').join("");
+    h+='<a class="c l'+td+'" href="'+ds+'.html" title="'+esc(tip)+'" aria-label="'+esc(ds+" "+tip.replace(/\n/g," "))+(P.all?"（已完成）":"")+'"><span class="n">'+d+'</span>'
+      +(P.all?'<span class="ck">✓</span>':P.some?'<span class="ck p">·</span>':'')+lbs+'<span class="dots">'+dots+'</span></a>';
+  }
+  document.getElementById("grid").innerHTML=h;
+}
+function renderList(){
+  document.getElementById("list").innerHTML=LESSONS.map(l=>{
+    const P=dayProg(l);
+    return'<li><a href="'+l.d+'.html"><span class="d">'+l.d+(P.all?'<span class="ok">✓ 已完成</span>':P.some?'<span class="pt">進行中</span>':'')+'</span>'
+      +l.s.map((s,i)=>'<span class="t"><em>S'+(i+1)+(P.p[i]==="f"?" ✓":"")+'</em>'+esc(s.t)+'</span>').join("")+'</a></li>';
+  }).join("");
+  document.getElementById("sub").textContent="共 "+LESSONS.length+" 天，每天 2 篇（聽力＋閱讀＋單字）";
+}
+document.getElementById("prev").onclick=()=>{if(cur>minM){cur=shift(cur,-1);renderCal()}};
+document.getElementById("next").onclick=()=>{if(cur<maxM){cur=shift(cur,1);renderCal()}};
+window.addEventListener("pageshow",()=>{renderCal();renderList()});   // refresh ✓ when returning via back button
+renderCal();renderList();
+</script></body></html>
