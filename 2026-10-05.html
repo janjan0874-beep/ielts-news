@@ -1,0 +1,2129 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-05",
+ "date": "2026-10-05",
+ "title": "onsemi Switches Synaptics Deal to Cash · A Narrow Market Carried by Chip Giants",
+ "stories": [
+  {
+   "title": "onsemi Rewrites Its Synaptics Takeover: Cash Instead of Shares",
+   "topic": "Chips · M&A",
+   "source": {
+    "name": "onsemi / Synaptics SEC filings (8-K, 1 Oct 2026)",
+    "url": "https://www.sec.gov/Archives/edgar/data/1097864/000114036126038294/ef20083030_ex99-1.htm",
+    "links": [
+     {
+      "name": "SEC 8-K: Amended and Restated Merger Agreement (onsemi)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1097864/000114036126038294/ef20083030_8k.htm"
+     },
+     {
+      "name": "onsemi (25 Jun 2026): onsemi to Acquire Synaptics (original all-stock deal)",
+      "url": "https://investor.onsemi.com/news-releases/news-release-details/onsemi-acquire-synaptics-enable-next-generation-intelligent"
+     },
+     {
+      "name": "SEC Form 425: onsemi investor call transcript (25 Jun 2026)",
+      "url": "https://www.sec.gov/Archives/edgar/data/817720/000114036126026472/ef20076900_form425.htm"
+     },
+     {
+      "name": "WSJ: ON Semiconductor to buy Synaptics for cash, not stock, in downsized deal",
+      "url": "https://www.wsj.com/business/deals/on-semicondcutor-to-buy-synaptics-for-cash-not-stock-in-downsized-deal-d2781e36"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead story in the chip industry: onsemi has rewritten its takeover of Synaptics, switching from shares to cash and cutting the headline value of the deal by more than a billion dollars.",
+     "Here's the report."
+    ],
+    [
+     "The original agreement was announced on the twenty-fifth of June.",
+     "Under those terms, Synaptics shareholders would have received one point three five onsemi shares for every Synaptics share they owned.",
+     "That all-stock deal carried an enterprise value of roughly seven billion dollars, and a premium of about nineteen per cent.",
+     "Synaptics investors would have ended up owning about twelve per cent of the combined company.",
+     "Now, under an amended agreement signed on the first of October, onsemi will pay one hundred and twenty-three dollars per share in cash.",
+     "The aggregate value falls to approximately five point seven billion dollars."
+    ],
+    [
+     "Why the change?",
+     "According to the companies, it followed an unsolicited competing proposal from a third party, identified in regulatory filings only as Party A.",
+     "Its identity has not been disclosed.",
+     "Synaptics says that approach arrived on the second of September.",
+     "After reviewing it, both boards unanimously backed the revised terms.",
+     "Synaptics chief executive Rahul Patel said the move to an all-cash structure gives his shareholders value certainty at a meaningful premium."
+    ],
+    [
+     "For onsemi, the arithmetic has improved.",
+     "Back in June, Mr El-Khoury had described the original offer as a low-premium, all-stock deal that kept the balance sheet flexible.",
+     "Chief executive Hassane El-Khoury said the all-cash deal delivers higher value to onsemi shareholders through a lower total cost.",
+     "Under the old structure, onsemi expected the deal to lift its adjusted earnings only within eighteen months of closing.",
+     "It now expects the transaction to be immediately accretive to adjusted earnings per share.",
+     "The company is also keeping its target of two hundred million dollars in annual synergies, and says further gains from extra sales and in-house production should follow after the first eighteen months."
+    ],
+    [
+     "Meanwhile, the money has to come from somewhere.",
+     "onsemi will use cash on hand, plus a loan commitment from Morgan Stanley of up to two point four five billion dollars.",
+     "Importantly, the deal does not depend on that financing being in place.",
+     "And because no new shares will be issued, onsemi plans to withdraw the share registration it had filed with regulators in August.",
+     "Several other conditions have also been dropped, and a Synaptics director will no longer join the onsemi board.",
+     "The strategic logic is unchanged: onsemi, best known for power and sensing chips used in cars, factories and data centres, wants Synaptics' edge A I processors and wireless technology to push into what it calls physical A I.",
+     "When the deal was first announced, onsemi said it would expand its addressable market by thirty billion dollars, to two hundred and forty-three billion dollars by twenty thirty."
+    ],
+    [
+     "There are hurdles ahead, though.",
+     "Synaptics shareholders still have to vote, and regulators outside the United States are still reviewing the deal, although the Federal Trade Commission has already approved it.",
+     "Closing is still expected by the middle of twenty twenty-seven.",
+     "That's the technology business report.",
+     "In our next bulletin, we'll look at how the memory chip shortage is reshaping prices across the industry."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "onsemi's Revised Takeover of Synaptics",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Original deal (June)"
+       },
+       {
+        "t": "Exchange ratio: [[1]] onsemi shares per Synaptics share"
+       },
+       {
+        "t": "Premium: about [[2]] %"
+       },
+       {
+        "h": "Revised deal (1 October)"
+       },
+       {
+        "t": "Price: $[[3]] per share, paid in cash"
+       },
+       {
+        "t": "New aggregate value: about $[[4]] billion"
+       },
+       {
+        "t": "Rival approach received: [[5]] September"
+       },
+       {
+        "h": "Benefits claimed by onsemi"
+       },
+       {
+        "t": "Deal now immediately [[6]] to adjusted EPS"
+       },
+       {
+        "t": "Annual synergies target: $[[7]] million"
+       },
+       {
+        "h": "Funding and strategy"
+       },
+       {
+        "t": "Morgan Stanley loan: up to $[[8]] billion"
+       },
+       {
+        "t": "Addressable market by 2030: $[[9]] billion"
+       },
+       {
+        "h": "Next steps"
+       },
+       {
+        "t": "Expected completion: mid-[[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "1.35",
+         "1.350"
+        ],
+        "ref": "one point three five onsemi shares",
+        "ev": "Under those terms, Synaptics shareholders would have received one point three five onsemi shares for every Synaptics share they owned.",
+        "zh": "原本換股比例 one point three five = 1.35 股 onsemi 換 1 股 Synaptics。"
+       },
+       {
+        "a": [
+         "19",
+         "19%",
+         "nineteen"
+        ],
+        "ref": "a premium of about nineteen per cent",
+        "ev": "That all-stock deal carried an enterprise value of roughly seven billion dollars, and a premium of about nineteen per cent.",
+        "zh": "溢價約 nineteen per cent = 19%。seven billion 是交易總值，不是溢價。"
+       },
+       {
+        "a": [
+         "123",
+         "123.00"
+        ],
+        "ref": "one hundred and twenty-three dollars per share",
+        "ev": "Now, under an amended agreement signed on the first of October, onsemi will pay one hundred and twenty-three dollars per share in cash.",
+        "zh": "新條件每股現金 one hundred and twenty-three dollars = $123。"
+       },
+       {
+        "a": [
+         "5.7",
+         "5.7 billion"
+        ],
+        "ref": "approximately five point seven billion dollars",
+        "ev": "The aggregate value falls to approximately five point seven billion dollars.",
+        "zh": "總值降至 five point seven billion = 57 億美元。seven billion（70 億）是原本的數字，為干擾項。"
+       },
+       {
+        "a": [
+         "2",
+         "2nd",
+         "second"
+        ],
+        "ref": "arrived on the second of September",
+        "ev": "Synaptics says that approach arrived on the second of September.",
+        "zh": "競爭提案在 the second of September = 9 月 2 日送達。6 月 25 日（原協議）與 10 月 1 日（修訂）都是干擾日期。"
+       },
+       {
+        "a": [
+         "accretive"
+        ],
+        "ref": "immediately accretive to adjusted earnings",
+        "ev": "It now expects the transaction to be immediately accretive to adjusted earnings per share.",
+        "zh": "accretive = 能增加（每股盈餘）的。注意拼字 a-c-c-r-e-t-i-v-e。eighteen months 是舊結構的時間點，為干擾。"
+       },
+       {
+        "a": [
+         "200",
+         "two hundred"
+        ],
+        "ref": "two hundred million dollars in annual synergies",
+        "ev": "The company is also keeping its target of two hundred million dollars in annual synergies",
+        "zh": "年度綜效目標 two hundred million = 2 億美元。"
+       },
+       {
+        "a": [
+         "2.45",
+         "2.45 billion"
+        ],
+        "ref": "two point four five billion dollars",
+        "ev": "onsemi will use cash on hand, plus a loan commitment from Morgan Stanley of up to two point four five billion dollars.",
+        "zh": "摩根士丹利貸款承諾最多 two point four five billion = 24.5 億美元。"
+       },
+       {
+        "a": [
+         "243",
+         "243 billion"
+        ],
+        "ref": "two hundred and forty-three billion dollars by twenty thirty",
+        "ev": "onsemi said it would expand its addressable market by thirty billion dollars, to two hundred and forty-three billion dollars by twenty thirty.",
+        "zh": "2030 年可服務市場達 243 billion。thirty billion 是「增加的幅度」，不是總額（干擾項）。"
+       },
+       {
+        "a": [
+         "2027"
+        ],
+        "ref": "by the middle of twenty twenty-seven",
+        "ev": "Closing is still expected by the middle of twenty twenty-seven.",
+        "zh": "預計 2027 年年中完成（the middle of twenty twenty-seven）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Why a Smaller Price Can Be a Better Deal: onsemi, Synaptics and the Economics of Cash",
+    "intro": "A competing bid forced two chipmakers to rewrite their merger. The new terms are lower on paper, yet both boards argue they leave shareholders better off.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "When onsemi agreed on 25 June 2026 to buy Synaptics, the transaction was presented as a bold strategic leap. onsemi, which makes power and sensing chips for cars, factories and AI data centres, wanted Synaptics' Edge AI processors, wireless connectivity and human-machine interface products in order to expand into what both companies call \"Physical AI\" — machines that sense, decide, act and adapt in the physical world. The original deal was an all-stock transaction with a total enterprise value of approximately $7 billion. Synaptics stockholders were to receive 1.350 onsemi shares for each share they held, a fixed exchange ratio representing a premium of about 19% to the two companies' recent volume-weighted average prices, leaving Synaptics holders with approximately 12% of the combined company. onsemi claimed the combination could expand its total addressable market by $30 billion, to $243 billion by 2030, and one Synaptics director was expected to join its board."
+     },
+     {
+      "label": "B",
+      "text": "That plan was disrupted from outside. On 2 September, Synaptics received an unsolicited, non-binding proposal from a strategic party, referred to in regulatory filings only as \"Party A\". Its identity has not been disclosed. Consistent with its fiduciary duties, the Synaptics board, together with a special committee of independent directors, reviewed the approach and engaged with the bidder. The filings stress that the committee had been formed for convenience and not as a result of any actual or perceived conflict of interest. The episode illustrates a familiar feature of public-company mergers: a signed agreement does not necessarily end the contest, because a target's directors must still weigh credible rival offers before shareholders vote. On 1 October, the original merger agreement was amended and restated in its entirety, and both boards approved the new version unanimously."
+     },
+     {
+      "label": "C",
+      "text": "The revised terms change the character of the deal. onsemi will now pay $123 per Synaptics share in cash, giving the transaction an aggregate value of approximately $5.7 billion rather than roughly $7 billion. At first glance, a lower headline figure might appear to be a defeat for Synaptics investors. Yet the value of an all-stock offer typically moves with the acquirer's share price, so the target's holders remain exposed to the buyer's future performance, while the buyer's existing owners face dilution. Cash removes much of that uncertainty. Rahul Patel, Synaptics' chief executive, argued that the all-cash structure provides \"value certainty at a meaningful premium as compared to current value.\" One technical consequence follows: according to onsemi's filing, the merger is no longer structured as a reorganisation under Section 368 of the US Internal Revenue Code."
+     },
+     {
+      "label": "D",
+      "text": "For onsemi, the arithmetic is arguably more favourable. Chief executive Hassane El-Khoury said the all-cash deal \"delivers higher value to our shareholders through lower total cost consideration.\" The original plan was expected to add to non-GAAP earnings per share only within 18 months of closing; the revised deal is expected to be immediately accretive. The company has kept its target of $200 million in annual run-rate synergies and has identified further revenue synergies and the insourcing of part of Synaptics' production, benefits it expects to realise after the initial 18 months post-close. There is a certain irony here. When the first deal was unveiled in June, El-Khoury described it as a low-premium, all-stock transaction that preserved balance-sheet flexibility, adding that using cash \"tends to be a higher premium.\" Three months later, cash appears to have become the cheaper route."
+     },
+     {
+      "label": "E",
+      "text": "Paying cash requires funding, and onsemi will draw on cash on hand together with committed debt. Morgan Stanley has agreed to provide up to $2.45 billion through a senior secured term loan, subject to customary conditions, to cover part of the price and related fees. Crucially, onsemi's obligation to complete the merger is not contingent on receiving that financing. Because no new onsemi shares will be issued, several closing conditions have disappeared: the effectiveness of onsemi's registration statement, which the company now intends to withdraw; approval for listing new shares on Nasdaq; the absence of a material adverse effect on onsemi; and closing tax opinions. The requirement to give a Synaptics director a seat on onsemi's board has also been removed. Synaptics must file a preliminary proxy statement within 10 days and hold its shareholder meeting within 30 days of learning that SEC staff have no further comments."
+     },
+     {
+      "label": "F",
+      "text": "Several hurdles remain. The transaction still requires approval from Synaptics shareholders, and although the US Federal Trade Commission has already approved it, regulators in other jurisdictions are still reviewing it; on the June investor call, onsemi noted that the normal approvals included China. Shareholders who do not vote in favour and who properly exercise appraisal rights under Delaware law may seek an independent determination of the fair value of their shares instead of accepting $123. Closing is still expected by mid-2027. The broader lesson is that deal structure can matter as much as headline price. By trading potential upside for certainty, Synaptics holders gain a fixed payout, while onsemi accepts more leverage in exchange for faster earnings accretion and full ownership of the strategic assets it wanted in the first place."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a list of requirements for completing the deal that no longer apply",
+        "a": "E",
+        "ref": "E",
+        "ev": "several closing conditions have disappeared: the effectiveness of onsemi's registration statement",
+        "zh": "E 段列出因改為現金而被刪除的交割條件（registration statement、Nasdaq 上市、MAE、稅務意見）。"
+       },
+       {
+        "q": "an earlier comment by a chief executive that seems to conflict with a later decision",
+        "a": "D",
+        "ref": "D",
+        "ev": "El-Khoury described it as a low-premium, all-stock transaction that preserved balance-sheet flexibility, adding that using cash \"tends to be a higher premium.\"",
+        "zh": "D 段：六月時 El-Khoury 說用現金通常溢價較高，如今卻改用現金——這就是 irony（看似矛盾）。"
+       },
+       {
+        "q": "a forecast of the total market the buyer hoped to serve by the end of the decade",
+        "a": "A",
+        "ref": "A",
+        "ev": "onsemi claimed the combination could expand its total addressable market by $30 billion, to $243 billion by 2030",
+        "zh": "A 段：2030 年可服務市場（total addressable market）達 2,430 億美元。end of the decade = 2030。"
+       },
+       {
+        "q": "the date on which a rival approach was received",
+        "a": "B",
+        "ref": "B",
+        "ev": "On 2 September, Synaptics received an unsolicited, non-binding proposal from a strategic party",
+        "zh": "B 段：9 月 2 日收到 Party A 的主動提案。"
+       },
+       {
+        "q": "a legal option for investors who are unhappy with the price",
+        "a": "F",
+        "ref": "F",
+        "ev": "Shareholders who do not vote in favour and who properly exercise appraisal rights under Delaware law may seek an independent determination of the fair value of their shares",
+        "zh": "F 段：appraisal rights（股份估價請求權）讓不滿價格的股東請求獨立認定公允價值。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Under the original agreement, Synaptics investors would have owned most of the combined company.",
+        "a": "False",
+        "ref": "A",
+        "ev": "leaving Synaptics holders with approximately 12% of the combined company",
+        "zh": "A 段：原協議下 Synaptics 股東只會持有合併公司約 12%，不是 most（多數），與原文相反，False。"
+       },
+       {
+        "q": "Party A offered Synaptics shareholders more than $123 per share.",
+        "a": "Not Given",
+        "ref": "B",
+        "ev": "Synaptics received an unsolicited, non-binding proposal from a strategic party, referred to in regulatory filings only as \"Party A\". Its identity has not been disclosed.",
+        "zh": "文章只說有主動、不具約束力的提案，完全沒提 Party A 的出價金額，也沒和 $123 比較——典型 Not Given 陷阱。"
+       },
+       {
+        "q": "onsemi now expects the deal to boost its adjusted earnings per share sooner than it originally predicted.",
+        "a": "True",
+        "ref": "D",
+        "ev": "The original plan was expected to add to non-GAAP earnings per share only within 18 months of closing; the revised deal is expected to be immediately accretive.",
+        "zh": "D 段：原本 18 個月內才增益，現在 immediately accretive（立即增益），比原預測更快，True。"
+       },
+       {
+        "q": "onsemi may abandon the merger if the Morgan Stanley loan is not provided.",
+        "a": "False",
+        "ref": "E",
+        "ev": "Crucially, onsemi's obligation to complete the merger is not contingent on receiving that financing.",
+        "zh": "E 段：完成併購的義務不以取得融資為條件（not contingent），所以不能因貸款落空而放棄，False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "How the revised deal works",
+      "lines": [
+       {
+        "t": "Synaptics' chief executive argued that the switch to cash gives investors value [[1]]. onsemi will pay with cash on hand and a senior secured [[2]] arranged by Morgan Stanley. Because no new shares will be issued, onsemi intends to withdraw its [[3]]. Investors who reject the price may use [[4]] under Delaware law."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "certainty"
+        ],
+        "ref": "C",
+        "ev": "the all-cash structure provides \"value certainty at a meaningful premium as compared to current value.\"",
+        "zh": "C 段 Patel 的話：value certainty（價值確定性）；填 certainty。"
+       },
+       {
+        "a": [
+         "term loan"
+        ],
+        "ref": "E",
+        "ev": "Morgan Stanley has agreed to provide up to $2.45 billion through a senior secured term loan",
+        "zh": "E 段：senior secured term loan（優先擔保定期貸款）；填 term loan（兩字）。"
+       },
+       {
+        "a": [
+         "registration statement"
+        ],
+        "ref": "E",
+        "ev": "the effectiveness of onsemi's registration statement, which the company now intends to withdraw",
+        "zh": "E 段：不再發新股，所以撤回 registration statement（證券註冊申報書）。"
+       },
+       {
+        "a": [
+         "appraisal rights"
+        ],
+        "ref": "F",
+        "ev": "who properly exercise appraisal rights under Delaware law",
+        "zh": "F 段：appraisal rights（估價請求權）；兩字。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "unsolicited",
+     "pos": "adj.",
+     "def": "not asked for or invited",
+     "zh": "主動提出的；未經邀請的",
+     "example": "Synaptics received an unsolicited proposal from a third party.",
+     "match": [
+      "unsolicited"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "accretive",
+     "pos": "adj.",
+     "def": "adding to earnings per share after a deal",
+     "zh": "（對每股盈餘）有增益的",
+     "example": "The revised deal is expected to be immediately accretive.",
+     "match": [
+      "accretive"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "aggregate",
+     "pos": "adj.",
+     "def": "formed by adding together several amounts; total",
+     "zh": "總計的；合計的",
+     "example": "The aggregate value of the deal fell to about $5.7 billion.",
+     "match": [
+      "aggregate"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "synergy",
+     "pos": "n.",
+     "def": "extra value created when two businesses combine",
+     "zh": "綜效；協同效應",
+     "example": "onsemi kept its target of $200 million in annual synergies.",
+     "match": [
+      "synergies",
+      "synergy"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "premium",
+     "pos": "n.",
+     "def": "the amount by which a price exceeds market value",
+     "zh": "溢價",
+     "example": "The all-stock offer carried a premium of about 19%.",
+     "match": [
+      "premium"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "unanimously",
+     "pos": "adv.",
+     "def": "with the agreement of everyone involved",
+     "zh": "一致地；無異議地",
+     "example": "Both boards unanimously backed the revised terms.",
+     "match": [
+      "unanimously"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "addressable market",
+     "pos": "n.",
+     "def": "the total revenue opportunity a company could realistically target",
+     "zh": "可服務（可觸及）市場",
+     "example": "onsemi said the deal would expand its addressable market.",
+     "match": [
+      "addressable market"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "hurdle",
+     "pos": "n.",
+     "def": "an obstacle that must be overcome",
+     "zh": "障礙；難關",
+     "example": "Regulatory approval is one of the hurdles ahead.",
+     "match": [
+      "hurdles",
+      "hurdle"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "fiduciary",
+     "pos": "adj.",
+     "def": "involving a legal duty to act in another party's best interests",
+     "zh": "受託的；（董事）忠實義務的",
+     "example": "Directors reviewed the rival bid consistent with their fiduciary duties.",
+     "match": [
+      "fiduciary"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "dilution",
+     "pos": "n.",
+     "def": "a reduction in existing owners' share when new shares are issued",
+     "zh": "（股權）稀釋",
+     "example": "Paying in shares can mean dilution for the buyer's owners.",
+     "match": [
+      "dilution"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "contingent",
+     "pos": "adj.",
+     "def": "dependent on something else happening",
+     "zh": "取決於…的；以…為條件的",
+     "example": "Completion is not contingent on the loan being provided.",
+     "match": [
+      "contingent"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "insourcing",
+     "pos": "n.",
+     "def": "bringing work back inside a company instead of outsourcing it",
+     "zh": "內部生產；內包",
+     "example": "onsemi plans the insourcing of part of Synaptics' production.",
+     "match": [
+      "insourcing"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "rival",
+     "pos": "adj.",
+     "def": "competing with another for the same objective",
+     "zh": "競爭的；對手的",
+     "example": "Directors must weigh credible rival offers.",
+     "match": [
+      "rival"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "leverage",
+     "pos": "n.",
+     "def": "the use of borrowed money; the level of debt",
+     "zh": "財務槓桿；負債程度",
+     "example": "onsemi accepts more leverage to complete the deal.",
+     "match": [
+      "leverage"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "arithmetic",
+     "pos": "n.",
+     "def": "the calculation of costs and benefits in a decision",
+     "zh": "算盤；（利弊）計算",
+     "example": "For onsemi, the arithmetic has improved.",
+     "match": [
+      "arithmetic"
+     ],
+     "src": "聽力"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-05-1.mp3",
+    "times": [
+     [
+      0.36,
+      0.98
+     ],
+     [
+      1.2,
+      11.06
+     ],
+     [
+      11.44,
+      12.41
+     ],
+     [
+      13.19,
+      16.14
+     ],
+     [
+      16.41,
+      23.41
+     ],
+     [
+      23.73,
+      29.95
+     ],
+     [
+      30.06,
+      34.52
+     ],
+     [
+      34.92,
+      42.02
+     ],
+     [
+      42.35,
+      46.5
+     ],
+     [
+      47.28,
+      48.31
+     ],
+     [
+      48.73,
+      56.93
+     ],
+     [
+      57.14,
+      59.34
+     ],
+     [
+      59.55,
+      62.73
+     ],
+     [
+      63.04,
+      66.89
+     ],
+     [
+      67.11,
+      74.56
+     ],
+     [
+      75.34,
+      77.79
+     ],
+     [
+      78.07,
+      84.93
+     ],
+     [
+      85.16,
+      91.96
+     ],
+     [
+      92.25,
+      98.31
+     ],
+     [
+      98.64,
+      103.31
+     ],
+     [
+      103.55,
+      113.75
+     ],
+     [
+      114.53,
+      117.07
+     ],
+     [
+      117.28,
+      123.6
+     ],
+     [
+      123.86,
+      127.97
+     ],
+     [
+      128.28,
+      135.03
+     ],
+     [
+      135.25,
+      141.21
+     ],
+     [
+      141.48,
+      154.95
+     ],
+     [
+      155.35,
+      164.73
+     ],
+     [
+      165.51,
+      167.18
+     ],
+     [
+      167.42,
+      176.44
+     ],
+     [
+      176.77,
+      179.96
+     ],
+     [
+      180.2,
+      182.18
+     ],
+     [
+      182.44,
+      187.81
+     ]
+    ],
+    "duration": 188.5,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-10-05-1-words/"
+   }
+  },
+  {
+   "title": "A Narrow Market: A Few Chip Giants Carry the S&P 500",
+   "topic": "Markets · breadth",
+   "source": {
+    "name": "CNBC / Motley Fool / ETF.net",
+    "url": "https://www.cnbc.com/2026/10/02/stock-market-next-week-outlook-for-oct-5-9-2026-.html",
+    "links": [
+     {
+      "name": "Motley Fool (via Longbridge): 4 stocks delivered about half of the S&P 500's gain this year",
+      "url": "https://longbridge.com/en/news/300846303"
+     },
+     {
+      "name": "ETF.net: Equal-weight S&P 500 fund down 4.6% in a month the S&P 500 fund gained 0.9%",
+      "url": "https://etf.net/news/the-equal-weight-s-p-500-fund-is-down-4-6-in-a-month-the-s-p-500-fund-gained-0-9-2026-09-25"
+     },
+     {
+      "name": "ETF.net: Equal-weight S&P 500 fund fell 4.8% over a month while SPY rose 0.4%",
+      "url": "https://etf.net/news/equal-weight-s-p-500-fund-fell-4-8-over-a-month-while-spy-rose-0-4-2026-09-24"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Hello, and welcome to the markets wrap.",
+     "Wall Street's headline indexes are flirting with records, but beneath the surface most stocks have been heading the other way, and investors are asking whether that gap is a warning or an opportunity.",
+     "Here's the report."
+    ],
+    [
+     "Start with September.",
+     "According to Bespoke Investment Group, cited by C N B C, the equal-weight S and P five hundred fund lagged the standard, cap-weighted fund by four point six percentage points last month.",
+     "In data going back to two thousand and three, only two months were worse: March twenty twenty, and March twenty twenty-three.",
+     "Roughly three-quarters of the stocks in the index actually fell in September, even as the index itself finished near all-time highs."
+    ],
+    [
+     "So who carried the load?",
+     "Mostly chipmakers.",
+     "A Motley Fool analysis published on Friday estimates that four stocks, Nvidia, Apple, Micron and A M D, delivered about half of the S and P five hundred's gain of roughly twelve per cent this year.",
+     "Micron's shares are up around two hundred and eighty-five per cent in twenty twenty-six, and A M D's about one hundred and eighty-eight per cent.",
+     "By contrast, the equal-weight index, a stand-in for the average company, is up only about nine per cent.",
+     "In other words, the index fund has done well, but the typical stock has not."
+    ],
+    [
+     "Meanwhile, everything else has been squeezed from two directions.",
+     "Art Hogan, chief market strategist at B Riley Wealth, described a one-two punch of higher energy prices and higher Treasury yields that has kept investors on the sidelines.",
+     "Last week, the Nasdaq Composite climbed to a fresh high, yet the Dow lost one point three per cent and the S and P five hundred slipped zero point three per cent.",
+     "Smaller companies have struggled too, with the Russell two thousand fund down about five per cent over the month to late September."
+    ],
+    [
+     "Some strategists see a silver lining.",
+     "Sam Stovall, chief investment strategist at C F R A Research, says only twelve per cent of the one hundred and fifty-three sub-industries in the broader S and P fifteen hundred are trading above both their fifty-day and two-hundred-day moving averages.",
+     "He says investors traditionally start nibbling at stocks once that figure drops below ten per cent.",
+     "His argument is that once most people are heading for the exit, the worst is probably over, or soon will be.",
+     "The calendar may help, as well: the Stock Traders' Almanac shows an average October gain of three per cent for the S and P five hundred and the Dow in midterm election years since nineteen fifty."
+    ],
+    [
+     "There are risks on both sides, though.",
+     "Jason Goepfert of SentimenTrader pointed out that on one day last month, the index rose at least one per cent while sitting near a high, yet more of its members hit new lows than new highs, a pattern he had seen only in nineteen twenty-nine and nineteen ninety-nine.",
+     "And if the chip stocks behind this year's gain give some of it back, index fund holders could feel it more than the average stock would.",
+     "Looking ahead, the Fed releases the minutes of its September meeting on Wednesday, and earnings season gets going with PepsiCo on Thursday and Delta Air Lines on Friday.",
+     "That's the markets wrap.",
+     "In our next wrap, we'll ask whether company earnings can broaden this rally beyond a handful of giants."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "A Narrow Stock Market",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "September"
+       },
+       {
+        "t": "Equal-weight fund trailed cap-weighted fund by [[1]] percentage points"
+       },
+       {
+        "t": "Only worse months since 2003: March 2020 and March [[2]]"
+       },
+       {
+        "t": "Proportion of index stocks that fell: roughly [[3]]"
+       },
+       {
+        "h": "This year's leaders"
+       },
+       {
+        "t": "Four stocks supplied about [[4]] of the S&P 500's gain"
+       },
+       {
+        "t": "Micron shares in 2026: up about [[5]] %"
+       },
+       {
+        "t": "Equal-weight index this year: up about [[6]] %"
+       },
+       {
+        "h": "Pressures on other stocks"
+       },
+       {
+        "t": "Higher energy prices and higher Treasury [[7]]"
+       },
+       {
+        "t": "Dow last week: down [[8]] %"
+       },
+       {
+        "h": "Reasons for hope"
+       },
+       {
+        "t": "Sub-industries above both moving averages: [[9]] %"
+       },
+       {
+        "t": "Average October gain in midterm years (since 1950): [[10]] %"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "4.6"
+        ],
+        "ref": "four point six percentage points",
+        "ev": "the equal-weight S and P five hundred fund lagged the standard, cap-weighted fund by four point six percentage points last month.",
+        "zh": "等權重基金落後市值加權基金 four point six = 4.6 個百分點。"
+       },
+       {
+        "a": [
+         "2023"
+        ],
+        "ref": "March twenty twenty, and March twenty twenty-three",
+        "ev": "only two months were worse: March twenty twenty, and March twenty twenty-three.",
+        "zh": "表格已給 March 2020，空格是另一個：March twenty twenty-three = 2023。two thousand and three（2003）是資料起點，為干擾。"
+       },
+       {
+        "a": [
+         "three-quarters",
+         "three quarters",
+         "3/4",
+         "75%",
+         "75"
+        ],
+        "ref": "Roughly three-quarters of the stocks",
+        "ev": "Roughly three-quarters of the stocks in the index actually fell in September",
+        "zh": "九月約 three-quarters（四分之三）的成分股下跌。"
+       },
+       {
+        "a": [
+         "half",
+         "a half",
+         "50%",
+         "1/2"
+        ],
+        "ref": "delivered about half of the S and P",
+        "ev": "four stocks, Nvidia, Apple, Micron and A M D, delivered about half of the S and P five hundred's gain of roughly twelve per cent this year.",
+        "zh": "四檔股票貢獻約 half（一半）的漲幅。twelve per cent 是指數今年漲幅，不是答案。"
+       },
+       {
+        "a": [
+         "285",
+         "285%"
+        ],
+        "ref": "two hundred and eighty-five per cent",
+        "ev": "Micron's shares are up around two hundred and eighty-five per cent in twenty twenty-six",
+        "zh": "Micron 今年漲約 285%。188% 是 AMD，為干擾項。"
+       },
+       {
+        "a": [
+         "9",
+         "9%",
+         "nine"
+        ],
+        "ref": "is up only about nine per cent",
+        "ev": "By contrast, the equal-weight index, a stand-in for the average company, is up only about nine per cent.",
+        "zh": "等權重指數今年約 +9%。12% 是市值加權 S&P 500，為干擾項。"
+       },
+       {
+        "a": [
+         "yields",
+         "yield"
+        ],
+        "ref": "higher Treasury yields",
+        "ev": "described a one-two punch of higher energy prices and higher Treasury yields that has kept investors on the sidelines.",
+        "zh": "Hogan 說的「一二連擊」：能源價格上升＋美債 yields（殖利率）上升。"
+       },
+       {
+        "a": [
+         "1.3",
+         "1.3%"
+        ],
+        "ref": "the Dow lost one point three per cent",
+        "ev": "yet the Dow lost one point three per cent and the S and P five hundred slipped zero point three per cent.",
+        "zh": "道瓊上週跌 one point three = 1.3%。0.3% 是 S&P 500，為干擾項。"
+       },
+       {
+        "a": [
+         "12",
+         "12%",
+         "twelve"
+        ],
+        "ref": "only twelve per cent of the one hundred and fifty-three sub-industries",
+        "ev": "only twelve per cent of the one hundred and fifty-three sub-industries in the broader S and P fifteen hundred are trading above both their fifty-day and two-hundred-day moving averages.",
+        "zh": "只有 12% 的子產業站上兩條均線。153 是子產業總數、10% 是「開始買進」的門檻，都是干擾。"
+       },
+       {
+        "a": [
+         "3",
+         "3%",
+         "three"
+        ],
+        "ref": "an average October gain of three per cent",
+        "ev": "the Stock Traders' Almanac shows an average October gain of three per cent for the S and P five hundred and the Dow in midterm election years since nineteen fifty.",
+        "zh": "期中選舉年的十月平均上漲 three per cent = 3%。1950 是統計起點。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "When the Index and the Average Stock Part Company",
+    "intro": "The S&P 500 has spent the autumn near record highs, yet most of its members have been falling. Analysts disagree on whether the divergence is a danger signal or the prelude to a broader rally.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Most investors who buy an S&P 500 index fund assume they own \"the market\". In one sense they do: a standard fund holds all 500 companies. But it holds them in proportion to their market value, so the largest firms exert the most influence on its returns. An equal-weight fund owns the same companies yet gives each the same weight, which makes it a reasonable stand-in for the average stock. The difference in composition is striking. According to ETF.net, technology accounted for 39% of the cap-weighted SPY fund in late September but only 17% of the equal-weight RSP fund. Going into 2026, Nvidia made up about 7.8% of the Vanguard S&P 500 ETF and Apple about 6.9% — together almost 15% of the money — according to an analysis published by the Motley Fool. When a handful of giants move, the whole index moves with them."
+     },
+     {
+      "label": "B",
+      "text": "For most of this year, that concentration did not seem to matter, because the average stock was keeping pace. At the end of August, the equal-weight index was up around 14% for the year, compared with about 12% for its cap-weighted sibling, and it held the lead until the middle of September. Then the two diverged sharply. Bespoke Investment Group, cited by CNBC, found that the equal-weight ETF lagged the cap-weighted fund by 4.6 percentage points in September, a margin exceeded in only two other months since 2003: March 2020 and March 2023. Around three-quarters of the stocks in the index fell over the month, even though the S&P 500 itself ended September near all-time highs."
+     },
+     {
+      "label": "C",
+      "text": "Who supplied the strength? The Motley Fool analysis estimates that four stocks — Nvidia, Apple, Micron and AMD — delivered about half of the S&P 500's gain of roughly 12% in 2026, while the equal-weight index has risen only about 9%. Micron and AMD each began the year at a little over half a percent of the fund, but Micron's shares have climbed around 285% and AMD's about 188%; by the author's calculation, Micron's weight in the index has more than tripled since January. The rest of the index, about 84% of the money in January, rose roughly 7% together. Not every giant helped, however. Tesla shares have fallen around 21% this year and Microsoft has gained only about 6%, laggards that probably prevented the gap from being even wider."
+     },
+     {
+      "label": "D",
+      "text": "Macroeconomic pressure explains much of the weakness elsewhere. CNBC reported that a five-week global bond rout and crude oil near $100 a barrel had hurt the parts of the market most sensitive to interest rates and the economy. \"That one-two punch of higher energy prices and higher Treasury yields has certainly kept investors on the sidelines over the course of the last month,\" said Art Hogan, chief market strategist at B. Riley Wealth. Sector mix amplified the effect: the equal-weight fund carries more utilities and real estate, sectors that ETF.net said were down 8.4% and 7.4% respectively over the month to 24 September. Smaller companies fared little better, with the Russell 2000 fund down 5.4% over the month to 25 September."
+     },
+     {
+      "label": "E",
+      "text": "Yet poor breadth is not necessarily bearish. CNBC noted that it could also mean the market is becoming washed out, paving the way for a rally into year-end, especially if earnings prove stronger than expected. Sam Stovall, chief investment strategist at CFRA Research, observed that only 12% of the 153 sub-industries in the S&P 1500 were trading above both their 50- and 200-day moving averages, and that investors traditionally begin nibbling at stocks once that momentum figure falls below 10%. Once a majority of people decide to get out, he argued, \"then the worst is probably over, or soon to be over.\" Seasonality offers modest encouragement: the Stock Traders' Almanac shows an average gain of 3% for both the S&P 500 and the Dow in midterm election-year Octobers since 1950."
+     },
+     {
+      "label": "F",
+      "text": "Others are more cautious. Jason Goepfert, founder of SentimenTrader, said that on 21 September the S&P 500 rose at least 1% while within 1% of a high, yet more of its members were at new lows than at new highs; the only other such days he named were 23 July 1929 and 21 December 1999. Matt Phillips, however, wrote that this was one measure among others, and that the share of stocks above their 200-day average had weakened, but not to a particularly severe level. For index-fund owners, the practical implication is two-sided. A cap-weighted fund has done its job by holding winners at full size, but if the chip stocks behind this year's gains give some of them back, such a fund might feel it more than the average stock would. The Fed's September minutes and early earnings from PepsiCo and Delta Air Lines may show whether leadership can broaden."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison of how much of two funds is invested in one sector",
+        "a": "A",
+        "ref": "A",
+        "ev": "technology accounted for 39% of the cap-weighted SPY fund in late September but only 17% of the equal-weight RSP fund",
+        "zh": "A 段：科技股在 SPY 占 39%、在 RSP 只占 17%。"
+       },
+       {
+        "q": "an account of how the average stock lost an advantage it had held for months",
+        "a": "B",
+        "ref": "B",
+        "ev": "it held the lead until the middle of September. Then the two diverged sharply.",
+        "zh": "B 段：等權重指數領先到九月中，之後大幅落後。"
+       },
+       {
+        "q": "two large companies whose weak performance limited the gap",
+        "a": "C",
+        "ref": "C",
+        "ev": "Tesla shares have fallen around 21% this year and Microsoft has gained only about 6%, laggards that probably prevented the gap from being even wider.",
+        "zh": "C 段：Tesla、Microsoft 表現落後，反而讓差距沒有更大。"
+       },
+       {
+        "q": "a level that some investors treat as a signal to begin buying",
+        "a": "E",
+        "ref": "E",
+        "ev": "investors traditionally begin nibbling at stocks once that momentum figure falls below 10%",
+        "zh": "E 段：動能指標跌破 10% 時，投資人通常開始小量買進（nibbling）。"
+       },
+       {
+        "q": "a comparison between a recent trading day and two dates from the twentieth century",
+        "a": "F",
+        "ref": "F",
+        "ev": "the only other such days he named were 23 July 1929 and 21 December 1999",
+        "zh": "F 段：Goepfert 把 9 月 21 日與 1929、1999 年（皆為 20 世紀）的兩個交易日相比。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Before mid-September, the equal-weight index had been outperforming the cap-weighted index in 2026.",
+        "a": "True",
+        "ref": "B",
+        "ev": "At the end of August, the equal-weight index was up around 14% for the year, compared with about 12% for its cap-weighted sibling, and it held the lead until the middle of September.",
+        "zh": "B 段：八月底等權重 +14% 對 +12%，且領先到九月中，True。"
+       },
+       {
+        "q": "Utilities and real estate rose in value during the month to late September.",
+        "a": "False",
+        "ref": "D",
+        "ev": "sectors that ETF.net said were down 8.4% and 7.4% respectively over the month to 24 September",
+        "zh": "D 段：公用事業與不動產分別下跌 8.4% 與 7.4%，與「上漲」相反，False。"
+       },
+       {
+        "q": "Sam Stovall predicts that the S&P 500 will set a new record before the end of October.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "Once a majority of people decide to get out, he argued, \"then the worst is probably over, or soon to be over.\"",
+        "zh": "Stovall 只說最壞情況可能已過去，沒有預測十月底前創新高——看似相關但文中沒說，Not Given。"
+       },
+       {
+        "q": "Matt Phillips described the fall in the share of stocks above their 200-day average as particularly severe.",
+        "a": "False",
+        "ref": "F",
+        "ev": "the share of stocks above their 200-day average had weakened, but not to a particularly severe level.",
+        "zh": "F 段：Phillips 明說「not to a particularly severe level」，與題目相反，False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Concentration, pressure and possible recovery",
+      "lines": [
+       {
+        "t": "A standard index fund holds companies in proportion to their [[1]], so a few giants dominate its returns. Outside these leaders, stocks have been hurt by a global bond [[2]] and expensive oil. Some analysts argue that the market is becoming [[3]], which could allow a year-end rally, particularly if [[4]] are stronger than expected."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "market value"
+        ],
+        "ref": "A",
+        "ev": "But it holds them in proportion to their market value",
+        "zh": "A 段：in proportion to their market value；填 market value。"
+       },
+       {
+        "a": [
+         "rout"
+        ],
+        "ref": "D",
+        "ev": "a five-week global bond rout and crude oil near $100 a barrel",
+        "zh": "D 段：global bond rout（全球債市崩跌）；填 rout。"
+       },
+       {
+        "a": [
+         "washed out"
+        ],
+        "ref": "E",
+        "ev": "it could also mean the market is becoming washed out",
+        "zh": "E 段：washed out（賣壓宣洩殆盡）；兩字。"
+       },
+       {
+        "a": [
+         "earnings"
+        ],
+        "ref": "E",
+        "ev": "especially if earnings prove stronger than expected",
+        "zh": "E 段：earnings prove stronger than expected；填 earnings。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "breadth",
+     "pos": "n.",
+     "def": "how many stocks are taking part in a market move",
+     "zh": "（市場）廣度；參與度",
+     "example": "Poor breadth means most stocks are not joining the rally.",
+     "match": [
+      "breadth"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "lag",
+     "pos": "v.",
+     "def": "to perform worse than or fall behind something",
+     "zh": "落後；表現不如",
+     "example": "The equal-weight fund lagged the cap-weighted fund.",
+     "match": [
+      "lagged",
+      "lag"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "stand-in",
+     "pos": "n.",
+     "def": "something used to represent something else",
+     "zh": "代表；替代指標",
+     "example": "The equal-weight index is a stand-in for the average company.",
+     "match": [
+      "stand-in"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "flirt with",
+     "pos": "phr. v.",
+     "def": "to come close to reaching a level",
+     "zh": "逼近；接近（某水準）",
+     "example": "Headline indexes are flirting with records.",
+     "match": [
+      "flirting with"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "on the sidelines",
+     "pos": "phr.",
+     "def": "not taking part; waiting before acting",
+     "zh": "觀望；按兵不動",
+     "example": "Higher yields have kept investors on the sidelines.",
+     "match": [
+      "on the sidelines"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "silver lining",
+     "pos": "n.",
+     "def": "a hopeful aspect of a bad situation",
+     "zh": "一線希望；好的一面",
+     "example": "Some strategists see a silver lining in poor breadth.",
+     "match": [
+      "silver lining"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "nibble",
+     "pos": "v.",
+     "def": "to buy small amounts cautiously",
+     "zh": "小量試探性買進",
+     "example": "Investors start nibbling at stocks below 10%.",
+     "match": [
+      "nibbling"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "squeeze",
+     "pos": "v.",
+     "def": "to put pressure on; to reduce",
+     "zh": "擠壓；施壓",
+     "example": "Everything else has been squeezed from two directions.",
+     "match": [
+      "squeezed"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "concentration",
+     "pos": "n.",
+     "def": "the gathering of most of something in a few places",
+     "zh": "集中（度）",
+     "example": "That concentration did not seem to matter until September.",
+     "match": [
+      "concentration"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "diverge",
+     "pos": "v.",
+     "def": "to move in different directions",
+     "zh": "分歧；背離",
+     "example": "Then the two indexes diverged sharply.",
+     "match": [
+      "diverged"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "laggard",
+     "pos": "n.",
+     "def": "a company or asset that performs worse than its peers",
+     "zh": "落後者；落後股",
+     "example": "Tesla and Microsoft were laggards among the giants.",
+     "match": [
+      "laggards"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "rout",
+     "pos": "n.",
+     "def": "a sudden, heavy fall in prices",
+     "zh": "崩跌；潰敗",
+     "example": "A five-week global bond rout hurt rate-sensitive stocks.",
+     "match": [
+      "rout"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "amplify",
+     "pos": "v.",
+     "def": "to make an effect larger or stronger",
+     "zh": "放大；加劇",
+     "example": "Sector mix amplified the effect on the equal-weight fund.",
+     "match": [
+      "amplified"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "washed out",
+     "pos": "adj.",
+     "def": "having had most selling pressure already exhausted",
+     "zh": "賣壓宣洩殆盡的",
+     "example": "The market may be becoming washed out.",
+     "match": [
+      "washed out"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "bearish",
+     "pos": "adj.",
+     "def": "expecting or signalling falling prices",
+     "zh": "看跌的；偏空的",
+     "example": "Poor breadth is not necessarily bearish.",
+     "match": [
+      "bearish"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-05-2.mp3",
+    "times": [
+     [
+      0.36,
+      2.72
+     ],
+     [
+      2.98,
+      12.54
+     ],
+     [
+      12.92,
+      13.97
+     ],
+     [
+      14.75,
+      16.07
+     ],
+     [
+      16.3,
+      26.51
+     ],
+     [
+      26.91,
+      33.57
+     ],
+     [
+      33.89,
+      40.76
+     ],
+     [
+      41.54,
+      42.96
+     ],
+     [
+      43.41,
+      44.72
+     ],
+     [
+      44.92,
+      56.44
+     ],
+     [
+      56.82,
+      63.77
+     ],
+     [
+      63.98,
+      70.09
+     ],
+     [
+      70.46,
+      74.85
+     ],
+     [
+      75.63,
+      79.13
+     ],
+     [
+      79.36,
+      88.49
+     ],
+     [
+      88.84,
+      96.84
+     ],
+     [
+      97.11,
+      103.11
+     ],
+     [
+      103.89,
+      106.07
+     ],
+     [
+      106.31,
+      118.87
+     ],
+     [
+      119.28,
+      124.22
+     ],
+     [
+      124.46,
+      130.14
+     ],
+     [
+      130.44,
+      140.01
+     ],
+     [
+      140.79,
+      142.98
+     ],
+     [
+      143.24,
+      156.18
+     ],
+     [
+      156.56,
+      162.76
+     ],
+     [
+      162.98,
+      171.7
+     ],
+     [
+      172.05,
+      173.34
+     ],
+     [
+      173.62,
+      178.94
+     ]
+    ],
+    "duration": 179.6,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-05-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+</body>
+</html>
