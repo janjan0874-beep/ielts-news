@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-06",
+ "date": "2026-10-06",
+ "title": "Losing the Dark: Light Pollution and Wildlife · OPEC+ Holds Oil Targets Above $100",
+ "stories": [
+  {
+   "title": "Losing the Dark: Night-Time Light Is One of the Least Regulated Threats to Wildlife",
+   "topic": "Environment · light pollution",
+   "source": {
+    "name": "Nature Reviews Biodiversity: Understanding and managing ecological light pollution (5 Oct 2026)",
+    "url": "https://www.nature.com/articles/s44358-026-00206-5",
+    "links": [
+     {
+      "name": "IGB Berlin: Light pollution in the Federal Nature Conservation Act (22 Jun 2026)",
+      "url": "https://www.igb-berlin.de/en/news/light-pollution-federal-nature-conservation-act"
+     },
+     {
+      "name": "IGB Berlin: Light pollution research overview",
+      "url": "https://www.igb-berlin.de/en/light-pollution"
+     },
+     {
+      "name": "Science (Kyba et al., 2023): Citizen scientists report global rapid reductions in the visibility of stars",
+      "url": "https://www.science.org/doi/10.1126/science.abq7781"
+     },
+     {
+      "name": "NOIRLab: Stars disappear before our eyes, citizen scientists report",
+      "url": "https://noirlab.edu/public/news/noirlab2302/"
+     },
+     {
+      "name": "Science News: Around the world, birds sing longer in light-polluted areas (Pease & Gilbert, 2025)",
+      "url": "https://www.sciencenews.org/article/birds-sing-longer-light-pollution"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Scientists say the lights we leave on at night have become one of the fastest-growing threats to wildlife, and one of the least controlled.",
+     "Here's our environment report."
+    ],
+    [
+     "The warning comes in a major review published on the fifth of October in the journal Nature Reviews Biodiversity.",
+     "The team is led by researchers at the Leibniz Institute of Freshwater Ecology and Inland Fisheries in Berlin.",
+     "They describe artificial light at night as among the fastest-growing, yet least regulated, forms of global environmental change.",
+     "In their words, it disrupts biological processes from genes to entire ecosystems."
+    ],
+    [
+     "Why does darkness matter so much?",
+     "According to the Berlin institute, about thirty per cent of all vertebrates are nocturnal.",
+     "Among invertebrates, such as insects, the figure is more than sixty per cent.",
+     "Over millions of years, these species have adapted to life in the dark."
+    ],
+    [
+     "And the night is getting brighter, fast.",
+     "In a study published in the journal Science in twenty twenty-three, researchers analysed fifty-one thousand, three hundred and fifty-one observations made by citizen scientists.",
+     "The volunteers simply compared the stars they could see with a set of sky charts.",
+     "Satellite data suggest that the light seen from space is rising by around two per cent a year.",
+     "The volunteers' reports, by contrast, pointed to a rise of between seven and ten per cent a year, with a central estimate of nine point six per cent.",
+     "At that pace, the brightness of the sky doubles roughly every eight years.",
+     "Over an eighteen-year childhood, the authors calculate, a place with two hundred and fifty visible stars would be left with about one hundred.",
+     "They put the gap partly down to modern LED lighting, which satellites do not fully detect."
+    ],
+    [
+     "Meanwhile, wildlife is already adjusting.",
+     "Last year, two American ecologists, Brent Pease and Neil Gilbert, used a global network of audio sensors to study five hundred and eighty-three bird species.",
+     "In the brightest places, birds sang for about fifty minutes longer each day than in the darkest.",
+     "Eighteen of those extra minutes came in the morning, and thirty-two in the evening.",
+     "Dr Gilbert said the team had expected some adjustment, but not an effect this large.",
+     "It was strongest in species with larger eyes."
+    ],
+    [
+     "So what can be done?",
+     "The review sets out a hierarchy of solutions, ranked by how effective they are.",
+     "At the top is elimination: getting rid of lighting that simply isn't needed.",
+     "Next come limits on where and when lights are used.",
+     "Changing the colour of the light, known as spectral tuning, comes last.",
+     "The authors also list six research priorities, from standard ways of measuring light to long-term monitoring networks."
+    ],
+    [
+     "Still, the biggest gap may be a legal one.",
+     "The authors warn that ecological evidence remains weakly embedded in lighting regulation and planning.",
+     "Germany is one country trying to close that gap.",
+     "It added a light-protection clause to its nature conservation law in twenty twenty-one.",
+     "But the clause only takes effect once detailed rules are issued, and the federal government has said those rules should arrive by twenty twenty-seven.",
+     "Researchers advising the government found that significant ecological effects can occur at light levels below one lux."
+    ],
+    [
+     "Balancing that protection against people's need for light will involve trade-offs, though.",
+     "That's the environment report.",
+     "In our next bulletin, we'll look at how cities are rethinking their street lighting."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Light Pollution and Wildlife",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The new review"
+       },
+       {
+        "t": "Published in the journal Nature Reviews [[1]]"
+       },
+       {
+        "t": "Night-time light: growing fast, but one of the least [[2]] forms of environmental change"
+       },
+       {
+        "h": "Why darkness matters"
+       },
+       {
+        "t": "Vertebrates that are nocturnal: about [[3]] %"
+       },
+       {
+        "h": "Evidence of a brighter sky (2023 study)"
+       },
+       {
+        "t": "Number of citizen-science observations: [[4]]"
+       },
+       {
+        "t": "Central estimate of yearly rise in sky brightness: [[5]] %"
+       },
+       {
+        "t": "Sky brightness doubles about every [[6]] years"
+       },
+       {
+        "h": "Effects on birds"
+       },
+       {
+        "t": "Number of species studied: [[7]]"
+       },
+       {
+        "t": "Extra singing in the evening in bright areas: [[8]] minutes"
+       },
+       {
+        "h": "Solutions and regulation"
+       },
+       {
+        "t": "Most effective solution: [[9]] of unnecessary lighting"
+       },
+       {
+        "t": "Detailed German rules expected by [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "Biodiversity"
+        ],
+        "ref": "Nature Reviews Biodiversity",
+        "ev": "The warning comes in a major review published on the fifth of October in the journal Nature Reviews Biodiversity.",
+        "zh": "期刊名是 Nature Reviews Biodiversity，填 Biodiversity（注意拼字 b-i-o-d-i-v-e-r-s-i-t-y）。"
+       },
+       {
+        "a": [
+         "regulated"
+        ],
+        "ref": "yet least regulated",
+        "ev": "They describe artificial light at night as among the fastest-growing, yet least regulated, forms of global environmental change.",
+        "zh": "least regulated = 最少受到管制的。筆記的 growing fast 對應 fastest-growing，空格要的是後半的 regulated。開場說的 least controlled 是同義改述，但筆記句型對應的是這句原文。"
+       },
+       {
+        "a": [
+         "30",
+         "thirty"
+        ],
+        "ref": "about thirty per cent of all vertebrates",
+        "ev": "According to the Berlin institute, about thirty per cent of all vertebrates are nocturnal.",
+        "zh": "脊椎動物約 thirty per cent = 30%。下一句的 sixty per cent 是「無脊椎動物」，是干擾數字。"
+       },
+       {
+        "a": [
+         "51,351",
+         "51351",
+         "51 351"
+        ],
+        "ref": "fifty-one thousand, three hundred and fifty-one observations",
+        "ev": "researchers analysed fifty-one thousand, three hundred and fifty-one observations made by citizen scientists",
+        "zh": "fifty-one thousand, three hundred and fifty-one = 51,351 筆公民科學家觀測。大數字聽法：thousand 前是千位，後面 three hundred and fifty-one。"
+       },
+       {
+        "a": [
+         "9.6"
+        ],
+        "ref": "a central estimate of nine point six per cent",
+        "ev": "The volunteers' reports, by contrast, pointed to a rise of between seven and ten per cent a year, with a central estimate of nine point six per cent.",
+        "zh": "筆記問的是 central estimate（中心估計值）= nine point six = 9.6%。two per cent 是衛星數據、seven to ten 是範圍，都是干擾項。"
+       },
+       {
+        "a": [
+         "8",
+         "eight"
+        ],
+        "ref": "doubles roughly every eight years",
+        "ev": "At that pace, the brightness of the sky doubles roughly every eight years.",
+        "zh": "每 eight years（8 年）亮度加倍。下一句的 eighteen-year childhood 是干擾，注意 eight 與 eighteen 的發音差別（重音在 -teen）。"
+       },
+       {
+        "a": [
+         "583"
+        ],
+        "ref": "five hundred and eighty-three bird species",
+        "ev": "used a global network of audio sensors to study five hundred and eighty-three bird species",
+        "zh": "five hundred and eighty-three = 583 種鳥。"
+       },
+       {
+        "a": [
+         "32",
+         "thirty-two"
+        ],
+        "ref": "thirty-two in the evening",
+        "ev": "Eighteen of those extra minutes came in the morning, and thirty-two in the evening.",
+        "zh": "傍晚多唱 thirty-two = 32 分鐘。fifty minutes 是全天合計、eighteen 是早上，都是干擾項。"
+       },
+       {
+        "a": [
+         "elimination"
+        ],
+        "ref": "At the top is elimination",
+        "ev": "At the top is elimination: getting rid of lighting that simply isn't needed.",
+        "zh": "最有效的是 elimination（移除不必要的照明）。筆記 most effective 改述 at the top of a hierarchy ranked by how effective。spectral tuning 排最後，不要選錯。"
+       },
+       {
+        "a": [
+         "2027"
+        ],
+        "ref": "should arrive by twenty twenty-seven",
+        "ev": "the federal government has said those rules should arrive by twenty twenty-seven",
+        "zh": "細則預計 2027 年前出台。twenty twenty-one（2021）是條文加入法律的年份，為干擾項。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Losing the Dark: Why Night-Time Light Has Become a Conservation Problem",
+    "intro": "Artificial light has transformed human life after sunset. A new review argues that its ecological costs are now well documented, yet still largely ignored by the law.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "For most of the history of life on Earth, night has been reliably dark. That is no longer true across much of the planet, and according to a review published on 5 October 2026 in Nature Reviews Biodiversity, the consequences for wildlife have been seriously underestimated. The authors, led by researchers at the Leibniz Institute of Freshwater Ecology and Inland Fisheries (IGB) in Berlin, with colleagues in the United States, Germany and Switzerland, describe artificial light at night as \"among the fastest growing yet least regulated forms of global environmental change\". Its effects, they argue, reach from genes to whole ecosystems and contribute to global biodiversity loss. The scale of the exposure is considerable: the IGB notes that around 30 per cent of all vertebrates and more than 60 per cent of invertebrates are nocturnal, and these species have evolved specialised adaptations to life in the dark."
+     },
+     {
+      "label": "B",
+      "text": "Measuring how quickly the night is brightening has proved surprisingly difficult. Satellites can record light emitted upwards, but they are not sensitive to all the wavelengths produced by LED lighting, nor to light emitted horizontally. A 2023 study in Science, led by Christopher Kyba, therefore took a different route. It analysed 51,351 observations submitted between 2011 and 2022 to Globe at Night, a citizen-science programme in which volunteers match the stars they can see with a series of sky charts. Because there were enough observations there, the analysis concentrated on Europe and North America. The loss of visible stars implied that sky brightness was rising by 7 to 10 per cent a year, with a central figure of 9.6 per cent, far faster than the roughly 2 per cent annual increase recorded by satellites. The authors ascribe the difference to changes in the spectrum of emitted light and to the angle at which it escapes. At that rate, they note, a location with 250 visible stars would see the number fall to 100 over eighteen years."
+     },
+     {
+      "label": "C",
+      "text": "Animals appear to be responding. In 2025, the ecologists Brent Pease and Neil Gilbert drew on BirdWeather, a global project in which volunteers deploy audio sensors and machine learning identifies the species making each sound. Studying 583 bird species, they found that in the brightest places birds were vocally active for about 50 minutes longer per day than in the darkest, with 18 extra minutes in the morning and 32 in the evening. The effect was strongest in species with larger eyes and during the breeding season. \"While we expected some behavioral adjustment to the lights at night, we didn't anticipate that it would be this impactful,\" Gilbert told Science News. Whether the extra activity is harmful remains unclear: it might disrupt sleep, though birds might compensate by resting during the day, and it could even provide more time to forage."
+     },
+     {
+      "label": "D",
+      "text": "The new review acknowledges that measurement approaches and mechanistic understanding have advanced considerably. Nevertheless, critical gaps persist. There is little standardisation in how light is measured, limited ability to predict effects across different groups of organisms and ecosystems, and only a partial understanding of how species adapt or how light interacts with other stressors such as noise and warming. The evidence base is also constrained by the short duration of many studies and by limited knowledge of indirect, cascading effects across ecological networks. To address this, the authors identify six priorities, including formal measurement protocols, predictive frameworks based on functional traits and species interactions, and long-term monitoring networks that track evolutionary change and multiple stressors."
+     },
+     {
+      "label": "E",
+      "text": "On the question of solutions, the review organises the available strategies into a hierarchical framework, ranked by effectiveness. The most effective option is elimination, followed by spatial and temporal controls, which limit where and when light is used; spectral tuning, which alters the colour of the light, comes third. This ordering implies that adjusting the colour of lamps, while useful, is no substitute for asking whether a light is needed in the first place."
+     },
+     {
+      "label": "F",
+      "text": "The most striking weakness, however, is legal. According to the authors, ecological evidence \"remains weakly embedded in lighting regulation and spatial planning\", creating a widening gap between knowledge and protection. Germany offers an illustration of both the problem and a possible response. In 2021 it added Section 41a to its Federal Nature Conservation Act, but the clause will only come into force once a statutory instrument setting out specific requirements is issued; the government has announced this for 2027. In a June 2026 report for the Federal Agency for Nature Conservation, IGB researchers found that \"significant ecological effects occur at illuminance levels of less than 1 lux\". They proposed a \"fictitious assessment wall\": at the boundary between areas used by people and areas worthy of protection, the light from each installation must not exceed a set threshold. The rules would apply only to new installations and significant modifications, although street lighting on public roads would face a retrofitting obligation. \"Feasibility was absolutely central to us,\" said the legal scholar Benedikt Thiggins, who stressed the need for enforceability by authorities, businesses and private individuals."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "an explanation of why two ways of measuring the same change produce different results",
+        "a": "B",
+        "ref": "B",
+        "ev": "The authors ascribe the difference to changes in the spectrum of emitted light and to the angle at which it escapes.",
+        "zh": "B 段：衛星（約 2%）與公民觀測（9.6%）結果不同，作者歸因於光譜改變與光線射出的角度。ascribe the difference to = 把差異歸因於。"
+       },
+       {
+        "q": "a description of how sound recordings were used to identify the animals producing them",
+        "a": "C",
+        "ref": "C",
+        "ev": "volunteers deploy audio sensors and machine learning identifies the species making each sound",
+        "zh": "C 段：BirdWeather 由志工架設錄音感測器，再用機器學習辨識鳥種。"
+       },
+       {
+        "q": "a ranking of possible responses according to how well they work",
+        "a": "E",
+        "ref": "E",
+        "ev": "the review organises the available strategies into a hierarchical framework, ranked by effectiveness",
+        "zh": "E 段：hierarchical framework, ranked by effectiveness = 依效果排序的層級架構（elimination → 時空控制 → 光譜調整）。"
+       },
+       {
+        "q": "the proportion of certain animal groups that are active after dark",
+        "a": "A",
+        "ref": "A",
+        "ev": "around 30 per cent of all vertebrates and more than 60 per cent of invertebrates are nocturnal",
+        "zh": "A 段：30% 脊椎動物、60% 以上無脊椎動物為夜行性。proportion = per cent；active after dark = nocturnal。"
+       },
+       {
+        "q": "a proposed method for limiting light at the edge of areas that deserve protection",
+        "a": "F",
+        "ref": "F",
+        "ev": "at the boundary between areas used by people and areas worthy of protection, the light from each installation must not exceed a set threshold",
+        "zh": "F 段：fictitious assessment wall——在人類使用區與值得保護區的交界，每個照明設施的光不得超過門檻值。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The Globe at Night analysis used roughly equal numbers of observations from every continent.",
+        "a": "False",
+        "ref": "B",
+        "ev": "the analysis concentrated on Europe and North America",
+        "zh": "B 段：分析集中在歐洲與北美（因為那裡觀測數夠多），與「各大洲數量大致相同」相反，False。"
+       },
+       {
+        "q": "Birds in brightly lit areas were found to be in poorer physical condition than birds in dark areas.",
+        "a": "Not Given",
+        "ref": "C",
+        "ev": "Whether the extra activity is harmful remains unclear",
+        "zh": "C 段只說鳴唱時間變長、是否有害「仍不清楚」，研究根本沒有測量或比較鳥的身體狀況——這是典型 Not Given 陷阱（看似相關，但文章沒提供這項資訊）。不是 False，因為文章也沒說牠們狀況「一樣好」。"
+       },
+       {
+        "q": "According to the review, what is known about light pollution is limited partly because many studies have been brief.",
+        "a": "True",
+        "ref": "D",
+        "ev": "The evidence base is also constrained by the short duration of many studies",
+        "zh": "D 段：證據受限於許多研究期間太短（short duration）。brief = short duration；limited = constrained，True。"
+       },
+       {
+        "q": "Germany's light-protection clause has been legally binding since it was added in 2021.",
+        "a": "False",
+        "ref": "F",
+        "ev": "the clause will only come into force once a statutory instrument setting out specific requirements is issued",
+        "zh": "F 段：條文要等施行細則（statutory instrument）發布後才生效，預計 2027 年，所以 2021 年起並未具約束力，False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Regulating light in Germany",
+      "lines": [
+       {
+        "t": "A protective clause added to German conservation law in 2021 cannot take effect until the government issues a [[1]]. Researchers advising the authorities found that significant ecological harm can occur below one [[2]]. They suggest an imaginary barrier, a 'fictitious [[3]]', at the edge of areas worthy of protection, and propose that street lighting on public roads should face a [[4]] obligation."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "statutory instrument"
+        ],
+        "ref": "F",
+        "ev": "the clause will only come into force once a statutory instrument setting out specific requirements is issued",
+        "zh": "F 段：statutory instrument（施行命令／法規命令）。兩個字剛好符合字數限制。"
+       },
+       {
+        "a": [
+         "lux"
+        ],
+        "ref": "F",
+        "ev": "significant ecological effects occur at illuminance levels of less than 1 lux",
+        "zh": "F 段：less than 1 lux；照度單位 lux（勒克斯）。題目已寫 one，只填 lux。"
+       },
+       {
+        "a": [
+         "assessment wall"
+        ],
+        "ref": "F",
+        "ev": "They proposed a \"fictitious assessment wall\"",
+        "zh": "F 段：fictitious assessment wall（虛擬評估牆）；題目已給 fictitious，填 assessment wall。"
+       },
+       {
+        "a": [
+         "retrofitting"
+        ],
+        "ref": "F",
+        "ev": "street lighting on public roads would face a retrofitting obligation",
+        "zh": "F 段：retrofitting obligation（既有設施改裝義務）。注意不要填 new installations（那是新設施）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "nocturnal",
+     "pos": "adj.",
+     "def": "active mainly at night",
+     "zh": "夜行性的",
+     "example": "About thirty per cent of all vertebrates are nocturnal.",
+     "match": [
+      "nocturnal"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "invertebrate",
+     "pos": "n.",
+     "def": "an animal without a backbone, such as an insect",
+     "zh": "無脊椎動物",
+     "example": "Among invertebrates, the figure is more than sixty per cent.",
+     "match": [
+      "invertebrates"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "hierarchy",
+     "pos": "n.",
+     "def": "a system that ranks things by importance or level",
+     "zh": "層級；等級排序",
+     "example": "The review sets out a hierarchy of solutions.",
+     "match": [
+      "hierarchy"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "elimination",
+     "pos": "n.",
+     "def": "the complete removal of something",
+     "zh": "消除；移除",
+     "example": "At the top is elimination of unneeded lighting.",
+     "match": [
+      "elimination"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "spectral",
+     "pos": "adj.",
+     "def": "relating to the range of colours or wavelengths of light",
+     "zh": "光譜的",
+     "example": "Spectral tuning changes the colour of the light.",
+     "match": [
+      "spectral"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "embedded",
+     "pos": "adj.",
+     "def": "firmly fixed as an essential part of something",
+     "zh": "深植的；嵌入的",
+     "example": "Evidence remains weakly embedded in lighting regulation.",
+     "match": [
+      "embedded"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "trade-off",
+     "pos": "n.",
+     "def": "a balance between two desirable but competing things",
+     "zh": "權衡；取捨",
+     "example": "Protecting the dark will involve trade-offs.",
+     "match": [
+      "trade-offs"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "ascribe (to)",
+     "pos": "v.",
+     "def": "to say that something is caused by a particular thing",
+     "zh": "把…歸因於",
+     "example": "The authors ascribe the difference to changes in spectrum.",
+     "match": [
+      "ascribe"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "mechanistic",
+     "pos": "adj.",
+     "def": "explaining how something works through its underlying processes",
+     "zh": "機制性的",
+     "example": "Mechanistic understanding has advanced considerably.",
+     "match": [
+      "mechanistic"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "stressor",
+     "pos": "n.",
+     "def": "something that causes stress to an organism or system",
+     "zh": "壓力源",
+     "example": "Light interacts with other stressors such as noise.",
+     "match": [
+      "stressors"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "cascading",
+     "pos": "adj.",
+     "def": "spreading in a chain from one part of a system to others",
+     "zh": "連鎖（反應）的",
+     "example": "Little is known about cascading effects across networks.",
+     "match": [
+      "cascading"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "compensate",
+     "pos": "v.",
+     "def": "to make up for a loss or problem",
+     "zh": "彌補；補償",
+     "example": "Birds might compensate by resting during the day.",
+     "match": [
+      "compensate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "threshold",
+     "pos": "n.",
+     "def": "a level that must not be passed",
+     "zh": "門檻；閾值",
+     "example": "Light must not exceed a set threshold.",
+     "match": [
+      "threshold"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "retrofit",
+     "pos": "v./n.",
+     "def": "to add new parts or features to something already built",
+     "zh": "改裝；翻新",
+     "example": "Street lighting would face a retrofitting obligation.",
+     "match": [
+      "retrofitting"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "enforceability",
+     "pos": "n.",
+     "def": "the ability of a rule to be made effective in practice",
+     "zh": "可執行性",
+     "example": "He stressed the need for enforceability by authorities.",
+     "match": [
+      "enforceability"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-06-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      7.87
+     ],
+     [
+      8.17,
+      9.89
+     ],
+     [
+      10.67,
+      16.14
+     ],
+     [
+      16.41,
+      22.23
+     ],
+     [
+      22.55,
+      29.75
+     ],
+     [
+      29.99,
+      35.1
+     ],
+     [
+      35.88,
+      37.85
+     ],
+     [
+      38.3,
+      42.9
+     ],
+     [
+      43.14,
+      47.4
+     ],
+     [
+      47.7,
+      51.72
+     ],
+     [
+      52.5,
+      54.84
+     ],
+     [
+      55.09,
+      64.51
+     ],
+     [
+      64.82,
+      68.8
+     ],
+     [
+      69.02,
+      73.82
+     ],
+     [
+      74.09,
+      82.02
+     ],
+     [
+      82.42,
+      86.48
+     ],
+     [
+      86.71,
+      93.65
+     ],
+     [
+      93.94,
+      98.62
+     ],
+     [
+      99.4,
+      102.13
+     ],
+     [
+      102.33,
+      111.33
+     ],
+     [
+      111.63,
+      116.42
+     ],
+     [
+      116.63,
+      120.8
+     ],
+     [
+      121.05,
+      125.7
+     ],
+     [
+      126.01,
+      128.61
+     ],
+     [
+      129.39,
+      130.65
+     ],
+     [
+      131.04,
+      135.33
+     ],
+     [
+      135.65,
+      139.7
+     ],
+     [
+      140.13,
+      142.77
+     ],
+     [
+      143.05,
+      147.02
+     ],
+     [
+      147.35,
+      153.76
+     ],
+     [
+      154.54,
+      157.16
+     ],
+     [
+      157.46,
+      162.75
+     ],
+     [
+      162.96,
+      165.68
+     ],
+     [
+      165.94,
+      170.03
+     ],
+     [
+      170.45,
+      177.59
+     ],
+     [
+      177.81,
+      183.92
+     ],
+     [
+      184.7,
+      189.11
+     ],
+     [
+      189.43,
+      190.98
+     ],
+     [
+      191.18,
+      195.09
+     ]
+    ],
+    "duration": 195.7,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-06-1-words/"
+   }
+  },
+  {
+   "title": "OPEC+ Holds Oil Targets Steady as Crude Stays Above $100",
+   "topic": "Energy · oil supply",
+   "source": {
+    "name": "OPEC press release: seven OPEC+ countries meet (4 Oct 2026)",
+    "url": "https://www.opec.org/pr-detail/616-4-october-2026.html",
+    "links": [
+     {
+      "name": "Reuters (via The Business Standard): OPEC+ agrees to keep November oil output targets steady",
+      "url": "https://www.tbsnews.net/world/global-economy/opec-agrees-keep-november-oil-output-targets-steady-1562466"
+     },
+     {
+      "name": "World Oil (via Oil & Gas 360): OPEC+ holds November oil production targets steady",
+      "url": "https://www.oilandgas360.com/opec-holds-november-oil-production-targets-steady-as-supply-remains-constrained/"
+     },
+     {
+      "name": "CNBC: G7 nations to release diesel stocks (2 Oct 2026)",
+      "url": "https://www.cnbc.com/2026/10/02/diesel-oil-trump-europe-export-ban.html"
+     },
+     {
+      "name": "Reuters (via Oil Monster): Oil slips as Middle East crude exports rise, G7 to release stocks (5 Oct 2026)",
+      "url": "https://www.oilmonster.com/article/oil-slips-as-middle-east-crude-exports-rise-g7-to-release-stocks/8653"
+     },
+     {
+      "name": "The Telegraph: Oil stockpiles are 'scarily thin', warns Saudi energy boss (5 Oct 2026)",
+      "url": "https://www.telegraph.co.uk/business/2026/10/05/oil-stockpiles-are-scarily-thin-warns-saudi-energy-boss/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "The world's biggest oil producers have decided to stand still, even with crude trading above one hundred dollars a barrel.",
+     "Here's our energy and markets report."
+    ],
+    [
+     "Seven core members of the OPEC plus alliance, led by Saudi Arabia and Russia, held a brief online meeting on Sunday, the fourth of October.",
+     "They agreed to keep their production targets for November at the same level as in September.",
+     "Iraq, Kuwait, Kazakhstan, Algeria and Oman make up the rest of the group.",
+     "The decision was in line with market expectations.",
+     "The seven will meet again on the first of November, ahead of a full ministerial meeting on the twenty-ninth."
+    ],
+    [
+     "So why hold steady?",
+     "In short, the targets are largely theoretical.",
+     "OPEC plus agreed a series of modest quota increases in the six months to August, before pausing for the rest of the year.",
+     "But the war involving Iran has kept most of those increases on paper.",
+     "According to OPEC data reported by Reuters, the seven pumped twenty-five million barrels a day in August.",
+     "That was up six hundred and thirty thousand barrels a day on July, but still roughly five million below their pre-war level in February.",
+     "UBS analyst Giovanni Staunovo said that, despite rising flows through the Strait of Hormuz, the group's output remains well below quota.",
+     "Consequently, he said, the oil market remains tight."
+    ],
+    [
+     "The alliance also still has about two million barrels a day of older cuts in place.",
+     "To decide who gets to pump more, it needs a review of each member's production capacity.",
+     "That review has been delayed by the war, and sources say changes to output are unlikely before twenty twenty-seven."
+    ],
+    [
+     "Meanwhile, consumers are feeling the squeeze.",
+     "Brent crude is trading above one hundred dollars, compared with about seventy-three dollars before the war began in late February.",
+     "On Monday, Brent slipped forty-three cents, to just under one hundred and two dollars.",
+     "One reason for the dip: on Friday, the Group of Seven agreed to release one hundred million barrels of oil, diesel and other fuel from emergency stocks.",
+     "That comes on top of four hundred million barrels that members of the International Energy Agency made available in March.",
+     "The United States alone pledged one hundred and seventy-two million barrels of that, all of it crude.",
+     "The new release will run over four months, with a large share of diesel front-loaded into the first twenty days.",
+     "Diesel is the pinch point.",
+     "The average US price was six dollars and thirty-seven cents a gallon on Friday, after record highs in September."
+    ],
+    [
+     "There are risks on both sides, though.",
+     "Middle East crude exports have recovered, briefly topping pre-war levels in late September, according to shipping data from Kpler.",
+     "Much of that improvement has come from Saudi Arabia, which is shipping more oil through the Red Sea port of Yanbu.",
+     "Aramco has also cut its November prices for Asian buyers to six-year lows.",
+     "But Saudi Aramco's chief executive, Amin Nasser, warned on Monday that rebuilding the world's depleted oil inventories could take as long as two years.",
+     "That's the energy report.",
+     "In our next bulletin, we'll look at how high diesel prices are feeding through to freight costs."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "OPEC+ and the Oil Market",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The decision"
+       },
+       {
+        "t": "Online meeting held on [[1]] October"
+       },
+       {
+        "t": "November targets: same as in [[2]]"
+       },
+       {
+        "h": "Targets versus reality"
+       },
+       {
+        "t": "Group's output in August: [[3]] million barrels a day"
+       },
+       {
+        "t": "Increase from July: [[4]] barrels a day"
+       },
+       {
+        "t": "UBS analyst: the market is still [[5]]"
+       },
+       {
+        "t": "Changes to output unlikely before [[6]]"
+       },
+       {
+        "h": "Prices and emergency stocks"
+       },
+       {
+        "t": "Brent before the war: about $[[7]] a barrel"
+       },
+       {
+        "t": "G7 release: [[8]] million barrels"
+       },
+       {
+        "t": "Most diesel released in the first [[9]] days"
+       },
+       {
+        "h": "Outlook"
+       },
+       {
+        "t": "Aramco: refilling inventories may take up to [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "4",
+         "4th",
+         "fourth"
+        ],
+        "ref": "held a brief online meeting on Sunday, the fourth of October",
+        "ev": "held a brief online meeting on Sunday, the fourth of October",
+        "zh": "the fourth of October = 10 月 4 日。the first of November（下次會議）與 the twenty-ninth（部長級會議）是干擾日期。"
+       },
+       {
+        "a": [
+         "September"
+        ],
+        "ref": "at the same level as in September",
+        "ev": "They agreed to keep their production targets for November at the same level as in September.",
+        "zh": "11 月目標維持與 September 相同。注意拼字 S-e-p-t-e-m-b-e-r，首字大寫。"
+       },
+       {
+        "a": [
+         "25",
+         "twenty-five"
+        ],
+        "ref": "pumped twenty-five million barrels a day in August",
+        "ev": "According to OPEC data reported by Reuters, the seven pumped twenty-five million barrels a day in August.",
+        "zh": "8 月產量 twenty-five million = 2,500 萬桶／日。後面的 five million 是「比戰前少多少」，不是產量。"
+       },
+       {
+        "a": [
+         "630,000",
+         "630000",
+         "630 000"
+        ],
+        "ref": "up six hundred and thirty thousand barrels a day on July",
+        "ev": "That was up six hundred and thirty thousand barrels a day on July",
+        "zh": "up … on July = 比 7 月增加 six hundred and thirty thousand = 63 萬桶／日。five million below 是與 2 月戰前相比的落差，為干擾項。"
+       },
+       {
+        "a": [
+         "tight"
+        ],
+        "ref": "the oil market remains tight",
+        "ev": "Consequently, he said, the oil market remains tight.",
+        "zh": "tight market = 供給吃緊的市場。筆記 still 對應 remains。"
+       },
+       {
+        "a": [
+         "2027"
+        ],
+        "ref": "unlikely before twenty twenty-seven",
+        "ev": "sources say changes to output are unlikely before twenty twenty-seven",
+        "zh": "產量政策在 2027 年前不太可能改變（unlikely before twenty twenty-seven）。two million 是仍在實施的減產量，不是年份。"
+       },
+       {
+        "a": [
+         "73",
+         "seventy-three"
+        ],
+        "ref": "about seventy-three dollars before the war",
+        "ev": "Brent crude is trading above one hundred dollars, compared with about seventy-three dollars before the war began in late February.",
+        "zh": "戰前約 seventy-three dollars = $73。one hundred 是現在的價格；一百零二是週一價位，都是干擾。"
+       },
+       {
+        "a": [
+         "100",
+         "one hundred"
+        ],
+        "ref": "release one hundred million barrels",
+        "ev": "the Group of Seven agreed to release one hundred million barrels of oil, diesel and other fuel from emergency stocks",
+        "zh": "G7 新釋出 one hundred million = 1 億桶。four hundred million 是 3 月 IEA 那一批，為「預測／舊數字 vs 新數字」型干擾。"
+       },
+       {
+        "a": [
+         "20",
+         "twenty"
+        ],
+        "ref": "front-loaded into the first twenty days",
+        "ev": "The new release will run over four months, with a large share of diesel front-loaded into the first twenty days.",
+        "zh": "大部分柴油在前 twenty days（20 天）先釋出（front-loaded）。four months 是整個釋出期間，干擾項。"
+       },
+       {
+        "a": [
+         "two years",
+         "2 years"
+        ],
+        "ref": "could take as long as two years",
+        "ev": "warned on Monday that rebuilding the world's depleted oil inventories could take as long as two years",
+        "zh": "重建庫存可能長達 two years（兩年）。筆記 refilling inventories = rebuilding … inventories；up to = as long as。答案是兩個字 two years（或 2 years）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Quotas on Paper: Why OPEC+'s Latest Decision Changed Little",
+    "intro": "Oil producers left their targets untouched this month. The real forces moving prices lie elsewhere: in damaged export routes, emergency stockpiles and the slow work of refilling them.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "On 4 October 2026, seven members of the OPEC+ alliance (Saudi Arabia, Russia, Iraq, Kuwait, Kazakhstan, Algeria and Oman) met by video link and decided to maintain their September production requirements for November. Their brief statement reaffirmed a \"collective commitment to achieve full conformity\" with the group's Declaration of Cooperation and confirmed that the seven would continue to meet monthly, next on 1 November. Policy for 2027 is expected to be settled at a full ministerial meeting on 29 November. A separate body, the Joint Ministerial Monitoring Committee, also met on the same Sunday; it does not decide policy, but it expressed concern about attacks on energy infrastructure. The outcome surprised no one, since the group had already signalled a pause in quota increases until the end of the year, after a series of modest rises in the six months through August."
+     },
+     {
+      "label": "B",
+      "text": "The more significant story is the gap between targets and reality. Since the US-Israeli war on Iran began in late February, Gulf producers have pumped well below their permitted levels, with exports fluctuating at 60 to 80 per cent of normal in recent months, according to Reuters. OPEC's own figures show that the seven countries produced 25 million barrels per day (bpd) in August, an increase of 630,000 bpd on July, yet still roughly 5 million bpd below their pre-war output in February. In other words, most of this year's quota increases have existed only on paper. As the UBS analyst Giovanni Staunovo put it, \"despite rising flows through the Strait of Hormuz, their output levels remain well below quota.\""
+     },
+     {
+      "label": "C",
+      "text": "A further complication concerns the future. OPEC+ still has about 2 million bpd of production cuts in place covering most members, and its next major decision is whether to restore a layer of output that was halted in 2022. To distribute any increases fairly, the group needs a review of each member's production capacity. That assessment has been delayed, industry sources told Reuters, because the war has thrown estimates of future production potential into uncertainty: damaged infrastructure and postponed expansion projects make it difficult to judge how much each country could realistically pump. As a result, any change to output is considered unlikely before 2027."
+     },
+     {
+      "label": "D",
+      "text": "While producers wait, consumer governments have acted. On 2 October, the Group of Seven agreed to release 100 million barrels of crude, diesel and other petroleum stocks through the International Energy Agency (IEA), over four months and with \"a frontloaded substantial diesel release within the first 20 days\". The leaders also agreed to refrain from export restrictions among themselves and called on producers to avoid bans \"that could exacerbate market tensions\". This followed pressure from Washington, which had considered a ban on US diesel exports; the United States supplied around half of the European Union's diesel imports in August, according to the IEA. US diesel prices hit record highs in September and still averaged $6.37 a gallon on the day of the announcement. The new release comes on top of 400 million barrels made available by IEA members in March, when the United States pledged 172 million barrels, all of it crude, Europe around 107 million and Asia and Oceania 108 million."
+     },
+     {
+      "label": "E",
+      "text": "Prices reflect this tug of war. Brent crude remains above $100 a barrel, up from about $73 before the war. On Monday 5 October it slipped 43 cents to $101.82, while US West Texas Intermediate fell $1.50 to $89.61, as physical supply improved. Provisional Kpler data showed the seven-day average of Middle East crude exports reaching about 18.3 million bpd on 30 September, compared with roughly 18 million bpd in the twelve months before the conflict. Much of the recovery has come from Saudi Arabia, which has shipped more oil through the Red Sea port of Yanbu as well as the Gulf, and Saudi Aramco has cut its November prices for Asian buyers to six-year lows. Refined products, however, remain tighter than crude, partly because of refinery disruptions in the Middle East and Russia."
+     },
+     {
+      "label": "F",
+      "text": "Whether relief lasts depends heavily on stockpiles. Speaking on 5 October, Aramco's chief executive Amin Nasser described global oil inventories as \"scarily thin\" and warned that rebuilding them could take as long as two years. He put the supply lost since the conflict began at nearly 3 billion barrels. Replenishing stocks, he estimated, could add roughly 2 million bpd of demand over the next 18 months. If he is right, the market's attention may arguably be misplaced: the quotas agreed in OPEC+ video calls appear to matter far less than the security of shipping lanes and the slow arithmetic of refilling the world's storage tanks."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison between recent export volumes and an average from before the conflict",
+        "a": "E",
+        "ref": "E",
+        "ev": "the seven-day average of Middle East crude exports reaching about 18.3 million bpd on 30 September, compared with roughly 18 million bpd in the twelve months before the conflict",
+        "zh": "E 段：9/30 的七日平均出口 1,830 萬桶 vs 戰前 12 個月平均約 1,800 萬桶。"
+       },
+       {
+        "q": "a reference to a group that met on the same day but has no power over policy",
+        "a": "A",
+        "ref": "A",
+        "ev": "A separate body, the Joint Ministerial Monitoring Committee, also met on the same Sunday; it does not decide policy",
+        "zh": "A 段：JMMC 同一天開會，但不決定政策（does not decide policy）。"
+       },
+       {
+        "q": "a breakdown of how different regions contributed to an earlier release of stocks",
+        "a": "D",
+        "ref": "D",
+        "ev": "the United States pledged 172 million barrels, all of it crude, Europe around 107 million and Asia and Oceania 108 million",
+        "zh": "D 段：3 月 IEA 4 億桶中，美國 1.72 億、歐洲約 1.07 億、亞洲與大洋洲 1.08 億——各地區分配明細。"
+       },
+       {
+        "q": "the reason why an assessment of members' potential output has been postponed",
+        "a": "C",
+        "ref": "C",
+        "ev": "because the war has thrown estimates of future production potential into uncertainty",
+        "zh": "C 段：產能評估延後，因為戰爭讓未來產能估計充滿不確定性。postponed = delayed。"
+       },
+       {
+        "q": "an estimate of the additional demand that could result from refilling stocks",
+        "a": "F",
+        "ref": "F",
+        "ev": "Replenishing stocks, he estimated, could add roughly 2 million bpd of demand over the next 18 months",
+        "zh": "F 段：補庫存未來 18 個月可能增加約 200 萬桶／日需求。refilling = replenishing。注意 C 段也有 2 million bpd，但那是減產量，不是需求。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The seven countries produced more oil in August than in July.",
+        "a": "True",
+        "ref": "B",
+        "ev": "the seven countries produced 25 million barrels per day (bpd) in August, an increase of 630,000 bpd on July",
+        "zh": "B 段：8 月比 7 月增加 63 萬桶／日，True。雖然仍比 2 月少 500 萬桶，但題目比較的是 7 月。"
+       },
+       {
+        "q": "Most of the oil pledged by the United States in March consisted of refined products such as diesel.",
+        "a": "False",
+        "ref": "D",
+        "ev": "the United States pledged 172 million barrels, all of it crude",
+        "zh": "D 段：美國承諾的 1.72 億桶全部是原油（all of it crude），與「大多是柴油等成品油」相反，False。"
+       },
+       {
+        "q": "Some G7 members complained that the October release was too small.",
+        "a": "Not Given",
+        "ref": "D",
+        "ev": "On 2 October, the Group of Seven agreed to release 100 million barrels",
+        "zh": "D 段只寫 G7 同意釋出 1 億桶、避免出口限制，以及美國施壓的背景；完全沒提到任何成員抱怨規模太小——Not Given 陷阱（題目套用「美國施壓」的印象，但文章沒說）。"
+       },
+       {
+        "q": "Saudi Aramco has raised the prices it charges Asian customers for November.",
+        "a": "False",
+        "ref": "E",
+        "ev": "Saudi Aramco has cut its November prices for Asian buyers to six-year lows",
+        "zh": "E 段：Aramco 調降（cut）11 月亞洲售價至六年低點，與 raised 相反，False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Why actual supply matters more than targets",
+      "lines": [
+       {
+        "t": "Since the war began, Gulf exports have run at only 60 to 80 per cent of [[1]] levels, so most quota increases have existed only [[2]]. Before it can share out future increases, OPEC+ must complete a review of members' production [[3]]. Even as crude supply improves, refined products remain tighter, partly because of [[4]] disruptions in the Middle East and Russia."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "normal"
+        ],
+        "ref": "B",
+        "ev": "with exports fluctuating at 60 to 80 per cent of normal in recent months",
+        "zh": "B 段：60 to 80 per cent of normal；填 normal。"
+       },
+       {
+        "a": [
+         "on paper"
+        ],
+        "ref": "B",
+        "ev": "most of this year's quota increases have existed only on paper",
+        "zh": "B 段：existed only on paper（只存在於紙上、沒有真正落實）；填 on paper。"
+       },
+       {
+        "a": [
+         "capacity"
+        ],
+        "ref": "C",
+        "ev": "the group needs a review of each member's production capacity",
+        "zh": "C 段：a review of each member's production capacity；題目已有 production，填 capacity。"
+       },
+       {
+        "a": [
+         "refinery"
+        ],
+        "ref": "E",
+        "ev": "partly because of refinery disruptions in the Middle East and Russia",
+        "zh": "E 段：refinery disruptions（煉油廠中斷）；填 refinery。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "quota",
+     "pos": "n.",
+     "def": "a fixed amount that someone is allowed to produce or receive",
+     "zh": "配額",
+     "example": "The group's output remains well below quota.",
+     "match": [
+      "quota",
+      "quotas"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "on paper",
+     "pos": "phr.",
+     "def": "officially or in theory, but not in reality",
+     "zh": "帳面上；理論上",
+     "example": "Most of those increases have stayed on paper.",
+     "match": [
+      "on paper"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "in line with",
+     "pos": "phr.",
+     "def": "matching or consistent with",
+     "zh": "符合；與…一致",
+     "example": "The decision was in line with market expectations.",
+     "match": [
+      "in line with"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "front-load",
+     "pos": "v.",
+     "def": "to place most of something at the beginning of a period",
+     "zh": "前置；集中在初期",
+     "example": "Diesel will be front-loaded into the first twenty days.",
+     "match": [
+      "front-loaded"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "pinch point",
+     "pos": "n.",
+     "def": "the place where a shortage or problem is most severe",
+     "zh": "瓶頸；最吃緊之處",
+     "example": "Diesel is the pinch point in the fuel market.",
+     "match": [
+      "pinch point"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "depleted",
+     "pos": "adj.",
+     "def": "reduced to a very low amount",
+     "zh": "耗盡的；大幅減少的",
+     "example": "Rebuilding depleted inventories could take two years.",
+     "match": [
+      "depleted"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "squeeze",
+     "pos": "n.",
+     "def": "a difficult situation caused by high costs or low supply",
+     "zh": "壓力；緊縮",
+     "example": "Consumers are feeling the squeeze.",
+     "match": [
+      "squeeze"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "conformity",
+     "pos": "n.",
+     "def": "behaviour that follows an agreed rule or standard",
+     "zh": "遵守；一致性",
+     "example": "They reaffirmed a commitment to full conformity.",
+     "match": [
+      "conformity"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "ministerial",
+     "pos": "adj.",
+     "def": "involving government ministers",
+     "zh": "部長級的",
+     "example": "Policy will be settled at a full ministerial meeting.",
+     "match": [
+      "ministerial"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "fluctuate",
+     "pos": "v.",
+     "def": "to change frequently in level or amount",
+     "zh": "波動",
+     "example": "Exports have fluctuated at 60 to 80 per cent of normal.",
+     "match": [
+      "fluctuating"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "refrain (from)",
+     "pos": "v.",
+     "def": "to deliberately not do something",
+     "zh": "避免；克制不做",
+     "example": "The leaders agreed to refrain from export restrictions.",
+     "match": [
+      "refrain"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "exacerbate",
+     "pos": "v.",
+     "def": "to make a bad situation worse",
+     "zh": "使惡化；加劇",
+     "example": "Bans could exacerbate market tensions.",
+     "match": [
+      "exacerbate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "tug of war",
+     "pos": "n.",
+     "def": "a struggle between two opposing forces",
+     "zh": "拉鋸戰",
+     "example": "Prices reflect this tug of war.",
+     "match": [
+      "tug of war"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "replenish",
+     "pos": "v.",
+     "def": "to fill something up again",
+     "zh": "補充；補足",
+     "example": "Replenishing stocks could add demand.",
+     "match": [
+      "Replenishing"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "misplaced",
+     "pos": "adj.",
+     "def": "directed at the wrong thing",
+     "zh": "放錯地方的；用錯對象的",
+     "example": "The market's attention may be misplaced.",
+     "match": [
+      "misplaced"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-06-2.mp3",
+    "times": [
+     [
+      0.36,
+      1.12
+     ],
+     [
+      1.34,
+      8.35
+     ],
+     [
+      8.65,
+      10.86
+     ],
+     [
+      11.64,
+      20.14
+     ],
+     [
+      20.41,
+      25.24
+     ],
+     [
+      25.56,
+      30.15
+     ],
+     [
+      30.39,
+      33.4
+     ],
+     [
+      33.68,
+      39.49
+     ],
+     [
+      40.27,
+      41.52
+     ],
+     [
+      41.88,
+      44.87
+     ],
+     [
+      45.17,
+      52.25
+     ],
+     [
+      52.58,
+      56.59
+     ],
+     [
+      56.85,
+      63.2
+     ],
+     [
+      63.5,
+      71.1
+     ],
+     [
+      71.32,
+      79.7
+     ],
+     [
+      79.97,
+      83.05
+     ],
+     [
+      83.83,
+      88.46
+     ],
+     [
+      88.7,
+      93.78
+     ],
+     [
+      94.06,
+      100.65
+     ],
+     [
+      101.43,
+      104.25
+     ],
+     [
+      104.46,
+      111.56
+     ],
+     [
+      111.85,
+      116.88
+     ],
+     [
+      117.09,
+      126.11
+     ],
+     [
+      126.45,
+      133.7
+     ],
+     [
+      134.0,
+      139.68
+     ],
+     [
+      139.91,
+      146.11
+     ],
+     [
+      146.38,
+      147.89
+     ],
+     [
+      148.16,
+      155.14
+     ],
+     [
+      155.92,
+      157.8
+     ],
+     [
+      158.09,
+      165.98
+     ],
+     [
+      166.31,
+      172.34
+     ],
+     [
+      172.58,
+      177.45
+     ],
+     [
+      177.87,
+      186.96
+     ],
+     [
+      187.17,
+      188.75
+     ],
+     [
+      188.96,
+      194.03
+     ]
+    ],
+    "duration": 194.7,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-10-06-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+</body>
+</html>
