@@ -1,0 +1,2227 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-09",
+ "date": "2026-10-09",
+ "title": "Underwater Umbrellas Ease Coral Bleaching · Samsung Hybrid Bonding for Taller HBM",
+ "stories": [
+  {
+   "title": "Underwater Umbrellas Ease Bleaching on Florida Keys Brain Corals",
+   "topic": "Environment · coral reefs",
+   "source": {
+    "name": "Frontiers / EurekAlert: Underwater umbrellas for coral reefs (2 Oct 2026)",
+    "url": "https://www.eurekalert.org/news-releases/1144950",
+    "links": [
+     {
+      "name": "Euronews: Could underwater umbrellas save bleaching corals? (5 Oct 2026)",
+      "url": "https://www.euronews.com/2026/10/05/coral-reefs-are-bleaching-in-extreme-heat-could-underwater-umbrellas-save-them"
+     },
+     {
+      "name": "Eos: Underwater Umbrellas Reduce—and Reverse—Coral Bleaching (2 Oct 2026)",
+      "url": "https://eos.org/articles/underwater-umbrellas-reduce-and-reverse-coral-bleaching-in-the-caribbean"
+     },
+     {
+      "name": "Mongabay: Global coral reefs get less time to recover (GCRMN Status 2025)",
+      "url": "https://news.mongabay.com/2026/09/global-coral-reefs-get-less-time-to-recover-as-oceans-heat-up-report-finds/"
+     },
+     {
+      "name": "NOAA NESDIS: Fourth global bleaching event likely ended mid-2025 (2 Jun 2026)",
+      "url": "https://www.nesdis.noaa.gov/news/worlds-fourth-mass-coral-bleaching-event-likely-ended-2025"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Scientists in Florida say simple underwater umbrellas can ease, and even partly reverse, coral bleaching during marine heatwaves.",
+     "Here's our science report."
+    ],
+    [
+     "The findings appear in a paper published this week in the journal Frontiers in Marine Science.",
+     "The lead author is Doctor Karen Neely of Nova Southeastern University.",
+     "She says heat-related bleaching is probably the biggest threat to reefs worldwide.",
+     "Shading, she adds, can offer temporary protection on small scales."
+    ],
+    [
+     "The experiment grew out of the twenty twenty-three heatwave in the Florida Keys.",
+     "Branching corals such as staghorn and elkhorn were almost wiped out at many sites.",
+     "At some inshore reefs, more than half the monitored colonies lost living tissue.",
+     "Doctor Neely's team wanted proof of concept for tools that might save targeted corals next time."
+    ],
+    [
+     "So in the summer of twenty twenty-four, divers deployed twenty floating shades at Newfound Harbor, a protected reef in the lower Florida Keys.",
+     "The shades covered colonies of two brain-coral species, Pseudodiploria clivosa and Colpophyllia natans.",
+     "Matching unshaded colonies nearby served as controls.",
+     "Each shade was a frame of polyvinyl chloride pipe, foam and agricultural cloth, fixed with cord and floating about thirty centimetres above the coral.",
+     "According to the researchers, the fabric cut incoming light by sixty per cent.",
+     "The point was not to cool the water.",
+     "It was to reduce sunlight and ultraviolet radiation that make heat damage worse."
+    ],
+    [
+     "Monitoring began in July, and the umbrellas went in during August, when temperatures peaked.",
+     "They stayed until November.",
+     "Sea-surface temperatures at the site breached the Florida Keys bleaching threshold of thirty point five degrees Celsius for at least sixty-one days.",
+     "Cumulative heat stress that summer was the second-highest on record, according to satellite data from the United States National Oceanic and Atmospheric Administration.",
+     "Analysts had expected severe paling across the board.",
+     "The shaded colonies, by contrast, lost less colour than expected, and some regained colour after the shades were installed.",
+     "The exposed colonies grew paler through the hottest weeks."
+    ],
+    [
+     "Meanwhile, neither group suffered bleaching-related deaths.",
+     "Doctor Neely notes that even non-lethal bleaching can raise disease risk and cut reproductive output later.",
+     "The team also found no clear difference in algal density or species between shaded and control corals.",
+     "They put that partly down to sampling rules that forced biopsies from colony edges, which already receive some shade.",
+     "Another factor may be that after twenty twenty-three, many survivors already hosted heat-tolerant algae of the genus Durusdinium."
+    ],
+    [
+     "Looking ahead, the authors stress that scaling is the big limitation.",
+     "Covering whole reefs would be impractical.",
+     "They see the umbrellas as a way to protect high-priority colonies—large, rare or especially valued ones—during extreme heat.",
+     "The paper estimates the approach is about ten times cheaper than replacing a dead coral.",
+     "Still, Doctor Neely says shading is not a cure-all, and long-term protection depends on limiting ocean warming."
+    ],
+    [
+     "The wider context is sobering.",
+     "The Global Coral Reef Monitoring Network reported in August that bleaching events now strike roughly every five to six years, compared with about once a decade in the past.",
+     "Between twenty twenty-three and twenty twenty-four, hard coral cover fell by eight point nine per cent globally—the largest one-year decline on record.",
+     "By March twenty twenty-five, eighty-four per cent of the world's reefs had faced temperatures hot enough to bleach.",
+     "There are risks on both sides of any local fix, though.",
+     "That's the science report.",
+     "In our next bulletin, we'll look at how coastal cities are testing marine heat early-warning systems."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Underwater Shades for Coral Bleaching",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The study"
+       },
+       {
+        "t": "Published in Frontiers in [[1]]"
+       },
+       {
+        "t": "Lead researcher: Dr Karen Neely, Nova Southeastern University"
+       },
+       {
+        "h": "Field trial (Florida Keys, 2024)"
+       },
+       {
+        "t": "Number of floating shades deployed: [[2]]"
+       },
+       {
+        "t": "Height of each shade above the coral: [[3]] centimetres"
+       },
+       {
+        "t": "Reduction in incoming light: [[4]] %"
+       },
+       {
+        "h": "Heat conditions at Newfound Harbor"
+       },
+       {
+        "t": "Bleaching threshold breached: [[5]] °C"
+       },
+       {
+        "t": "Days above that threshold: at least [[6]]"
+       },
+       {
+        "t": "Cumulative heat stress ranked: [[7]]-highest on record"
+       },
+       {
+        "h": "Results and limits"
+       },
+       {
+        "t": "Shaded corals: less colour loss; some [[8]] colour after installation"
+       },
+       {
+        "t": "Cost vs replacing a dead coral: about [[9]] times cheaper"
+       },
+       {
+        "t": "Global hard-coral cover drop, 2023–24: [[10]] %"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "Marine Science"
+        ],
+        "ref": "Frontiers in Marine Science",
+        "ev": "The findings appear in a paper published this week in the journal Frontiers in Marine Science.",
+        "zh": "期刊名是 Frontiers in Marine Science，填 Marine Science（兩個字）。不要只填 Marine 或 Science。"
+       },
+       {
+        "a": [
+         "20",
+         "twenty"
+        ],
+        "ref": "deployed twenty floating shades",
+        "ev": "divers deployed twenty floating shades at Newfound Harbor",
+        "zh": "部署了 twenty = 20 頂浮式遮陽傘。後面的 matching controls 是對照組，不是遮陽傘數量。"
+       },
+       {
+        "a": [
+         "30",
+         "thirty"
+        ],
+        "ref": "about thirty centimetres above the coral",
+        "ev": "floating about thirty centimetres above the coral",
+        "zh": "離珊瑚約 thirty centimetres = 30 公分。sixty per cent 是減光比例，別填錯。"
+       },
+       {
+        "a": [
+         "60",
+         "sixty"
+        ],
+        "ref": "cut incoming light by sixty per cent",
+        "ev": "the fabric cut incoming light by sixty per cent",
+        "zh": "遮布減少 sixty per cent = 60% 入射光。目的不是降溫，而是減紫外線與強光。"
+       },
+       {
+        "a": [
+         "30.5"
+        ],
+        "ref": "thirty point five degrees Celsius",
+        "ev": "breached the Florida Keys bleaching threshold of thirty point five degrees Celsius",
+        "zh": "白化門檻 thirty point five = 30.5°C。後面的 sixty-one days 是超過門檻的天數，是干擾項。"
+       },
+       {
+        "a": [
+         "61",
+         "sixty-one"
+        ],
+        "ref": "at least sixty-one days",
+        "ev": "for at least sixty-one days",
+        "zh": "至少 sixty-one = 61 天超過白化門檻。second-highest 是熱壓力排名，不要混。"
+       },
+       {
+        "a": [
+         "second",
+         "2nd"
+        ],
+        "ref": "the second-highest on record",
+        "ev": "Cumulative heat stress that summer was the second-highest on record",
+        "zh": "累積熱壓力為有紀錄以來 second-highest（第二高）。分析師原本預期全面嚴重褪色，是干擾敘述。"
+       },
+       {
+        "a": [
+         "regained",
+         "recovered"
+        ],
+        "ref": "some regained colour after the shades",
+        "ev": "some regained colour after the shades were installed",
+        "zh": "部分遮蔭珊瑚安裝後 regained / recovered colour（恢復顏色）。exposed 對照組則更蒼白。"
+       },
+       {
+        "a": [
+         "10",
+         "ten"
+        ],
+        "ref": "about ten times cheaper",
+        "ev": "The paper estimates the approach is about ten times cheaper than replacing a dead coral.",
+        "zh": "成本約為置換死珊瑚的 ten times cheaper = 10 倍便宜。不是「便宜 10%」。"
+       },
+       {
+        "a": [
+         "8.9"
+        ],
+        "ref": "fell by eight point nine per cent",
+        "ev": "hard coral cover fell by eight point nine per cent globally",
+        "zh": "全球硬珊瑚覆蓋率一年內下降 eight point nine = 8.9%。eighty-four per cent 是經歷白化級高溫的礁區比例，為干擾項。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Shade for the Reef: Can Underwater Umbrellas Buy Corals Time?",
+    "intro": "A Florida field trial suggests temporary shading can blunt bleaching in heatwaves. Researchers insist it is a triage tool, not a substitute for cooler seas.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "When seawater stays too warm for too long, corals often expel the microscopic algae that live inside their tissues and supply most of their food. The colonies turn ghostly white—a condition known as bleaching—and, if stress continues, they may starve and die. Heat-driven bleaching has become the dominant threat to tropical reefs. Against that backdrop, a team led by Karen Neely of Nova Southeastern University has tested a deceptively simple idea: floating shade structures, nicknamed underwater umbrellas, placed over vulnerable colonies during peak summer heat. Their results, published in Frontiers in Marine Science in early October 2026, show that shading cannot cool the water but can cut the sunlight and ultraviolet load that amplify heat damage. Neely describes the method as temporary protection on small scales, not a reef-wide cure."
+     },
+     {
+      "label": "B",
+      "text": "The trial was a direct response to the catastrophic 2023 marine heatwave in the Florida Keys. Branching species such as staghorn and elkhorn coral were nearly eliminated at many sites, and at one inshore location more than half of the monitored colonies lost some or all of their living tissue. Brain corals, although more robust than branching forms, also suffered heavy losses. Neely's group returned in 2024 to Newfound Harbor, a protected reef in the lower Keys, to ask whether targeted shading could spare high-value survivors in a future event. They built twenty shades from polyvinyl chloride pipe, foam floats and agricultural shade cloth, moored them with cord so that each canopy hung roughly thirty centimetres above a colony, and left matched unshaded colonies as controls. The fabric reduced incoming light by about sixty per cent."
+     },
+     {
+      "label": "C",
+      "text": "Installation came later than the team would have liked. Divers began colour surveys in July 2024, but permits and logistics meant the umbrellas were not in place until August, after paling had already begun. The shades remained until November. Even so, sea-surface temperatures at Newfound Harbor exceeded the regional bleaching threshold of 30.5°C for at least sixty-one days, and cumulative heat stress ranked as the second-highest on the local record, according to NOAA satellite products. Shaded colonies lost less colour than expected during the hottest weeks, and some that had already paled regained pigment after the canopies went up. Unshaded neighbours continued to lighten. \"As soon as those shades went on, those corals all recovered,\" Neely told Eos. No bleaching-related mortality occurred in either group, so the study could not show whether shading improves survival under more extreme heat."
+     },
+     {
+      "label": "D",
+      "text": "Tissue biopsies added a further puzzle. The density and species mix of symbiotic algae did not differ clearly between shaded and control colonies. Neely suggests two explanations. First, sampling permits required biopsies from colony edges, which receive partial shade even without an umbrella, potentially masking differences on the sun-exposed tops. Second, after the 2023 die-off, many surviving corals already hosted heat-tolerant Durusdinium symbionts, leaving less room for community change. Mark Warner of the University of Delaware, who was not involved in the work, noted that paling without a drop in algal density can also reflect reduced chlorophyll inside the algae rather than classic expulsion. Those uncertainties do not erase the colour benefit of shading, but they complicate claims about the precise biological pathway."
+     },
+     {
+      "label": "E",
+      "text": "The authors are frank about scale. Blanketing entire reef tracts would be impractical and costly in labour, even if materials are cheap; the paper estimates shading at roughly one-tenth the cost of replacing a dead colony, yet that arithmetic applies only to selected targets. Neely argues the tool is best reserved for corals that managers decide they cannot afford to lose—especially large, rare or culturally valued specimens—and that it may reassure Atlantic managers who want local evidence rather than Pacific precedents alone. Maintenance surprised the team in a positive way: the shades needed little cleaning and held up through the season. Still, Neely warns that thermal stress can reach a point at which no amount of shade helps, and that only further experiments can map that boundary."
+     },
+     {
+      "label": "F",
+      "text": "The local experiment sits inside a grim global trend. The Global Coral Reef Monitoring Network's Status of Coral Reefs of the World: 2025, drawing on more than twenty-one million observations, found that bleaching events now recur roughly every four to six years, compared with about once a decade historically. Between 2023 and 2024 alone, hard coral cover fell by 8.9 per cent—the largest single-year relative decline on record—while by March 2025 some eighty-four per cent of the world's reef area had experienced bleaching-level heat. Average sea-surface temperature over reefs rose about 0.81°C from 1985 to 2025. Reefs can rebound when heat eases: global cover rose roughly six per cent between 2017 and 2019 after the previous global event. But shortening recovery windows leave less time for that rebound. Ecologist Julia Baum has called steep emissions cuts essential, warning that local interventions without cooler oceans risk becoming little more than rearranging deck chairs. Neely's umbrellas, in that light, are a triage measure: useful for buying days and weeks for chosen colonies, never a substitute for limiting greenhouse gases."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison between the cost of shading and the cost of replacing a dead coral",
+        "a": "E",
+        "ref": "E",
+        "ev": "the paper estimates shading at roughly one-tenth the cost of replacing a dead colony",
+        "zh": "E 段：遮蔭成本約為置換死珊瑚的十分之一（one-tenth）。"
+       },
+       {
+        "q": "possible reasons why algal communities looked similar in shaded and unshaded corals",
+        "a": "D",
+        "ref": "D",
+        "ev": "Neely suggests two explanations. First, sampling permits required biopsies from colony edges",
+        "zh": "D 段：兩種解釋——只能從邊緣取樣、以及倖存珊瑚已帶耐熱共生藻。"
+       },
+       {
+        "q": "evidence that shading can help even after bleaching has begun",
+        "a": "C",
+        "ref": "C",
+        "ev": "some that had already paled regained pigment after the canopies went up",
+        "zh": "C 段：已開始褪色的珊瑚在裝上遮陽後恢復色素；Neely 說 shades 一上就 recovered。"
+       },
+       {
+        "q": "a description of how the shade structures were built and positioned",
+        "a": "B",
+        "ref": "B",
+        "ev": "They built twenty shades from polyvinyl chloride pipe, foam floats and agricultural shade cloth",
+        "zh": "B 段：PVC 管、泡沫浮體、農業遮光布，約 30 公分高、減光約 60%。"
+       },
+       {
+        "q": "figures showing how often global bleaching events now occur compared with the past",
+        "a": "F",
+        "ref": "F",
+        "ev": "bleaching events now recur roughly every four to six years, compared with about once a decade historically",
+        "zh": "F 段：現在約每 4–6 年一次，過去約每十年一次。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The shade structures were designed primarily to lower the temperature of the surrounding seawater.",
+        "a": "False",
+        "ref": "A",
+        "ev": "shading cannot cool the water but can cut the sunlight and ultraviolet load",
+        "zh": "A 段明確說遮蔭「無法」降溫，而是減少陽光與紫外線——與題幹相反，False。"
+       },
+       {
+        "q": "The umbrellas were installed before any paling had been observed in 2024.",
+        "a": "False",
+        "ref": "C",
+        "ev": "the umbrellas were not in place until August, after paling had already begun",
+        "zh": "C 段：八月才裝上，當時褪色已開始——與「在任何褪色之前」相反，False。"
+       },
+       {
+        "q": "Shaded corals produced more larvae the following breeding season than unshaded corals.",
+        "a": "Not Given",
+        "ref": "C",
+        "ev": "the study could not show whether shading improves survival under more extreme heat",
+        "zh": "文章提到非致死白化可能影響繁殖力，但沒有比較兩組翌年幼體產量——典型 Not Given（看似相關但沒數據）。"
+       },
+       {
+        "q": "According to the GCRMN assessment, the one-year fall in hard coral cover between 2023 and 2024 was the largest on record.",
+        "a": "True",
+        "ref": "F",
+        "ev": "hard coral cover fell by 8.9 per cent—the largest single-year relative decline on record",
+        "zh": "F 段：8.9% 的單年相對下降是有紀錄以來最大，True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "What the Florida trial showed",
+      "lines": [
+       {
+        "t": "At Newfound Harbor, temperatures stayed above the bleaching threshold of [[1]] for lengthy periods, and heat stress was among the worst on the local record. Even though installation was delayed, shaded colonies regained [[2]] after the canopies were fitted. The authors recommend using shades mainly for [[3]] that managers cannot afford to lose. Globally, average reef sea-surface temperature rose about [[4]] between 1985 and 2025."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "30.5°C",
+         "30.5 C",
+         "30.5"
+        ],
+        "ref": "C",
+        "ev": "exceeded the regional bleaching threshold of 30.5°C for at least sixty-one days",
+        "zh": "C 段：白化門檻 30.5°C。可填 30.5°C 或 30.5。"
+       },
+       {
+        "a": [
+         "pigment"
+        ],
+        "ref": "C",
+        "ev": "some that had already paled regained pigment after the canopies went up",
+        "zh": "C 段原文是 regained pigment（色素）。不要改寫成 colour（閱讀填空須取自原文）。"
+       },
+       {
+        "a": [
+         "corals",
+         "specimens"
+        ],
+        "ref": "E",
+        "ev": "best reserved for corals that managers decide they cannot afford to lose",
+        "zh": "E 段：主要留給管理者認定「不能失去」的 corals／specimens（大型、稀有或具文化價值者）。"
+       },
+       {
+        "a": [
+         "0.81°C",
+         "0.81 C",
+         "0.81"
+        ],
+        "ref": "F",
+        "ev": "Average sea-surface temperature over reefs rose about 0.81°C from 1985 to 2025",
+        "zh": "F 段：1985–2025 礁區海表溫約升 0.81°C。8.9 per cent 是覆蓋率下降，別填錯。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "bleaching",
+     "pos": "n.",
+     "def": "the whitening of coral when it expels its symbiotic algae under stress",
+     "zh": "（珊瑚）白化",
+     "example": "Heat-related bleaching is probably the biggest threat to reefs.",
+     "match": [
+      "bleaching"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "symbiont",
+     "pos": "n.",
+     "def": "an organism living in a long-term partnership with another",
+     "zh": "共生物；共生藻",
+     "example": "Corals host microscopic algal symbionts that supply food.",
+     "match": [
+      "symbionts",
+      "symbiont"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "irradiance",
+     "pos": "n.",
+     "def": "the power of radiant light received on a surface",
+     "zh": "輻照度；光照強度",
+     "example": "Shading reduces irradiance that worsens heat damage.",
+     "match": [
+      "irradiance"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "threshold",
+     "pos": "n.",
+     "def": "the level at which a significant effect begins",
+     "zh": "門檻；臨界值",
+     "example": "Temperatures breached the bleaching threshold of 30.5°C.",
+     "match": [
+      "threshold"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "cumulative",
+     "pos": "adj.",
+     "def": "increasing by successive additions over time",
+     "zh": "累積的",
+     "example": "Cumulative heat stress was the second-highest on record.",
+     "match": [
+      "Cumulative",
+      "cumulative"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "paling",
+     "pos": "n.",
+     "def": "a gradual loss of colour; becoming pale",
+     "zh": "褪色；變蒼白",
+     "example": "Paling had already begun before the shades were installed.",
+     "match": [
+      "paling",
+      "paler"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "triage",
+     "pos": "n.",
+     "def": "the process of deciding which cases to treat first when resources are limited",
+     "zh": "檢傷分類；優先處置",
+     "example": "Shading is a triage measure for high-priority colonies.",
+     "match": [
+      "triage"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "impractical",
+     "pos": "adj.",
+     "def": "not sensible or feasible in real conditions",
+     "zh": "不切實際的",
+     "example": "Covering whole reefs would be impractical.",
+     "match": [
+      "impractical"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "reproductive",
+     "pos": "adj.",
+     "def": "relating to the ability to produce offspring",
+     "zh": "生殖的；繁殖的",
+     "example": "Bleaching can cut reproductive output later.",
+     "match": [
+      "reproductive"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "biopsy",
+     "pos": "n.",
+     "def": "a small sample of tissue taken for examination",
+     "zh": "活組織切片；組織採樣",
+     "example": "Tissue biopsies showed similar algal densities in both groups.",
+     "match": [
+      "biopsies",
+      "biopsy"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "amplify",
+     "pos": "v.",
+     "def": "to make something stronger or more intense",
+     "zh": "放大；加劇",
+     "example": "Sunlight can amplify heat damage to corals.",
+     "match": [
+      "amplify",
+      "amplify"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "rebound",
+     "pos": "v.",
+     "def": "to recover after a decline or setback",
+     "zh": "反彈；復原",
+     "example": "Reefs can rebound when heat eases.",
+     "match": [
+      "rebound"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "canopy",
+     "pos": "n.",
+     "def": "an overhead cover that provides shade",
+     "zh": "遮棚；頂蓋",
+     "example": "Some corals regained pigment after the canopies went up.",
+     "match": [
+      "canopies",
+      "canopy"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sobering",
+     "pos": "adj.",
+     "def": "making you feel serious by showing a difficult reality",
+     "zh": "令人警醒的；嚴肅的",
+     "example": "The wider context for reefs is sobering.",
+     "match": [
+      "sobering"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "expel",
+     "pos": "v.",
+     "def": "to force something out",
+     "zh": "排出；驅離",
+     "example": "Stressed corals expel the algae that feed them.",
+     "match": [
+      "expel",
+      "expelled"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-09-1.mp3",
+    "times": [
+     [
+      0.36,
+      0.98
+     ],
+     [
+      1.2,
+      8.94
+     ],
+     [
+      9.24,
+      10.74
+     ],
+     [
+      11.52,
+      16.31
+     ],
+     [
+      16.58,
+      20.54
+     ],
+     [
+      20.86,
+      24.99
+     ],
+     [
+      25.23,
+      29.37
+     ],
+     [
+      30.15,
+      34.14
+     ],
+     [
+      34.47,
+      39.03
+     ],
+     [
+      39.27,
+      43.34
+     ],
+     [
+      43.64,
+      48.91
+     ],
+     [
+      49.69,
+      57.19
+     ],
+     [
+      57.44,
+      63.73
+     ],
+     [
+      64.04,
+      67.35
+     ],
+     [
+      67.57,
+      75.85
+     ],
+     [
+      76.12,
+      80.37
+     ],
+     [
+      80.69,
+      82.45
+     ],
+     [
+      82.68,
+      86.79
+     ],
+     [
+      87.57,
+      92.6
+     ],
+     [
+      92.93,
+      94.32
+     ],
+     [
+      94.53,
+      102.08
+     ],
+     [
+      102.37,
+      111.35
+     ],
+     [
+      111.56,
+      114.66
+     ],
+     [
+      114.92,
+      121.62
+     ],
+     [
+      121.93,
+      125.1
+     ],
+     [
+      125.88,
+      129.16
+     ],
+     [
+      129.39,
+      134.94
+     ],
+     [
+      135.26,
+      140.91
+     ],
+     [
+      141.14,
+      147.28
+     ],
+     [
+      147.56,
+      154.48
+     ],
+     [
+      155.26,
+      158.85
+     ],
+     [
+      159.1,
+      161.23
+     ],
+     [
+      161.48,
+      169.16
+     ],
+     [
+      169.37,
+      173.88
+     ],
+     [
+      174.14,
+      180.21
+     ],
+     [
+      180.99,
+      182.71
+     ],
+     [
+      182.9,
+      191.83
+     ],
+     [
+      192.18,
+      200.63
+     ],
+     [
+      200.95,
+      206.69
+     ],
+     [
+      206.92,
+      210.0
+     ],
+     [
+      210.28,
+      211.6
+     ],
+     [
+      211.89,
+      216.91
+     ]
+    ],
+    "duration": 217.6,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-10-09-1-words/"
+   }
+  },
+  {
+   "title": "Samsung Bets on Hybrid Copper Bonding to Cool Taller HBM Stacks",
+   "topic": "Semiconductors · HBM packaging",
+   "source": {
+    "name": "Samsung Newsroom: HBM4E and hybrid copper bonding at NVIDIA GTC 2026 (17 Mar 2026)",
+    "url": "https://news.samsung.com/global/samsung-unveils-hbm4e-showcasing-comprehensive-ai-solutions-nvidia-partnership-and-vision-at-nvidia-gtc-2026",
+    "links": [
+     {
+      "name": "NineScrolls: Samsung IEEE paper on HCB thermal characterization (Jun 2026)",
+      "url": "https://ninescrolls.com/news/samsung-publishes-first-system-level-proof-that-hybrid-copper-bonding-cuts-hbm/"
+     },
+     {
+      "name": "East Asia Brief: Samsung revamps HBM thermal packaging (6 Oct 2026)",
+      "url": "https://eastasiabrief.com/semiconductors/samsung-revamps-hbm-thermal-packaging-challenge-tsmc-supply-lead-559"
+     },
+     {
+      "name": "CiVL: Samsung adopts direct copper bonding for memory stacks",
+      "url": "https://civl.com/news/story/samsung-adopts-direct-copper-bonding-for-memory-stacks-to-meet-nvidia-height-lim-8e9ff090"
+     },
+     {
+      "name": "NineScrolls: SK hynix rules out hybrid bonding for HBM4E",
+      "url": "https://ninescrolls.com/news/sk-hynix-rules-out-hybrid-bonding-for-hbm4e-775-micron-ceiling-keeps-mr-muf/"
+     },
+     {
+      "name": "TechPowerUp: JEDEC HBM4 package thickness (775 μm)",
+      "url": "https://www.techpowerup.com/320314/jedec-agrees-to-relax-hbm4-package-thickness"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Our lead story in technology:",
+     "Samsung says a new way of stacking memory chips—hybrid copper bonding—can cut heat and shrink tall high-bandwidth memory packages just as artificial-intelligence accelerators demand more layers.",
+     "Here's the report."
+    ],
+    [
+     "High-bandwidth memory, or HBM, stacks DRAM dies vertically beside a graphics or AI processor.",
+     "Each extra layer traps more heat in the middle of the stack.",
+     "For years the industry joined those dies with tiny solder bumps and underfill—a method known as thermal compression bonding.",
+     "Samsung is pushing an alternative called hybrid copper bonding, or HCB.",
+     "It fuses copper pads directly, copper-to-copper, and removes the bumps and the heat-trapping film between dies."
+    ],
+    [
+     "At NVIDIA's GTC conference in March twenty twenty-six, Samsung put the claim on stage.",
+     "According to the company's newsroom, HCB can lower thermal resistance by more than twenty per cent compared with thermal compression bonding.",
+     "It also aims to support stacks of sixteen layers or more.",
+     "Samsung's sixth-generation HBM4 is already in mass production for NVIDIA's Vera Rubin platform.",
+     "The firm says it delivers eleven point seven gigabits per second per pin, above the industry standard of eight, and can be pushed to thirteen.",
+     "Its successor, HBM4E, was shown with sixteen gigabits per second per pin and four point zero terabytes per second of bandwidth."
+    ],
+    [
+     "Meanwhile, a June twenty twenty-six IEEE paper from Samsung offered what the company calls the first system-level thermal measurements of hybrid-bonded HBM.",
+     "Test vehicles with HCB and with conventional bonding sat beside an ASIC on a silicon interposer under air cooling meant to mimic a server.",
+     "The hybrid-bonded stacks ran with cooler hotspot temperatures, less thermal interference with the logic die underneath, and a higher usable power budget.",
+     "Package stack height fell by more than fifteen per cent."
+    ],
+    [
+     "Height matters because JEDEC, the industry standards body, set a package ceiling of seven hundred and seventy-five micrometres for HBM4.",
+     "That limit applies to both twelve-high and sixteen-high stacks.",
+     "Industry reports this week say NVIDIA has asked memory suppliers to trim another five micrometres below that ceiling for upcoming platforms.",
+     "Analysts had been forecasting that taller stacks would force an early industry-wide switch to hybrid bonding.",
+     "The actual picture is more mixed."
+    ],
+    [
+     "Samsung plans to introduce HCB with sixteen-layer HBM4E, running it first alongside conventional bonding, then moving to full hybrid bonding at HBM5.",
+     "Sample shipments of HBM4E were completed in May, and customer qualification is targeted for early twenty twenty-seven.",
+     "By contrast, SK hynix has said it will stick with its mass-reflow moulded underfill process through HBM4E and treat hybrid bonding as a later step, possibly at HBM5.",
+     "That split means the packaging race is no longer only about who ships the most HBM—it is about who can keep stacks cool and thin enough for the next AI systems."
+    ],
+    [
+     "There are risks on both sides, though.",
+     "Hybrid bonding demands near-perfect surface cleanliness and sub-micron alignment; yield risk compounds as stacks grow taller, and the tools are expensive.",
+     "Still, with AI accelerators packing more memory beside hotter logic dies, the pressure on the bond line is only rising.",
+     "That's the technology report.",
+     "Next week, we'll look at how equipment makers are racing to supply hybrid bonders and plasma activation tools."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Samsung Hybrid Copper Bonding for HBM",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "What HCB changes"
+       },
+       {
+        "t": "Joins dies by fusing [[1]] pads directly"
+       },
+       {
+        "t": "Removes solder bumps and heat-trapping [[2]]"
+       },
+       {
+        "h": "Samsung claims (GTC 2026)"
+       },
+       {
+        "t": "Thermal resistance vs TCB: more than [[3]] % lower"
+       },
+       {
+        "t": "Target stack height: [[4]] layers or more"
+       },
+       {
+        "t": "HBM4 speed (mass production): [[5]] Gbps per pin"
+       },
+       {
+        "t": "Industry standard for comparison: [[6]] Gbps"
+       },
+       {
+        "h": "IEEE thermal study (June 2026)"
+       },
+       {
+        "t": "Reduction in package stack height: more than [[7]] %"
+       },
+       {
+        "h": "Industry height rules"
+       },
+       {
+        "t": "JEDEC HBM4 package ceiling: [[8]] micrometres"
+       },
+       {
+        "t": "Extra cut reportedly requested by NVIDIA: [[9]] micrometres"
+       },
+       {
+        "h": "Roadmap"
+       },
+       {
+        "t": "Customer qualification for 16-layer HBM4E targeted: early [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "copper"
+        ],
+        "ref": "fuses copper pads directly",
+        "ev": "It fuses copper pads directly, copper-to-copper",
+        "zh": "直接熔接 copper pads（銅墊）。hybrid copper bonding 的核心就是銅對銅。"
+       },
+       {
+        "a": [
+         "film",
+         "underfill"
+        ],
+        "ref": "heat-trapping film between dies",
+        "ev": "removes the bumps and the heat-trapping film between dies",
+        "zh": "去掉錫球凸塊與會擋熱的 film（非導電膠層／underfill）。筆記寫 heat-trapping，對應原文 film。"
+       },
+       {
+        "a": [
+         "20",
+         "twenty"
+        ],
+        "ref": "more than twenty per cent",
+        "ev": "HCB can lower thermal resistance by more than twenty per cent compared with thermal compression bonding",
+        "zh": "熱阻比 TCB 低 more than twenty per cent = 20% 以上。fifteen per cent 是堆疊高度下降，為干擾項。"
+       },
+       {
+        "a": [
+         "16",
+         "sixteen"
+        ],
+        "ref": "stacks of sixteen layers or more",
+        "ev": "It also aims to support stacks of sixteen layers or more",
+        "zh": "目標支援 sixteen = 16 層以上。twelve-high 是 JEDEC 也允許的另一種高度配置，不要混淆。"
+       },
+       {
+        "a": [
+         "11.7"
+        ],
+        "ref": "eleven point seven gigabits per second",
+        "ev": "it delivers eleven point seven gigabits per second per pin",
+        "zh": "HBM4 量產速度 eleven point seven = 11.7 Gbps。thirteen 是可再推高的上限，eight 是業界標準，都是干擾。"
+       },
+       {
+        "a": [
+         "8",
+         "eight"
+        ],
+        "ref": "industry standard of eight",
+        "ev": "above the industry standard of eight",
+        "zh": "業界標準 eight = 8 Gbps。題目問的是 standard，不是 Samsung 的 11.7。"
+       },
+       {
+        "a": [
+         "15",
+         "fifteen"
+        ],
+        "ref": "more than fifteen per cent",
+        "ev": "Package stack height fell by more than fifteen per cent",
+        "zh": "IEEE 量測：封裝堆疊高度下降 more than fifteen per cent = 15% 以上。twenty per cent 是熱阻，別填錯。"
+       },
+       {
+        "a": [
+         "775"
+        ],
+        "ref": "seven hundred and seventy-five micrometres",
+        "ev": "set a package ceiling of seven hundred and seventy-five micrometres for HBM4",
+        "zh": "JEDEC HBM4 高度上限 seven hundred and seventy-five = 775 微米。"
+       },
+       {
+        "a": [
+         "5",
+         "five"
+        ],
+        "ref": "trim another five micrometres",
+        "ev": "NVIDIA has asked memory suppliers to trim another five micrometres below that ceiling",
+        "zh": "業界報導 NVIDIA 要求再低 five = 5 微米。775 是上限本身，不要填 775。"
+       },
+       {
+        "a": [
+         "2027"
+        ],
+        "ref": "early twenty twenty-seven",
+        "ev": "customer qualification is targeted for early twenty twenty-seven",
+        "zh": "客戶認證目標 early 2027。May 是樣品出貨時間，HBM5 是更後面的世代，皆為干擾。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Cooling the Stack: Why Hybrid Bonding Matters for Next-Generation HBM",
+    "intro": "As AI accelerators demand taller memory stacks in the same package height, Samsung is betting on copper-to-copper bonds. Rivals are not all following the same path.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "High-bandwidth memory has become the bottleneck currency of artificial-intelligence computing. Each HBM stack places multiple DRAM dies one atop another and links them with thousands of through-silicon vias, then sits the tower beside a graphics or AI processor on an advanced package. Every added layer improves capacity and bandwidth, but it also traps more heat mid-stack. Much of that heat must escape downward through the logic die. As stacks climb from eight and twelve layers toward sixteen, thermal management—not raw electrical performance—increasingly sets the limit. That is the backdrop to Samsung Electronics' public push for hybrid copper bonding, a packaging method that replaces conventional micro-bump joints with direct copper-to-copper bonds between dies. Industry analysts now treat packaging choices—bonding method, stack height and thermal interface—as strategic decisions that can decide which memory vendor wins a design slot beside the next generation of AI accelerators."
+     },
+     {
+      "label": "B",
+      "text": "For the current generation of HBM, the dominant attachment method is thermal compression bonding, or TCB. Dies are joined with microscopic solder bumps, and the gaps are filled with a non-conductive underfill. Those polymer layers sit squarely in the heat path and behave like insulation. Hybrid copper bonding, often abbreviated HCB, eliminates both the bumps and the underfill at the bond interface: copper pads on adjacent dies are planarised, cleaned and fused metal-to-metal. Samsung told visitors at NVIDIA's GTC conference in March 2026 that the approach can reduce thermal resistance by more than twenty per cent relative to TCB while enabling stacks of sixteen layers or more. The company also used the event to showcase HBM4, already in mass production for NVIDIA's Vera Rubin platform at 11.7 gigabits per second per pin against an eight-gigabit industry baseline, and HBM4E samples rated at sixteen gigabits per second and four terabytes per second of aggregate bandwidth."
+     },
+     {
+      "label": "C",
+      "text": "Marketing claims are one thing; measured system behaviour is another. In June 2026 Samsung published an IEEE paper titled \"System-Level Thermal Characterization of Hybrid Cu Bonding HBM with 2.5D Advanced Packaging.\" Rather than stopping at chip-level simulation, the authors built a multi-scale thermal model from microstructure up to server level and validated it with hardware. HCB and TCB test vehicles were mounted with an ASIC on a silicon interposer and exercised under air cooling intended to approximate real datacentre conditions. The hybrid-bonded stacks showed lower hotspot junction temperatures, reduced thermal interference between the memory tower and the logic die beneath it, and a larger usable power budget. Package stack height dropped by more than fifteen per cent—headroom that matters when customers insist on packing more DRAM into a fixed mechanical envelope."
+     },
+     {
+      "label": "D",
+      "text": "That envelope is partly set by standards bodies and partly by platform vendors. JEDEC's HBM4 specification allows a maximum package thickness of 775 micrometres for both twelve-high and sixteen-high configurations, up from 720 micrometres in the HBM3E generation. The ceiling reflects constraints in logic-wafer thickness and cooling hardware as much as memory process technology. In early October 2026, industry reports said NVIDIA had asked suppliers to shave a further five micrometres off that limit for forthcoming systems. Whether or not every customer adopts the tighter ask, the direction of travel is clear: stacks must get denser without growing taller, which intensifies interest in thinner interconnect schemes."
+     },
+     {
+      "label": "E",
+      "text": "Samsung's roadmap pairs HCB with sixteen-layer HBM4E, initially running hybrid bonding alongside conventional TCB before shifting to full hybrid bonding at HBM5. Sample shipments of HBM4E were completed in May 2026, with customer qualification aimed at early 2027. SK hynix, currently a leading HBM supplier, has taken a different public stance. At the Hot Chips conference in August 2026 it indicated that hybrid bonding would not be used for HBM4E and that mass-reflow moulded underfill—its MR-MUF process—would continue through NVIDIA's Rubin generation, with hybrid bonding deferred at least until HBM5. The divergence underlines that packaging strategy is becoming a competitive differentiator in its own right, not merely a back-end detail."
+     },
+     {
+      "label": "F",
+      "text": "None of this makes hybrid bonding easy. Samsung itself acknowledges that production HCB demands near-perfect surface cleanliness, sub-micron alignment across every die, specialised bonders, extra cleanroom capacity and a yield risk that compounds with stack height. Long-term reliability questions—warpage, thermal cycling fatigue, interconnect integrity—remain active research topics. Equipment makers such as BESI have already seen hybrid-bonding order books swell on logic and other applications even while HBM volume adoption is still staged. For AI system designers, the stakes are practical: cooler, thinner stacks free power budget and board space; hotter, thicker ones throttle clocks or force awkward cooling. Hybrid bonding will not by itself solve the memory wall, but the thermal data Samsung has begun to publish suggest it is moving from slideware toward a measurable engineering option—provided yields hold when sixteen-high volumes arrive. For now, the evidence base is still thin compared with decades of TCB experience, which is why both Samsung and its rivals are staging the transition rather than flipping overnight."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a rival supplier's decision to delay hybrid bonding until a later HBM generation",
+        "a": "E",
+        "ref": "E",
+        "ev": "hybrid bonding would not be used for HBM4E and that mass-reflow moulded underfill—its MR-MUF process—would continue",
+        "zh": "E 段：SK hynix 表示 HBM4E 不用 hybrid bonding，MR-MUF 會延續到 Rubin，hybrid 至少等到 HBM5。"
+       },
+       {
+        "q": "hardware measurements comparing hotspot temperatures of two bonding methods",
+        "a": "C",
+        "ref": "C",
+        "ev": "The hybrid-bonded stacks showed lower hotspot junction temperatures",
+        "zh": "C 段：IEEE 論文用硬體驗證，HCB 熱點接面溫度較低。"
+       },
+       {
+        "q": "an explanation of why heat becomes harder to remove as more DRAM layers are added",
+        "a": "A",
+        "ref": "A",
+        "ev": "Every added layer improves capacity and bandwidth, but it also traps more heat mid-stack",
+        "zh": "A 段：每多一層就在堆疊中間多困住熱量，熱必須往下經邏輯晶片散出。"
+       },
+       {
+        "q": "practical difficulties that make volume manufacturing of hybrid bonding demanding",
+        "a": "F",
+        "ref": "F",
+        "ev": "production HCB demands near-perfect surface cleanliness, sub-micron alignment across every die",
+        "zh": "F 段：表面潔淨度、次微米對位、專用設備、良率風險等量產難題。"
+       },
+       {
+        "q": "the maximum package thickness allowed under the current HBM4 standard",
+        "a": "D",
+        "ref": "D",
+        "ev": "JEDEC's HBM4 specification allows a maximum package thickness of 775 micrometres",
+        "zh": "D 段：JEDEC HBM4 最大封裝厚度 775 微米。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Thermal compression bonding leaves polymer underfill in the path through which heat must travel.",
+        "a": "True",
+        "ref": "B",
+        "ev": "Those polymer layers sit squarely in the heat path and behave like insulation",
+        "zh": "B 段：非導電 underfill 聚合物層正好擋在熱路徑上，像絕緣體，True。"
+       },
+       {
+        "q": "Samsung's HBM4 is still only available as engineering samples, not in mass production.",
+        "a": "False",
+        "ref": "B",
+        "ev": "HBM4, already in mass production for NVIDIA's Vera Rubin platform",
+        "zh": "B 段：HBM4 已量產（already in mass production），與「只是工程樣品」相反，False。"
+       },
+       {
+        "q": "NVIDIA has published its own laboratory comparison of HCB and TCB hotspot temperatures.",
+        "a": "Not Given",
+        "ref": "C",
+        "ev": "In June 2026 Samsung published an IEEE paper",
+        "zh": "文章只提 Samsung 的 IEEE 量測與業界報導 NVIDIA 要求降高度，沒有說 NVIDIA 自己發表過熱點溫度比較——Not Given。"
+       },
+       {
+        "q": "The HBM4 thickness limit is higher than the limit that applied to HBM3E.",
+        "a": "True",
+        "ref": "D",
+        "ev": "up from 720 micrometres in the HBM3E generation",
+        "zh": "D 段：HBM4 上限 775 μm，高於 HBM3E 的 720 μm，True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Samsung's packaging path",
+      "lines": [
+       {
+        "t": "At GTC 2026 Samsung said hybrid copper bonding can cut thermal resistance by more than twenty per cent versus [[1]]. An IEEE study later reported that package stack height dropped by more than fifteen [[2]] and hybrid stacks ran with cooler hotspots. Samsung intends to pair HCB with sixteen-layer [[3]], while SK hynix plans to keep using [[4]] through that generation."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "TCB",
+         "thermal compression"
+        ],
+        "ref": "B",
+        "ev": "reduce thermal resistance by more than twenty per cent relative to TCB",
+        "zh": "B 段：相對 TCB（thermal compression bonding）熱阻降低逾 20%。填 TCB 或 thermal compression。"
+       },
+       {
+        "a": [
+         "per cent",
+         "percent"
+        ],
+        "ref": "C",
+        "ev": "Package stack height dropped by more than fifteen per cent",
+        "zh": "C 段：堆疊高度下降逾 fifteen per cent；題目已有 fifteen，填 per cent。"
+       },
+       {
+        "a": [
+         "HBM4E"
+        ],
+        "ref": "E",
+        "ev": "Samsung's roadmap pairs HCB with sixteen-layer HBM4E",
+        "zh": "E 段：HCB 搭配 sixteen-layer HBM4E。不要填 HBM5（那是全面 hybrid 的更後世代）。"
+       },
+       {
+        "a": [
+         "MR-MUF"
+        ],
+        "ref": "E",
+        "ev": "mass-reflow moulded underfill—its MR-MUF process—would continue",
+        "zh": "E 段：SK hynix 繼續用 MR-MUF。兩個字以內；填 MR-MUF。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "interconnect",
+     "pos": "n.",
+     "def": "an electrical connection linking components or dies",
+     "zh": "互連；連接結構",
+     "example": "Thinner interconnect schemes help stacks stay within height limits.",
+     "match": [
+      "interconnect"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "thermal resistance",
+     "pos": "n.",
+     "def": "a measure of how strongly a material or structure blocks heat flow",
+     "zh": "熱阻",
+     "example": "HCB can lower thermal resistance by more than twenty per cent.",
+     "match": [
+      "thermal resistance"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "underfill",
+     "pos": "n.",
+     "def": "a polymer material filling gaps between a chip and its substrate or neighbouring die",
+     "zh": "底部填充膠",
+     "example": "TCB fills gaps with non-conductive underfill.",
+     "match": [
+      "underfill"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "planarise",
+     "pos": "v.",
+     "def": "to make a surface extremely flat, usually by polishing",
+     "zh": "平坦化；整平",
+     "example": "Copper pads are planarised before bonding.",
+     "match": [
+      "planarised"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "hotspot",
+     "pos": "n.",
+     "def": "a localised region of high temperature in a chip or package",
+     "zh": "熱點",
+     "example": "Hybrid-bonded stacks showed lower hotspot temperatures.",
+     "match": [
+      "hotspot"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "interposer",
+     "pos": "n.",
+     "def": "an intermediate substrate that routes signals between chips in a package",
+     "zh": "中介層；中介基板",
+     "example": "Test vehicles sat on a silicon interposer beside an ASIC.",
+     "match": [
+      "interposer"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "micrometre",
+     "pos": "n.",
+     "def": "one millionth of a metre; a common unit for chip dimensions",
+     "zh": "微米",
+     "example": "JEDEC set a ceiling of 775 micrometres for HBM4 packages.",
+     "match": [
+      "micrometres",
+      "micrometre"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "qualification",
+     "pos": "n.",
+     "def": "the formal process of proving a product meets customer requirements",
+     "zh": "（客戶）認證；合格驗證",
+     "example": "Customer qualification is targeted for early 2027.",
+     "match": [
+      "qualification"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "divergence",
+     "pos": "n.",
+     "def": "a difference in path or opinion between parties that once seemed aligned",
+     "zh": "分歧；分道揚鑣",
+     "example": "The divergence underlines packaging as a competitive differentiator.",
+     "match": [
+      "divergence"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "warpage",
+     "pos": "n.",
+     "def": "unwanted bending or distortion of a wafer or package",
+     "zh": "翹曲",
+     "example": "Warpage is one long-term reliability concern for tall stacks.",
+     "match": [
+      "warpage"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "envelope",
+     "pos": "n.",
+     "def": "the maximum physical size or operating limit allowed for a system",
+     "zh": "（尺寸／規格）包絡；限制範圍",
+     "example": "Customers pack more DRAM into a fixed mechanical envelope.",
+     "match": [
+      "envelope"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "compound",
+     "pos": "v.",
+     "def": "to make a problem worse by adding to it",
+     "zh": "加劇；使更嚴重",
+     "example": "Yield risk compounds as stacks grow taller.",
+     "match": [
+      "compounds",
+      "compound"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "throttle",
+     "pos": "v.",
+     "def": "to deliberately limit speed or power to avoid overheating or overload",
+     "zh": "降速；節流",
+     "example": "Hotter stacks may throttle clocks or force awkward cooling.",
+     "match": [
+      "throttle"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "slideware",
+     "pos": "n.",
+     "def": "ideas that exist mainly in presentation slides rather than working products",
+     "zh": "簡報軟體（諷指僅存在投影片中的構想）",
+     "example": "Hybrid bonding is moving from slideware toward a measured option.",
+     "match": [
+      "slideware"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "bandwidth",
+     "pos": "n.",
+     "def": "the rate at which data can be transferred",
+     "zh": "頻寬",
+     "example": "HBM4E was shown with four terabytes per second of bandwidth.",
+     "match": [
+      "bandwidth"
+     ],
+     "src": "聽力"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-09-2.mp3",
+    "times": [
+     [
+      0.36,
+      1.87
+     ],
+     [
+      2.17,
+      12.43
+     ],
+     [
+      12.73,
+      13.78
+     ],
+     [
+      14.56,
+      20.86
+     ],
+     [
+      21.13,
+      24.0
+     ],
+     [
+      24.32,
+      31.08
+     ],
+     [
+      31.32,
+      36.06
+     ],
+     [
+      36.34,
+      42.45
+     ],
+     [
+      43.23,
+      48.55
+     ],
+     [
+      48.79,
+      55.94
+     ],
+     [
+      56.24,
+      59.41
+     ],
+     [
+      59.62,
+      65.46
+     ],
+     [
+      65.72,
+      73.21
+     ],
+     [
+      73.51,
+      81.13
+     ],
+     [
+      81.91,
+      90.4
+     ],
+     [
+      90.67,
+      98.72
+     ],
+     [
+      99.04,
+      107.0
+     ],
+     [
+      107.23,
+      109.91
+     ],
+     [
+      110.69,
+      118.3
+     ],
+     [
+      118.63,
+      121.94
+     ],
+     [
+      122.19,
+      129.44
+     ],
+     [
+      129.73,
+      135.14
+     ],
+     [
+      135.35,
+      137.26
+     ],
+     [
+      138.04,
+      148.38
+     ],
+     [
+      148.69,
+      155.81
+     ],
+     [
+      156.03,
+      166.64
+     ],
+     [
+      166.99,
+      175.52
+     ],
+     [
+      176.3,
+      178.49
+     ],
+     [
+      178.73,
+      186.95
+     ],
+     [
+      187.23,
+      194.16
+     ],
+     [
+      194.49,
+      196.13
+     ],
+     [
+      196.45,
+      202.37
+     ]
+    ],
+    "duration": 203.0,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-09-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
