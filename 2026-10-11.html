@@ -1,0 +1,2133 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-11",
+ "date": "2026-10-11",
+ "title": "World Migratory Bird Day Puts Citizen Science Centre Stage · Japanese Interval Walking Beats Steady Pace",
+ "stories": [
+  {
+   "title": "World Migratory Bird Day 2026: Every Bird Counts as Citizen Science Goes Global",
+   "topic": "Nature · migratory birds",
+   "source": {
+    "name": "CMS: World Migratory Bird Day 2026 – 10 October (Every Bird Counts – Your Observations Matter!)",
+    "url": "https://www.cms.int/news/2026017-world-migratory-bird-day-2026-10-october-2026",
+    "links": [
+     {
+      "name": "CMS: Every Bird Counts – Your Observations Matter! (theme announcement, 18 Dec 2025)",
+      "url": "https://www.cms.int/news/every-bird-counts-your-observations-matter-0"
+     },
+     {
+      "name": "CMS: Every Bird Counts — how every observation matters (8 May 2026)",
+      "url": "https://www.cms.int/news/every-bird-counts-world-migratory-bird-day-2026-highlights-how-every-observation-matters"
+     },
+     {
+      "name": "Wetlands International: Counting for Conservation – 60th International Waterbird Census (14 Jan 2026)",
+      "url": "https://www.wetlands.org/counting-for-conservation-60th-international-waterbird-census/"
+     },
+     {
+      "name": "eBird / Cornell Lab: October Big Day — 10 Oct 2026",
+      "url": "https://ebird.org/news/october-big-day-2026"
+     },
+     {
+      "name": "eBird: Collective Achievement on October Big Day 2025 results",
+      "url": "https://ebird.org/news/october-big-day-2025-results"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "World Migratory Bird Day is marking its October peak under a simple theme: Every Bird Counts – Your Observations Matter!",
+     "Here's the conservation report."
+    ],
+    [
+     "The campaign is coordinated by four partners: the United Nations Convention on Migratory Species, the African-Eurasian Migratory Waterbirds Agreement, the East Asian–Australasian Flyway Partnership, and Environment for the Americas.",
+     "According to the Convention's Bonn notice, Parties and partners are invited to celebrate on Saturday, the tenth of October.",
+     "A first peak day already ran on the ninth of May, reflecting that migration peaks at different times in the northern and southern hemispheres.",
+     "The Convention itself now counts one hundred thirty-three Parties—one hundred thirty-two countries plus the European Union."
+    ],
+    [
+     "Meanwhile, the theme puts community science—also called citizen science—at the centre.",
+     "From backyard sightings to coordinated wetland surveys, millions of people record birds that help track migration patterns, population trends and habitat change across flyways.",
+     "Campaign materials highlight digital platforms such as eBird, iNaturalist, Ornitho and BirdTrack, which let observers share sightings instantly.",
+     "The Cornell Lab of Ornithology, Wetlands International and BirdLife International are among the organisations actively supporting the twenty twenty-six campaign."
+    ],
+    [
+     "The timing also coincides with the sixtieth anniversary of the International Waterbird Census.",
+     "Coordinated by Wetlands International, the census has run every year since nineteen sixty-seven.",
+     "Its tallies now cover about sixty-seven thousand wetlands in one hundred eighty-nine countries and territories, and more than one point nine billion waterbirds have been recorded over six decades.",
+     "Some earlier briefings had floated a narrower footprint of roughly one hundred forty countries.",
+     "Wetlands International's anniversary figures use the wider one hundred eighty-nine figure when territories are included."
+    ],
+    [
+     "Those volunteer counts have shaped policy on the ground.",
+     "Wetlands International says census data have helped designate nine hundred fifty-six Ramsar Wetlands of International Importance, covering one point five million square kilometres—roughly the size of Mongolia.",
+     "They have also helped identify two thousand seven hundred one Important Bird Areas covering one point seven five million square kilometres.",
+     "Chief executive Coenraad Krijger called the census an essential beacon of knowledge and collaboration for waterbirds and wetlands."
+    ],
+    [
+     "Looking ahead to this weekend's citizen-science surge, the Cornell Lab's eBird platform is running October Big Day on the same Saturday.",
+     "Organisers note that last October nearly nine hundred thousand people united for a single day of birding, and they are challenging the community to push past one million this year.",
+     "Hard numbers from the twenty twenty-five results show one hundred thirteen thousand five hundred ten checklists from forty-eight thousand eight hundred thirty eBirders, spanning seven thousand eight hundred thirty-four species across one hundred ninety-six countries.",
+     "Sound uploads that year totalled two thousand seven hundred eighty-one recordings.",
+     "If every eBirder uploaded one recording this year, eBird says that would mean about fifty thousand more bird sounds archived in the Macaulay Library."
+    ],
+    [
+     "There are limits to what a single day's checklists can prove, though.",
+     "Long-term trends still depend on repeated counts like the waterbird census, and many shorebird populations remain in decline.",
+     "Still, Amy Fraenkel, Executive Secretary of the Convention on Migratory Species, has pointed to the new Americas Flyways Atlas—built with Cornell Lab modelling on millions of citizen-science observations—as proof that shared sightings can map breeding, stopover and wintering sites for vulnerable species.",
+     "That's the nature report.",
+     "In our next bulletin, we'll look at how flyway partnerships are protecting stopover wetlands in East Asia."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "World Migratory Bird Day 2026 & Citizen Science",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Campaign basics"
+       },
+       {
+        "t": "October peak date: [[1]] October"
+       },
+       {
+        "t": "Earlier peak day in [[2]]"
+       },
+       {
+        "t": "CMS membership: [[3]] Parties"
+       },
+       {
+        "h": "International Waterbird Census"
+       },
+       {
+        "t": "Running every year since [[4]]"
+       },
+       {
+        "t": "Wetlands surveyed: about [[5]] thousand"
+       },
+       {
+        "t": "Countries and territories covered: [[6]]"
+       },
+       {
+        "t": "Waterbirds recorded over six decades: more than [[7]] billion"
+       },
+       {
+        "h": "eBird October Big Day"
+       },
+       {
+        "t": "Checklists in 2025: [[8]]"
+       },
+       {
+        "t": "Species observed globally in 2025: [[9]]"
+       },
+       {
+        "t": "Sound-recording challenge target this year: about [[10]] thousand"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "10",
+         "tenth"
+        ],
+        "ref": "on Saturday, the tenth of October",
+        "ev": "celebrate on Saturday, the tenth of October",
+        "zh": "十月高峰日是 Saturday, the tenth of October = 10 月 10 日。五月九日是另一個高峰日，別填錯。"
+       },
+       {
+        "a": [
+         "May"
+        ],
+        "ref": "on the ninth of May",
+        "ev": "A first peak day already ran on the ninth of May",
+        "zh": "第一個高峰日在五月九日（ninth of May）。答案填 May。"
+       },
+       {
+        "a": [
+         "133"
+        ],
+        "ref": "one hundred thirty-three Parties",
+        "ev": "counts one hundred thirty-three Parties—one hundred thirty-two countries plus the European Union",
+        "zh": "CMS 共 one hundred thirty-three = 133 個締約方（含歐盟）。132 是國家數，不要少算歐盟。"
+       },
+       {
+        "a": [
+         "1967"
+        ],
+        "ref": "every year since nineteen sixty-seven",
+        "ev": "the census has run every year since nineteen sixty-seven",
+        "zh": "IWC 自 nineteen sixty-seven = 1967 年起每年舉行。六十週年是紀念說法，年份填 1967。"
+       },
+       {
+        "a": [
+         "67",
+         "sixty-seven"
+        ],
+        "ref": "about sixty-seven thousand wetlands",
+        "ev": "cover about sixty-seven thousand wetlands in one hundred eighty-nine countries and territories",
+        "zh": "濕地點約 sixty-seven thousand = 6.7 萬處。題幹已有 thousand，填 67。"
+       },
+       {
+        "a": [
+         "189"
+        ],
+        "ref": "one hundred eighty-nine countries and territories",
+        "ev": "sixty-seven thousand wetlands in one hundred eighty-nine countries and territories",
+        "zh": "含屬地為 one hundred eighty-nine = 189。前面「約 140 國」是較窄說法的干擾項。"
+       },
+       {
+        "a": [
+         "1.9",
+         "1.9 billion"
+        ],
+        "ref": "more than one point nine billion waterbirds",
+        "ev": "more than one point nine billion waterbirds have been recorded over six decades",
+        "zh": "六十年累計超過 one point nine = 1.9 billion 隻水鳥。題幹已有 billion，填 1.9。"
+       },
+       {
+        "a": [
+         "113510",
+         "113,510"
+        ],
+        "ref": "one hundred thirteen thousand five hundred ten checklists",
+        "ev": "one hundred thirteen thousand five hundred ten checklists from forty-eight thousand eight hundred thirty eBirders",
+        "zh": "2025 年 checklist 數 one hundred thirteen thousand five hundred ten = 113,510。48,830 是 eBirder 人數，別填錯。"
+       },
+       {
+        "a": [
+         "7834",
+         "7,834"
+        ],
+        "ref": "seven thousand eight hundred thirty-four species",
+        "ev": "spanning seven thousand eight hundred thirty-four species across one hundred ninety-six countries",
+        "zh": "全球觀察到 seven thousand eight hundred thirty-four = 7,834 種。196 是國家數干擾。"
+       },
+       {
+        "a": [
+         "50",
+         "fifty"
+        ],
+        "ref": "about fifty thousand more bird sounds",
+        "ev": "that would mean about fifty thousand more bird sounds archived in the Macaulay Library",
+        "zh": "若每位 eBirder 上傳一筆，約 fifty thousand = 5 萬筆聲音。去年實際約 2,781 筆是干擾。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "When Every Checklist Becomes Conservation Data",
+    "intro": "A United Nations–backed bird campaign is using its 2026 theme to argue that volunteer observations—from backyard apps to sixty-year wetland counts—are no longer a hobbyist sideline but core evidence for flyway protection.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "On 10 October 2026, World Migratory Bird Day reaches its second peak of the year under the slogan \"Every Bird Counts – Your Observations Matter!\" The date is not arbitrary. Unlike most environmental observances, the campaign is celebrated twice annually—on the second Saturday in May and again in October—because peak migration occurs at different times in the northern and southern hemispheres. Coordinated by four partners—the Convention on the Conservation of Migratory Species of Wild Animals (CMS), the Agreement on the Conservation of African-Eurasian Migratory Waterbirds (AEWA), the East Asian–Australasian Flyway Partnership (EAAFP) and Environment for the Americas (EFTA)—the day is designed to convert public attention into measurable participation. CMS, an environmental treaty of the United Nations signed in 1979, now comprises 133 Parties. Its Bonn secretariat has urged national focal points to organise walks, school programmes, media outreach and official statements around the October celebration."
+     },
+     {
+      "label": "B",
+      "text": "The 2026 theme places community science—also referred to as citizen science—at the centre of the narrative. Campaign materials argue that millions of people already contribute observations that help track migration timing, abundance trends and habitat change across flyways. Digital platforms such as eBird, iNaturalist, Ornitho, BirdTrack and BirdLasser allow observers of any age to submit sightings that feed research and policy. The Cornell Lab of Ornithology, Wetlands International and BirdLife International are among the organisations actively supporting the year's messaging. CMS Executive Secretary Amy Fraenkel has highlighted a concrete product of that data pipeline: the Americas Flyways Atlas, unveiled at CMS COP15 in Brazil through a partnership with the Cornell Lab. Built on millions of citizen-science observations and advanced modelling, the atlas maps breeding, stopover and wintering sites for highly vulnerable migratory birds so that priority habitats can be identified more clearly."
+     },
+     {
+      "label": "C",
+      "text": "The theme also coincides with the sixtieth anniversary of the International Waterbird Census (IWC). Coordinated by Wetlands International, the census has operated annually since 1967 and is widely described as one of the world's largest and longest-running biodiversity monitoring programmes. Anniversary briefings state that surveys have covered about 67,000 wetlands in 189 countries and territories, and that more than 1.9 billion waterbirds have been recorded over six decades. Each year, tens of thousands of counters—mostly volunteers, but also researchers and protected-area staff—fan out across icy lakes, tropical mudflats and coastal estuaries. Continuity is the point: repeating coordinated counts year after year allows scientists to distinguish short-term fluctuations from real population trends, including climate-linked shifts in European wintering grounds toward the Baltics and Russia."
+     },
+     {
+      "label": "D",
+      "text": "Those datasets have already shaped site protection. According to Wetlands International, IWC evidence has contributed to the designation of 956 Ramsar Wetlands of International Importance covering 1.5 million square kilometres—roughly the size of Mongolia—and to the identification of 2,701 Important Bird Areas covering 1.75 million square kilometres. Within the European Union, related monitoring has informed 2,721 Special Protection Areas spanning 418,000 square kilometres. BirdLife International's chief executive, Martin Harper, has called the census a tool for targeting conservation \"where the need is greatest,\" noting that many of BirdLife's national partners coordinate IWC surveys. Yet the same long record also delivers warnings: many waterbird populations are declining, with waders showing particularly worrying downward trends that reflect pressure on wetlands, grasslands and tundra along their flyways."
+     },
+     {
+      "label": "E",
+      "text": "Instantaneous digital counts complement those multi-decade surveys. On the same Saturday as the October World Migratory Bird Day peak, the Cornell Lab's eBird platform runs October Big Day, inviting anyone—from home balconies to remote hotspots—to submit checklists. Organisers note that last October nearly 900,000 people united for a single day of birding and challenge the community to push past one million in 2026. The 2025 results provide a more granular baseline: 113,510 checklists from 48,830 eBirders, 7,834 species observed across 196 countries, and 2,781 sound recordings archived in the Macaulay Library. eBird's 2026 sound challenge argues that if every participating eBirder uploaded one recording, roughly 50,000 additional bird sounds could enter the archive—a dramatic jump from the previous year's total. Whether that target is met or not, the exercise illustrates how a one-day surge can densify data that later feed abundance models and conservation maps."
+     },
+     {
+      "label": "F",
+      "text": "None of this implies that volunteer data are a complete substitute for professional fieldwork. Checklists can be uneven in geographic coverage, identification skill varies, and a single spectacular day cannot replace multi-year trend analyses. Campaign partners therefore stress ethical birding, complete checklists and sustained participation in programmes such as the IWC alongside app-based reporting. Flagship species featured on the 2026 global poster—among them the critically endangered Spoon-billed Sandpiper, which migrates between Arctic tundra and coastal wetlands of South and Southeast Asia—underscore how individual colour-ring sightings and flock counts still unlock migration stories that span countries. Jennifer George, chief executive of the EAAFP, has put the idea plainly: a single observation of a bird with a tiny colour ring on a beach can become a thread of knowledge connecting places, people and ecosystems. For policymakers, the practical question is less whether citizen science \"counts\" than how quickly institutions integrate those threads into site protection, hunting management and climate adaptation along the world's flyways."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "absolute figures for Ramsar sites and Important Bird Areas linked to census evidence",
+        "a": "D",
+        "ref": "D",
+        "ev": "IWC evidence has contributed to the designation of 956 Ramsar Wetlands of International Importance covering 1.5 million square kilometres",
+        "zh": "D 段列出 956 處 Ramsar 與 2,701 處 IBA 等數字。"
+       },
+       {
+        "q": "an explanation of why the campaign is held on two Saturdays each year",
+        "a": "A",
+        "ref": "A",
+        "ev": "peak migration occurs at different times in the northern and southern hemispheres",
+        "zh": "A 段說明南北半球遷徙高峰時間不同，故五月與十月各慶祝一次。"
+       },
+       {
+        "q": "eBird statistics for checklists, species and sound recordings from the previous October",
+        "a": "E",
+        "ref": "E",
+        "ev": "113,510 checklists from 48,830 eBirders, 7,834 species observed across 196 countries, and 2,781 sound recordings",
+        "zh": "E 段給出 2025 年 checklist、物種與錄音的具體數字。"
+       },
+       {
+        "q": "a mapping tool built from millions of citizen-science observations and unveiled at a CMS conference",
+        "a": "B",
+        "ref": "B",
+        "ev": "the Americas Flyways Atlas, unveiled at CMS COP15 in Brazil through a partnership with the Cornell Lab",
+        "zh": "B 段介紹 COP15 發表的 Americas Flyways Atlas。"
+       },
+       {
+        "q": "the founding year and geographic scale of the International Waterbird Census",
+        "a": "C",
+        "ref": "C",
+        "ev": "the census has operated annually since 1967 and is widely described as one of the world's largest",
+        "zh": "C 段：自 1967 年起，涵蓋約 67,000 處濕地、189 個國家與屬地。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "CMS currently has fewer than one hundred member Parties.",
+        "a": "False",
+        "ref": "A",
+        "ev": "CMS, an environmental treaty of the United Nations signed in 1979, now comprises 133 Parties",
+        "zh": "A 段寫 CMS 現有 133 個締約方，與「少於 100」相反 → False。"
+       },
+       {
+        "q": "Wetlands International reports that the waterbird census has recorded more than 1.9 billion waterbirds over six decades.",
+        "a": "True",
+        "ref": "C",
+        "ev": "more than 1.9 billion waterbirds have been recorded over six decades",
+        "zh": "C 段原文：超過 1.9 billion 隻水鳥 → True。"
+       },
+       {
+        "q": "Colombia submitted more October Big Day checklists than the United States in 2025.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "113,510 checklists from 48,830 eBirders, 7,834 species observed across 196 countries",
+        "zh": "E 段只有全球總數，沒有各國 checklist 排名比較 → Not Given。"
+       },
+       {
+        "q": "The article states that volunteer checklists can fully replace professional fieldwork for conservation decisions.",
+        "a": "False",
+        "ref": "F",
+        "ev": "None of this implies that volunteer data are a complete substitute for professional fieldwork",
+        "zh": "F 段明確說志工數據並非專業田野工作的完整替代 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "How volunteer bird data feed conservation",
+      "lines": [
+       {
+        "t": "The 2026 slogan stresses that every [[1]] matters for science and policy. IWC surveys now cover wetlands in 189 countries and [[2]]. eBird hopes October Big Day participation can exceed [[3]] people after nearly 900,000 joined last year. A critically endangered shorebird featured on the poster is the Spoon-billed [[4]]."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "observation",
+         "Observations"
+        ],
+        "ref": "A",
+        "ev": "Every Bird Counts – Your Observations Matter!",
+        "zh": "口號是 Your Observations Matter，摘要填 observation／Observations。"
+       },
+       {
+        "a": [
+         "territories"
+        ],
+        "ref": "C",
+        "ev": "67,000 wetlands in 189 countries and territories",
+        "zh": "C 段：189 countries and territories，填 territories。"
+       },
+       {
+        "a": [
+         "one million",
+         "1 million",
+         "a million"
+        ],
+        "ref": "E",
+        "ev": "challenge the community to push past one million in 2026",
+        "zh": "E 段挑戰突破 one million。900,000 是去年數字，不要填。"
+       },
+       {
+        "a": [
+         "Sandpiper"
+        ],
+        "ref": "F",
+        "ev": "the critically endangered Spoon-billed Sandpiper",
+        "zh": "F 段物種全名 Spoon-billed Sandpiper，題幹已有 Spoon-billed，填 Sandpiper。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "flyway",
+     "pos": "n.",
+     "def": "a broad route regularly used by migrating birds between breeding and wintering areas",
+     "zh": "候鳥遷徙路線／廊道",
+     "example": "Citizen data help map threats along entire flyways.",
+     "match": [
+      "flyways",
+      "flyway"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "citizen science",
+     "pos": "n.",
+     "def": "research in which members of the public collect or analyse data",
+     "zh": "公民科學；大眾科學",
+     "example": "The campaign puts citizen science at the centre.",
+     "match": [
+      "citizen science",
+      "community science"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "census",
+     "pos": "n.",
+     "def": "an official or coordinated count of a population",
+     "zh": "普查；計數調查",
+     "example": "The waterbird census has run since 1967.",
+     "match": [
+      "census"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "wetland",
+     "pos": "n.",
+     "def": "land that is saturated with water, such as a marsh, swamp or mudflat",
+     "zh": "濕地",
+     "example": "Volunteers survey about 67,000 wetlands worldwide.",
+     "match": [
+      "wetlands",
+      "wetland"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "stopover",
+     "pos": "n./adj.",
+     "def": "a place where migrating animals pause to rest and feed",
+     "zh": "中停地；停歇點",
+     "example": "The atlas maps breeding, stopover and wintering sites.",
+     "match": [
+      "stopover"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "abundance",
+     "pos": "n.",
+     "def": "the quantity or density of individuals of a species in an area",
+     "zh": "豐度；數量多寡",
+     "example": "Checklists later feed abundance models.",
+     "match": [
+      "abundance"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "designation",
+     "pos": "n.",
+     "def": "the official naming or classification of a protected site or status",
+     "zh": "指定；登錄",
+     "example": "Census data supported the designation of Ramsar sites.",
+     "match": [
+      "designation"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "flagship",
+     "pos": "adj./n.",
+     "def": "a leading or representative example used to attract attention to a wider cause",
+     "zh": "旗艦（物種／項目）",
+     "example": "The Spoon-billed Sandpiper is a flagship species on the poster.",
+     "match": [
+      "Flagship",
+      "flagship"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "critically endangered",
+     "pos": "adj.",
+     "def": "facing an extremely high risk of extinction in the wild",
+     "zh": "極危的",
+     "example": "The critically endangered shorebird migrates thousands of kilometres.",
+     "match": [
+      "critically endangered"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "continuity",
+     "pos": "n.",
+     "def": "the unbroken maintenance of a process over a long period",
+     "zh": "連續性；延續",
+     "example": "Continuity allows scientists to see real population trends.",
+     "match": [
+      "Continuity",
+      "continuity"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "granular",
+     "pos": "adj.",
+     "def": "detailed and fine-grained rather than broad or approximate",
+     "zh": "細緻的；高解析度的",
+     "example": "The 2025 results provide a more granular baseline.",
+     "match": [
+      "granular"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "densify",
+     "pos": "v.",
+     "def": "to make denser; to increase the concentration of data or activity",
+     "zh": "使更密集",
+     "example": "A one-day surge can densify data for later models.",
+     "match": [
+      "densify"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "observance",
+     "pos": "n.",
+     "def": "a customary ceremony or day set aside to mark an event",
+     "zh": "紀念活動；紀念日",
+     "example": "Unlike most environmental observances, this campaign runs twice a year.",
+     "match": [
+      "observances",
+      "observance"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "secretariat",
+     "pos": "n.",
+     "def": "the administrative office of an international organisation or treaty",
+     "zh": "秘書處",
+     "example": "The Bonn secretariat urged national focal points to organise events.",
+     "match": [
+      "secretariat"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "ethical birding",
+     "pos": "n.",
+     "def": "watching birds in ways that minimise disturbance and keep them safe",
+     "zh": "合乎倫理的賞鳥",
+     "example": "Partners stress ethical birding alongside app-based reporting.",
+     "match": [
+      "ethical birding"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-11-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.09
+     ],
+     [
+      1.31,
+      9.16
+     ],
+     [
+      9.54,
+      11.32
+     ],
+     [
+      12.1,
+      27.31
+     ],
+     [
+      27.66,
+      35.17
+     ],
+     [
+      35.49,
+      43.59
+     ],
+     [
+      43.83,
+      51.14
+     ],
+     [
+      51.92,
+      57.55
+     ],
+     [
+      57.88,
+      68.76
+     ],
+     [
+      69.0,
+      77.77
+     ],
+     [
+      78.07,
+      87.84
+     ],
+     [
+      88.62,
+      94.23
+     ],
+     [
+      94.48,
+      100.43
+     ],
+     [
+      100.74,
+      111.51
+     ],
+     [
+      111.81,
+      117.01
+     ],
+     [
+      117.28,
+      124.66
+     ],
+     [
+      125.44,
+      128.53
+     ],
+     [
+      128.77,
+      141.29
+     ],
+     [
+      141.65,
+      149.57
+     ],
+     [
+      149.9,
+      157.18
+     ],
+     [
+      157.96,
+      165.87
+     ],
+     [
+      166.16,
+      176.28
+     ],
+     [
+      176.57,
+      190.91
+     ],
+     [
+      191.25,
+      195.76
+     ],
+     [
+      196.07,
+      204.61
+     ],
+     [
+      205.39,
+      208.7
+     ],
+     [
+      208.97,
+      216.44
+     ],
+     [
+      216.75,
+      235.38
+     ],
+     [
+      235.7,
+      237.19
+     ],
+     [
+      237.43,
+      243.6
+     ]
+    ],
+    "duration": 244.2,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-10-11-1-words/"
+   }
+  },
+  {
+   "title": "Japanese Interval Walking Outperforms Steady Pace for Fitness and Blood Pressure",
+   "topic": "Health · exercise science",
+   "source": {
+    "name": "Mayo Clinic Proceedings: Effects of High-Intensity Interval Walking Training (Nemoto, Nose et al., 2007)",
+    "url": "https://www.mayoclinicproceedings.org/article/S0025-6196(11)61303-7/abstract",
+    "links": [
+     {
+      "name": "Reuters Health / Rehab Management summary of the 2007 Mayo study (BP −9/−5 mmHg)",
+      "url": "https://rehabpub.com/industry-news/research/high-intensity-walking-increases-physical-function-reduces-bp-in-elderly/"
+     },
+     {
+      "name": "Shinshu University IBS: Masuki et al. 2019 Mayo paper — high-intensity walking time is key",
+      "url": "https://www.shinshu-u.ac.jp/institution/ibs/english/topics/department-of-neurohealth-inno/-a-paper-on-interval-walking-t.html"
+     },
+     {
+      "name": "Mayo Clinic Proceedings 2019 full text link (Masuki / Shinshu IWT cohort)",
+      "url": "https://www.mayoclinicproceedings.org/article/S0025-6196(19)30473-2/fulltext"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Our health lead this morning:",
+     "A Japanese walking method that alternates three minutes hard and three minutes easy still looks stronger than a steady moderate stroll for older adults' fitness and blood pressure.",
+     "Here's the exercise-science report."
+    ],
+    [
+     "The protocol comes from Shinshu University in Matsumoto and was tested in a five-month randomised study published in Mayo Clinic Proceedings in two thousand seven.",
+     "Lead researcher Hiroshi Nose and colleagues enrolled two hundred forty-six healthy middle-aged and older adults—sixty men and one hundred eighty-six women—with a mean age of sixty-three.",
+     "Some fitness writers had rounded the sample to nearly two hundred fifty.",
+     "The published figure was two hundred forty-six."
+    ],
+    [
+     "Participants were assigned to one of three groups: no walking training, moderate-intensity continuous walking, or high-intensity interval walking.",
+     "The continuous group walked at about fifty per cent of peak aerobic capacity and aimed for eight thousand steps or more a day on at least four days a week.",
+     "The interval group, monitored by accelerometry, repeated five or more sets of three minutes at forty per cent of peak aerobic capacity followed by three minutes above seventy per cent, also on four or more days a week.",
+     "Each hard-plus-easy pair lasts six minutes, so five sets already fill about thirty minutes."
+    ],
+    [
+     "Meanwhile, the results favoured the interval walkers who hit their targets.",
+     "Isometric knee extension rose thirteen per cent and knee flexion seventeen per cent.",
+     "Peak aerobic capacity for cycling increased eight per cent, and peak aerobic capacity for walking nine per cent—all statistically significant and greater than the gains seen with continuous walking.",
+     "Resting systolic blood pressure fell about nine millimetres of mercury and diastolic pressure about five.",
+     "The systolic drop was significantly larger than in both the no-walking and continuous-walking groups."
+    ],
+    [
+     "Still, adherence was imperfect across arms.",
+     "Only eleven of nineteen men and thirty-one of sixty-eight women in the interval group met the prescribed targets, according to the Mayo abstract.",
+     "Among those who did improve walking aerobic capacity, systolic pressure fell in twenty-five of thirty-three people—about seventy-six per cent—suggesting a close link between fitness gains and blood-pressure change."
+    ],
+    [
+     "Looking ahead, a larger Shinshu follow-up led by Shizue Masuki and published in Mayo Clinic Proceedings in two thousand nineteen trained six hundred seventy-nine middle-aged and older adults—one hundred ninety-six men and four hundred eighty-three women, average age sixty-five—for five months.",
+     "That analysis found that improvements in peak aerobic capacity and lifestyle-related disease markers scaled with total weekly high-intensity walking time.",
+     "Slow-walking time and total walking time did not show the same relationship.",
+     "In other words, the strenuous minutes appeared to do the work."
+    ],
+    [
+     "There are caveats for anyone eyeing a race calendar, though.",
+     "Both landmark cohorts studied middle-aged and older adults, not competitive runners, and the intensity targets were set from measured peak aerobic capacity rather than a casual guess at heart-rate zones.",
+     "Mayo Clinic's James Levine, writing in an accompanying two thousand seven editorial, still framed the broader lesson simply: people are designed to walk, and displacing long sedentary stretches with activity matters.",
+     "That's the fitness report.",
+     "In our next bulletin, we'll look at how wearable coaches are trying to prescribe interval walking outside the lab."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Japanese Interval Walking Training (IWT)",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "2007 Mayo Clinic Proceedings study"
+       },
+       {
+        "t": "Participants enrolled: [[1]]"
+       },
+       {
+        "t": "Mean age: [[2]]"
+       },
+       {
+        "t": "Study length: [[3]] months"
+       },
+       {
+        "h": "Interval protocol"
+       },
+       {
+        "t": "Easy bout intensity: [[4]] % of peak aerobic capacity"
+       },
+       {
+        "t": "Hard bout intensity: above [[5]] %"
+       },
+       {
+        "t": "Minimum sets per day: [[6]]"
+       },
+       {
+        "h": "Key outcomes (interval group)"
+       },
+       {
+        "t": "Knee extension increase: [[7]] %"
+       },
+       {
+        "t": "Peak aerobic capacity for walking: up [[8]] %"
+       },
+       {
+        "t": "Systolic blood pressure fall: about [[9]] mm Hg"
+       },
+       {
+        "h": "2019 Masuki follow-up"
+       },
+       {
+        "t": "Adults trained: [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "246"
+        ],
+        "ref": "enrolled two hundred forty-six healthy",
+        "ev": "enrolled two hundred forty-six healthy middle-aged and older adults",
+        "zh": "正式樣本 two hundred forty-six = 246。nearly two hundred fifty 是媒體約略說法，干擾項。"
+       },
+       {
+        "a": [
+         "63",
+         "sixty-three"
+        ],
+        "ref": "mean age of sixty-three",
+        "ev": "with a mean age of sixty-three",
+        "zh": "平均年齡 sixty-three = 63。2019 年追蹤平均 65 是另一研究。"
+       },
+       {
+        "a": [
+         "5",
+         "five"
+        ],
+        "ref": "five-month randomised study",
+        "ev": "tested in a five-month randomised study published in Mayo Clinic Proceedings",
+        "zh": "研究為 five = 5 個月。後面也說 five months 的 2019 追蹤，本題指 2007。"
+       },
+       {
+        "a": [
+         "40",
+         "forty"
+        ],
+        "ref": "three minutes at forty per cent of peak",
+        "ev": "three minutes at forty per cent of peak aerobic capacity followed by three minutes above seventy per cent",
+        "zh": "輕鬆段 forty = 40%。連續組的 50% 是另一組，別填。"
+       },
+       {
+        "a": [
+         "70",
+         "seventy"
+        ],
+        "ref": "three minutes above seventy per cent",
+        "ev": "followed by three minutes above seventy per cent",
+        "zh": "高強度段 above seventy = 70%。"
+       },
+       {
+        "a": [
+         "5",
+         "five"
+        ],
+        "ref": "five or more sets of three minutes",
+        "ev": "repeated five or more sets of three minutes at forty per cent",
+        "zh": "每天至少 five = 5 組。每組 6 分鐘，五組約 30 分鐘。"
+       },
+       {
+        "a": [
+         "13",
+         "thirteen"
+        ],
+        "ref": "knee extension rose thirteen per cent",
+        "ev": "Isometric knee extension rose thirteen per cent and knee flexion seventeen per cent",
+        "zh": "膝伸 thirteen = 13%。十七是膝屈，別混。"
+       },
+       {
+        "a": [
+         "9",
+         "nine"
+        ],
+        "ref": "peak aerobic capacity for walking nine per cent",
+        "ev": "peak aerobic capacity for walking nine per cent",
+        "zh": "步行有氧能力 +nine = 9%。腳踏車是 +8%，干擾。"
+       },
+       {
+        "a": [
+         "9",
+         "nine"
+        ],
+        "ref": "Resting systolic blood pressure fell about nine",
+        "ev": "Resting systolic blood pressure fell about nine millimetres of mercury and diastolic pressure about five",
+        "zh": "收縮壓約降 nine = 9 mmHg。舒張壓約 5 是另一數字。"
+       },
+       {
+        "a": [
+         "679"
+        ],
+        "ref": "trained six hundred seventy-nine middle-aged",
+        "ev": "trained six hundred seventy-nine middle-aged and older adults",
+        "zh": "2019 年追蹤 six hundred seventy-nine = 679 人。246 是 2007 年樣本。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Why Three Hard Minutes Keep Beating a Steady Stroll",
+    "intro": "Two Mayo Clinic Proceedings papers from Shinshu University suggest that interval walking—brief bouts above seventy per cent of peak aerobic capacity—improves fitness and blood pressure more efficiently than continuous moderate walking in older adults.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "For decades, public-health advice has urged middle-aged and older adults to walk at a moderate, sustainable pace. Japanese exercise physiologists at Shinshu University Graduate School of Medicine have long argued that this prescription may be too gentle to raise peak aerobic capacity—Vo2peak—or to protect thigh strength as people age. In a randomised trial published in Mayo Clinic Proceedings in 2007, Hiroshi Nose and colleagues tested a different pattern: high-intensity interval walking training, or IWT. Over five months, from May to October 2004, they compared no walking, continuous moderate walking and interval walking in 246 healthy nonsmoking adults (60 men and 186 women; mean age 63 ± 6 years) with no history of cardiovascular or pulmonary disease. The question was practical rather than theatrical: could a method built from ordinary walking still deliver the adaptations usually associated with harder training?"
+     },
+     {
+      "label": "B",
+      "text": "The prescriptions were tightly specified. Participants in the continuous-walking arm were told to walk at approximately 50% of their peak aerobic capacity for walking and to verify, with a pedometer, that they accumulated 8,000 steps or more on at least four days each week. Those in the interval arm were monitored by accelerometry and instructed to repeat five or more sets per day of three minutes at about 40% of peak aerobic capacity followed by three minutes above 70%, again on four or more days weekly. Five such pairs already amount to roughly half an hour. Before and after the intervention, researchers measured isometric knee extension and flexion forces plus Vo2peak for both cycling and walking. Meeting the targets proved demanding: only 11 of 19 men and 31 of 68 women in the interval group fully complied, a reminder that real-world adherence can lag behind laboratory ideals even when the exercise looks simple."
+     },
+     {
+      "label": "C",
+      "text": "Among interval walkers who completed the protocol, the fitness changes were unambiguous. Isometric knee extension increased by 13% and knee flexion by 17%; peak aerobic capacity rose 8% for cycling and 9% for walking (all P < .001). Those gains were significantly larger than the increases observed in the continuous-walking group (all P < .01). Blood pressure moved in the same direction. Resting systolic pressure fell by about 9 mm Hg and diastolic pressure by about 5 mm Hg (both P < .001). The systolic reduction was greater than in the no-walking group (P = .002) and the continuous-walking group (P = .01). Reuters Health coverage of the paper noted a further detail from the authors: systolic pressure declined in 25 of 33 interval participants who improved walking Vo2peak—about 76%—suggesting a close relationship between aerobic gains and pressure change."
+     },
+     {
+      "label": "D",
+      "text": "A dozen years later, Shinshu researchers returned to the same method with a larger cohort. In work led by Shizue Masuki and published in Mayo Clinic Proceedings in 2019, 679 middle-aged and older adults (196 men and 483 women; average age 65) completed five months of interval walking training. The team then asked which component of the programme predicted benefit. Physical-fitness improvements and reductions in lifestyle-related disease markers scaled with the total weekly time spent in high-intensity walking. Time spent in slow walking, and even total walking time, did not show the same association. The practical implication is sharp: for this population, the minutes walked \"a little too hard\" appear to carry the adaptation, while easy minutes mainly fill the session. Shinshu's Institute for Biomedical Sciences summarised the finding bluntly—high-intensity walking time is a key determinant of the health return."
+     },
+     {
+      "label": "E",
+      "text": "The physiology behind the pattern is consistent with broader interval-training literature, even though IWT uses walking rather than running or cycling. Brief exposures above roughly 70% of peak aerobic capacity repeatedly challenge oxygen delivery, muscle recruitment and vascular control, then allow partial recovery in the easy bout. Continuous walking at 50% can displace sedentary time and support daily step goals, yet it may not supply a sufficient stimulus to raise Vo2peak or thigh strength in older adults who already walk casually. Nose's group had previously noted that a moderately paced stroll of about six kilometres per hour—widely recommended—might protect against some age-associated risks without being intense enough to lift peak capacity. Interval walking tries to keep the accessibility of walking while inserting those missing hard minutes."
+     },
+     {
+      "label": "F",
+      "text": "Caveats still matter for anyone tempted to treat IWT as a universal prescription. Both landmark Mayo papers studied middle-aged and older adults, not young competitive runners preparing for a race. Intensities were anchored to individually measured peak aerobic capacity, not to a casual estimate of maximum heart rate, so unsupervised copycats can mis-dose the hard bouts. Adherence was incomplete even inside a supervised research setting. And an accompanying 2007 editorial by Mayo Clinic's James Levine emphasised a complementary truth: displacing long stretches of sedentariness with almost any activity has value, and humans are, in his phrase, designed to walk. Interval walking does not erase that baseline message; it refines it. For clinicians and coaches working with older adults—and for recreational runners seeking low-impact aerobic stimulus between harder sessions—the Shinshu evidence suggests that how the thirty minutes are organised can matter as much as whether the half-hour happens at all."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "percentage gains in knee strength and aerobic capacity for the interval group",
+        "a": "C",
+        "ref": "C",
+        "ev": "Isometric knee extension increased by 13% and knee flexion by 17%; peak aerobic capacity rose 8% for cycling and 9% for walking",
+        "zh": "C 段列出膝伸 +13%、膝屈 +17%、有氧 +8%／+9%。"
+       },
+       {
+        "q": "step-count and intensity targets for the continuous-walking comparison group",
+        "a": "B",
+        "ref": "B",
+        "ev": "walk at approximately 50% of their peak aerobic capacity for walking and to verify, with a pedometer, that they accumulated 8,000 steps or more",
+        "zh": "B 段：連續組約 50% 峰值有氧能力，每天至少 8,000 步。"
+       },
+       {
+        "q": "a finding that weekly hard-walking time predicted benefits better than total walking time",
+        "a": "D",
+        "ref": "D",
+        "ev": "Physical-fitness improvements and reductions in lifestyle-related disease markers scaled with the total weekly time spent in high-intensity walking",
+        "zh": "D 段：效益與每週高強度步行時間成比例，與總步行時間無關。"
+       },
+       {
+        "q": "the sample size, sex split and mean age of the 2007 randomised trial",
+        "a": "A",
+        "ref": "A",
+        "ev": "they compared no walking, continuous moderate walking and interval walking in 246 healthy nonsmoking adults (60 men and 186 women; mean age 63 ± 6 years)",
+        "zh": "A 段：246 人、60 男 186 女、平均 63 歲。"
+       },
+       {
+        "q": "a warning that intensities were based on measured peak aerobic capacity rather than guessed heart-rate zones",
+        "a": "F",
+        "ref": "F",
+        "ev": "Intensities were anchored to individually measured peak aerobic capacity, not to a casual estimate of maximum heart rate",
+        "zh": "F 段提醒強度以實測峰值有氧能力為準，不是隨意心率估計。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Interval walkers who met the protocol improved knee strength more than continuous walkers did.",
+        "a": "True",
+        "ref": "C",
+        "ev": "Those gains were significantly larger than the increases observed in the continuous-walking group",
+        "zh": "C 段：間隔組增幅顯著大於連續組 → True。"
+       },
+       {
+        "q": "Every participant assigned to interval walking fully met the prescribed daily targets.",
+        "a": "False",
+        "ref": "B",
+        "ev": "only 11 of 19 men and 31 of 68 women in the interval group fully complied",
+        "zh": "B 段顯示間隔組並非全員達標 → False。"
+       },
+       {
+        "q": "Masuki's 2019 cohort included more men than women.",
+        "a": "False",
+        "ref": "D",
+        "ev": "679 middle-aged and older adults (196 men and 483 women; average age 65)",
+        "zh": "D 段：196 男、483 女，女性較多，與「男多於女」相反 → False。"
+       },
+       {
+        "q": "Nose's team measured changes in bone mineral density after five months of interval walking.",
+        "a": "Not Given",
+        "ref": "B",
+        "ev": "researchers measured isometric knee extension and flexion forces plus Vo2peak for both cycling and walking",
+        "zh": "文中測量肌力與有氧能力，未提及骨密度 → Not Given。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "How interval walking was tested and what changed",
+      "lines": [
+       {
+        "t": "Continuous walkers aimed for at least [[1]] steps on qualifying days. Hard bouts were set above [[2]] % of peak aerobic capacity. Systolic pressure in successful interval walkers fell by about [[3]] mm Hg. An accompanying editorial by James [[4]] stressed displacing sedentary time with activity."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "8,000",
+         "8000"
+        ],
+        "ref": "B",
+        "ev": "they accumulated 8,000 steps or more on at least four days each week",
+        "zh": "B 段：連續組每天至少 8,000 步。"
+       },
+       {
+        "a": [
+         "70"
+        ],
+        "ref": "B",
+        "ev": "three minutes above 70%, again on four or more days weekly",
+        "zh": "B 段：高強度段 above 70%。40% 是輕鬆段。"
+       },
+       {
+        "a": [
+         "9"
+        ],
+        "ref": "C",
+        "ev": "Resting systolic pressure fell by about 9 mm Hg and diastolic pressure by about 5 mm Hg",
+        "zh": "C 段：收縮壓約降 9 mmHg。5 是舒張壓。"
+       },
+       {
+        "a": [
+         "Levine"
+        ],
+        "ref": "F",
+        "ev": "an accompanying 2007 editorial by Mayo Clinic's James Levine emphasised a complementary truth",
+        "zh": "F 段社論作者是 James Levine，填 Levine。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "protocol",
+     "pos": "n.",
+     "def": "a detailed plan of a scientific or medical procedure",
+     "zh": "試驗方案；操作規程",
+     "example": "The interval-walking protocol alternates hard and easy bouts.",
+     "match": [
+      "protocol"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "randomised",
+     "pos": "adj.",
+     "def": "assigned to groups by chance in an experiment",
+     "zh": "隨機分配的",
+     "example": "Participants joined a five-month randomised study.",
+     "match": [
+      "randomised"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "aerobic capacity",
+     "pos": "n.",
+     "def": "the maximum ability of the body to use oxygen during exercise",
+     "zh": "有氧能力；攝氧量能力",
+     "example": "Peak aerobic capacity for walking rose nine per cent.",
+     "match": [
+      "aerobic capacity",
+      "peak aerobic capacity"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "accelerometry",
+     "pos": "n.",
+     "def": "measurement of movement using wearable accelerometer sensors",
+     "zh": "加速度計監測",
+     "example": "Interval walkers were monitored by accelerometry.",
+     "match": [
+      "accelerometry"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "isometric",
+     "pos": "adj.",
+     "def": "involving muscle contraction without changing muscle length",
+     "zh": "等長的（肌力）",
+     "example": "Isometric knee extension rose thirteen per cent.",
+     "match": [
+      "Isometric",
+      "isometric"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "systolic",
+     "pos": "adj.",
+     "def": "relating to the peak arterial pressure when the heart contracts",
+     "zh": "收縮壓的",
+     "example": "Resting systolic blood pressure fell about nine millimetres of mercury.",
+     "match": [
+      "systolic",
+      "Systolic"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "adherence",
+     "pos": "n.",
+     "def": "the extent to which people follow a prescribed programme",
+     "zh": "遵從度；堅持度",
+     "example": "Adherence was imperfect across study arms.",
+     "match": [
+      "adherence",
+      "Adherence"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "sedentary",
+     "pos": "adj.",
+     "def": "involving little physical activity; sitting for long periods",
+     "zh": "久坐的；少動的",
+     "example": "Displacing sedentary stretches with walking matters.",
+     "match": [
+      "sedentary",
+      "sedentariness"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "intervention",
+     "pos": "n.",
+     "def": "a treatment or programme introduced to change an outcome",
+     "zh": "介入；干預措施",
+     "example": "Fitness was measured before and after the intervention.",
+     "match": [
+      "intervention"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "unambiguous",
+     "pos": "adj.",
+     "def": "clear and leaving no room for doubt",
+     "zh": "明確無誤的",
+     "example": "Among completers, the fitness changes were unambiguous.",
+     "match": [
+      "unambiguous"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "determinant",
+     "pos": "n.",
+     "def": "a factor that decisively affects an outcome",
+     "zh": "決定因素",
+     "example": "High-intensity walking time was a key determinant of benefit.",
+     "match": [
+      "determinant"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "stimulus",
+     "pos": "n.",
+     "def": "something that provokes a physiological or training response",
+     "zh": "刺激；訓練刺激",
+     "example": "Moderate walking may not supply a sufficient stimulus.",
+     "match": [
+      "stimulus"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "vascular",
+     "pos": "adj.",
+     "def": "relating to blood vessels",
+     "zh": "血管的",
+     "example": "Hard bouts challenge oxygen delivery and vascular control.",
+     "match": [
+      "vascular"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "caveat",
+     "pos": "n.",
+     "def": "a warning that limits how far a claim should be applied",
+     "zh": "保留條件；警語",
+     "example": "Caveats still matter before treating IWT as universal advice.",
+     "match": [
+      "Caveats",
+      "caveats"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "complementary",
+     "pos": "adj.",
+     "def": "combining in a way that enhances or completes another idea",
+     "zh": "互補的",
+     "example": "Levine emphasised a complementary truth about daily activity.",
+     "match": [
+      "complementary"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-11-2.mp3",
+    "times": [
+     [
+      0.36,
+      1.8
+     ],
+     [
+      2.07,
+      10.89
+     ],
+     [
+      11.28,
+      13.18
+     ],
+     [
+      13.96,
+      22.79
+     ],
+     [
+      23.06,
+      33.08
+     ],
+     [
+      33.4,
+      37.19
+     ],
+     [
+      37.42,
+      39.86
+     ],
+     [
+      40.64,
+      48.8
+     ],
+     [
+      49.21,
+      57.06
+     ],
+     [
+      57.39,
+      69.19
+     ],
+     [
+      69.56,
+      75.02
+     ],
+     [
+      75.8,
+      79.7
+     ],
+     [
+      79.96,
+      84.52
+     ],
+     [
+      84.7,
+      95.02
+     ],
+     [
+      95.32,
+      101.01
+     ],
+     [
+      101.28,
+      106.51
+     ],
+     [
+      107.29,
+      110.11
+     ],
+     [
+      110.31,
+      117.88
+     ],
+     [
+      118.16,
+      130.03
+     ],
+     [
+      130.81,
+      147.28
+     ],
+     [
+      147.6,
+      155.79
+     ],
+     [
+      156.09,
+      159.85
+     ],
+     [
+      160.18,
+      163.44
+     ],
+     [
+      164.22,
+      167.24
+     ],
+     [
+      167.54,
+      178.09
+     ],
+     [
+      178.4,
+      190.14
+     ],
+     [
+      190.49,
+      191.87
+     ],
+     [
+      192.14,
+      197.77
+     ]
+    ],
+    "duration": 198.4,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-10-11-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
