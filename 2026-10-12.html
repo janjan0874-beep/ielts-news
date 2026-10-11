@@ -1,0 +1,2115 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-12",
+ "date": "2026-10-12",
+ "title": "GlobalFoundries Unveils FDX Fusion for Physical AI at Dresden · Naples Rebuilds Scampia: Eco-Homes Rise Where the Vele Stood",
+ "stories": [
+  {
+   "title": "GlobalFoundries Unveils FDX Fusion for Physical AI at Dresden",
+   "topic": "Semiconductors · FD-SOI",
+   "source": {
+    "name": "GlobalFoundries: GF unveils roadmap for FDX Fusion FD-SOI platform for Physical AI (9 Oct 2026)",
+    "url": "https://gf.com/news-and-events/news/gf-unveils-roadmap-to-deliver-worlds-most-advanced-platform-for-physical-ai/",
+    "links": [
+     {
+      "name": "GlobalFoundries: Dresden SPRINT topping-out + FDX Fusion announcement (9 Oct 2026)",
+      "url": "https://gf.com/news-and-events/news/globalfoundries-marks-dresden-expansion-milestone-announces-next-generation-platform-for-physical-ai/"
+     },
+     {
+      "name": "Trend & Ticker: GF FDX Fusion 7nm Dresden 2028 summary",
+      "url": "https://trendandticker.com/technology/globalfoundries-gfs-fdx-fusion-7nm-dresden-2028"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "GlobalFoundries has unveiled FDX Fusion, a next-generation FD-SOI platform purpose-built for Physical AI, at a ceremony in Dresden.",
+     "Here's the technology report."
+    ],
+    [
+     "The announcement came on Friday, the ninth of October, according to the company's official releases.",
+     "FDX Fusion is designed for STAC workloads—Sense, Think, Act and Communicate—pushing intelligence beyond the cloud into machines that interact with the physical world.",
+     "Ed Kaste, senior vice president of CMOS at GlobalFoundries, said Physical AI needs chips that can process data in real time and interact seamlessly with the physical environment.",
+     "He added that the platform extends the company's FD-SOI roadmap across substrate, transistor and interconnect innovations."
+    ],
+    [
+     "The first generation aims for seven-nanometer-class digital performance.",
+     "According to GlobalFoundries, the platform should deliver more than two times the density of first-generation FDX technology.",
+     "Radio-frequency performance is expected to reach up to zero point five terahertz for ft and fmax.",
+     "The stack also covers analog and mixed-signal features, embedded non-volatile memory and in-memory computing.",
+     "Billions of existing FD-SOI chips already sit in automotive radars, wireless microcontrollers, display drivers and SATCOM and five-G front-end modules."
+    ],
+    [
+     "Initial production is tied to GF's advanced Dresden facility, reinforced as a strategic European hub under the broader European Chips Act framework.",
+     "Meanwhile, manufacturing is planned for two thousand twenty-eight at the Dresden site.",
+     "Demonstrator silicon is targeted for early customer evaluation in early two thousand twenty-seven, with an initial process design kit planned for mid-two thousand twenty-seven.",
+     "Development, though, is contingent on the German federal government approving the start of the IPCEI Advanced Semiconductor Technologies programme for GlobalFoundries Dresden."
+    ],
+    [
+     "Still, the ceremony also marked a construction milestone for the SPRINT expansion.",
+     "GlobalFoundries is investing one point one billion euros to grow Dresden capacity.",
+     "The site currently handles up to about nine hundred fifty thousand three-hundred-millimetre wafers a year, depending on product mix.",
+     "SPRINT targets more than one million wafers a year by the end of two thousand twenty-eight, which would make Dresden Europe's largest foundry site.",
+     "Around three thousand people work there today, across roughly sixty thousand square metres of cleanroom and laboratory space, after more than ten billion euros invested since two thousand nine."
+    ],
+    [
+     "Looking ahead, Physical AI applications range from edge inference and robotics to industrial automation, automotive systems, sensors and secure connectivity.",
+     "Customers can also tap design-enablement tools including MIPS and ARC processor IP and RISC-V options aimed at Physical AI workloads.",
+     "Tesla's Karn Budhiraj, vice president of supply chain, said the roadmap reflects the type of semiconductor investment needed to bring physical AI to the masses.",
+     "Infineon's Patrick Press said the company is exploring seven-nanometer-class FDX Fusion for next-generation radar and wireless products.",
+     "NXP's Lars Reger pointed to Trusted Physical AI, while BMW, Bosch, Siemens and CEA-Leti were also named among supporting voices.",
+     "Chief executive Tim Breen framed SPRINT as expanding trusted European supply close to the customers who rely on it."
+    ],
+    [
+     "There are risks on both sides, though.",
+     "Timelines depend on public funding approvals, and seven-nanometer-class performance still has to prove itself in volume silicon.",
+     "That's the technology report.",
+     "In our next bulletin, we'll look at how European Chips Act projects are reshaping foundry capacity across the continent."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "GlobalFoundries FDX Fusion & Dresden expansion",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Platform basics"
+       },
+       {
+        "t": "Purpose-built for: [[1]]"
+       },
+       {
+        "t": "First-generation digital performance class: [[2]] nanometer"
+       },
+       {
+        "t": "Density vs first-generation FDX: more than [[3]] times"
+       },
+       {
+        "t": "RF performance up to: [[4]] THz ft/fmax"
+       },
+       {
+        "h": "Schedule"
+       },
+       {
+        "t": "Manufacturing planned for: [[5]]"
+       },
+       {
+        "t": "Demonstrator silicon targeted for early: [[6]]"
+       },
+       {
+        "t": "Development contingent on German approval of: [[7]] AST programme"
+       },
+       {
+        "h": "SPRINT expansion"
+       },
+       {
+        "t": "Investment: [[8]] billion euros"
+       },
+       {
+        "t": "Capacity target by end-2028: more than [[9]] wafers/year"
+       },
+       {
+        "t": "Current Dresden capacity (product-mix dependent): about [[10]] thousand wafers/year"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "Physical AI"
+        ],
+        "ref": "purpose-built for Physical AI",
+        "ev": "a next-generation FD-SOI platform purpose-built for Physical AI",
+        "zh": "平台專為 Physical AI 打造。STAC 是工作負載縮寫，不要填 STAC。"
+       },
+       {
+        "a": [
+         "seven",
+         "7"
+        ],
+        "ref": "seven-nanometer-class digital performance",
+        "ev": "The first generation aims for seven-nanometer-class digital performance",
+        "zh": "第一代瞄準 seven-nanometer-class = 七奈米級。題幹已有 nanometer，填 seven／7。"
+       },
+       {
+        "a": [
+         "two",
+         "2"
+        ],
+        "ref": "more than two times the density",
+        "ev": "deliver more than two times the density of first-generation FDX technology",
+        "zh": "密度較第一代 FDX 超過 two = 2 倍。題幹已有 times。"
+       },
+       {
+        "a": [
+         "0.5"
+        ],
+        "ref": "up to zero point five terahertz",
+        "ev": "reach up to zero point five terahertz for ft and fmax",
+        "zh": "射頻最高約 zero point five = 0.5 THz。題幹已有 THz。"
+       },
+       {
+        "a": [
+         "2028"
+        ],
+        "ref": "manufacturing is planned for two thousand twenty-eight",
+        "ev": "manufacturing is planned for two thousand twenty-eight at the Dresden site",
+        "zh": "量產規劃 two thousand twenty-eight = 2028。2027 是示範矽與 PDK 時程，別混。"
+       },
+       {
+        "a": [
+         "2027"
+        ],
+        "ref": "early two thousand twenty-seven, with an initial",
+        "ev": "early customer evaluation in early two thousand twenty-seven, with an initial process design kit planned for mid-two thousand twenty-seven",
+        "zh": "示範矽瞄準 early 2027。mid-2027 是 PDK，題幹說 early，填 2027。"
+       },
+       {
+        "a": [
+         "IPCEI"
+        ],
+        "ref": "approving the start of the IPCEI Advanced",
+        "ev": "approving the start of the IPCEI Advanced Semiconductor Technologies programme",
+        "zh": "開發取決於德國政府核准 IPCEI AST。答案填 IPCEI（題幹已有 AST programme）。"
+       },
+       {
+        "a": [
+         "1.1"
+        ],
+        "ref": "investing one point one billion euros",
+        "ev": "GlobalFoundries is investing one point one billion euros to grow Dresden capacity",
+        "zh": "SPRINT 投資 one point one = 1.1 billion euros。ten billion 是自 2009 累計投資，干擾項。"
+       },
+       {
+        "a": [
+         "one million",
+         "1 million",
+         "1,000,000"
+        ],
+        "ref": "more than one million wafers a year",
+        "ev": "SPRINT targets more than one million wafers a year by the end of two thousand twenty-eight",
+        "zh": "目標超過 one million 片／年。九十五萬是現有產能，別填。"
+       },
+       {
+        "a": [
+         "950"
+        ],
+        "ref": "about nine hundred fifty thousand three-hundred-millimetre",
+        "ev": "up to about nine hundred fifty thousand three-hundred-millimetre wafers a year",
+        "zh": "現有約 nine hundred fifty thousand = 95 萬片；題幹已有 thousand，填 950。one million 是擴產目標。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "From Cloud to Factory Floor: Europe's Bid for Physical AI Silicon",
+    "intro": "GlobalFoundries' FDX Fusion announcement in Dresden links a next-generation FD-SOI platform to a €1.1 billion capacity expansion—and to a broader European argument that edge AI must be manufactured close to the machines that use it.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "On 9 October 2026, GlobalFoundries (GF) used a topping-out ceremony at its Dresden campus to unveil FDX Fusion™, a next-generation fully depleted silicon-on-insulator (FD-SOI) platform designed for Physical AI. In company language, Physical AI refers to systems that Sense, Think, Act and Communicate—often abbreviated STAC—beyond the data centre. Ed Kaste, senior vice president of GF's CMOS business, argued that intelligence is moving into devices that must process data in real time and interact seamlessly with the physical environment. The announcement is therefore less a routine process update than a positioning statement: Europe's largest dedicated foundry site wants to host the silicon that robots, cars, factories and secure edge nodes will need as AI leaves the cloud."
+     },
+     {
+      "label": "B",
+      "text": "Technically, the first generation of FDX Fusion is expected to deliver seven-nanometer-class digital performance while retaining the analog, mixed-signal, radio-frequency and embedded-memory strengths associated with FD-SOI. GF says the platform should achieve more than a twofold density improvement over first-generation FDX technology, with RF performance reaching up to 0.5 THz for ft/fmax, plus in-memory computing and embedded non-volatile memory. Manufacturing is planned for 2028 at Dresden; demonstrator silicon is targeted for early customer evaluation in early 2027, and an initial process design kit (PDK) for mid-2027. Crucially, GF Dresden's pursuit of the technology through the IPCEI Advanced Semiconductor Technologies (AST) programme remains contingent on German federal government approval—a reminder that European chip roadmaps are intertwined with public industrial policy."
+     },
+     {
+      "label": "C",
+      "text": "The same ceremony celebrated the SPRINT expansion, a €1.1 billion project intended to lift Dresden's annual capacity to more than one million 300 mm wafers by the end of 2028, making it Europe's largest foundry site. Today the facility can process up to about 950,000 wafers a year depending on product mix, employs roughly 3,000 people and operates around 60,000 m² of cleanroom and laboratory space. Since 2009 GF has invested more than €10 billion in Dresden. Chief executive Tim Breen framed the expansion as securing chips that are \"available, trusted and built close to the customers who rely on them,\" while general manager Manfred Horstmann emphasised resilient European supply chains and Germany's industrial future. Construction partner Exyte reported that the topping-out phase was completed on schedule and on budget while the existing fab remained operational."
+     },
+     {
+      "label": "D",
+      "text": "Customer and partner voices were carefully curated. Tesla's Karn Budhiraj, vice president of supply chain, said high-performance edge compute is key to advanced robotics and autonomous systems, and that GF's roadmap reflects the investment needed to bring physical AI to the masses. Infineon's Patrick Press described a joint exploration of 7 nm-class FDX Fusion for next-generation radar and wireless products. NXP chief technology officer Lars Reger stressed that in Physical AI, \"trust and low power are paramount,\" welcoming efforts toward Trusted Physical AI. BMW highlighted resilient automotive supply chains; Bosch's Axel Kaschner linked the FDX roadmap to sensing, control and edge intelligence for robotics; Siemens' Cedrik Neike argued that Europe's economy \"runs on silicon\"; and CEA-Leti's Sébastien Dauvé noted decades of French research feeding single-digit FD-SOI nodes through programmes such as the FAMES pilot line."
+     },
+     {
+      "label": "E",
+      "text": "The commercial logic rests on an installed base as much as on a roadmap. GF notes that billions of FD-SOI chips already operate in automotive radars and sensors, wireless microcontrollers, display drivers and front-end modules for SATCOM and 5G devices. FDX Fusion is meant to address edge inference, robotics, industrial automation, autonomous systems, sensor-fusion architectures and intelligent connected devices across automotive, consumer and industrial markets. Design enablement—including MIPS and ARC processor IP, RISC-V and application-specific processor design—is presented as a way to shorten the path from architecture to high-volume silicon. In other words, the company is selling not only a process node but a claim that Physical AI needs tightly integrated, power-efficient platforms rather than cloud-optimised digital logic alone."
+     },
+     {
+      "label": "F",
+      "text": "Whether FDX Fusion becomes a defining European Physical AI platform will depend on execution as much as ambition. Demonstrators in 2027 and volume manufacturing in 2028 leave little margin for IPCEI delays, yield learning or customer redesign cycles. Competitors in Asia and the United States continue to push denser digital nodes for AI accelerators, and some analysts will ask whether seven-nanometer-class FD-SOI can capture workloads that might otherwise migrate to specialised ASICs or advanced FinFET/GAA processes. Yet the Dresden story also illustrates a policy thesis: if Europe wants trusted supply for defence, critical infrastructure and industrial automation, capacity and process leadership must be co-located. SPRINT's path to more than one million wafers a year is therefore both a factory plan and a geopolitical signal. For IELTS candidates—and for policymakers—the useful reading is not that one announcement settles the race, but that Physical AI is forcing foundries to argue about where intelligence should live: in distant clouds, or in chips that sense and act on the factory floor."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "current wafer capacity, workforce size and cumulative investment figures for the Dresden site",
+        "a": "C",
+        "ref": "C",
+        "ev": "Today the facility can process up to about 950,000 wafers a year depending on product mix, employs roughly 3,000 people",
+        "zh": "C 段列出約 95 萬片產能、約 3,000 名員工與自 2009 年逾 100 億歐元投資。"
+       },
+       {
+        "q": "a definition of Physical AI in terms of Sense, Think, Act and Communicate workloads",
+        "a": "A",
+        "ref": "A",
+        "ev": "Physical AI refers to systems that Sense, Think, Act and Communicate—often abbreviated STAC",
+        "zh": "A 段用 STAC（Sense, Think, Act, Communicate）界定 Physical AI。"
+       },
+       {
+        "q": "named executives from Tesla, Infineon and NXP commenting on the platform",
+        "a": "D",
+        "ref": "D",
+        "ev": "Tesla's Karn Budhiraj, vice president of supply chain, said high-performance edge compute is key",
+        "zh": "D 段引述 Tesla、Infineon、NXP 等高管／夥伴發言。"
+       },
+       {
+        "q": "examples of existing FD-SOI end markets such as automotive radar and 5G front-end modules",
+        "a": "E",
+        "ref": "E",
+        "ev": "billions of FD-SOI chips already operate in automotive radars and sensors, wireless microcontrollers, display drivers and front-end modules for SATCOM and 5G devices",
+        "zh": "E 段列出現有 FD-SOI 應用：車用雷達、無線 MCU、顯示驅動、SATCOM／5G FEM。"
+       },
+       {
+        "q": "the condition that German federal approval of an IPCEI programme is required before development proceeds",
+        "a": "B",
+        "ref": "B",
+        "ev": "remains contingent on German federal government approval",
+        "zh": "B 段：透過 IPCEI AST 開發取決於德國聯邦政府核准。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "FDX Fusion manufacturing at Dresden is scheduled to begin before 2027.",
+        "a": "False",
+        "ref": "B",
+        "ev": "Manufacturing is planned for 2028 at Dresden; demonstrator silicon is targeted for early customer evaluation in early 2027",
+        "zh": "B 段：量產規劃 2028；2027 初是示範矽。說「2027 前開始量產」與原文相反 → False。"
+       },
+       {
+        "q": "The SPRINT project aims to raise Dresden's annual capacity above one million 300 mm wafers by the end of 2028.",
+        "a": "True",
+        "ref": "C",
+        "ev": "lift Dresden's annual capacity to more than one million 300 mm wafers by the end of 2028",
+        "zh": "C 段原文：2028 年底前超過 100 萬片 → True。"
+       },
+       {
+        "q": "GlobalFoundries expects FDX Fusion to capture more than half of the European automotive radar market by 2030.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "FDX Fusion is meant to address edge inference, robotics, industrial automation, autonomous systems",
+        "zh": "E 段只列應用領域，沒有市佔率或 2030 年目標 → Not Given。"
+       },
+       {
+        "q": "The article claims that denser digital nodes in Asia and the United States pose no competitive challenge to seven-nanometer-class FD-SOI.",
+        "a": "False",
+        "ref": "F",
+        "ev": "Competitors in Asia and the United States continue to push denser digital nodes for AI accelerators",
+        "zh": "F 段明確提到亞洲與美國競爭者持續推進更密數位製程，並非「沒有挑戰」→ False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "FDX Fusion timeline and Dresden scale-up",
+      "lines": [
+       {
+        "t": "An initial [[1]] is planned for mid-2027, while volume manufacturing is aimed at 2028. SPRINT involves an investment of €[[2]] billion. The Dresden site today has roughly [[3]] m² of cleanroom and laboratory space. Since 2009 GF has invested more than €[[4]] billion there."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "PDK",
+         "initial PDK"
+        ],
+        "ref": "B",
+        "ev": "an initial process design kit (PDK) for mid-2027",
+        "zh": "B 段：mid-2027 釋出 initial process design kit (PDK)。"
+       },
+       {
+        "a": [
+         "1.1"
+        ],
+        "ref": "C",
+        "ev": "a €1.1 billion project intended to lift Dresden's annual capacity",
+        "zh": "C 段：SPRINT 為 €1.1 billion。10 billion 是累計投資。"
+       },
+       {
+        "a": [
+         "60,000",
+         "60000"
+        ],
+        "ref": "C",
+        "ev": "operates around 60,000 m² of cleanroom and laboratory space",
+        "zh": "C 段：約 60,000 m² 無塵室／實驗室。"
+       },
+       {
+        "a": [
+         "10"
+        ],
+        "ref": "C",
+        "ev": "Since 2009 GF has invested more than €10 billion in Dresden",
+        "zh": "C 段：自 2009 年投資逾 €10 billion。1.1 是 SPRINT 擴產額。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "FD-SOI",
+     "pos": "n.",
+     "def": "fully depleted silicon-on-insulator, a chip process with a thin silicon layer over an insulator",
+     "zh": "全耗盡絕緣層上矽（製程）",
+     "example": "FDX Fusion extends GF's FD-SOI roadmap for Physical AI.",
+     "match": [
+      "FD-SOI"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "Physical AI",
+     "pos": "n.",
+     "def": "artificial intelligence embedded in machines that sense and act in the real world",
+     "zh": "實體／物理人工智慧",
+     "example": "Physical AI needs chips beyond the cloud for real-time interaction.",
+     "match": [
+      "Physical AI",
+      "physical AI"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "contingent",
+     "pos": "adj.",
+     "def": "dependent on something else happening first",
+     "zh": "取決於……的；有條件的",
+     "example": "Development is contingent on German federal approval of IPCEI AST.",
+     "match": [
+      "contingent"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "demonstrator",
+     "pos": "n.",
+     "def": "an early silicon sample built to prove a technology before volume production",
+     "zh": "示範晶片／驗證樣品",
+     "example": "Demonstrator silicon is targeted for early 2027.",
+     "match": [
+      "Demonstrator",
+      "demonstrator"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "topping-out",
+     "pos": "n.",
+     "def": "a ceremony marking the completion of a building's highest structural point",
+     "zh": "上樑／封頂儀式",
+     "example": "GF celebrated the topping-out of its SPRINT expansion in Dresden.",
+     "match": [
+      "topping-out"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "foundry",
+     "pos": "n.",
+     "def": "a factory that manufactures chips designed by other companies",
+     "zh": "晶圓代工廠",
+     "example": "Dresden would become Europe's largest foundry site.",
+     "match": [
+      "foundry"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "interconnect",
+     "pos": "n.",
+     "def": "the wiring layers that connect transistors on a chip",
+     "zh": "互連（線路層）",
+     "example": "Innovations span substrate, transistor and interconnect stacks.",
+     "match": [
+      "interconnect"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "resilient",
+     "pos": "adj.",
+     "def": "able to withstand shocks and keep functioning",
+     "zh": "具韌性的；抗衝擊的",
+     "example": "Partners emphasise resilient European semiconductor supply chains.",
+     "match": [
+      "resilient"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sovereignty",
+     "pos": "n.",
+     "def": "independent control over critical capabilities or resources",
+     "zh": "主權（科技／供應）",
+     "example": "European technological sovereignty is a stated policy goal.",
+     "match": [
+      "sovereignty"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "edge inference",
+     "pos": "n.",
+     "def": "running AI model predictions on local devices rather than in the cloud",
+     "zh": "邊緣推論",
+     "example": "Target applications include edge inference and industrial automation.",
+     "match": [
+      "edge inference"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "mixed-signal",
+     "pos": "adj.",
+     "def": "combining analog and digital circuitry on the same chip",
+     "zh": "混合訊號的",
+     "example": "FD-SOI is valued for analog and mixed-signal features.",
+     "match": [
+      "mixed-signal"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "paramount",
+     "pos": "adj.",
+     "def": "more important than anything else",
+     "zh": "至關重要的；首要的",
+     "example": "In Physical AI, trust and low power are paramount.",
+     "match": [
+      "paramount"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "co-located",
+     "pos": "adj.",
+     "def": "situated in the same place",
+     "zh": "共址的；設於同一地點的",
+     "example": "Capacity and process leadership must be co-located for trusted supply.",
+     "match": [
+      "co-located"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "roadmap",
+     "pos": "n.",
+     "def": "a planned sequence of technology generations and milestones",
+     "zh": "技術藍圖／路線圖",
+     "example": "FDX Fusion extends GF's FD-SOI roadmap.",
+     "match": [
+      "roadmap"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "geopolitical",
+     "pos": "adj.",
+     "def": "relating to politics influenced by geography and power between states",
+     "zh": "地緣政治的",
+     "example": "The wafer target is both a factory plan and a geopolitical signal.",
+     "match": [
+      "geopolitical"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-12-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      9.61
+     ],
+     [
+      9.91,
+      11.59
+     ],
+     [
+      12.37,
+      17.51
+     ],
+     [
+      17.78,
+      27.4
+     ],
+     [
+      27.72,
+      37.9
+     ],
+     [
+      38.22,
+      45.37
+     ],
+     [
+      46.15,
+      49.8
+     ],
+     [
+      50.13,
+      56.86
+     ],
+     [
+      57.1,
+      62.81
+     ],
+     [
+      63.11,
+      69.15
+     ],
+     [
+      69.36,
+      78.64
+     ],
+     [
+      79.42,
+      87.75
+     ],
+     [
+      88.17,
+      92.65
+     ],
+     [
+      92.87,
+      101.84
+     ],
+     [
+      102.11,
+      111.67
+     ],
+     [
+      112.45,
+      117.03
+     ],
+     [
+      117.27,
+      121.76
+     ],
+     [
+      122.04,
+      128.64
+     ],
+     [
+      128.97,
+      135.98
+     ],
+     [
+      136.23,
+      145.96
+     ],
+     [
+      146.74,
+      156.07
+     ],
+     [
+      156.28,
+      164.43
+     ],
+     [
+      164.68,
+      173.42
+     ],
+     [
+      173.73,
+      180.95
+     ],
+     [
+      181.17,
+      189.97
+     ],
+     [
+      190.24,
+      196.33
+     ],
+     [
+      197.11,
+      199.3
+     ],
+     [
+      199.54,
+      206.32
+     ],
+     [
+      206.6,
+      208.23
+     ],
+     [
+      208.52,
+      214.74
+     ]
+    ],
+    "duration": 215.4,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-12-1-words/"
+   }
+  },
+  {
+   "title": "Naples Rebuilds Scampia: Eco-Homes Rise Where the Vele Stood",
+   "topic": "Urban planning · housing",
+   "source": {
+    "name": "la Repubblica Europe: Scampia redevelopment — new homes replace Naples' Vele (11 Oct 2026)",
+    "url": "https://europe.repubblica.it/en/news/2026/10/11/news/scampia_redevelopment_new_homes_replace_naples__notorious_vele_housing_blocks-425639280/",
+    "links": [
+     {
+      "name": "Il Sole 24 Ore: A Napoli rinasce Scampia — first three blocks, 509 public homes (3 Oct 2026)",
+      "url": "https://www.ilsole24ore.com/art/a-napoli-rinasce-scampia-pronte-prime-tre-palazzine-posto-vecchie-vele-AJJJdeWB"
+     },
+     {
+      "name": "Comune di Napoli: Restart Scampia (urban regeneration programme page)",
+      "url": "https://www.comune.napoli.it/articolo_tematico/urbana-urbanistica-napoli/grandi-progetti-e-mobilita/restart-scampia/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Our city lead this morning:",
+     "In Naples, eco-homes are rising where the notorious Vele once stood, as Restart Scampia turns a Camorra-scarred estate into an eco-district.",
+     "Here's the urban report."
+    ],
+    [
+     "According to Il Sole Twenty-Four Ore, the regeneration programme is backed by about one hundred fifty-nine million euros from Italy's National Recovery and Resilience Plan, the PON Metro programme and funds for deprived urban areas.",
+     "In all, five hundred nine public homes are planned—Il Sole's figure, preferred over some coverage that rounded to five hundred eight.",
+     "The first phase delivers about ninety-seven nearly zero-energy homes in three buildings labelled A one to A three on lot M.",
+     "Hand-over is due late two thousand twenty-six to early two thousand twenty-seven."
+    ],
+    [
+     "Deputy mayor Laura Lieto told Il Sole that a desk opens in early November, with rankings published in January and February two thousand twenty-seven.",
+     "She also said one hundred sixteen homes should be ready and delivered by the end of two thousand twenty-six, and another one hundred sixty-two completed by the end of two thousand twenty-seven."
+    ],
+    [
+     "Meanwhile, the site covers about two hundred thousand square metres.",
+     "More than one hundred workers are on the ground, with twenty-five specialist contractors—mostly from Campania—and roughly fifty architects and designers.",
+     "The first phase was designed by Settanta7 with Studio Perillo and Valle Progettazioni, and is being built by Piloda Building and Operazione Srl."
+    ],
+    [
+     "Still, the skyline change is stark.",
+     "The Vela Gialla was demolished in March two thousand twenty-five, and the Vela Rossa in December that year.",
+     "The Vela Celeste is being kept and converted into offices and social-cultural spaces as a memory of the past.",
+     "A tragedy accelerated the urgency: on the night of the twenty-second of July two thousand twenty-four, an access walkway at the Vela Celeste collapsed, killing three people and injuring twelve."
+    ],
+    [
+     "Looking ahead, amenities go far beyond housing.",
+     "Plans include urban farming with community gardens and orchards, a public park, an educational farm, a neighbourhood market, a school complex with a nursery for fifty to sixty children and a preschool for about one hundred twenty, plus a civic centre.",
+     "New flats come in five typologies of roughly fifty to one hundred forty square metres, with dual aspect and terraces up to four by four metres, behind ventilated façades in anthracite, white and burgundy.",
+     "Ground floors will be multifunctional—meetings, study and co-working."
+    ],
+    [
+     "Mayor Gaetano Manfredi says Scampia is leaving the Gomorrah stigma and that good politics means delivering housing people can see.",
+     "Omero Benfenati of the Vele Committee has long carried the slogan Scampia wants everything, arguing the community is reclaiming dignity.",
+     "Between two thousand four and two thousand five, a Camorra feud claimed more than fifty lives—context for why regeneration matters.",
+     "la Repubblica's framing calls the ambition Europe's largest eco-district."
+    ],
+    [
+     "There are risks on delivery timelines, though.",
+     "Partial collapses during demolition forced work to be reconfigured, and rankings must still match homes to families.",
+     "That's the city report.",
+     "In our next bulletin, we'll look at how recovery funds are reshaping other Italian peripheral neighbourhoods."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Restart Scampia — Naples housing regeneration",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Funding & homes"
+       },
+       {
+        "t": "Total funding: about [[1]] million euros"
+       },
+       {
+        "t": "Public homes planned (Il Sole figure): [[2]]"
+       },
+       {
+        "t": "First-phase NZEB homes: about [[3]]"
+       },
+       {
+        "h": "Delivery timetable (Laura Lieto)"
+       },
+       {
+        "t": "Application desk opens: early [[4]]"
+       },
+       {
+        "t": "Homes ready/delivered by end-2026: [[5]]"
+       },
+       {
+        "t": "Further homes completed by end-2027: [[6]]"
+       },
+       {
+        "h": "Site & demolition"
+       },
+       {
+        "t": "Site area: about [[7]] thousand square metres"
+       },
+       {
+        "t": "Vela Gialla demolished: [[8]] 2025"
+       },
+       {
+        "t": "Walkway collapse fatalities (July 2024): [[9]]"
+       },
+       {
+        "h": "Community facilities"
+       },
+       {
+        "t": "Preschool places planned: about [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "159"
+        ],
+        "ref": "about one hundred fifty-nine million euros",
+        "ev": "backed by about one hundred fifty-nine million euros from Italy's National Recovery and Resilience Plan",
+        "zh": "資金約 one hundred fifty-nine = 159 million euros。題幹已有 million euros。"
+       },
+       {
+        "a": [
+         "509"
+        ],
+        "ref": "five hundred nine public homes are planned",
+        "ev": "In all, five hundred nine public homes are planned—Il Sole's figure, preferred over some coverage that rounded to five hundred eight",
+        "zh": "Il Sole 數字 five hundred nine = 509。508 是其他報導約數，干擾項。"
+       },
+       {
+        "a": [
+         "97",
+         "ninety-seven"
+        ],
+        "ref": "about ninety-seven nearly zero-energy homes",
+        "ev": "The first phase delivers about ninety-seven nearly zero-energy homes in three buildings",
+        "zh": "第一期約 ninety-seven = 97 戶近零能耗住宅。"
+       },
+       {
+        "a": [
+         "November"
+        ],
+        "ref": "a desk opens in early November",
+        "ev": "a desk opens in early November, with rankings published in January and February",
+        "zh": "窗口 early November 開放。Jan–Feb 2027 是排名公布，別填。"
+       },
+       {
+        "a": [
+         "116"
+        ],
+        "ref": "one hundred sixteen homes should be ready",
+        "ev": "one hundred sixteen homes should be ready and delivered by the end of two thousand twenty-six",
+        "zh": "2026 年底前 ready/delivered：one hundred sixteen = 116。162 是 2027 年底另批。"
+       },
+       {
+        "a": [
+         "162"
+        ],
+        "ref": "another one hundred sixty-two completed",
+        "ev": "another one hundred sixty-two completed by the end of two thousand twenty-seven",
+        "zh": "2027 年底前再完成 one hundred sixty-two = 162 戶。"
+       },
+       {
+        "a": [
+         "200",
+         "two hundred"
+        ],
+        "ref": "about two hundred thousand square metres",
+        "ev": "the site covers about two hundred thousand square metres",
+        "zh": "基地約 two hundred thousand = 20 萬平方米；題幹已有 thousand square metres，填 200。"
+       },
+       {
+        "a": [
+         "March"
+        ],
+        "ref": "demolished in March two thousand twenty-five",
+        "ev": "The Vela Gialla was demolished in March two thousand twenty-five, and the Vela Rossa in December",
+        "zh": "Vela Gialla 於 March 2025 拆除。December 是 Vela Rossa。"
+       },
+       {
+        "a": [
+         "3",
+         "three"
+        ],
+        "ref": "collapsed, killing three people and injuring twelve",
+        "ev": "an access walkway at the Vela Celeste collapsed, killing three people and injuring twelve",
+        "zh": "走道崩塌造成 three = 3 人死亡、12 人受傷。12 是受傷數，別填。"
+       },
+       {
+        "a": [
+         "120"
+        ],
+        "ref": "a preschool for about one hundred twenty",
+        "ev": "a nursery for fifty to sixty children and a preschool for about one hundred twenty",
+        "zh": "學前班約 one hundred twenty = 120 名。托兒所 50–60 是另一數字。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "After the Vele: Can Scampia Become Europe's Eco-District?",
+    "intro": "Naples' Restart Scampia programme is replacing the notorious sail-shaped housing blocks with nearly zero-energy flats, parks and schools—testing whether recovery funds and community politics can erase a Gomorrah-era stigma.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "For decades the Vele of Scampia—vast sail-shaped concrete blocks on Naples' northern edge—stood as shorthand for urban failure. Popularised internationally by Roberto Saviano's Gomorrah, the estate was associated with open-air drug markets and a Camorra feud in 2004–2005 that claimed more than fifty lives. By October 2026, however, a different skyline is emerging. Under the Restart (or ReStart) Scampia urban regeneration programme, new nearly zero-energy buildings are rising where the Vela Gialla and Vela Rossa once loomed, while the Vela Celeste is retained as offices and social-cultural space—a deliberate decision to preserve memory rather than erase it entirely. la Repubblica has framed the ambition as Europe's largest eco-district; whether that label sticks will depend on delivery as much as design."
+     },
+     {
+      "label": "B",
+      "text": "Money and scale matter. The programme is backed by roughly €159 million drawn from Italy's National Recovery and Resilience Plan (PNRR), the PON Metro programme and funds earmarked for deprived urban areas (Periferie). Il Sole 24 Ore reports a total of 509 public homes—preferable to some coverage that cites 508—while the first completed phase comprises about 97 NZEB dwellings in three buildings (A1–A3) on lot M. Deputy mayor and urban-planning assessor Laura Lieto told Il Sole that an application desk would open in early November 2026, with rankings published in January–February 2027, and that hand-over of the first units would run from late 2026 into early 2027. She also projected 116 homes ready and delivered by the end of 2026 and another 162 completed by the end of 2027."
+     },
+     {
+      "label": "C",
+      "text": "The construction site itself covers about 200,000 square metres and currently employs more than 100 workers, supported by 25 specialist contractors—mostly from Campania—and around 50 architects and designers. The first phase was designed by Settanta7 with Studio Perillo and Valle Progettazioni and is being built by Piloda Building/Operazione Srl. Architecturally, the new blocks seek discontinuity from the old Vele: ventilated façades in anthracite, white and burgundy; five flat typologies of roughly 50–140 m²; dual-aspect layouts; and terraces of up to four by four metres. Ground floors are planned as multifunctional spaces for meetings, study and co-working, signalling that regeneration is meant to include everyday civic life, not only bedroom counts."
+     },
+     {
+      "label": "D",
+      "text": "Amenities beyond housing are central to the eco-district claim. Plans include urban farming with community gardens and orchards, a public neighbourhood park, an educational farm, a local market, a school complex—nursery places for 50–60 children and a preschool for about 120—and a civic centre for social and cultural activities. The area for the neighbourhood centre has already been handed to the contractor to begin building. These facilities answer a long-standing complaint from residents' groups: earlier demolitions under previous mayoral administrations removed concrete without delivering a comprehensive urban programme. Restart Scampia is therefore marketed as the first attempt to couple clearance with schools, jobs-adjacent spaces and green infrastructure. Local officials argue that without those everyday amenities, new façades would risk becoming another isolated housing estate rather than a living district."
+     },
+     {
+      "label": "E",
+      "text": "Tragedy forced the pace. On the night of 22 July 2024, an access walkway at the Vela Celeste collapsed, killing three people and injuring twelve; residents were evacuated after the building was declared unsafe. The Vela Gialla was demolished in March 2025 and the Vela Rossa in December 2025, though Il Sole notes that a partial collapse during the Rossa demolition obliged planners to reconfigure works and slowed the timetable. Politically, mayor Gaetano Manfredi presents the project as leaving behind the \"stigma of Gomorrah\" and as proof that Naples can put public resources to visible use—an argument aimed as much at investors as at voters. Omero Benfenati, long-time spokesman for the Vele Committee, has carried the banner \"Scampia wants everything\" across Italy, insisting the community is reclaiming dignity denied for too long."
+     },
+     {
+      "label": "F",
+      "text": "Critical questions remain. Matching 509 homes to displaced families—including those scattered in Scampia's long \"diaspora\" to other districts—will test administrative fairness as rankings appear in early 2027. Energy performance labels do not automatically produce social cohesion, and an eco-district can still fail if shops, schools and safe public space lag behind façades. Nationally, Lieto has pointed to unmet demand for public housing across Italy, framing Naples' effort as maximum local push within a wider shortage. For urbanists, Scampia is therefore a live exam in post-stigma regeneration: whether PNRR-era money, participatory rhetoric and NZEB design can convert a symbol of organised-crime storytelling into ordinary, dignified neighbourhood life. The cranes are already answering part of that question in steel and coloured cladding; the harder proof will be whether, five years on, residents say the Vele's shadow has finally lifted. Until then, Restart Scampia remains a closely watched Italian test of whether recovery money can rewrite a neighbourhood's story without repeating past demolitions that left empty ground."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "details of flat sizes, terrace dimensions and façade colours for the new blocks",
+        "a": "C",
+        "ref": "C",
+        "ev": "ventilated façades in anthracite, white and burgundy; five flat typologies of roughly 50–140 m²",
+        "zh": "C 段描述立面顏色、五種戶型約 50–140 m²、露台最大 4×4 m。"
+       },
+       {
+        "q": "funding sources and the preferred total number of public homes",
+        "a": "B",
+        "ref": "B",
+        "ev": "backed by roughly €159 million drawn from Italy's National Recovery and Resilience Plan (PNRR)",
+        "zh": "B 段：約 1.59 億歐元來源與 Il Sole 的 509 戶總數。"
+       },
+       {
+        "q": "the July 2024 walkway collapse and subsequent demolition dates for two Vele",
+        "a": "E",
+        "ref": "E",
+        "ev": "On the night of 22 July 2024, an access walkway at the Vela Celeste collapsed, killing three people and injuring twelve",
+        "zh": "E 段：2024/7/22 走道崩塌，以及 2025 年 3 月、12 月拆除時程。"
+       },
+       {
+        "q": "planned nurseries, preschool capacity and other non-housing amenities",
+        "a": "D",
+        "ref": "D",
+        "ev": "nursery places for 50–60 children and a preschool for about 120—and a civic centre",
+        "zh": "D 段列都市農業、公園、市場、托兒所／學前班與市民中心等設施。"
+       },
+       {
+        "q": "a warning that energy labels alone may not guarantee social cohesion",
+        "a": "F",
+        "ref": "F",
+        "ev": "Energy performance labels do not automatically produce social cohesion",
+        "zh": "F 段提醒節能標章不必然帶來社會凝聚。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "All three remaining Vele blocks are scheduled for complete demolition by the end of 2025.",
+        "a": "False",
+        "ref": "A",
+        "ev": "while the Vela Celeste is retained as offices and social-cultural space",
+        "zh": "A／E 段：Vela Celeste 保留改建，並非三棟全拆 → False。"
+       },
+       {
+        "q": "Il Sole 24 Ore reports that 509 public homes are planned under the programme.",
+        "a": "True",
+        "ref": "B",
+        "ev": "Il Sole 24 Ore reports a total of 509 public homes",
+        "zh": "B 段明確寫 Il Sole 報導共 509 戶 → True。"
+       },
+       {
+        "q": "Settanta7 previously designed public housing projects in Milan under the same PNRR funding stream.",
+        "a": "Not Given",
+        "ref": "C",
+        "ev": "The first phase was designed by Settanta7 with Studio Perillo and Valle Progettazioni",
+        "zh": "C 段只提本案設計團隊，沒有米蘭或其他 PNRR 案 → Not Given。"
+       },
+       {
+        "q": "Mayor Manfredi argues that visible delivery of housing can improve Naples' reputation with investors.",
+        "a": "True",
+        "ref": "E",
+        "ev": "proof that Naples can put public resources to visible use—an argument aimed as much at investors as at voters",
+        "zh": "E 段：市長強調把資源用在看得見的地方，說服對象包含投資人 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Restart Scampia — key figures",
+      "lines": [
+       {
+        "t": "The first phase provides about 97 [[1]] dwellings in three buildings on lot M. Rankings for allocation are due in January–February [[2]]. The construction site covers about [[3]] square metres. A Camorra feud in 2004–2005 claimed more than [[4]] lives."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "NZEB",
+         "nearly zero-energy"
+        ],
+        "ref": "B",
+        "ev": "about 97 NZEB dwellings in three buildings (A1–A3) on lot M",
+        "zh": "B 段：約 97 戶 NZEB（nearly zero-energy）住宅。"
+       },
+       {
+        "a": [
+         "2027"
+        ],
+        "ref": "B",
+        "ev": "with rankings published in January–February 2027",
+        "zh": "B 段：排名於 2027 年 1–2 月公布。"
+       },
+       {
+        "a": [
+         "200,000",
+         "200000"
+        ],
+        "ref": "C",
+        "ev": "The construction site itself covers about 200,000 square metres",
+        "zh": "C 段：工地約 200,000 平方米。"
+       },
+       {
+        "a": [
+         "fifty",
+         "50"
+        ],
+        "ref": "A",
+        "ev": "a Camorra feud in 2004–2005 that claimed more than fifty lives",
+        "zh": "A 段：2004–2005 年衝突奪去超過 fifty／50 條人命。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "regeneration",
+     "pos": "n.",
+     "def": "the process of improving a run-down urban area with new buildings and services",
+     "zh": "都市再生；重建",
+     "example": "Restart Scampia is a major urban regeneration programme.",
+     "match": [
+      "regeneration"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "NZEB",
+     "pos": "n.",
+     "def": "nearly zero-energy building; a structure with very low net energy demand",
+     "zh": "近零能耗建築",
+     "example": "The first phase delivers about 97 NZEB homes.",
+     "match": [
+      "NZEB",
+      "nearly zero-energy"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "stigma",
+     "pos": "n.",
+     "def": "a strong mark of social disgrace attached to a place or group",
+     "zh": "污名；烙印",
+     "example": "The mayor says Scampia is leaving the Gomorrah stigma.",
+     "match": [
+      "stigma"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "demolish",
+     "pos": "v.",
+     "def": "to deliberately destroy a building",
+     "zh": "拆除；拆毀",
+     "example": "The Vela Gialla was demolished in March 2025.",
+     "match": [
+      "demolished",
+      "demolition"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "typology",
+     "pos": "n.",
+     "def": "a category or design type within a set of buildings or flats",
+     "zh": "類型；戶型",
+     "example": "New flats come in five typologies from 50 to 140 square metres.",
+     "match": [
+      "typologies",
+      "typology"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "ventilated façade",
+     "pos": "n.",
+     "def": "an exterior wall system with an air gap that improves insulation and weathering",
+     "zh": "通風外牆／雙層立面",
+     "example": "Ventilated façades appear in anthracite, white and burgundy.",
+     "match": [
+      "ventilated façades",
+      "ventilated façade"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "dual aspect",
+     "pos": "adj.",
+     "def": "having windows on two different sides of a dwelling",
+     "zh": "雙向採光的",
+     "example": "The flats are dual aspect with generous terraces.",
+     "match": [
+      "dual aspect",
+      "dual-aspect"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "diaspora",
+     "pos": "n.",
+     "def": "the dispersal of a community away from its original neighbourhood",
+     "zh": "離散（居民外遷）",
+     "example": "Families in Scampia's diaspora may return as homes are allocated.",
+     "match": [
+      "diaspora"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "eco-district",
+     "pos": "n.",
+     "def": "a neighbourhood planned for high environmental performance and green amenities",
+     "zh": "生態城區／生態社區",
+     "example": "Media have called the project Europe's largest eco-district.",
+     "match": [
+      "eco-district"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "reclaim",
+     "pos": "v.",
+     "def": "to take back something that was lost or denied",
+     "zh": "重新奪回；討回",
+     "example": "Residents say they are reclaiming dignity.",
+     "match": [
+      "reclaiming",
+      "reclaim"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "multifunctional",
+     "pos": "adj.",
+     "def": "designed to serve several different purposes",
+     "zh": "多功能的",
+     "example": "Ground floors will be multifunctional spaces for meetings and study.",
+     "match": [
+      "multifunctional"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "assessor",
+     "pos": "n.",
+     "def": "a local government official responsible for a policy portfolio",
+     "zh": "（地方政府）政務官／局長",
+     "example": "Urban-planning assessor Laura Lieto outlined the allocation timetable.",
+     "match": [
+      "assessor"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "cohesion",
+     "pos": "n.",
+     "def": "the social bonding that holds a community together",
+     "zh": "凝聚（力）",
+     "example": "Energy labels do not automatically produce social cohesion.",
+     "match": [
+      "cohesion"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "earmark",
+     "pos": "v.",
+     "def": "to set money aside for a particular purpose",
+     "zh": "專款專用；指定用途",
+     "example": "Funds were earmarked for deprived urban areas.",
+     "match": [
+      "earmarked",
+      "earmark"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "cladding",
+     "pos": "n.",
+     "def": "the external covering material applied to a building's walls",
+     "zh": "外牆覆材；飾面",
+     "example": "Coloured cladding already marks the new blocks on the skyline.",
+     "match": [
+      "cladding"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-12-2.mp3",
+    "times": [
+     [
+      0.36,
+      1.75
+     ],
+     [
+      2.05,
+      10.66
+     ],
+     [
+      10.96,
+      12.4
+     ],
+     [
+      13.18,
+      27.04
+     ],
+     [
+      27.39,
+      35.12
+     ],
+     [
+      35.44,
+      42.42
+     ],
+     [
+      42.66,
+      47.01
+     ],
+     [
+      47.79,
+      56.97
+     ],
+     [
+      57.3,
+      67.98
+     ],
+     [
+      68.76,
+      72.78
+     ],
+     [
+      73.07,
+      82.42
+     ],
+     [
+      82.63,
+      91.85
+     ],
+     [
+      92.63,
+      94.76
+     ],
+     [
+      95.03,
+      101.33
+     ],
+     [
+      101.55,
+      108.1
+     ],
+     [
+      108.37,
+      119.95
+     ],
+     [
+      120.73,
+      123.88
+     ],
+     [
+      124.11,
+      139.31
+     ],
+     [
+      139.67,
+      152.01
+     ],
+     [
+      152.42,
+      156.6
+     ],
+     [
+      157.38,
+      165.22
+     ],
+     [
+      165.52,
+      173.65
+     ],
+     [
+      173.86,
+      182.15
+     ],
+     [
+      182.41,
+      186.79
+     ],
+     [
+      187.57,
+      189.94
+     ],
+     [
+      190.16,
+      196.84
+     ],
+     [
+      197.11,
+      198.47
+     ],
+     [
+      198.75,
+      204.86
+     ]
+    ],
+    "duration": 205.5,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-10-12-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
