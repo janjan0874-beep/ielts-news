@@ -1,0 +1,2176 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-13",
+ "date": "2026-10-13",
+ "title": "UAE Unveils Lander for Seven-Asteroid Mission Ending on Red Justitia · SEMICON India 2026: Packaging Plants Lead the Way as India Reaches Five Chip Units",
+ "stories": [
+  {
+   "title": "UAE Unveils Lander for Seven-Asteroid Mission Ending on Red Justitia",
+   "topic": "Space · asteroids",
+   "source": {
+    "name": "Space.com: UAE unveils lander for bold 7-asteroid mission set to launch in 2028 (Sharmila Kuthunur, 12 Oct 2026)",
+    "url": "https://www.space.com/astronomy/asteroids/uae-unveils-lander-for-bold-7-asteroid-mission-set-to-launch-in-2028-photos",
+    "links": [
+     {
+      "name": "Technology Innovation Institute: TII completes asteroid-landing probe for Emirates Mission to the Asteroid Belt (1 Oct 2026)",
+      "url": "https://www.tii.ae/news/technology-innovation-institute-completes-asteroid-landing-probe-landmark-emirates-mission"
+     },
+     {
+      "name": "The National: UAE's MBR Explorer probe enters final tests for 2028 mission (4 Oct 2026)",
+      "url": "https://www.thenationalnews.com/news/uae/2026/10/04/uaes-mbr-explorer-probe-enters-final-tests-for-2028-mission/"
+     },
+     {
+      "name": "Dubai Media Office / WAM: Hamdan bin Mohammed witnesses unveiling of EMA probe (4 Oct 2026)",
+      "url": "https://www.mediaoffice.ae/en/news/2026/october/04-10/hamdan-bin-mohammed-witnesses-unveiling-of-uae-developed-asteroid-belt-probe"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "The United Arab Emirates has unveiled the small probe that will try to reach the surface of a strange red asteroid, as it prepares its most ambitious space mission yet.",
+     "Here's the report."
+    ],
+    [
+     "The probe was presented to reporters at a press conference in Abu Dhabi on the first of October.",
+     "It is the country's second interplanetary mission, following the Hope orbiter, which has been studying Mars since twenty twenty-one.",
+     "The lander was designed, built and tested by the Technology Innovation Institute, a research centre in the capital.",
+     "It will travel attached to a larger spacecraft, the MBR Explorer, which is named after Dubai's ruler, Sheikh Mohammed bin Rashid al-Maktoum."
+    ],
+    [
+     "The scale of the journey is striking.",
+     "According to the institute's chief executive, Najwa Aaraj, the spacecraft will cover about five billion kilometres, roughly the same as circling the Earth a hundred and twenty-five thousand times.",
+     "To get there, it will borrow speed from Venus, Earth and Mars in a series of gravity assists.",
+     "Along the way, it is due to race past six other asteroids at high speed.",
+     "The final target is Justitia, a body about fifty kilometres wide in the middle of the main asteroid belt."
+    ],
+    [
+     "So why Justitia?",
+     "The answer, scientists say, is its colour.",
+     "It is among the reddest objects ever observed in the main belt, and its light looks more like that of icy bodies in the Kuiper Belt, beyond Neptune, than that of its own neighbours.",
+     "That has led researchers to suspect it formed in the cold outer solar system and drifted inward early in its history.",
+     "If so, it may still hold water-related minerals and organic compounds from that time.",
+     "In other words, it could offer clues to how water was spread around as the planets were forming."
+    ],
+    [
+     "Meanwhile, the ending is less gentle than the word landing suggests.",
+     "After about seven months in orbit, starting at an altitude of two hundred and fifty kilometres, the main craft will release the probe.",
+     "The descent should take two to three hours, depending on the asteroid's gravity, which is still unknown.",
+     "The probe carries no propulsion to slow itself down, so it is expected to hit the surface at somewhere between fifteen and twenty-seven metres per second.",
+     "Mariam Alhammadi, a researcher on the team, told reporters she does not expect the probe to survive the touchdown.",
+     "If it does, its battery is designed to last twenty to fifty minutes.",
+     "Either way, the impact could dig a small crater, exposing material beneath the surface that cannot be studied from orbit."
+    ],
+    [
+     "Still, the biggest pressure is on the calendar.",
+     "The mission must lift off from Japan during a narrow three-week window that opens in early March twenty twenty-eight.",
+     "Mission director Mohsen al-Awadhi said that if that window were missed, there would basically be no mission, and the team is not preparing a backup plan.",
+     "According to Space dot com, a comparable opportunity would not come round again for at least a century.",
+     "Once released, the probe must also work with complete autonomy, receiving no commands from Earth after launch.",
+     "Its own software will decide when to take pictures and which images are worth keeping."
+    ],
+    [
+     "Looking ahead, officials see the project as a way to build skills at home.",
+     "The UAE wants to rank among the world's ten largest space economies by twenty thirty-one, from a sector currently worth about twelve billion dollars.",
+     "Officials have declined to disclose the mission's overall cost, though.",
+     "And with an eight-year cruise ahead, a great deal could still go wrong.",
+     "That's the science report.",
+     "In our next bulletin, we'll look at what earlier missions have learned from touching asteroids."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Emirates Mission to the Asteroid Belt (EMA)",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Background"
+       },
+       {
+        "t": "UAE's earlier deep-space project: the Hope [[1]] (studying Mars)"
+       },
+       {
+        "t": "Main spacecraft takes its name from Dubai's [[2]]"
+       },
+       {
+        "h": "Target: Justitia"
+       },
+       {
+        "t": "Main reason scientists chose it: its [[3]]"
+       },
+       {
+        "t": "Its light resembles icy objects in the [[4]]"
+       },
+       {
+        "t": "May contain organic compounds and water-related [[5]]"
+       },
+       {
+        "h": "Final stage"
+       },
+       {
+        "t": "Probe has no [[6]] for braking"
+       },
+       {
+        "t": "Top impact speed: [[7]] metres per second"
+       },
+       {
+        "t": "Collision may create a small [[8]], revealing hidden material"
+       },
+       {
+        "h": "Risks and operations"
+       },
+       {
+        "t": "No [[9]] plan if the March 2028 launch is missed"
+       },
+       {
+        "t": "Probe operates with full [[10]] — no instructions from Earth"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "orbiter",
+         "Hope orbiter"
+        ],
+        "ref": "following the Hope orbiter",
+        "ev": "following the Hope orbiter, which has been studying Mars since twenty twenty-one",
+        "zh": "earlier deep-space project = second interplanetary mission, following the Hope orbiter。答案 orbiter（軌道器）。Mars 已在題幹括號中，別填。"
+       },
+       {
+        "a": [
+         "ruler"
+        ],
+        "ref": "named after Dubai's ruler",
+        "ev": "which is named after Dubai's ruler, Sheikh Mohammed bin Rashid al-Maktoum",
+        "zh": "takes its name from = is named after；Dubai's ruler（杜拜統治者）。人名 Sheikh Mohammed 太長且題幹要的是身分。"
+       },
+       {
+        "a": [
+         "colour",
+         "color"
+        ],
+        "ref": "The answer, scientists say, is its colour.",
+        "ev": "The answer, scientists say, is its colour.",
+        "zh": "So why Justitia? → The answer … is its colour。main reason chosen = answer to why。英式拼法 colour，美式 color 皆可。"
+       },
+       {
+        "a": [
+         "Kuiper Belt"
+        ],
+        "ref": "icy bodies in the Kuiper Belt",
+        "ev": "its light looks more like that of icy bodies in the Kuiper Belt, beyond Neptune",
+        "zh": "resembles = looks more like；icy bodies in the Kuiper Belt（古柏帶）。Neptune 只是位置說明；main belt 是它現在所在、不是相似對象。"
+       },
+       {
+        "a": [
+         "minerals"
+        ],
+        "ref": "water-related minerals and organic compounds",
+        "ev": "it may still hold water-related minerals and organic compounds",
+        "zh": "contain = hold；題幹已有 organic compounds，空格是 water-related minerals（含水礦物）。"
+       },
+       {
+        "a": [
+         "propulsion"
+        ],
+        "ref": "The probe carries no propulsion",
+        "ev": "The probe carries no propulsion to slow itself down",
+        "zh": "no ___ for braking = carries no propulsion to slow itself down（沒有推進系統可減速）。"
+       },
+       {
+        "a": [
+         "27",
+         "twenty-seven"
+        ],
+        "ref": "between fifteen and twenty-seven metres per second",
+        "ev": "between fifteen and twenty-seven metres per second",
+        "zh": "Top impact speed = 範圍的上限 twenty-seven = 27。fifteen 是下限（干擾）；前面的 two to three hours 是下降時間、two hundred and fifty 是軌道高度，都不是速度。"
+       },
+       {
+        "a": [
+         "crater"
+        ],
+        "ref": "the impact could dig a small crater",
+        "ev": "the impact could dig a small crater, exposing material beneath the surface",
+        "zh": "collision may create = the impact could dig；small crater（小撞擊坑），revealing hidden material = exposing material beneath the surface。"
+       },
+       {
+        "a": [
+         "backup",
+         "back-up"
+        ],
+        "ref": "the team is not preparing a backup plan",
+        "ev": "the team is not preparing a backup plan",
+        "zh": "No ___ plan = not preparing a backup plan（不準備備案）。"
+       },
+       {
+        "a": [
+         "autonomy",
+         "complete autonomy"
+        ],
+        "ref": "work with complete autonomy",
+        "ev": "the probe must also work with complete autonomy, receiving no commands from Earth after launch",
+        "zh": "full = complete；no instructions = receiving no commands。答案 autonomy（自主性），注意是名詞，不是 autonomous。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "A Red Stranger in the Asteroid Belt",
+    "intro": "The United Arab Emirates' second interplanetary mission will spend eight years crossing the inner solar system before sending a small, self-governing probe crashing into an asteroid that may not belong where it is.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "On 1 October 2026, the Technology Innovation Institute (TII) in Abu Dhabi revealed the probe it has developed for the Emirates Mission to the Asteroid Belt (EMA). The craft is the mission's only deployable payload and will ride aboard a larger spacecraft, the MBR Explorer, named after Sheikh Mohammed bin Rashid al-Maktoum. EMA is the country's second interplanetary venture, following the Hope orbiter, which has been studying Mars since 2021. According to TII, it is also the first such mission in which the spacecraft element has been designed, engineered, assembled and tested within the UAE. The probe was built in partnership with the UAE Space Agency, the start-up HEX20, Khalifa University and UAE University's National Space Science and Technology Center, and it reached flight readiness in under two years."
+     },
+     {
+      "label": "B",
+      "text": "The route is long and unusually rigid. The MBR Explorer is expected to cover approximately five billion kilometres over eight years, using gravity-assist manoeuvres at Venus, Earth and Mars to reach the main belt between Mars and Jupiter. On the way it will conduct close encounters with six asteroids, among them Westerwald, Chimaera and Rockox, before arriving at 269 Justitia. The spacecraft is scheduled to launch from Japan in March 2028 within a three-week window determined by the positions of the planets. Mission director Mohsen al-Awadhi has said that the team is not preparing an alternative, because the planned trajectory would no longer work if the date slipped. Before launch, the probe is to be shipped to the Laboratory for Atmospheric and Space Physics at the University of Colorado Boulder for integration with the main spacecraft."
+     },
+     {
+      "label": "C",
+      "text": "Scientifically, the attraction lies in the destination. Justitia is roughly 50 kilometres across and among the reddest bodies ever observed in the main belt. Its spectrum more closely resembles objects in the Kuiper Belt beyond Neptune than those of neighbouring asteroids, suggesting that it may have formed in the cold outer solar system, beyond the distance at which methane and methanol freeze, before migrating inward. Its surface is thought to be covered in complex organic material produced by the irradiation of that ice. If this interpretation is correct, a visit would give researchers access to primitive outer-solar-system material without the decade-long voyage that a mission to the Kuiper Belt itself would require. TII adds that, if successful, the touchdown would make Justitia only the seventh asteroid in history to be reached on its surface by a probe."
+     },
+     {
+      "label": "D",
+      "text": "The term 'landing', however, is arguably generous. On arrival, the MBR Explorer will spend about seven months in orbit, beginning at 250 kilometres and descending through a series of lower orbits. The probe will be released during a low-altitude pass in early 2036 and will then follow a ballistic path, since it has no propulsion system with which to brake. The descent is expected to last two to three hours, and the probe should strike the asteroid at between 15 and 27 metres per second. Engineers do not expect it to survive, although its battery and communications are designed to keep working for 20 to 50 minutes if it does. The collision could excavate a small crater, allowing scientists to examine subsurface material that cannot be characterised from orbit."
+     },
+     {
+      "label": "E",
+      "text": "Because no commands will be sent to the probe from Earth or from the MBR Explorer after launch, it must function independently. Its onboard software decides when to take images, how many to capture and which are worth keeping, using a digital processing unit designed by TII that also manages power. Two cameras, one wide-field and one narrow-field, provide both context and high-resolution detail. Rather than waiting for Justitia, the probe will take pictures throughout the cruise, transmitting data at roughly six-month intervals. TII executive director Anton Ivanov has said that artificial intelligence could assist with tasks such as assessing and selecting images, but that the team would not rely on it for operations requiring precise and predictable outcomes. Before shipment, the flight model completed vibration testing and underwent thermal cycles inside a vacuum chamber in Al Ain."
+     },
+     {
+      "label": "F",
+      "text": "For the UAE, the mission is as much about national capability as about asteroids. TII's chief executive, Najwa Aaraj, has said that about 80 per cent of the work on the probe was carried out by UAE engineers, and that the next mission should be fully developed at home. The government values the country's space sector at more than AED 44 billion and hopes to place the UAE among the world's ten largest space economies by 2031. Ahmad Al Falasi, chairman of the UAE Space Agency, has argued that deep-space missions should be judged not only by what they discover but by what they leave behind. Officials have not disclosed the overall cost. Whether the probe's final images justify that investment will not be known for roughly a decade."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "an explanation of how the probe will decide which pictures to retain",
+        "a": "E",
+        "ref": "E",
+        "ev": "Its onboard software decides when to take images, how many to capture and which are worth keeping",
+        "zh": "E 段：機上軟體決定何時拍、拍幾張、哪些值得保留（retain = keep）。"
+       },
+       {
+        "q": "a reason why visiting this asteroid avoids a much longer journey",
+        "a": "C",
+        "ref": "C",
+        "ev": "without the decade-long voyage that a mission to the Kuiper Belt itself would require",
+        "zh": "C 段：不必花十年飛到古柏帶，就能取得外太陽系的原始物質。"
+       },
+       {
+        "q": "the claim that the launch date cannot be postponed without ruining the planned route",
+        "a": "B",
+        "ref": "B",
+        "ev": "the planned trajectory would no longer work if the date slipped",
+        "zh": "B 段：日期延誤，原定軌道就不成立，因此不準備備案。"
+       },
+       {
+        "q": "an official's view that a mission's value includes its lasting legacy",
+        "a": "F",
+        "ref": "F",
+        "ev": "deep-space missions should be judged not only by what they discover but by what they leave behind",
+        "zh": "F 段：Al Falasi 認為任務價值也在於「留下了什麼」（legacy）。"
+       },
+       {
+        "q": "a suggestion that the word used to describe the final event may be misleading",
+        "a": "D",
+        "ref": "D",
+        "ev": "The term 'landing', however, is arguably generous.",
+        "zh": "D 段開頭：「landing」這個說法恐怕太客氣——實際是彈道式撞擊。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The probe will not begin taking photographs until it reaches Justitia.",
+        "a": "False",
+        "ref": "E",
+        "ev": "Rather than waiting for Justitia, the probe will take pictures throughout the cruise",
+        "zh": "E 段：整趟巡航都會拍照，不是等到抵達 Justitia → 與原文相反，False。"
+       },
+       {
+        "q": "Most of the work on the probe was done by engineers from the UAE.",
+        "a": "True",
+        "ref": "F",
+        "ev": "about 80 per cent of the work on the probe was carried out by UAE engineers",
+        "zh": "F 段：約 80% 由阿聯酋工程師完成 → most，True。"
+       },
+       {
+        "q": "EMA is expected to cost less than the Hope mission to Mars.",
+        "a": "Not Given",
+        "ref": "F",
+        "ev": "Officials have not disclosed the overall cost.",
+        "zh": "F 段只說官方未公布總成本，全文沒有與 Hope 任務的成本比較 → Not Given（典型陷阱：有提到 cost 也有提到 Hope，但沒有比較）。"
+       },
+       {
+        "q": "The team intends to let artificial intelligence control all critical operations of the probe.",
+        "a": "False",
+        "ref": "E",
+        "ev": "the team would not rely on it for operations requiring precise and predictable outcomes",
+        "zh": "E 段：AI 只協助評估與挑選影像，需要精確、可預測結果的操作不交給 AI → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Justitia and the probe",
+      "lines": [
+       {
+        "t": "Justitia's surface is believed to be coated with complex organic matter created through the [[1]] of ice. After months of orbiting, the main spacecraft will set the probe free in early [[2]], when it will travel along a [[3]] path towards the surface. Earlier, the flight model had been put through heat cycles in a vacuum [[4]] in Al Ain."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "irradiation"
+        ],
+        "ref": "C",
+        "ev": "complex organic material produced by the irradiation of that ice",
+        "zh": "C 段：created through = produced by；the irradiation of that ice（冰受輻射照射）。答案 irradiation。"
+       },
+       {
+        "a": [
+         "2036"
+        ],
+        "ref": "D",
+        "ev": "The probe will be released during a low-altitude pass in early 2036",
+        "zh": "D 段：set the probe free = released；early 2036。2028 是發射年份，干擾項。"
+       },
+       {
+        "a": [
+         "ballistic"
+        ],
+        "ref": "D",
+        "ev": "will then follow a ballistic path, since it has no propulsion system with which to brake",
+        "zh": "D 段：follow a ballistic path（彈道式路徑），因為沒有推進系統可剎車。"
+       },
+       {
+        "a": [
+         "chamber"
+        ],
+        "ref": "E",
+        "ev": "underwent thermal cycles inside a vacuum chamber in Al Ain",
+        "zh": "E 段：heat cycles = thermal cycles；inside a vacuum chamber（真空艙）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "interplanetary",
+     "pos": "adj.",
+     "def": "travelling or existing between planets",
+     "zh": "行星際的",
+     "example": "EMA is the UAE's second interplanetary mission.",
+     "match": [
+      "interplanetary"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "orbiter",
+     "pos": "n.",
+     "def": "a spacecraft designed to circle a planet or other body rather than land on it",
+     "zh": "軌道器",
+     "example": "The Hope orbiter has been studying Mars since 2021.",
+     "match": [
+      "orbiter"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "gravity assist",
+     "pos": "n.",
+     "def": "a manoeuvre using a planet's gravity to change a spacecraft's speed and direction",
+     "zh": "重力助推",
+     "example": "The craft will borrow speed from Venus, Earth and Mars in a series of gravity assists.",
+     "match": [
+      "gravity assists",
+      "gravity-assist"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "drift",
+     "pos": "v.",
+     "def": "to move slowly, often without a deliberate force or direction",
+     "zh": "漂移；緩慢移動",
+     "example": "Justitia may have drifted inward early in its history.",
+     "match": [
+      "drifted"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "propulsion",
+     "pos": "n.",
+     "def": "the force or system that drives a vehicle forward or changes its speed",
+     "zh": "推進（系統）",
+     "example": "The probe carries no propulsion to slow itself down.",
+     "match": [
+      "propulsion"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "autonomy",
+     "pos": "n.",
+     "def": "the ability to act and make decisions independently",
+     "zh": "自主性",
+     "example": "The probe must work with complete autonomy after launch.",
+     "match": [
+      "autonomy"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "disclose",
+     "pos": "v.",
+     "def": "to make information known publicly",
+     "zh": "揭露；公開",
+     "example": "Officials have declined to disclose the mission's overall cost.",
+     "match": [
+      "disclose",
+      "disclosed"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "deployable",
+     "pos": "adj.",
+     "def": "able to be released or put into operation from a larger system",
+     "zh": "可部署的；可釋放的",
+     "example": "The probe is the mission's only deployable payload.",
+     "match": [
+      "deployable"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "payload",
+     "pos": "n.",
+     "def": "the instruments or equipment a spacecraft carries to do its job",
+     "zh": "酬載",
+     "example": "The lander is the only payload that will separate from the spacecraft.",
+     "match": [
+      "payload"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "trajectory",
+     "pos": "n.",
+     "def": "the path followed by an object moving through space",
+     "zh": "軌道；軌跡",
+     "example": "The planned trajectory would no longer work if the date slipped.",
+     "match": [
+      "trajectory"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "spectrum",
+     "pos": "n.",
+     "def": "the range of light wavelengths reflected or emitted by an object",
+     "zh": "光譜",
+     "example": "Justitia's spectrum resembles that of Kuiper Belt objects.",
+     "match": [
+      "spectrum"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "irradiation",
+     "pos": "n.",
+     "def": "exposure to radiation",
+     "zh": "輻射照射",
+     "example": "Organic material may form through the irradiation of ice.",
+     "match": [
+      "irradiation"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "ballistic",
+     "pos": "adj.",
+     "def": "moving under gravity alone after release, without powered control",
+     "zh": "彈道式的",
+     "example": "The probe will follow a ballistic path to the surface.",
+     "match": [
+      "ballistic"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "excavate",
+     "pos": "v.",
+     "def": "to dig out and expose material by removing what covers it",
+     "zh": "挖掘；掘出",
+     "example": "The collision could excavate a small crater.",
+     "match": [
+      "excavate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "characterise",
+     "pos": "v.",
+     "def": "to describe or measure the distinctive features of something",
+     "zh": "描述特性；表徵",
+     "example": "Subsurface material cannot be characterised from orbit.",
+     "match": [
+      "characterised"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-13-1.mp3",
+    "times": [
+     [
+      0.35,
+      1.48
+     ],
+     [
+      1.64,
+      13.71
+     ],
+     [
+      14.03,
+      15.46
+     ],
+     [
+      16.18,
+      22.74
+     ],
+     [
+      22.95,
+      31.25
+     ],
+     [
+      31.51,
+      39.49
+     ],
+     [
+      39.67,
+      49.92
+     ],
+     [
+      50.64,
+      53.22
+     ],
+     [
+      53.49,
+      66.88
+     ],
+     [
+      67.14,
+      73.53
+     ],
+     [
+      73.77,
+      78.6
+     ],
+     [
+      78.75,
+      86.91
+     ],
+     [
+      87.63,
+      89.33
+     ],
+     [
+      89.69,
+      92.62
+     ],
+     [
+      92.78,
+      104.42
+     ],
+     [
+      104.71,
+      112.69
+     ],
+     [
+      112.95,
+      118.73
+     ],
+     [
+      119.02,
+      124.9
+     ],
+     [
+      125.62,
+      130.43
+     ],
+     [
+      130.7,
+      139.43
+     ],
+     [
+      139.62,
+      146.12
+     ],
+     [
+      146.35,
+      156.3
+     ],
+     [
+      156.45,
+      164.41
+     ],
+     [
+      164.61,
+      169.32
+     ],
+     [
+      169.57,
+      178.0
+     ],
+     [
+      178.72,
+      181.69
+     ],
+     [
+      181.9,
+      189.53
+     ],
+     [
+      189.79,
+      199.87
+     ],
+     [
+      200.04,
+      206.72
+     ],
+     [
+      206.94,
+      214.32
+     ],
+     [
+      214.59,
+      220.52
+     ],
+     [
+      221.24,
+      226.14
+     ],
+     [
+      226.38,
+      236.62
+     ],
+     [
+      236.77,
+      241.47
+     ],
+     [
+      241.66,
+      245.79
+     ],
+     [
+      246.04,
+      247.94
+     ],
+     [
+      248.07,
+      253.55
+     ]
+    ],
+    "duration": 254.2,
+    "voice": "kokoro:bm_george",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · George · male (offline Kokoro)",
+    "words": null
+   }
+  },
+  {
+   "title": "SEMICON India 2026: Packaging Plants Lead the Way as India Reaches Five Chip Units",
+   "topic": "Semiconductors · packaging",
+   "source": {
+    "name": "EE Times: SEMICON India 2026 — India starts packaging chips as ecosystem takes shape (Sep 2026)",
+    "url": "https://www.eetimes.com/semicon-india-2026-india-starts-packaging-chips-as-ecosystem-takes-shape/",
+    "links": [
+     {
+      "name": "The Hindu BusinessLine: Suchi Semicon starts commercial production, targets 3 million chips a day over three years (17 Sep 2026)",
+      "url": "https://www.thehindubusinessline.com/info-tech/suchi-semicon-starts-commercial-production-targets-3-million-chips-a-day-over-three-years/article71477399.ece"
+     },
+     {
+      "name": "The New Indian Express: PM Modi inaugurates commercial production at CDIL, Suchi Semicon units (17 Sep 2026)",
+      "url": "https://www.newindianexpress.com/india/2026/Sep/17/pm-modi-inaugurates-commercial-production-at-cdil-suchi-semicon-units"
+     },
+     {
+      "name": "PIB (Govt of India): Ashwini Vaishnaw at SEMICON India 2026 — five plants in commercial production, ISM 2.0 (18 Sep 2026)",
+      "url": "https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2312207&lang=2&reg=48"
+     },
+     {
+      "name": "Power Semiconductors Weekly: CDIL begins commercial production at new Mohali OSAT line (30 Sep 2026)",
+      "url": "https://www.powersemiconductorsweekly.com/2026/09/30/cdil-semiconductors-begins-commercial-production-of-power-devices-at-new-mohali-osat-line/"
+     },
+     {
+      "name": "The New Indian Express: Tata Electronics' Dholera fab, Assam packaging plant on track (17 Sep 2026)",
+      "url": "https://www.newindianexpress.com/business/2026/Sep/17/tata-electronics-dholera-fab-assam-packaging-plant-on-track-ceo-and-md-randhir-thakur"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Our lead business story this morning.",
+     "India now has five chip plants in commercial production, after Prime Minister Narendra Modi opened two new packaging units at the SEMICON India conference in New Delhi.",
+     "Here's the report."
+    ],
+    [
+     "The ceremony took place on the seventeenth of September at the Yashobhoomi convention centre, where Mr Modi launched production at both sites by video link.",
+     "The first site belongs to CDIL Semiconductors, in Mohali, in the northern state of Punjab.",
+     "The second is run by Suchi Semicon at Palsana, near Surat, in Gujarat.",
+     "Both plants work at the back end of the industry, assembling, testing and packaging chips, rather than printing circuits onto silicon wafers."
+    ],
+    [
+     "Suchi's chairman, Ashok Mehta, said the Gujarat plant can currently turn out about three hundred thousand chips a day.",
+     "He plans a tenfold increase, to three million a day, within three years, and said customers are already lined up for the extra capacity.",
+     "The project carries an investment of one hundred million dollars, according to the newspaper BusinessLine.",
+     "Most of the interest so far, Mr Mehta said, comes from global chip companies in the United States, Japan, Korea and Europe.",
+     "Still, he stressed that the firm is concentrating on capacity rather than near-term profits.",
+     "Customer qualification alone, he explained, can take six months to a year."
+    ],
+    [
+     "Meanwhile, CDIL's new line in Mohali focuses on high-power discrete devices.",
+     "They include power transistors and silicon carbide parts for electric vehicles, industry and renewable energy.",
+     "The company said the line was set up within ten months, using technology it developed itself."
+    ],
+    [
+     "The two openings take India's tally of commercially operating plants to five.",
+     "The other three, run by Micron, Kaynes and CG Semi, are all located at Sanand, also in Gujarat.",
+     "Mr Modi noted that twelve projects have now been approved under the India Semiconductor Mission.",
+     "He also announced a second phase of the programme, saying its size had been raised to thirteen point five billion dollars, up from about eight billion in the first phase.",
+     "Electronics and IT minister Ashwini Vaishnaw said the new phase will rest on six pillars, ranging from design and materials to more fabs, research and talent.",
+     "He added that some of the packaging units are already exporting to Japan."
+    ],
+    [
+     "By contrast, full-scale chipmaking is still a few years away.",
+     "Tata Electronics is building India's first fabrication plant at Dholera, in Gujarat, with a manufacturer from Taiwan, Powerchip, as its technology partner.",
+     "Chief executive Randhir Thakur said the project remains on track to meet its commitments to the government.",
+     "The plant will start with mature process nodes, ranging from ninety down to twenty-eight nanometres.",
+     "Mr Vaishnaw also said that a fab due to be commissioned in twenty twenty-eight already has a large part of its capacity booked."
+    ],
+    [
+     "There are hurdles ahead, though.",
+     "Packaging lines are only one link in the chain, and turning approved fabs into steady wafer output will be a far tougher test.",
+     "Mr Modi himself warned that this is not a sector where you set up a factory and the work is done.",
+     "That's the business report.",
+     "Next, we'll look at how other Asian economies are competing for the same chip investment."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "SEMICON India 2026: new packaging plants",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The two new sites"
+       },
+       {
+        "t": "CDIL factory: Mohali, in the state of [[1]]"
+       },
+       {
+        "t": "Neither plant prints circuits onto silicon [[2]]"
+       },
+       {
+        "h": "Suchi Semicon"
+       },
+       {
+        "t": "Daily output goal within three years: [[3]] chips"
+       },
+       {
+        "t": "Customer [[4]] may last between six and twelve months"
+       },
+       {
+        "h": "CDIL"
+       },
+       {
+        "t": "Specialises in high-power [[5]] devices"
+       },
+       {
+        "h": "National picture"
+       },
+       {
+        "t": "Micron, Kaynes and CG Semi all produce at [[6]]"
+       },
+       {
+        "t": "Second phase built on six [[7]], e.g. design and talent"
+       },
+       {
+        "t": "Some packaging plants already sell abroad to [[8]]"
+       },
+       {
+        "h": "Wafer fabrication"
+       },
+       {
+        "t": "Tata's technology partner is based in [[9]]"
+       },
+       {
+        "t": "First fab will begin with [[10]] process nodes"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "Punjab"
+        ],
+        "ref": "in the northern state of Punjab",
+        "ev": "The first site belongs to CDIL Semiconductors, in Mohali, in the northern state of Punjab.",
+        "zh": "CDIL 工廠在 Mohali, in the northern state of Punjab。Gujarat 是 Suchi 所在的邦，干擾項。"
+       },
+       {
+        "a": [
+         "wafers",
+         "wafer"
+        ],
+        "ref": "rather than printing circuits onto silicon wafers",
+        "ev": "rather than printing circuits onto silicon wafers",
+        "zh": "Neither plant prints… = rather than printing circuits onto silicon wafers（兩廠都是後段封測，不做晶圓製造）。"
+       },
+       {
+        "a": [
+         "3 million",
+         "three million",
+         "3,000,000"
+        ],
+        "ref": "to three million a day, within three years",
+        "ev": "He plans a tenfold increase, to three million a day, within three years",
+        "zh": "goal within three years = 三年內提升十倍到 three million a day（300 萬顆/天）。three hundred thousand 是目前產能，干擾項。"
+       },
+       {
+        "a": [
+         "qualification"
+        ],
+        "ref": "Customer qualification alone",
+        "ev": "Customer qualification alone, he explained, can take six months to a year.",
+        "zh": "may last between six and twelve months = can take six months to a year；Customer qualification（客戶認證）。"
+       },
+       {
+        "a": [
+         "discrete"
+        ],
+        "ref": "high-power discrete devices",
+        "ev": "CDIL's new line in Mohali focuses on high-power discrete devices.",
+        "zh": "specialises in = focuses on；high-power discrete devices（高功率分離式元件）。形容詞 discrete（注意拼字，不是 discreet）。"
+       },
+       {
+        "a": [
+         "Sanand"
+        ],
+        "ref": "are all located at Sanand",
+        "ev": "The other three, run by Micron, Kaynes and CG Semi, are all located at Sanand, also in Gujarat.",
+        "zh": "all produce at = are all located at Sanand。also in Gujarat 是邦名，題目要的是地點 Sanand。"
+       },
+       {
+        "a": [
+         "pillars"
+        ],
+        "ref": "rest on six pillars",
+        "ev": "the new phase will rest on six pillars, ranging from design and materials to more fabs, research and talent",
+        "zh": "built on = rest on；six pillars（六大支柱）。"
+       },
+       {
+        "a": [
+         "Japan"
+        ],
+        "ref": "already exporting to Japan",
+        "ev": "some of the packaging units are already exporting to Japan",
+        "zh": "sell abroad = exporting to Japan。前面 Mehta 提到的 United States, Japan, Korea and Europe 是「客戶興趣來源」不是出口，注意題幹。"
+       },
+       {
+        "a": [
+         "Taiwan"
+        ],
+        "ref": "a manufacturer from Taiwan, Powerchip",
+        "ev": "with a manufacturer from Taiwan, Powerchip, as its technology partner",
+        "zh": "technology partner is based in = a manufacturer from Taiwan。Gujarat/Dholera 是 Tata 晶圓廠所在地，干擾項。"
+       },
+       {
+        "a": [
+         "mature"
+        ],
+        "ref": "start with mature process nodes",
+        "ev": "The plant will start with mature process nodes",
+        "zh": "begin with = start with；mature process nodes（成熟製程）。90 到 28 奈米是補充說明。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Packaging First: India's Back-End Route into Chipmaking",
+    "intro": "At SEMICON India 2026, two new assembly and test plants took India's count of commercially operating chip units to five — but the country's first wafer fab is still being built.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "On 17 September 2026, at the opening of the fifth edition of SEMICON India at the Yashobhoomi convention centre in New Delhi, Prime Minister Narendra Modi virtually inaugurated commercial production at two semiconductor facilities. One, run by CDIL Semiconductors in Mohali, Punjab, is an assembly, testing, marking and packaging (ATMP) unit; the other, operated by Suchi Semicon at Palsana near Surat in Gujarat, is an outsourced semiconductor assembly and test (OSAT) plant. The openings brought the number of Indian semiconductor projects in commercial production to five. The other three, belonging to Micron, Kaynes and CG Semi, are all located at Sanand in Gujarat. Notably, none of the five fabricates wafers: each works at the so-called back end of the industry, where finished silicon is assembled, tested and enclosed in protective packages."
+     },
+     {
+      "label": "B",
+      "text": "Starting with packaging is arguably a pragmatic choice. Back-end plants are generally regarded as a less capital-intensive entry point than wafer fabrication, and they can begin serving customers while the far more demanding front-end infrastructure is still under construction. Modi acknowledged the scale of the task in his speech: \"This is not a sector where you set up a factory and the work is done. It takes decades to build technological capabilities.\" He also linked the industry's prospects to artificial intelligence, observing that AI applications are increasing demand for closer integration between processors and memory, faster data movement and better management of heat and power. In the past two years, he told the audience, the global semiconductor market has grown by more than 20 per cent, with a very large part of that growth driven by AI demand."
+     },
+     {
+      "label": "C",
+      "text": "Suchi Semicon illustrates how quickly a newcomer can move. Incorporated in 2023, the company received Cabinet approval for its OSAT project in May 2026, with ₹868 crore in approved support, for an investment of $100 million. Since then it has commissioned its cleanrooms, completed its first customer shipment and established a technology collaboration with Japan's ROHM Semiconductor. Its Surat facility handles SOIC, QFN and power semiconductor packaging for automotive, industrial, consumer and electric-vehicle applications. Chairman Ashok Mehta said capacity stands at about 300,000 chips a day and should rise to 3 million within three years. \"Three years ago, when we started, people were wondering if India could pull this off,\" he said. The firm intends to move into advanced packaging in its next phase and to create more than 600 direct jobs."
+     },
+     {
+      "label": "D",
+      "text": "CDIL's new line, by contrast, reflects the expansion of an established manufacturer. According to the company, it was set up within ten months and is the first production line it has built under the first phase of the India Semiconductor Mission (ISM 1.0). Initial output concentrates on devices in the TO-247 package, and the portfolio includes power transistors, MOSFETs, IGBTs and silicon carbide components for automotive, electric-vehicle, industrial and renewable-energy uses. The line relies on technology developed internally by CDIL and is intended to supply customers both in India and abroad. Such high-power discrete devices are less glamorous than AI processors, yet they are essential to the electrification of transport and the integration of renewable power into electricity grids."
+     },
+     {
+      "label": "E",
+      "text": "The policy framework is expanding as well. Modi announced a second phase of the Semiconductor Mission, saying that its size had been increased to $13.5 billion from about $8 billion in the first phase, and noted that 12 projects had been approved so far. Electronics and IT minister Ashwini Vaishnaw said that ISM 1.0, originally envisaged as a six-year programme, had achieved its objectives in four, and that ISM 2.0 would rest on six pillars: design, materials and machines, more fabs, more ATMP units, research and development, and talent. India, he added, had trained around 70,000 chip design engineers in four years against an original target of 85,000 in ten. ATMP units are already exporting to Japan, he said, although the scale of those shipments was not specified."
+     },
+     {
+      "label": "F",
+      "text": "The real test, however, lies at the front end. Tata Electronics, in partnership with Powerchip Semiconductor Manufacturing Corporation of Taiwan, is constructing the country's first semiconductor fabrication plant at Dholera in Gujarat, an $11 billion investment that will initially produce chips on mature nodes of 90, 55 and 28 nanometres. Chief executive Randhir Thakur said the fab and the company's packaging facility in Assam were on track to meet their commitments to the government, and that more than 450 ecosystem partners had been brought together for Dholera. Vaishnaw remarked that a fab due to be commissioned in 2028 already has much of its capacity booked. Whether early success in packaging will translate into competitive wafer production, though, remains an open question."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison between the budgets of two stages of a national programme",
+        "a": "E",
+        "ref": "E",
+        "ev": "its size had been increased to $13.5 billion from about $8 billion in the first phase",
+        "zh": "E 段：第二期規模由約 80 億美元提高到 135 億美元。"
+       },
+       {
+        "q": "the time one firm needed to establish a new production line",
+        "a": "D",
+        "ref": "D",
+        "ev": "it was set up within ten months",
+        "zh": "D 段：CDIL 新產線十個月內建成。"
+       },
+       {
+        "q": "a leader's warning that building the industry is a long-term process",
+        "a": "B",
+        "ref": "B",
+        "ev": "It takes decades to build technological capabilities.",
+        "zh": "B 段：Modi 說建立技術能力需要數十年。"
+       },
+       {
+        "q": "the observation that none of the operating plants actually produces wafers",
+        "a": "A",
+        "ref": "A",
+        "ev": "none of the five fabricates wafers",
+        "zh": "A 段：五座工廠都不製造晶圓，全是後段封測。"
+       },
+       {
+        "q": "the number of outside organisations gathered to support a fab project",
+        "a": "F",
+        "ref": "F",
+        "ev": "more than 450 ecosystem partners had been brought together for Dholera",
+        "zh": "F 段：Dholera 晶圓廠集結逾 450 家生態系夥伴。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Suchi Semicon obtained Cabinet approval for its plant before the company was formed.",
+        "a": "False",
+        "ref": "C",
+        "ev": "Incorporated in 2023, the company received Cabinet approval for its OSAT project in May 2026",
+        "zh": "C 段：2023 年成立，2026 年 5 月才獲內閣核准 → 先成立後核准，與題目相反，False。"
+       },
+       {
+        "q": "According to the minister, the first phase of the mission met its goals sooner than originally planned.",
+        "a": "True",
+        "ref": "E",
+        "ev": "ISM 1.0, originally envisaged as a six-year programme, had achieved its objectives in four",
+        "zh": "E 段：原定六年、四年就達成 → True。"
+       },
+       {
+        "q": "Japan buys the majority of the chips exported by India's ATMP units.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "ATMP units are already exporting to Japan, he said, although the scale of those shipments was not specified",
+        "zh": "E 段只說已出口到日本，且明言規模未說明；沒有「多數」的資訊 → Not Given。"
+       },
+       {
+        "q": "The Dholera fab will begin by using the most advanced process technology available.",
+        "a": "False",
+        "ref": "F",
+        "ev": "will initially produce chips on mature nodes of 90, 55 and 28 nanometres",
+        "zh": "F 段：初期採用成熟製程（90/55/28nm），不是最先進製程 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Two companies and a skills drive",
+      "lines": [
+       {
+        "t": "Suchi Semicon has formed a technology [[1]] with ROHM of Japan and plans to enter [[2]] packaging at a later stage. At CDIL, early production centres on components in the TO-247 [[3]]. Meanwhile, the government says roughly [[4]] chip design engineers have been trained in four years."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "collaboration"
+        ],
+        "ref": "C",
+        "ev": "established a technology collaboration with Japan's ROHM Semiconductor",
+        "zh": "C 段：formed = established；technology collaboration（技術合作）。"
+       },
+       {
+        "a": [
+         "advanced"
+        ],
+        "ref": "C",
+        "ev": "The firm intends to move into advanced packaging in its next phase",
+        "zh": "C 段：enter = move into；at a later stage = in its next phase；advanced packaging（先進封裝）。"
+       },
+       {
+        "a": [
+         "package"
+        ],
+        "ref": "D",
+        "ev": "Initial output concentrates on devices in the TO-247 package",
+        "zh": "D 段：early production centres on = initial output concentrates on；the TO-247 package（封裝型式）。"
+       },
+       {
+        "a": [
+         "70,000",
+         "70000",
+         "seventy thousand"
+        ],
+        "ref": "E",
+        "ev": "had trained around 70,000 chip design engineers in four years against an original target of 85,000 in ten",
+        "zh": "E 段：四年培訓約 70,000 名設計工程師。85,000 是原本「十年」目標，干擾項。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "inaugurate",
+     "pos": "v.",
+     "def": "to open or begin something officially, often with a ceremony",
+     "zh": "（正式）啟用；揭幕",
+     "example": "Modi virtually inaugurated commercial production at two plants.",
+     "match": [
+      "inaugurated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "back end",
+     "pos": "n.",
+     "def": "the final stages of chipmaking: assembly, testing and packaging",
+     "zh": "（半導體）後段製程",
+     "example": "Both plants work at the back end of the industry.",
+     "match": [
+      "back end"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "tenfold",
+     "pos": "adj./adv.",
+     "def": "ten times as great or as many",
+     "zh": "十倍的",
+     "example": "Suchi plans a tenfold increase in daily output.",
+     "match": [
+      "tenfold"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "qualification",
+     "pos": "n.",
+     "def": "the process of testing a product to prove it meets a customer's standards",
+     "zh": "（產品）認證；驗證",
+     "example": "Customer qualification can take six months to a year.",
+     "match": [
+      "qualification"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "discrete",
+     "pos": "adj.",
+     "def": "(of an electronic component) individual, performing a single function rather than part of an integrated circuit",
+     "zh": "分離式的（元件）",
+     "example": "CDIL focuses on high-power discrete devices.",
+     "match": [
+      "discrete"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "tally",
+     "pos": "n.",
+     "def": "a running total or count",
+     "zh": "總數；計數",
+     "example": "The openings take India's tally of plants to five.",
+     "match": [
+      "tally"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "pillar",
+     "pos": "n.",
+     "def": "a fundamental element on which a plan or system is built",
+     "zh": "支柱；核心要素",
+     "example": "ISM 2.0 rests on six pillars, including design and talent.",
+     "match": [
+      "pillars"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "commission",
+     "pos": "v.",
+     "def": "to bring a new facility or machine into working operation",
+     "zh": "使投入運轉；試運轉啟用",
+     "example": "A fab due to be commissioned in 2028 is already largely booked.",
+     "match": [
+      "commissioned"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "pragmatic",
+     "pos": "adj.",
+     "def": "dealing with things sensibly and realistically rather than ideally",
+     "zh": "務實的",
+     "example": "Starting with packaging is arguably a pragmatic choice.",
+     "match": [
+      "pragmatic"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "capital-intensive",
+     "pos": "adj.",
+     "def": "requiring large investment in equipment and buildings relative to labour",
+     "zh": "資本密集的",
+     "example": "Back-end plants are less capital-intensive than wafer fabs.",
+     "match": [
+      "capital-intensive"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "envisage",
+     "pos": "v.",
+     "def": "to plan or imagine something as a future possibility",
+     "zh": "設想；預想",
+     "example": "ISM 1.0 was originally envisaged as a six-year programme.",
+     "match": [
+      "envisaged"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "electrification",
+     "pos": "n.",
+     "def": "the conversion of a system to run on electric power",
+     "zh": "電氣化",
+     "example": "Power devices are essential to the electrification of transport.",
+     "match": [
+      "electrification"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "fabricate",
+     "pos": "v.",
+     "def": "to manufacture, especially through an industrial process",
+     "zh": "製造；（晶圓）製作",
+     "example": "None of the five plants fabricates wafers.",
+     "match": [
+      "fabricates"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "incorporate",
+     "pos": "v.",
+     "def": "to form a company as a legal entity",
+     "zh": "（公司）成立；註冊",
+     "example": "Suchi Semicon was incorporated in 2023.",
+     "match": [
+      "Incorporated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "translate into",
+     "pos": "phr. v.",
+     "def": "to lead to or result in a particular outcome",
+     "zh": "轉化為；導致",
+     "example": "Will packaging success translate into wafer production?",
+     "match": [
+      "translate into"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-13-2.mp3",
+    "times": [
+     [
+      0.35,
+      2.43
+     ],
+     [
+      2.59,
+      14.24
+     ],
+     [
+      14.56,
+      15.77
+     ],
+     [
+      16.49,
+      26.73
+     ],
+     [
+      26.94,
+      33.58
+     ],
+     [
+      33.84,
+      39.19
+     ],
+     [
+      39.37,
+      48.56
+     ],
+     [
+      49.28,
+      57.12
+     ],
+     [
+      57.39,
+      66.87
+     ],
+     [
+      67.06,
+      73.75
+     ],
+     [
+      73.98,
+      82.68
+     ],
+     [
+      82.83,
+      88.89
+     ],
+     [
+      89.09,
+      94.07
+     ],
+     [
+      94.79,
+      100.82
+     ],
+     [
+      100.99,
+      108.76
+     ],
+     [
+      108.97,
+      114.93
+     ],
+     [
+      115.65,
+      120.91
+     ],
+     [
+      121.08,
+      128.9
+     ],
+     [
+      129.12,
+      135.46
+     ],
+     [
+      135.73,
+      146.87
+     ],
+     [
+      147.14,
+      158.82
+     ],
+     [
+      159.05,
+      163.55
+     ],
+     [
+      164.27,
+      168.43
+     ],
+     [
+      168.63,
+      180.28
+     ],
+     [
+      180.52,
+      187.51
+     ],
+     [
+      187.68,
+      194.37
+     ],
+     [
+      194.58,
+      203.2
+     ],
+     [
+      203.92,
+      205.56
+     ],
+     [
+      205.7,
+      214.42
+     ],
+     [
+      214.64,
+      221.13
+     ],
+     [
+      221.4,
+      222.85
+     ],
+     [
+      223.12,
+      228.77
+     ]
+    ],
+    "duration": 229.4,
+    "voice": "kokoro:am_michael",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Michael · male (offline Kokoro)",
+    "words": null
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
