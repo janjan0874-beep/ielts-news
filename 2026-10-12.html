@@ -388,40 +388,43 @@ const DATA = {
         "h": "Platform basics"
        },
        {
-        "t": "Purpose-built for: [[1]]"
+        "t": "Designed specifically for: [[1]]"
        },
        {
-        "t": "First-generation digital performance class: [[2]] nanometer"
+        "t": "Aim: shift computing away from the [[2]] into physical machines"
        },
        {
-        "t": "Density vs first-generation FDX: more than [[3]] times"
+        "t": "Main gain over first-generation FDX: over twice the [[3]]"
        },
        {
-        "t": "RF performance up to: [[4]] THz ft/fmax"
+        "t": "Extra features: in-memory computing and embedded [[4]] memory"
+       },
+       {
+        "t": "FD-SOI chips already used in automotive [[5]], display drivers, etc."
        },
        {
         "h": "Schedule"
        },
        {
-        "t": "Manufacturing planned for: [[5]]"
-       },
-       {
-        "t": "Demonstrator silicon targeted for early: [[6]]"
-       },
-       {
-        "t": "Development contingent on German approval of: [[7]] AST programme"
+        "t": "Volume manufacturing at Dresden: [[6]]"
        },
        {
         "h": "SPRINT expansion"
        },
        {
-        "t": "Investment: [[8]] billion euros"
+        "t": "Ceremony marked a [[7]] milestone"
        },
        {
-        "t": "Capacity target by end-2028: more than [[9]] wafers/year"
+        "t": "€1.1 billion to increase Dresden's [[8]]"
        },
        {
-        "t": "Current Dresden capacity (product-mix dependent): about [[10]] thousand wafers/year"
+        "t": "Would make Dresden Europe's biggest [[9]] site"
+       },
+       {
+        "h": "Risks"
+       },
+       {
+        "t": "Timelines rely on approvals of public [[10]]"
        }
       ],
       "items": [
@@ -431,33 +434,43 @@ const DATA = {
         ],
         "ref": "purpose-built for Physical AI",
         "ev": "a next-generation FD-SOI platform purpose-built for Physical AI",
-        "zh": "平台專為 Physical AI 打造。STAC 是工作負載縮寫，不要填 STAC。"
+        "zh": "designed specifically for = purpose-built for → Physical AI。STAC 是工作負載（Sense, Think, Act, Communicate）的縮寫，不是平台的目標，別填。"
        },
        {
         "a": [
-         "seven",
-         "7"
+         "cloud",
+         "the cloud"
         ],
-        "ref": "seven-nanometer-class digital performance",
-        "ev": "The first generation aims for seven-nanometer-class digital performance",
-        "zh": "第一代瞄準 seven-nanometer-class = 七奈米級。題幹已有 nanometer，填 seven／7。"
+        "ref": "pushing intelligence beyond the cloud",
+        "ev": "pushing intelligence beyond the cloud into machines that interact with the physical world",
+        "zh": "shift computing away from the ___ = pushing intelligence beyond the cloud（把運算從雲端推向實體機器）。答案 cloud。physical world 是「機器互動的對象」，不是被移出的地方。"
        },
        {
         "a": [
-         "two",
-         "2"
+         "density"
         ],
         "ref": "more than two times the density",
-        "ev": "deliver more than two times the density of first-generation FDX technology",
-        "zh": "密度較第一代 FDX 超過 two = 2 倍。題幹已有 times。"
+        "ev": "the platform should deliver more than two times the density of first-generation FDX technology",
+        "zh": "over twice the ___ = more than two times the density（密度超過兩倍）。前一句的 digital performance 是七奈米級性能、不是與第一代 FDX 的比較，別填。"
        },
        {
         "a": [
-         "0.5"
+         "non-volatile",
+         "non volatile",
+         "nonvolatile"
         ],
-        "ref": "up to zero point five terahertz",
-        "ev": "reach up to zero point five terahertz for ft and fmax",
-        "zh": "射頻最高約 zero point five = 0.5 THz。題幹已有 THz。"
+        "ref": "embedded non-volatile memory",
+        "ev": "embedded non-volatile memory and in-memory computing",
+        "zh": "題幹已有 in-memory computing 與 embedded … memory，空格是形容詞 non-volatile（非揮發性）。注意拼字與連字號。"
+       },
+       {
+        "a": [
+         "radars",
+         "radar"
+        ],
+        "ref": "automotive radars",
+        "ev": "Billions of existing FD-SOI chips already sit in automotive radars, wireless microcontrollers, display drivers",
+        "zh": "already used in = already sit in；automotive radars（車用雷達）。wireless microcontrollers 前面沒有 automotive，不符題幹。"
        },
        {
         "a": [
@@ -465,49 +478,41 @@ const DATA = {
         ],
         "ref": "manufacturing is planned for two thousand twenty-eight",
         "ev": "manufacturing is planned for two thousand twenty-eight at the Dresden site",
-        "zh": "量產規劃 two thousand twenty-eight = 2028。2027 是示範矽與 PDK 時程，別混。"
+        "zh": "volume manufacturing = manufacturing is planned for two thousand twenty-eight = 2028。緊接著的 2027 是示範矽（demonstrator silicon）與 PDK 的時程，是干擾項。"
        },
        {
         "a": [
-         "2027"
+         "construction"
         ],
-        "ref": "early two thousand twenty-seven, with an initial",
-        "ev": "early customer evaluation in early two thousand twenty-seven, with an initial process design kit planned for mid-two thousand twenty-seven",
-        "zh": "示範矽瞄準 early 2027。mid-2027 是 PDK，題幹說 early，填 2027。"
+        "ref": "a construction milestone for the SPRINT expansion",
+        "ev": "the ceremony also marked a construction milestone for the SPRINT expansion",
+        "zh": "marked a ___ milestone = marked a construction milestone（工程里程碑，即封頂典禮）。"
        },
        {
         "a": [
-         "IPCEI"
-        ],
-        "ref": "approving the start of the IPCEI Advanced",
-        "ev": "approving the start of the IPCEI Advanced Semiconductor Technologies programme",
-        "zh": "開發取決於德國政府核准 IPCEI AST。答案填 IPCEI（題幹已有 AST programme）。"
-       },
-       {
-        "a": [
-         "1.1"
+         "capacity",
+         "Dresden capacity"
         ],
         "ref": "investing one point one billion euros",
         "ev": "GlobalFoundries is investing one point one billion euros to grow Dresden capacity",
-        "zh": "SPRINT 投資 one point one = 1.1 billion euros。ten billion 是自 2009 累計投資，干擾項。"
+        "zh": "increase = grow；投資 1.1 billion euros 是為了擴大 Dresden 的 capacity（產能）。"
        },
        {
         "a": [
-         "one million",
-         "1 million",
-         "1,000,000"
+         "foundry"
         ],
-        "ref": "more than one million wafers a year",
-        "ev": "SPRINT targets more than one million wafers a year by the end of two thousand twenty-eight",
-        "zh": "目標超過 one million 片／年。九十五萬是現有產能，別填。"
+        "ref": "which would make Dresden Europe's largest foundry site",
+        "ev": "which would make Dresden Europe's largest foundry site",
+        "zh": "biggest = largest；Europe's largest foundry site（歐洲最大晶圓代工廠區）。答案 foundry。"
        },
        {
         "a": [
-         "950"
+         "funding",
+         "public funding"
         ],
-        "ref": "about nine hundred fifty thousand three-hundred-millimetre",
-        "ev": "up to about nine hundred fifty thousand three-hundred-millimetre wafers a year",
-        "zh": "現有約 nine hundred fifty thousand = 95 萬片；題幹已有 thousand，填 950。one million 是擴產目標。"
+        "ref": "Timelines depend on public funding approvals",
+        "ev": "Timelines depend on public funding approvals",
+        "zh": "rely on = depend on；public funding approvals（公共資金的核准）。後半句 volume silicon 是另一項風險（量產驗證），不是 approvals 的對象。"
        }
       ]
      }
@@ -655,7 +660,7 @@ const DATA = {
       "heading": "FDX Fusion timeline and Dresden scale-up",
       "lines": [
        {
-        "t": "An initial [[1]] is planned for mid-2027, while volume manufacturing is aimed at 2028. SPRINT involves an investment of €[[2]] billion. The Dresden site today has roughly [[3]] m² of cleanroom and laboratory space. Since 2009 GF has invested more than €[[4]] billion there."
+        "t": "An initial [[1]] is due in mid-2027, a year before volume manufacturing begins. Present output at Dresden varies according to the product [[2]]. Over the period since 2009, GF has put in excess of €[[3]] billion into the site, and the construction firm says the topping-out stage was reached on schedule and within [[4]], with the existing fab still running."
        }
       ],
       "items": [
@@ -666,24 +671,15 @@ const DATA = {
         ],
         "ref": "B",
         "ev": "an initial process design kit (PDK) for mid-2027",
-        "zh": "B 段：mid-2027 釋出 initial process design kit (PDK)。"
+        "zh": "B 段：mid-2027 推出 initial process design kit (PDK)。process design kit 是三個字，超過字數，填 PDK。"
        },
        {
         "a": [
-         "1.1"
+         "mix"
         ],
         "ref": "C",
-        "ev": "a €1.1 billion project intended to lift Dresden's annual capacity",
-        "zh": "C 段：SPRINT 為 €1.1 billion。10 billion 是累計投資。"
-       },
-       {
-        "a": [
-         "60,000",
-         "60000"
-        ],
-        "ref": "C",
-        "ev": "operates around 60,000 m² of cleanroom and laboratory space",
-        "zh": "C 段：約 60,000 m² 無塵室／實驗室。"
+        "ev": "can process up to about 950,000 wafers a year depending on product mix",
+        "zh": "C 段：varies according to = depending on product mix（產品組合）。答案 mix。"
        },
        {
         "a": [
@@ -691,7 +687,15 @@ const DATA = {
         ],
         "ref": "C",
         "ev": "Since 2009 GF has invested more than €10 billion in Dresden",
-        "zh": "C 段：自 2009 年投資逾 €10 billion。1.1 是 SPRINT 擴產額。"
+        "zh": "C 段：自 2009 年累計投資逾 €10 billion。1.1 billion 是 SPRINT 擴產案金額，干擾項。"
+       },
+       {
+        "a": [
+         "budget"
+        ],
+        "ref": "C",
+        "ev": "the topping-out phase was completed on schedule and on budget while the existing fab remained operational",
+        "zh": "C 段：Exyte 表示封頂階段 on schedule and on budget（如期且未超支）完成。within budget = on budget，答案 budget。"
        }
       ]
      }
@@ -1083,53 +1087,56 @@ const DATA = {
         "h": "Funding & homes"
        },
        {
-        "t": "Total funding: about [[1]] million euros"
+        "t": "Money also comes from funds for [[1]] urban areas"
        },
        {
         "t": "Public homes planned (Il Sole figure): [[2]]"
        },
        {
-        "t": "First-phase NZEB homes: about [[3]]"
-       },
-       {
         "h": "Delivery timetable (Laura Lieto)"
        },
        {
-        "t": "Application desk opens: early [[4]]"
-       },
-       {
-        "t": "Homes ready/delivered by end-2026: [[5]]"
-       },
-       {
-        "t": "Further homes completed by end-2027: [[6]]"
+        "t": "January–February 2027: [[3]] to be published"
        },
        {
         "h": "Site & demolition"
        },
        {
-        "t": "Site area: about [[7]] thousand square metres"
+        "t": "Most of the 25 specialist firms come from [[4]]"
        },
        {
-        "t": "Vela Gialla demolished: [[8]] 2025"
+        "t": "Vela Celeste: to be turned into [[5]] and social-cultural spaces"
        },
        {
-        "t": "Walkway collapse fatalities (July 2024): [[9]]"
+        "t": "Reason for keeping it: as a [[6]] of the past"
        },
        {
-        "h": "Community facilities"
+        "t": "July 2024: collapse of an access [[7]]"
        },
        {
-        "t": "Preschool places planned: about [[10]]"
+        "h": "Amenities"
+       },
+       {
+        "t": "Urban farming: community gardens and [[8]]"
+       },
+       {
+        "t": "Ground floors: [[9]] use (meetings, study, co-working)"
+       },
+       {
+        "h": "Reactions"
+       },
+       {
+        "t": "Vele Committee: residents are regaining their [[10]]"
        }
       ],
       "items": [
        {
         "a": [
-         "159"
+         "deprived"
         ],
-        "ref": "about one hundred fifty-nine million euros",
-        "ev": "backed by about one hundred fifty-nine million euros from Italy's National Recovery and Resilience Plan",
-        "zh": "資金約 one hundred fifty-nine = 159 million euros。題幹已有 million euros。"
+        "ref": "funds for deprived urban areas",
+        "ev": "the PON Metro programme and funds for deprived urban areas",
+        "zh": "money also comes from = funds for deprived urban areas（弱勢／貧困城區）。空格是形容詞 deprived。National Recovery and Resilience Plan 與 PON Metro 是另外兩個資金來源。"
        },
        {
         "a": [
@@ -1137,74 +1144,74 @@ const DATA = {
         ],
         "ref": "five hundred nine public homes are planned",
         "ev": "In all, five hundred nine public homes are planned—Il Sole's figure, preferred over some coverage that rounded to five hundred eight",
-        "zh": "Il Sole 數字 five hundred nine = 509。508 是其他報導約數，干擾項。"
+        "zh": "Il Sole 的數字 five hundred nine = 509；508 是其他報導的約數，干擾項。"
        },
        {
         "a": [
-         "97",
-         "ninety-seven"
+         "rankings"
         ],
-        "ref": "about ninety-seven nearly zero-energy homes",
-        "ev": "The first phase delivers about ninety-seven nearly zero-energy homes in three buildings",
-        "zh": "第一期約 ninety-seven = 97 戶近零能耗住宅。"
-       },
-       {
-        "a": [
-         "November"
-        ],
-        "ref": "a desk opens in early November",
+        "ref": "with rankings published in January",
         "ev": "a desk opens in early November, with rankings published in January and February",
-        "zh": "窗口 early November 開放。Jan–Feb 2027 是排名公布，別填。"
+        "zh": "published Jan–Feb 2027 的是 rankings（排名名單）。early November 開的是申請窗口（desk），干擾項。"
        },
        {
         "a": [
-         "116"
+         "Campania"
         ],
-        "ref": "one hundred sixteen homes should be ready",
-        "ev": "one hundred sixteen homes should be ready and delivered by the end of two thousand twenty-six",
-        "zh": "2026 年底前 ready/delivered：one hundred sixteen = 116。162 是 2027 年底另批。"
+        "ref": "mostly from Campania",
+        "ev": "twenty-five specialist contractors—mostly from Campania",
+        "zh": "most of the firms come from = mostly from Campania（坎帕尼亞大區）。注意拼字。"
        },
        {
         "a": [
-         "162"
+         "offices"
         ],
-        "ref": "another one hundred sixty-two completed",
-        "ev": "another one hundred sixty-two completed by the end of two thousand twenty-seven",
-        "zh": "2027 年底前再完成 one hundred sixty-two = 162 戶。"
+        "ref": "converted into offices",
+        "ev": "The Vela Celeste is being kept and converted into offices and social-cultural spaces",
+        "zh": "turned into = converted into offices（辦公室）。題幹已有 social-cultural spaces。"
        },
        {
         "a": [
-         "200",
-         "two hundred"
+         "memory"
         ],
-        "ref": "about two hundred thousand square metres",
-        "ev": "the site covers about two hundred thousand square metres",
-        "zh": "基地約 two hundred thousand = 20 萬平方米；題幹已有 thousand square metres，填 200。"
+        "ref": "as a memory of the past",
+        "ev": "converted into offices and social-cultural spaces as a memory of the past",
+        "zh": "reason for keeping it = as a memory of the past（作為過去的記憶）。答案 memory。"
        },
        {
         "a": [
-         "March"
+         "walkway",
+         "access walkway"
         ],
-        "ref": "demolished in March two thousand twenty-five",
-        "ev": "The Vela Gialla was demolished in March two thousand twenty-five, and the Vela Rossa in December",
-        "zh": "Vela Gialla 於 March 2025 拆除。December 是 Vela Rossa。"
+        "ref": "an access walkway at the Vela Celeste collapsed",
+        "ev": "an access walkway at the Vela Celeste collapsed",
+        "zh": "collapse of an access ___ = an access walkway … collapsed（通道走廊坍塌）。three / twelve 是死傷人數，不是此題。"
        },
        {
         "a": [
-         "3",
-         "three"
+         "orchards",
+         "orchard"
         ],
-        "ref": "collapsed, killing three people and injuring twelve",
-        "ev": "an access walkway at the Vela Celeste collapsed, killing three people and injuring twelve",
-        "zh": "走道崩塌造成 three = 3 人死亡、12 人受傷。12 是受傷數，別填。"
+        "ref": "community gardens and orchards",
+        "ev": "urban farming with community gardens and orchards",
+        "zh": "題幹已有 community gardens，答案是 orchards（果園）。public park、educational farm 是後面的其他設施，干擾項。"
        },
        {
         "a": [
-         "120"
+         "multifunctional",
+         "multi-functional"
         ],
-        "ref": "a preschool for about one hundred twenty",
-        "ev": "a nursery for fifty to sixty children and a preschool for about one hundred twenty",
-        "zh": "學前班約 one hundred twenty = 120 名。托兒所 50–60 是另一數字。"
+        "ref": "Ground floors will be multifunctional",
+        "ev": "Ground floors will be multifunctional—meetings, study and co-working",
+        "zh": "一樓將是 multifunctional（多功能）空間——開會、讀書、共同工作。形容詞。"
+       },
+       {
+        "a": [
+         "dignity"
+        ],
+        "ref": "the community is reclaiming dignity",
+        "ev": "arguing the community is reclaiming dignity",
+        "zh": "regaining = reclaiming dignity（尊嚴）。stigma 是市長說要擺脫的「污名」，干擾項。"
        }
       ]
      }
@@ -1349,10 +1356,10 @@ const DATA = {
        "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer.",
        "Write your answers in boxes 10–13 on your answer sheet."
       ],
-      "heading": "Restart Scampia — key figures",
+      "heading": "Restart Scampia — design and amenities",
       "lines": [
        {
-        "t": "The first phase provides about 97 [[1]] dwellings in three buildings on lot M. Rankings for allocation are due in January–February [[2]]. The construction site covers about [[3]] square metres. A Camorra feud in 2004–2005 claimed more than [[4]] lives."
+        "t": "The first phase provides about 97 [[1]] dwellings in three buildings on lot M. The new blocks have ventilated [[2]] in anthracite, white and burgundy, and flats are given [[3]] layouts. The programme is presented as the first effort to link clearance with schools, spaces near jobs and green [[4]]."
        }
       ],
       "items": [
@@ -1363,33 +1370,35 @@ const DATA = {
         ],
         "ref": "B",
         "ev": "about 97 NZEB dwellings in three buildings (A1–A3) on lot M",
-        "zh": "B 段：約 97 戶 NZEB（nearly zero-energy）住宅。"
+        "zh": "B 段：約 97 戶 NZEB（nearly zero-energy building，近零能耗）住宅。"
        },
        {
         "a": [
-         "2027"
-        ],
-        "ref": "B",
-        "ev": "with rankings published in January–February 2027",
-        "zh": "B 段：排名於 2027 年 1–2 月公布。"
-       },
-       {
-        "a": [
-         "200,000",
-         "200000"
+         "façades",
+         "facades",
+         "façade",
+         "facade"
         ],
         "ref": "C",
-        "ev": "The construction site itself covers about 200,000 square metres",
-        "zh": "C 段：工地約 200,000 平方米。"
+        "ev": "ventilated façades in anthracite, white and burgundy",
+        "zh": "C 段：ventilated façades（通風外牆）。可寫 facades。"
        },
        {
         "a": [
-         "fifty",
-         "50"
+         "dual-aspect",
+         "dual aspect"
         ],
-        "ref": "A",
-        "ev": "a Camorra feud in 2004–2005 that claimed more than fifty lives",
-        "zh": "A 段：2004–2005 年衝突奪去超過 fifty／50 條人命。"
+        "ref": "C",
+        "ev": "five flat typologies of roughly 50–140 m²; dual-aspect layouts",
+        "zh": "C 段：dual-aspect layouts（雙向採光／雙面朝向的格局）。可寫 dual aspect。"
+       },
+       {
+        "a": [
+         "infrastructure"
+        ],
+        "ref": "D",
+        "ev": "the first attempt to couple clearance with schools, jobs-adjacent spaces and green infrastructure",
+        "zh": "D 段：link … with = couple clearance with … green infrastructure（綠色基礎設施）。"
        }
       ]
      }
