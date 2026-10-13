@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-14",
+ "date": "2026-10-14",
+ "title": "IMF Warns Bond Markets Face Disorderly Yield Spike Amid Debt and AI Borrowing · Drones Find Hidden Aboriginal Rock Shelters in the Blue Mountains",
+ "stories": [
+  {
+   "title": "IMF Warns Bond Markets Face Disorderly Yield Spike Amid Debt and AI Borrowing",
+   "topic": "Markets · bonds",
+   "source": {
+    "name": "CNBC: IMF warns bond yields could see a 'disorderly' spike as debt, inflation risks worsen (Anniek Bao, 13 Oct 2026)",
+    "url": "https://www.cnbc.com/2026/10/13/treasury-yields-imf-debt-inflation-.html",
+    "links": [
+     {
+      "name": "IMF: Global Financial Stability Report, October 2026 (released 13 Oct 2026, Bangkok Annual Meetings)",
+      "url": "https://www.imf.org/en/publications/gfsr/issues/2026/10/13/global-financial-stability-report-october-2026"
+     },
+     {
+      "name": "The Nation Thailand: IMF warns of three threats to markets and urges stronger safeguards (13 Oct 2026)",
+      "url": "https://www.nationthailand.com/business/banking-finance/40072201"
+     },
+     {
+      "name": "Federal Reserve: Minutes of the FOMC, September 15–16, 2026 (released 7 Oct 2026)",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260916.htm"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "The International Monetary Fund has warned that government bond yields could jump in a disorderly way, as high public debt, sticky inflation and heavy borrowing by artificial-intelligence firms pile pressure on sovereign markets.",
+     "Here's the market report."
+    ],
+    [
+     "The warning came in the Fund's latest Global Financial Stability Report, released on Tuesday in Bangkok during the IMF–World Bank Annual Meetings.",
+     "More than eighteen thousand delegates are gathered at the Queen Sirikit National Convention Center this week.",
+     "Athanasios Vamvakidis, a deputy division chief in the Fund's monetary and capital markets department, told reporters that markets have held up surprisingly well.",
+     "Still, he stressed that resilience is not the same as safety."
+    ],
+    [
+     "First, the three risks the Fund highlighted.",
+     "One is a possible correction in AI-related shares and assets if earnings or investment plans disappoint.",
+     "The second is a sharp rise in sovereign bond yields, already at multidecade highs in several advanced economies.",
+     "The third is cyber attacks that could disrupt financial services and shake confidence.",
+     "These risks may be manageable on their own, Mr Vamvakidis said, but existing vulnerabilities could amplify them."
+    ],
+    [
+     "Meanwhile, the debt backdrop is uncomfortable.",
+     "The Fund had already warned last week that global public debt is near its highest level since the Second World War and is on track to exceed one hundred percent of gross domestic product.",
+     "High debt loads and frequent refinancing needs leave bond markets susceptible to fiscal and inflation shocks, the report said.",
+     "A disorderly jump in yields would mark down asset values and erode the value of government bonds posted as collateral."
+    ],
+    [
+     "By contrast, private borrowers are also crowding the market.",
+     "According to the report, the share of global investment-grade bond issuance coming from so-called hyperscalers — the large technology firms building AI infrastructure — has risen to ten percent, from less than one percent since twenty twenty-four.",
+     "In other words, AI-linked debt is large enough to compete with government bonds for investor capital.",
+     "Marc Seidner of Pacific Investment Management said that competition is real, even if it is not yet the dominant driver of yields."
+    ],
+    [
+     "Still, hedge funds are another concern.",
+     "Their share of United States Treasuries rose to about nine percent in twenty twenty-five, from roughly four percent in twenty twenty-two, mostly through leveraged arbitrage strategies.",
+     "The Fund said those positions leave the market susceptible to a disorderly unwind if many funds exit the same crowded trades together.",
+     "Caio Ferreira, another IMF official, said the worry is rising leverage and overlapping holdings across funds."
+    ],
+    [
+     "Looking ahead, the report also flagged circular financing among AI firms.",
+     "Since twenty twenty-three, fourteen publicly disclosed deals have channelled about three hundred billion dollars of equity and six hundred and fifty billion of debt into weaker AI companies, in exchange for one point four trillion dollars of future revenue commitments.",
+     "Jason Wu of the IMF said that unusual circularity could deliver a triple whammy if monetisation falls short: equity losses, strained debt service, and revenue promises that never materialise."
+    ],
+    [
+     "There are risks on both sides, though.",
+     "Liquidity has held up in the United States, Europe and the United Kingdom, the Fund noted, though Japan remains an exception after the end of yield-curve control.",
+     "Debt managers were urged to lengthen maturities rather than roll over into short-term borrowing, and central banks to protect their independence so that long-term yields stay anchored.",
+     "That's the market report.",
+     "In our next bulletin, we'll look at how households are adjusting to higher borrowing costs."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "IMF Global Financial Stability Report (October 2026)",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Release"
+       },
+       {
+        "t": "Presented in [[1]] during the IMF–World Bank meetings"
+       },
+       {
+        "t": "Official's warning: market [[2]] should not be confused with safety"
+       },
+       {
+        "h": "Three highlighted risks"
+       },
+       {
+        "t": "Possible AI-related market [[3]] if results disappoint"
+       },
+       {
+        "t": "Sharp rise in sovereign bond yields"
+       },
+       {
+        "t": "Cyber attacks on financial services"
+       },
+       {
+        "h": "Debt and private issuance"
+       },
+       {
+        "t": "Global public [[4]] near post-war peak; heading above 100% of GDP"
+       },
+       {
+        "t": "Hyperscalers' share of investment-grade bond [[5]]: up to 10%"
+       },
+       {
+        "h": "Hedge funds and AI finance"
+       },
+       {
+        "t": "Hedge funds' share of US Treasuries: about [[6]] % (2025)"
+       },
+       {
+        "t": "Crowded trades raise risk of a disorderly [[7]]"
+       },
+       {
+        "t": "Unusual feature of AI deals: future revenue [[8]]"
+       },
+       {
+        "h": "Policy advice"
+       },
+       {
+        "t": "Debt managers should lengthen [[9]]"
+       },
+       {
+        "t": "Central banks urged to protect their [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "Bangkok"
+        ],
+        "ref": "released on Tuesday in Bangkok",
+        "ev": "released on Tuesday in Bangkok during the IMF–World Bank Annual Meetings",
+        "zh": "Presented in = released in Bangkok（曼谷）。Queen Sirikit… 是會場名稱，不是城市答案。"
+       },
+       {
+        "a": [
+         "resilience"
+        ],
+        "ref": "resilience is not the same as safety",
+        "ev": "he stressed that resilience is not the same as safety",
+        "zh": "not confused with safety = is not the same as safety；答案 resilience（韌性／抗壓表現）。"
+       },
+       {
+        "a": [
+         "correction"
+        ],
+        "ref": "a possible correction in AI-related shares",
+        "ev": "One is a possible correction in AI-related shares and assets if earnings or investment plans disappoint",
+        "zh": "AI-related market ___ = correction（修正／回檔）。干擾：sharply rise 是公債殖利率那項風險。"
+       },
+       {
+        "a": [
+         "debt"
+        ],
+        "ref": "global public debt is near its highest level",
+        "ev": "global public debt is near its highest level since the Second World War",
+        "zh": "Global public ___ = debt（公債）。題幹已有 100% of GDP，別填數字。"
+       },
+       {
+        "a": [
+         "issuance"
+        ],
+        "ref": "share of global investment-grade bond issuance",
+        "ev": "the share of global investment-grade bond issuance coming from so-called hyperscalers",
+        "zh": "bond ___ = issuance（發行量）。題幹已給 10%，不要填 ten；hyperscalers 已在題幹。"
+       },
+       {
+        "a": [
+         "nine",
+         "9"
+        ],
+        "ref": "rose to about nine percent in twenty twenty-five",
+        "ev": "Their share of United States Treasuries rose to about nine percent in twenty twenty-five, from roughly four percent in twenty twenty-two",
+        "zh": "約 nine = 9%。four / 4 是 2022 年的舊數字（干擾）；ten 是 hyperscaler 發行占比。"
+       },
+       {
+        "a": [
+         "unwind"
+        ],
+        "ref": "susceptible to a disorderly unwind",
+        "ev": "those positions leave the market susceptible to a disorderly unwind",
+        "zh": "disorderly ___ = unwind（平倉／拆倉）。題幹已有 disorderly。"
+       },
+       {
+        "a": [
+         "commitments"
+        ],
+        "ref": "future revenue commitments",
+        "ev": "in exchange for one point four trillion dollars of future revenue commitments",
+        "zh": "future revenue ___ = commitments（承諾）。circularity 是現象名稱；equity / debt 是資金形式。"
+       },
+       {
+        "a": [
+         "maturities"
+        ],
+        "ref": "urged to lengthen maturities",
+        "ev": "Debt managers were urged to lengthen maturities rather than roll over into short-term borrowing",
+        "zh": "lengthen ___ = maturities（到期年限）。不要填 short-term borrowing（那是要避免的做法）。"
+       },
+       {
+        "a": [
+         "independence"
+        ],
+        "ref": "central banks to protect their independence",
+        "ev": "central banks to protect their independence so that long-term yields stay anchored",
+        "zh": "protect their ___ = independence（獨立性），以便錨定長期殖利率。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "When Resilience Is Not Safety",
+    "intro": "The IMF's October 2026 Global Financial Stability Report argues that calm markets can mask three rising threats — and that public debt, AI financing and cyber risk could amplify one another.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "At the IMF–World Bank Annual Meetings in Bangkok on 13 October 2026, the Fund released the latest chapter of its Global Financial Stability Report. Global financial conditions, it argued, have remained surprisingly accommodative despite geopolitical shocks, sticky inflation and a year of heavy sovereign and corporate issuance. Athanasios Vamvakidis, a deputy division chief in the monetary and capital markets department, told a briefing at the Queen Sirikit National Convention Center that strong earnings, better-than-expected growth and optimism about artificial intelligence had sustained investor risk appetite. Yet he insisted that resilience should not be mistaken for safety. The report identifies three risks that could trigger abrupt tightening: an AI-related market correction, a disorderly rise in sovereign bond yields, and cyber incidents capable of disrupting financial services."
+     },
+     {
+      "label": "B",
+      "text": "The bond-market warning sits against an already elevated starting point. Government yields in several advanced economies have climbed to multidecade highs, reflecting higher energy costs linked to conflict in the Middle East and expectations of tighter monetary policy as central banks fight resurgent inflation. In the United States, the Federal Reserve raised its federal-funds target by 25 basis points in mid-September to a range of 3.75–4.00 per cent, and most FOMC participants then judged that another increase would likely be appropriate by year-end. The IMF had separately cautioned that global public debt is near its highest level since the Second World War and is on course to exceed 100 per cent of GDP. High debt stocks and frequent refinancing needs, the Fund said, leave sovereign markets 'susceptible to more frequent fiscal and inflation shocks'."
+     },
+     {
+      "label": "C",
+      "text": "Private borrowers are adding a further layer of competition for capital. Hyperscalers — the large technology firms financing data centres and AI infrastructure — have seen their share of global investment-grade bond issuance climb to 10 per cent from less than 1 per cent since 2024. Marc Seidner, chief investment officer for non-traditional strategies at Pacific Investment Management, has observed that AI-linked issuance, much of it longer-dated, is large enough to compete with government bonds for investor demand even if it is not yet the main driver of yields. The Fund warns that a sharp rise in yields would mark down asset values through higher discount rates, including for AI-related assets, and would erode the collateral value of government securities posted in funding markets."
+     },
+     {
+      "label": "D",
+      "text": "Hedge funds have become a more prominent presence in the Treasury market. Drawing on Federal Reserve data, the IMF estimates that their share of US Treasuries rose to about 9 per cent in 2025 from roughly 4 per cent in 2022, largely through leveraged arbitrage strategies such as basis trades. Caio Ferreira, an IMF deputy division chief for financial supervision and regulation, said the concern is not only the level of leverage but the growing overlap in positions, so that many funds hold similar trades and could amplify a collective exit. Leveraged basis trades have partly unwound without notable stress in short-term funding markets, the report notes, but remaining leverage still leaves the market 'susceptible to a disorderly unwind'. Liquidity has broadly held up in the United States, Europe and the United Kingdom; Japan is singled out as an exception on liquidity: conditions in its government-bond market have continued to deteriorate since the end of yield-curve control."
+     },
+     {
+      "label": "E",
+      "text": "A distinctive feature of the current AI boom, the Fund argues, is a web of circular financing. Since 2023, fourteen publicly disclosed deals have channelled roughly 300 billion dollars of equity — led by hyperscalers — into financially weaker AI firms, alongside 650 billion dollars of debt. In return, investors secured about 1.4 trillion dollars of future revenue commitments through services or chip orders. Jason Wu, an assistant director in the monetary and capital markets department, told reporters that those revenue promises are what make the arrangements unusual. If AI commercialisation disappoints, he said, the losses could arrive together: equity stakes would lose value, debt would be harder to service, and the promised future revenues might never materialise — a combination he described as a 'triple whammy'. Because financing and commitments are concentrated in a handful of firms, stress at a few nodes could transmit widely."
+     },
+     {
+      "label": "F",
+      "text": "The Fund's policy prescriptions emphasise prevention rather than prediction. It is not forecasting an AI correction; Vamvakidis noted that valuations are not necessarily stretched, because strong earnings growth has pushed price-to-earnings ratios lower. The concentration of market performance and economic resilience in AI nonetheless remains a concern. Fiscal authorities are urged to address imbalances and bring debt dynamics back onto a sustainable path. Debt managers are urged to lengthen maturities instead of replacing long-term borrowing with short-term paper on a large scale. Central banks are advised to focus on their inflation mandates, communicate clearly and preserve independence, since credibility helps anchor long-term yields. Supervisors are pressed to strengthen oversight of non-bank financial institutions and to improve cyber resilience as digitalisation and AI tools available to criminals expand the attack surface. 'The bottom line,' Vamvakidis concluded, 'is that now is the time to strengthen the financial system.'"
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a description of overlapping positions that could magnify a simultaneous exit",
+        "a": "D",
+        "ref": "D",
+        "ev": "the growing overlap in positions, so that many funds hold similar trades and could amplify a collective exit",
+        "zh": "D 段：避險基金部位重疊，集體退出會放大衝擊。"
+       },
+       {
+        "q": "an official's claim that unusual future revenue promises define recent AI funding deals",
+        "a": "E",
+        "ref": "E",
+        "ev": "those revenue promises are what make the arrangements unusual",
+        "zh": "E 段：Jason Wu 指出「未來營收承諾」使這些交易不同於以往。"
+       },
+       {
+        "q": "evidence that one country's government-bond liquidity has worsened after a policy shift",
+        "a": "D",
+        "ref": "D",
+        "ev": "conditions in its government-bond market have continued to deteriorate since the end of yield-curve control",
+        "zh": "D 段：日本在結束殖利率曲線控制後，公債市場流動性持續惡化。"
+       },
+       {
+        "q": "a reminder that the Fund is not predicting a fall in AI asset prices",
+        "a": "F",
+        "ref": "F",
+        "ev": "It is not forecasting an AI correction",
+        "zh": "F 段：IMF 並未預測 AI 修正；估值未必偏高。"
+       },
+       {
+        "q": "a comparison showing how large technology firms' bond issuance share has changed",
+        "a": "C",
+        "ref": "C",
+        "ev": "their share of global investment-grade bond issuance climb to 10 per cent from less than 1 per cent since 2024",
+        "zh": "C 段：hyperscalers 投資級債券發行占比從不到 1% 升至 10%。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Most Federal Reserve policymakers expected a further rate rise before the end of 2026.",
+        "a": "True",
+        "ref": "B",
+        "ev": "most FOMC participants then judged that another increase would likely be appropriate by year-end",
+        "zh": "B 段：多數 FOMC 成員認為年底前可能再升息一次 → True。"
+       },
+       {
+        "q": "Hedge funds' share of the US Treasury market was higher in 2022 than in 2025.",
+        "a": "False",
+        "ref": "D",
+        "ev": "their share of US Treasuries rose to about 9 per cent in 2025 from roughly 4 per cent in 2022",
+        "zh": "D 段：2025 約 9%，2022 約 4%，是上升而非下降 → False。"
+       },
+       {
+        "q": "The IMF estimates that circular AI deals will produce higher defaults than the 2008 banking crisis.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "If AI commercialisation disappoints, he said, the losses could arrive together",
+        "zh": "E 段只談「三重打擊」風險，全文沒有與 2008 年銀行危機的違約比較 → Not Given（陷阱：有提到 losses／風險，但無危機對照）。"
+       },
+       {
+        "q": "Liquidity conditions in US, European and UK government-bond markets are described as having held up.",
+        "a": "True",
+        "ref": "D",
+        "zh": "D 段：美、歐、英公債市場流動性大致維持；日本是例外 → True。",
+        "ev": "Liquidity has broadly held up in the United States, Europe and the United Kingdom"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Risks and responses",
+      "lines": [
+       {
+        "t": "Elevated energy costs and expectations of tighter [[1]] have helped push government yields to multidecade highs. A sudden jump in yields would reduce the [[2]] value of bonds used in funding markets. In AI finance, equity and debt have been exchanged for large future revenue [[3]]. Policymakers are told to repair fiscal imbalances and keep debt on a [[4]] path."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "monetary policy"
+        ],
+        "ref": "B",
+        "ev": "expectations of tighter monetary policy as central banks fight resurgent inflation",
+        "zh": "B 段：tighter monetary policy（貨幣政策）。不要填 energy costs（已在題幹）。"
+       },
+       {
+        "a": [
+         "collateral"
+        ],
+        "ref": "C",
+        "ev": "would erode the collateral value of government securities posted in funding markets",
+        "zh": "C 段：erode the collateral value → 題幹 reduce the ___ value = collateral。"
+       },
+       {
+        "a": [
+         "commitments"
+        ],
+        "ref": "E",
+        "ev": "investors secured about 1.4 trillion dollars of future revenue commitments",
+        "zh": "E 段：future revenue commitments（未來營收承諾）。"
+       },
+       {
+        "a": [
+         "sustainable"
+        ],
+        "ref": "F",
+        "ev": "bring debt dynamics back onto a sustainable path",
+        "zh": "F 段：bring debt dynamics back onto a sustainable path（永續／可維持的債務路徑）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "disorderly",
+     "pos": "adj.",
+     "def": "happening in a chaotic or uncontrolled way",
+     "zh": "無序的；失控的",
+     "example": "Bond yields could jump in a disorderly way.",
+     "match": [
+      "disorderly"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "sovereign",
+     "pos": "adj.",
+     "def": "relating to a national government and its debt or bonds",
+     "zh": "主權的（政府／公債）",
+     "example": "Sovereign bond yields are at multidecade highs.",
+     "match": [
+      "sovereign"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "resilience",
+     "pos": "n.",
+     "def": "the ability to withstand shocks and recover quickly",
+     "zh": "韌性；抗壓能力",
+     "example": "He stressed that resilience is not the same as safety.",
+     "match": [
+      "resilience"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "correction",
+     "pos": "n.",
+     "def": "a significant fall in asset prices after a period of gains",
+     "zh": "（市場）修正；回檔",
+     "example": "One risk is a possible correction in AI-related shares.",
+     "match": [
+      "correction"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "susceptible",
+     "pos": "adj.",
+     "def": "likely to be affected or harmed by something",
+     "zh": "易受影響的",
+     "example": "High debt leaves markets susceptible to fiscal shocks.",
+     "match": [
+      "susceptible"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "hyperscaler",
+     "pos": "n.",
+     "def": "a very large technology firm that builds and operates massive cloud and AI infrastructure",
+     "zh": "超大規模雲端／AI 基建業者",
+     "example": "Hyperscalers now account for a rising share of bond issuance.",
+     "match": [
+      "hyperscalers"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "unwind",
+     "pos": "n./v.",
+     "def": "the closing-out of leveraged positions, often under stress",
+     "zh": "平倉；拆解部位",
+     "example": "Crowded trades raise the risk of a disorderly unwind.",
+     "match": [
+      "unwind"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "circularity",
+     "pos": "n.",
+     "def": "a financing pattern in which money and future revenue promises loop among related firms",
+     "zh": "循環性（融資）",
+     "example": "Wu said that unusual circularity could deliver a triple whammy.",
+     "match": [
+      "circularity"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "maturities",
+     "pos": "n.",
+     "def": "the lengths of time until debts must be repaid",
+     "zh": "到期年限",
+     "example": "Debt managers were urged to lengthen maturities.",
+     "match": [
+      "maturities"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "accommodative",
+     "pos": "adj.",
+     "def": "keeping financial conditions easy, typically through low rates or ample liquidity",
+     "zh": "寬鬆的（金融條件）",
+     "example": "Global financial conditions have remained surprisingly accommodative.",
+     "match": [
+      "accommodative"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "issuance",
+     "pos": "n.",
+     "def": "the act of selling new bonds or other securities",
+     "zh": "（債券等）發行",
+     "example": "Hyperscalers' share of investment-grade bond issuance has risen.",
+     "match": [
+      "issuance"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "collateral",
+     "pos": "n.",
+     "def": "an asset pledged as security for borrowing",
+     "zh": "擔保品；抵押品",
+     "example": "Higher yields would erode the collateral value of government bonds.",
+     "match": [
+      "collateral"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "arbitrage",
+     "pos": "n.",
+     "def": "trading that seeks to profit from small price differences between related markets",
+     "zh": "套利",
+     "example": "Hedge funds used leveraged arbitrage strategies such as basis trades.",
+     "match": [
+      "arbitrage"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "monetisation",
+     "pos": "n.",
+     "def": "the process of turning an activity or technology into actual revenue",
+     "zh": "變現；商業化獲利",
+     "example": "If AI monetisation falls short, losses could arrive together.",
+     "match": [
+      "monetisation",
+      "monetization"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "anchor",
+     "pos": "v.",
+     "def": "to keep expectations or long-term rates firmly tied to a policy goal",
+     "zh": "錨定",
+     "example": "Central-bank credibility helps anchor long-term yields.",
+     "match": [
+      "anchor",
+      "anchored"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-14-1.mp3",
+    "times": [
+     [
+      0.35,
+      1.48
+     ],
+     [
+      1.64,
+      17.74
+     ],
+     [
+      18.06,
+      19.92
+     ],
+     [
+      20.64,
+      31.16
+     ],
+     [
+      31.37,
+      38.58
+     ],
+     [
+      38.84,
+      50.67
+     ],
+     [
+      50.84,
+      54.85
+     ],
+     [
+      55.57,
+      58.73
+     ],
+     [
+      59.0,
+      67.05
+     ],
+     [
+      67.24,
+      75.37
+     ],
+     [
+      75.6,
+      81.74
+     ],
+     [
+      81.89,
+      89.72
+     ],
+     [
+      90.44,
+      93.49
+     ],
+     [
+      93.7,
+      106.44
+     ],
+     [
+      106.68,
+      115.41
+     ],
+     [
+      115.62,
+      124.16
+     ],
+     [
+      124.88,
+      129.0
+     ],
+     [
+      129.17,
+      146.1
+     ],
+     [
+      146.53,
+      153.22
+     ],
+     [
+      153.49,
+      162.62
+     ],
+     [
+      163.34,
+      166.33
+     ],
+     [
+      166.52,
+      179.06
+     ],
+     [
+      179.21,
+      188.72
+     ],
+     [
+      188.92,
+      197.08
+     ],
+     [
+      197.8,
+      203.36
+     ],
+     [
+      203.52,
+      221.97
+     ],
+     [
+      222.26,
+      237.05
+     ],
+     [
+      237.77,
+      240.42
+     ],
+     [
+      240.6,
+      251.56
+     ],
+     [
+      251.86,
+      264.15
+     ],
+     [
+      264.5,
+      266.31
+     ],
+     [
+      266.45,
+      272.06
+     ]
+    ],
+    "duration": 272.7,
+    "voice": "kokoro:bm_george",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · George · male (offline Kokoro)",
+    "words": null
+   }
+  },
+  {
+   "title": "Drones Find Hidden Aboriginal Rock Shelters in the Blue Mountains",
+   "topic": "Archaeology · heritage",
+   "source": {
+    "name": "University of Sydney: New drone technology locates Aboriginal heritage in rugged bushland (14 Oct 2026)",
+    "url": "https://www.sydney.edu.au/news-opinion/news/2026/10/14/drone-technology-aboriginal-heritage-archaeology-blue-mountains.html",
+    "links": [
+     {
+      "name": "Sydney Morning Herald: How high-tech drones reveal ancient Blue Mountains Indigenous sites (Julie Power, 14 Oct 2026)",
+      "url": "https://www.smh.com.au/national/nsw/how-high-tech-drones-reveal-ancient-blue-mountains-indigenous-sites-20261014-p60zj3.html"
+     },
+     {
+      "name": "Remote Sensing: LiDAR-assisted survey locates unregistered rock shelters in the Blue Mountains, Australia (Bongers et al., 2026)",
+      "url": "https://doi.org/10.3390/rs18203495"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Our lead science story this morning.",
+     "Archaeologists in Australia have used laser-equipped drones to find three Aboriginal rock shelters in the Blue Mountains that had never been recorded before.",
+     "Here's the report."
+    ],
+    [
+     "The finds were announced on the fourteenth of October by researchers at the University of Sydney and the Australian Museum.",
+     "They worked with the Dharug Custodian Aboriginal Corporation on a project known as Gulamada, a name that refers to a place of koalas.",
+     "The team flew drones fitted with LiDAR sensors — light detection and ranging — over rugged bushland west of Sydney.",
+     "LiDAR sends out rapid laser pulses and builds a detailed three-dimensional map of the ground beneath dense vegetation."
+    ],
+    [
+     "According to Dr Jacob Bongers, a digital archaeologist and the lead author of the study, the real advantage is being able to strip away the tree canopy.",
+     "Once the canopy is removed from the model, rock overhangs that would take days to reach on foot can stand out clearly.",
+     "The survey confirmed six shelters already listed on the official New South Wales register and located three previously unregistered ones.",
+     "Those newly recorded sites contain striking rock art, including red hand stencils, as well as stone artefacts."
+    ],
+    [
+     "Meanwhile, the scale of what remains unknown is striking.",
+     "More than two hundred rock shelters with cultural evidence have already been recorded in the Blue Mountains.",
+     "Yet Dr Amy Way, a research archaeologist on the project, estimates that only about ten percent of the region has been surveyed on foot, because the terrain is so difficult.",
+     "The Greater Blue Mountains World Heritage area covers roughly one point zero three million hectares — about the size of Lebanon.",
+     "In a pilot zone of just four point one six square kilometres, the drones pointed the team to the three new shelters."
+    ],
+    [
+     "Still, machines do not replace people on the ground.",
+     "After the drones flagged possible sites, Dr Way led students and volunteers in to verify each location and check for cultural material.",
+     "Wayne Brennan, a First Nations rock-art expert and project co-director, then led the recording of the art with Erin Wilkins and other Aboriginal custodians from the Dharug Custodian Aboriginal Corporation.",
+     "Mr Brennan has said the technology felt like whitefella magic when he first saw the results, but that its real value is helping communities protect undisturbed heritage."
+    ],
+    [
+     "By contrast, traditional walking surveys are slow, expensive and hard in cliff country.",
+     "Dr Bongers told reporters the method offers an efficient and accurate way to search landscapes that are notoriously arduous to cover.",
+     "The research is published in the journal Remote Sensing.",
+     "The project received two hundred and forty-eight thousand six hundred and ten dollars from the Australian government's First Nations Heritage Grants programme."
+    ],
+    [
+     "Looking ahead, the team plans to test the approach in other environments, including the tropical savannahs of western Arnhem Land and the semi-arid country of western New South Wales.",
+     "There are risks, though: development, erosion and bushfires can damage sites before they are documented.",
+     "Officials say the broader hope is that Aboriginal communities can use the tool alongside existing cultural knowledge to safeguard Country for future generations.",
+     "That's the science report.",
+     "In our next bulletin, we'll look at how fire scars reshape cultural landscapes."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Gulamada Project — Blue Mountains rock shelters",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Method"
+       },
+       {
+        "t": "Drones use [[1]] sensors to map ground under vegetation"
+       },
+       {
+        "t": "Key advantage: removing the tree [[2]] from the 3D model"
+       },
+       {
+        "h": "Findings"
+       },
+       {
+        "t": "Confirmed six listed shelters; found three new [[3]]"
+       },
+       {
+        "t": "New sites include red hand [[4]] and stone tools"
+       },
+       {
+        "h": "Survey coverage"
+       },
+       {
+        "t": "Share of the Blue Mountains surveyed on foot so far: about [[5]] %"
+       },
+       {
+        "t": "World Heritage area roughly the size of [[6]]"
+       },
+       {
+        "h": "People and process"
+       },
+       {
+        "t": "After drone detection, [[7]] and volunteers walk in to verify sites"
+       },
+       {
+        "t": "Rock-art recording led with local Aboriginal [[8]]"
+       },
+       {
+        "h": "Next steps and threats"
+       },
+       {
+        "t": "Further trials planned in tropical [[9]] (western Arnhem Land)"
+       },
+       {
+        "t": "Sites may be damaged by development, erosion or [[10]] before recording"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "LiDAR",
+         "lidar"
+        ],
+        "ref": "drones fitted with LiDAR sensors",
+        "ev": "The team flew drones fitted with LiDAR sensors — light detection and ranging",
+        "zh": "LiDAR sensors（光達）。題幹已說 map ground under vegetation，別填 laser pulses。"
+       },
+       {
+        "a": [
+         "canopy"
+        ],
+        "ref": "strip away the tree canopy",
+        "ev": "the real advantage is being able to strip away the tree canopy",
+        "zh": "tree ___ = canopy（樹冠層）。removing = strip away。"
+       },
+       {
+        "a": [
+         "shelters",
+         "rock shelters"
+        ],
+        "ref": "confirmed six shelters already listed",
+        "ev": "The survey confirmed six shelters already listed on the official New South Wales register and located three previously unregistered ones.",
+        "zh": "three new ___：講稿先說 confirmed six shelters… and located three previously unregistered ones，ones=shelters。答案 shelters。"
+       },
+       {
+        "a": [
+         "stencils"
+        ],
+        "ref": "including red hand stencils",
+        "ev": "striking rock art, including red hand stencils, as well as stone artefacts",
+        "zh": "red hand ___ = stencils（型印／手印）。artefacts 是石器，題幹已寫 stone tools。"
+       },
+       {
+        "a": [
+         "ten",
+         "10"
+        ],
+        "ref": "only about ten percent of the region has been surveyed",
+        "ev": "only about ten percent of the region has been surveyed on foot",
+        "zh": "約 ten = 10%。two hundred 是已記錄庇護所數量；four point one six 是試點面積。"
+       },
+       {
+        "a": [
+         "Lebanon"
+        ],
+        "ref": "about the size of Lebanon",
+        "ev": "about the size of Lebanon",
+        "zh": "roughly the size of Lebanon（黎巴嫩）。不要填 hectares 數字。"
+       },
+       {
+        "a": [
+         "students"
+        ],
+        "ref": "led students and volunteers in to verify",
+        "ev": "Dr Way led students and volunteers in to verify each location",
+        "zh": "___ and volunteers = students（學生）。"
+       },
+       {
+        "a": [
+         "custodians"
+        ],
+        "ref": "other Aboriginal custodians from the Dharug",
+        "ev": "led the recording of the art with Erin Wilkins and other Aboriginal custodians from the Dharug Custodian Aboriginal Corporation",
+        "zh": "local Aboriginal ___ = custodians（監護人／傳統守護者）。Corporation 是組織全名的一部分。"
+       },
+       {
+        "a": [
+         "savannahs",
+         "savannas"
+        ],
+        "ref": "tropical savannahs of western Arnhem Land",
+        "ev": "including the tropical savannahs of western Arnhem Land",
+        "zh": "tropical ___ = savannahs（稀樹草原）。semi-arid 是新南威爾斯西部。"
+       },
+       {
+        "a": [
+         "bushfires"
+        ],
+        "ref": "development, erosion and bushfires",
+        "ev": "development, erosion and bushfires can damage sites before they are documented",
+        "zh": "題幹已有 development, erosion or ___ → bushfires（叢林大火）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Seeing Through the Canopy",
+    "intro": "A partnership between archaeologists and Aboriginal custodians is using drone-based LiDAR to locate rock shelters that walking surveys have long struggled to find in Australia's Blue Mountains.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "On 14 October 2026, researchers from the University of Sydney's Vere Gordon Childe Centre and the Australian Museum reported that drone-mounted LiDAR had identified three previously unregistered Aboriginal rock shelters in the Blue Mountains. The work forms part of the Gulamada Project, developed with the Dharug Custodian Aboriginal Corporation (DCAC) on the principle of 'walking side by side' — combining scientific methods with First Nations cultural knowledge. LiDAR, or light detection and ranging, fires rapid laser pulses from the air and constructs centimetre-scale three-dimensional models of the terrain. Because many pulses pass through gaps in foliage, analysts can digitally remove the tree canopy and inspect the ground surface for overhangs that are hard to spot from walking tracks."
+     },
+     {
+      "label": "B",
+      "text": "The practical payoff was immediate. Field surveys guided by the drone models confirmed six shelters already listed on the Aboriginal Heritage Information Management System (AHIMS), the official New South Wales sites register, and located three unregistered shelters containing rock art and stone artefacts. Coordinates for the known sites were also refined, improving on the accuracy of older AHIMS entries. The newly recorded shelters include visually striking red hand stencils. After potential locations were flagged from the air, project co-director Dr Amy Mosig Way, a research archaeologist at the University of Sydney and the Australian Museum, led students and volunteers on foot to verify each site and assess whether cultural material was present. Wayne Brennan, a First Nations mentor and rock-art specialist, and Erin Wilkins of DCAC then directed the art recording."
+     },
+     {
+      "label": "C",
+      "text": "The Blue Mountains illustrate why a faster method matters. More than 200 rock shelters with cultural and archaeological evidence have already been documented in the region, yet Dr Way estimates that only about 10 per cent of the landscape has been surveyed because the terrain is rugged and time-consuming to traverse. The Greater Blue Mountains World Heritage area spans approximately 1.03 million hectares — roughly the size of Lebanon — and is listed for its biodiversity, eucalypt communities and prehistoric species such as the Wollemi pine, set against 300-metre sandstone cliffs. Within a pilot area of just 4.16 square kilometres, the drones steered the team to the three new shelters. Dr Way has suggested that applying the same intensity across a comparable share of the World Heritage area could add dozens more sites, many with cultural material."
+     },
+     {
+      "label": "D",
+      "text": "Dr Jacob Bongers, a digital archaeologist at the University of Sydney and lead author of the Remote Sensing paper, argues that the method is efficient precisely where conventional survey is most expensive. 'This work is exciting because it offers an efficient and accurate way to locate sites in rugged environments, which are notoriously arduous, expensive and time-consuming to survey,' he said. The aircraft used included a DJI M350 drone carrying a Yellowscan Explorer LiDAR sensor. Importantly, the team stresses that detection is only a first step: some overhangs identified on cliff faces proved inaccessible to people, so ground-truthing remains essential. Bongers has previously used drones in Peru to map thousands of aligned holes in the Andes, work that reinterpreted the so-called Band of Holes as a form of Indigenous marketplace."
+     },
+     {
+      "label": "E",
+      "text": "For Aboriginal partners, the technology is a tool rather than a replacement for cultural authority. Brennan, a Gomeroi man, has said he was astonished when he first saw LiDAR strip the bush from the model, joking that it looked like 'whitefella magic', yet he emphasises its role in documenting undisturbed rock art and cultural places. He has also argued that stronger records of Indigenous heritage could support efforts to extend the Blue Mountains' UNESCO listing beyond biodiversity to include cultural values — a change the current listing does not make. Fire adds urgency: scars from past burns show how quickly rock art and surface deposits can be damaged, and Brennan has stressed the need for the best possible record while sites remain intact."
+     },
+     {
+      "label": "F",
+      "text": "Funding for Gulamada came from Round 1 of the Australian Government's First Nations Heritage Grants, managed by the Department of Climate Change, Energy, the Environment and Water, which awarded 248,610 dollars for on-Country work in World and National Heritage places. Susan Templeman, the federal member for Macquarie, which includes the Blue Mountains, welcomed the pairing of First Nations knowledge with new technology. Looking ahead, the researchers plan to adapt the approach with Aboriginal communities in contrasting environments, including the tropical savannahs of western Arnhem Land and the semi-arid landscapes of western New South Wales. Ultimately, they argue, LiDAR-assisted survey could help communities locate, manage and safeguard cultural landscapes before development, erosion or bushfires remove the chance to do so."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reason why some LiDAR detections still had to be rejected after field visits",
+        "a": "D",
+        "ref": "D",
+        "ev": "some overhangs identified on cliff faces proved inaccessible to people, so ground-truthing remains essential",
+        "zh": "D 段：有些偵測到的岩棚在峭壁上、人到不了，故仍需實地查核。"
+       },
+       {
+        "q": "an estimate of how little of the mountain region has been walked and recorded",
+        "a": "C",
+        "ref": "C",
+        "ev": "only about 10 per cent of the landscape has been surveyed",
+        "zh": "C 段：估計只有約 10% 的區域做過徒步調查。"
+       },
+       {
+        "q": "a suggestion that better cultural records might strengthen a World Heritage case",
+        "a": "E",
+        "ref": "E",
+        "ev": "stronger records of Indigenous heritage could support efforts to extend the Blue Mountains' UNESCO listing beyond biodiversity to include cultural values",
+        "zh": "E 段：更完整的文化遺產紀錄可能有助把 UNESCO 登錄從生物多樣性擴及文化價值。"
+       },
+       {
+        "q": "details of earlier drone mapping work by the lead author outside Australia",
+        "a": "D",
+        "ref": "D",
+        "ev": "Bongers has previously used drones in Peru to map thousands of aligned holes in the Andes",
+        "zh": "D 段：Bongers 先前在秘魯用無人機測繪安地斯「孔帶」。"
+       },
+       {
+        "q": "the source and purpose of the project's government grant",
+        "a": "F",
+        "ref": "F",
+        "ev": "Funding for Gulamada came from Round 1 of the Australian Government's First Nations Heritage Grants",
+        "zh": "F 段：經費來自聯邦 First Nations Heritage Grants，用於世界／國家遺產地的 on-Country 工作。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The three newly recorded shelters contained rock art as well as stone artefacts.",
+        "a": "True",
+        "ref": "B",
+        "ev": "three unregistered shelters containing rock art and stone artefacts",
+        "zh": "B 段：三處未登記庇護所含岩畫與石器 → True。"
+       },
+       {
+        "q": "The Greater Blue Mountains World Heritage listing already recognises Indigenous cultural values as a primary criterion.",
+        "a": "False",
+        "ref": "E",
+        "ev": "a change the current listing does not make",
+        "zh": "E 段：目前登錄未納入文化價值，Brennan 希望擴及 → False。"
+       },
+       {
+        "q": "Dr Way's team found more unregistered shelters in Arnhem Land than in the Blue Mountains pilot zone.",
+        "a": "Not Given",
+        "ref": "F",
+        "ev": "the researchers plan to adapt the approach with Aboriginal communities in contrasting environments, including the tropical savannahs of western Arnhem Land",
+        "zh": "F 段只說計畫到 Arnhem Land 試驗，沒有比較兩地找到的未登記庇護所數量 → Not Given。"
+       },
+       {
+        "q": "AHIMS coordinates for some already listed shelters were improved by the drone survey.",
+        "a": "True",
+        "ref": "B",
+        "ev": "Coordinates for the known sites were also refined, improving on the accuracy of older AHIMS entries",
+        "zh": "B 段：已知遺址座標也更精準 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN THREE WORDS** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "How the survey works",
+      "lines": [
+       {
+        "t": "Analysts can digitally strip away the tree [[1]] to inspect the ground for overhangs. Dr Way then took [[2]] and volunteers into the field to confirm cultural material. Brennan has linked better documentation to protecting sites from [[3]]. Future tests will include semi-arid landscapes in western [[4]]."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "canopy"
+        ],
+        "ref": "A",
+        "ev": "analysts can digitally remove the tree canopy and inspect the ground surface for overhangs",
+        "zh": "A 段：remove the tree canopy（樹冠）。"
+       },
+       {
+        "a": [
+         "students"
+        ],
+        "ref": "B",
+        "ev": "led students and volunteers on foot to verify each site",
+        "zh": "B 段：students and volunteers。"
+       },
+       {
+        "a": [
+         "fire"
+        ],
+        "ref": "E",
+        "ev": "Fire adds urgency: scars from past burns show how quickly rock art and surface deposits can be damaged",
+        "zh": "E 段：Fire adds urgency… 保護遺址免受 fire（火災）破壞。"
+       },
+       {
+        "a": [
+         "New South Wales"
+        ],
+        "ref": "F",
+        "ev": "the semi-arid landscapes of western New South Wales",
+        "zh": "F 段：western New South Wales 的半乾旱地景。Arnhem Land 是熱帶稀樹草原。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "LiDAR",
+     "pos": "n.",
+     "def": "a remote-sensing method that uses laser pulses to map surfaces in three dimensions",
+     "zh": "光達（雷射探測與測距）",
+     "example": "Drones fitted with LiDAR sensors mapped the bushland.",
+     "match": [
+      "LiDAR"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "canopy",
+     "pos": "n.",
+     "def": "the upper layer of tree cover in a forest",
+     "zh": "樹冠層",
+     "example": "LiDAR lets researchers strip away the tree canopy.",
+     "match": [
+      "canopy"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "overhang",
+     "pos": "n.",
+     "def": "a rock projection that creates a sheltered space beneath",
+     "zh": "岩棚；懸突",
+     "example": "Rock overhangs can stand out clearly once the canopy is removed.",
+     "match": [
+      "overhangs"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "stencil",
+     "pos": "n.",
+     "def": "an outline image made by spraying or blowing pigment around a hand or object",
+     "zh": "型印；手印岩畫",
+     "example": "The shelters contain red hand stencils.",
+     "match": [
+      "stencils"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "artefact",
+     "pos": "n.",
+     "def": "an object made or modified by people, especially in an archaeological context",
+     "zh": "人工製品；文物",
+     "example": "Stone artefacts lay in the sandy floor of the shelter.",
+     "match": [
+      "artefacts",
+      "artifacts"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "custodian",
+     "pos": "n.",
+     "def": "a person or group responsible for protecting cultural heritage",
+     "zh": "監護人；傳統守護者",
+     "example": "Recording was led with Aboriginal custodians.",
+     "match": [
+      "custodians",
+      "Custodian"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "savannah",
+     "pos": "n.",
+     "def": "a tropical grassland with scattered trees",
+     "zh": "稀樹草原",
+     "example": "Further trials are planned in tropical savannahs.",
+     "match": [
+      "savannahs",
+      "savannas"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "arduous",
+     "pos": "adj.",
+     "def": "involving a great deal of effort and difficulty",
+     "zh": "艱鉅的；費力的",
+     "example": "Rugged environments are notoriously arduous to survey.",
+     "match": [
+      "arduous"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "ground-truth",
+     "pos": "v.",
+     "def": "to check remote-sensing results by inspecting a site in person",
+     "zh": "實地查核；地面驗證",
+     "example": "Students ground-truthed the drone detections on foot.",
+     "match": [
+      "ground-truthing",
+      "ground-truthed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "foliage",
+     "pos": "n.",
+     "def": "leaves of plants and trees collectively",
+     "zh": "枝葉；葉叢",
+     "example": "Many laser pulses pass through gaps in foliage.",
+     "match": [
+      "foliage"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "refine",
+     "pos": "v.",
+     "def": "to improve accuracy or detail",
+     "zh": "精煉；使更精確",
+     "example": "Coordinates for known sites were refined.",
+     "match": [
+      "refined"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "biodiversity",
+     "pos": "n.",
+     "def": "the variety of living species in an environment",
+     "zh": "生物多樣性",
+     "example": "The World Heritage listing recognises biodiversity and eucalypt communities.",
+     "match": [
+      "biodiversity"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "inaccessible",
+     "pos": "adj.",
+     "def": "impossible or very difficult to reach",
+     "zh": "無法到達的",
+     "example": "Some overhangs on cliff faces proved inaccessible to people.",
+     "match": [
+      "inaccessible"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "undisturbed",
+     "pos": "adj.",
+     "def": "not damaged or altered by later activity",
+     "zh": "未受干擾的",
+     "example": "The technology helps document undisturbed rock art.",
+     "match": [
+      "undisturbed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "safeguard",
+     "pos": "v.",
+     "def": "to protect from harm or loss",
+     "zh": "守護；保護",
+     "example": "Communities can safeguard cultural landscapes for future generations.",
+     "match": [
+      "safeguard",
+      "safeguarding"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-14-2.mp3",
+    "times": [
+     [
+      0.35,
+      2.32
+     ],
+     [
+      2.48,
+      12.63
+     ],
+     [
+      12.87,
+      14.01
+     ],
+     [
+      14.73,
+      21.95
+     ],
+     [
+      22.16,
+      30.74
+     ],
+     [
+      31.0,
+      38.82
+     ],
+     [
+      38.99,
+      47.31
+     ],
+     [
+      48.03,
+      57.42
+     ],
+     [
+      57.77,
+      64.97
+     ],
+     [
+      65.16,
+      74.1
+     ],
+     [
+      74.33,
+      81.52
+     ],
+     [
+      82.24,
+      85.6
+     ],
+     [
+      85.8,
+      91.84
+     ],
+     [
+      92.08,
+      103.08
+     ],
+     [
+      103.32,
+      111.43
+     ],
+     [
+      111.64,
+      118.53
+     ],
+     [
+      119.25,
+      122.21
+     ],
+     [
+      122.39,
+      131.72
+     ],
+     [
+      131.94,
+      145.18
+     ],
+     [
+      145.53,
+      156.28
+     ],
+     [
+      157.0,
+      162.78
+     ],
+     [
+      163.02,
+      171.77
+     ],
+     [
+      171.92,
+      175.04
+     ],
+     [
+      175.23,
+      184.49
+     ],
+     [
+      185.21,
+      196.88
+     ],
+     [
+      197.12,
+      203.35
+     ],
+     [
+      203.64,
+      214.01
+     ],
+     [
+      214.27,
+      215.75
+     ],
+     [
+      215.88,
+      220.56
+     ]
+    ],
+    "duration": 221.2,
+    "voice": "kokoro:af_heart",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Heart · female (offline Kokoro)",
+    "words": null
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
