@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-16",
+ "date": "2026-10-16",
+ "title": "ASML High-NA EUV Gains Momentum as Customers Book Tools into 2030 · PISA 2025: Reading and Maths Hit Record Lows Across the OECD",
+ "stories": [
+  {
+   "title": "ASML High-NA EUV Gains Momentum as Customers Book Tools into 2030",
+   "topic": "Semiconductors · lithography",
+   "source": {
+    "name": "CNBC: ASML says it's getting order interest through 2030 as profit smashes expectations (Arjun Kharpal, 14 Oct 2026)",
+    "url": "https://www.cnbc.com/2026/10/14/asml-3q-earnings-ai-demand-orders-capacity.html",
+    "links": [
+     {
+      "name": "ASML: Q3 2026 financial results press release (14 Oct 2026)",
+      "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm"
+     },
+     {
+      "name": "The Motley Fool: ASML Q3 2026 earnings call transcript (14 Oct 2026)",
+      "url": "https://www.fool.com/earnings/call-transcripts/2026/10/14/asml-asml-q3-2026-earnings-call-transcript/"
+     },
+     {
+      "name": "Reuters via Investing.com: ASML's strong orders ease fears AI spending boom is running out of steam (14 Oct 2026)",
+      "url": "https://www.investing.com/news/economy-news/asmls-strong-ordersease-fears-ai-spending-boom-is-running-out-of-steam-4951281"
+     },
+     {
+      "name": "Adalytica: ASML High-NA EUV demand builds with Intel, Samsung, TSMC (15 Oct 2026)",
+      "url": "https://adalytica.com/news/asml-high-na-euv-demand-intel-samsung-tsmc-6690be5c"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning, and our lead in technology: Dutch chip-equipment maker ASML says customers are already signalling interest in orders for twenty twenty-nine and even twenty thirty, as artificial-intelligence spending keeps stretching its factory schedules.",
+     "Here's the technology report."
+    ],
+    [
+     "ASML reported third-quarter results on Wednesday.",
+     "Total net sales came in at eleven point seven billion euros, towards the high end of the range the company had signalled.",
+     "Analysts surveyed by LSEG had been forecasting roughly eleven point seven two billion.",
+     "Net income was about five billion euros, well above the four point one billion that those same analysts had expected.",
+     "Gross margin reached fifty-seven point five percent, helped by busy service activity on machines already in the field.",
+     "Chief executive Christophe Fouquet said customers keep raising their short and medium-term equipment forecasts, driven mainly by their views on the size and duration of AI-related investment."
+    ],
+    [
+     "The near-term story is still about capacity.",
+     "ASML had already said it plans to lift low-NA EUV and deep-ultraviolet immersion capacity by thirty percent in twenty twenty-seven, and to study a further thirty percent rise in twenty twenty-eight.",
+     "On the call, Mr Fouquet said even that will not fully meet customer demand.",
+     "The company is now investigating ways to expand twenty twenty-eight output still further.",
+     "Some customers, he added, are expressing interest in placing orders for twenty twenty-nine and twenty thirty."
+    ],
+    [
+     "Meanwhile, the next platform, High-NA EUV, is moving from development towards production.",
+     "Each High-NA tool costs around four hundred million dollars, roughly twice a standard EUV machine.",
+     "Intel says it has already exposed more than one million wafers on High-NA systems, with performance that meets or exceeds comparable low-NA layers.",
+     "Samsung has set a target for high-volume manufacturing in twenty twenty-eight, while TSMC is aiming for twenty thirty.",
+     "ASML sold one High-NA system in the third quarter, and says availability across its existing High-NA fleet is approaching ninety percent."
+    ],
+    [
+     "Look under the hood of the quarter and the mix is revealing.",
+     "Net system sales were eight point four billion euros.",
+     "Of that, EUV systems contributed four point one billion, including that single High-NA sale, while non-EUV systems brought in four point three billion.",
+     "Logic customers accounted for fifty-four percent of system sales, and memory for forty-six percent.",
+     "Installed Base Management, which covers service and upgrades, came in above the company's target at three point three billion euros."
+    ],
+    [
+     "Looking further ahead, ASML said it is working with TSMC on larger twelve-inch EUV photomasks, with a pilot line targeted for twenty thirty-one and production in twenty thirty-three.",
+     "The company raised the lower end of its full-year sales outlook to between forty-four and forty-five billion euros, from a previous floor of forty-three billion.",
+     "Fourth-quarter sales are guided at fourteen point two to fifteen point two billion.",
+     "China is still expected to make up about twenty percent of the business.",
+     "There are risks on both sides, though: any slowdown in AI capital spending, or further export curbs, could still reshape the order book.",
+     "That's the technology report.",
+     "Coming up next, the rest of this morning's headlines."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "ASML Q3 2026: High-NA and long-dated demand",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Results versus expectations"
+       },
+       {
+        "t": "Net income beat the figure that [[1]] surveyed by LSEG had expected"
+       },
+       {
+        "h": "Capacity plans"
+       },
+       {
+        "t": "Even planned rises for 2027–28 will not fully cover customer [[2]]"
+       },
+       {
+        "t": "Firm studying how to expand [[3]] for 2028 still further"
+       },
+       {
+        "h": "High-NA EUV"
+       },
+       {
+        "t": "Moving from development towards [[4]]"
+       },
+       {
+        "t": "Intel: more than one million [[5]] already exposed on High-NA tools"
+       },
+       {
+        "t": "Fleet [[6]] approaching ninety percent"
+       },
+       {
+        "h": "Sales mix"
+       },
+       {
+        "t": "System sales split: logic fifty-four percent, [[7]] forty-six percent"
+       },
+       {
+        "t": "Installed Base Management boosted by demand for [[8]]"
+       },
+       {
+        "h": "Longer roadmap"
+       },
+       {
+        "t": "Working with TSMC on larger twelve-inch EUV [[9]]"
+       },
+       {
+        "t": "Full-year sales [[10]] raised at the lower end to €44–45 billion"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "analysts"
+        ],
+        "ref": "Analysts surveyed by LSEG had been forecasting",
+        "ev": "Analysts surveyed by LSEG had been forecasting roughly eleven point seven two billion. Net income was about five billion euros, well above the four point one billion that those same analysts had expected.",
+        "zh": "題幹 the figure that ___ surveyed by LSEG had expected → analysts（分析師）。干擾：銷售額大致符合預測（約 11.72B），真正大幅超預期的是淨利（約 5B vs 預期 4.1B）。"
+       },
+       {
+        "a": [
+         "demand"
+        ],
+        "ref": "will not fully meet customer demand",
+        "ev": "even that will not fully meet customer demand",
+        "zh": "will not fully cover customer ___ = will not fully meet customer demand；答案 demand（需求）。thirty percent 是產能計畫數字，不是答案。"
+       },
+       {
+        "a": [
+         "output"
+        ],
+        "ref": "expand twenty twenty-eight output still further",
+        "ev": "investigating ways to expand twenty twenty-eight output still further",
+        "zh": "expand ___ for 2028 = expand twenty twenty-eight output；亦可接受 capacity。investigating ways = studying how。"
+       },
+       {
+        "a": [
+         "production"
+        ],
+        "ref": "moving from development towards production",
+        "ev": "High-NA EUV, is moving from development towards production",
+        "zh": "from development towards ___ → production（量產）。development 是起點，不是答案。"
+       },
+       {
+        "a": [
+         "wafers"
+        ],
+        "ref": "exposed more than one million wafers",
+        "ev": "exposed more than one million wafers on High-NA systems",
+        "zh": "more than one million ___ → wafers（晶圓）。million 是數量單位，題幹已給；要填被曝光的物件 wafers。"
+       },
+       {
+        "a": [
+         "availability"
+        ],
+        "ref": "availability across its existing High-NA fleet is approaching ninety percent",
+        "ev": "availability across its existing High-NA fleet is approaching ninety percent",
+        "zh": "Fleet ___ approaching ninety percent → availability（可用率／稼動可用度）。ninety percent 是干擾數字；題幹已寫出百分比，答案是名詞 availability。"
+       },
+       {
+        "a": [
+         "memory"
+        ],
+        "ref": "memory for forty-six percent",
+        "ev": "Logic customers accounted for fifty-four percent of system sales, and memory for forty-six percent",
+        "zh": "logic 54% vs ___ 46% → memory（記憶體）。問的是較小那一塊；勿填 logic。"
+       },
+       {
+        "a": [
+         "upgrades"
+        ],
+        "ref": "which covers service and upgrades",
+        "ev": "Installed Base Management, which covers service and upgrades, came in above the company's target at three point three billion euros",
+        "zh": "Installed Base Management 高於公司目標，涵蓋 service and ___ → upgrades（升級）。service 是並列項目，題幹問的是推升業績的升級需求／內容中的 upgrades。"
+       },
+       {
+        "a": [
+         "photomasks",
+         "masks"
+        ],
+        "ref": "larger twelve-inch EUV photomasks",
+        "ev": "working with TSMC on larger twelve-inch EUV photomasks",
+        "zh": "twelve-inch EUV ___ → photomasks（光罩）；masks 亦可。pilot line / production 年份是時程干擾。"
+       },
+       {
+        "a": [
+         "outlook"
+        ],
+        "ref": "raised the lower end of its full-year sales outlook",
+        "ev": "The company raised the lower end of its full-year sales outlook to between forty-four and forty-five billion euros",
+        "zh": "Full-year sales ___ raised → outlook（展望）。從下限 43B 上修至 44–45B；數字已在題幹，答案是名詞 outlook。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "High-NA Lithography Leaves the Lab",
+    "intro": "ASML’s third-quarter results and customer road maps suggest its most advanced EUV platform is shifting from trials into a staggered industry rollout.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "For more than a decade, ASML Holding has occupied a unique position in the semiconductor supply chain: it is the only company that can ship extreme ultraviolet (EUV) lithography systems capable of printing the finest circuitry in advanced logic and memory chips. That monopoly has made the Dutch firm a closely watched proxy for artificial-intelligence capital spending. On 14 October 2026 the company reported record third-quarter net sales of €11.7 billion and net income of roughly €5.0 billion. Equally important for investors, however, were comments from chief executive Christophe Fouquet that some customers are already expressing interest in placing orders for 2029 and even 2030. The remarks suggested that the AI-driven equipment cycle, far from peaking, is lengthening into the next decade. The company also remains the sole commercial source of the light sources and optical modules that make EUV possible at scale, which further concentrates industry attention on its guidance."
+     },
+     {
+      "label": "B",
+      "text": "The immediate constraint is not demand but ASML’s ability to build machines fast enough. Management had previously outlined plans to raise capacity for low-NA EUV and deep-ultraviolet (DUV) immersion tools by 30 per cent in 2027, with a further 30 per cent increase under study for 2028. On the earnings call Fouquet conceded that even those expansions will leave planned output short of what customers say they need. The company is therefore investigating additional ways to lift 2028 capacity. Installed Base Management sales, which include service contracts and productivity upgrades on tools already in fabs, reached €3.3 billion in the quarter, underscoring how chipmakers are extracting more wafers from the existing fleet while they wait for new systems."
+     },
+     {
+      "label": "C",
+      "text": "High numerical aperture, or High-NA, EUV is ASML’s next major platform. Each tool is priced at around $400 million — roughly double a standard EUV machine — and uses a larger numerical aperture to print smaller features with fewer multi-patterning steps. Intel has been the early adopter: it reports having exposed more than one million wafers on High-NA systems, with layer performance that meets or exceeds comparable low-NA EUV layers. Samsung Electronics has said it aims to introduce High-NA into high-volume manufacturing in 2028, while Taiwan Semiconductor Manufacturing Company (TSMC) is targeting 2030. ASML sold one High-NA system in the third quarter and said availability across its installed High-NA fleet was approaching 90 per cent, a figure that matters because chipmakers will not commit critical layers to a tool that frequently stops."
+     },
+     {
+      "label": "D",
+      "text": "Analysts caution that High-NA revenue will arrive in stages rather than as a sudden step-change. Fouquet himself described the industry as still in ‘very initial ramps’, meaning customers must validate the technology on a handful of layers before spreading it across a process node. That staggered path implies a multi-year order stream as each major foundry and memory maker adds systems. At the same time, near-term sales continue to be dominated by conventional EUV and DUV tools. Of €8.4 billion in net system sales in the quarter, EUV (including the single High-NA unit) contributed €4.1 billion and non-EUV systems €4.3 billion. Logic accounted for 54 per cent of system sales and memory for 46 per cent, a mix that reflects AI accelerators on the logic side and high-bandwidth memory on the other."
+     },
+     {
+      "label": "E",
+      "text": "Beyond the current generation of tools, ASML and TSMC have launched an industry initiative to develop larger 12-inch EUV photomasks. The partners target a pilot line by 2031 and production by 2033. Larger masks would allow High-NA scanners to expose bigger fields in a single pass, improving throughput for the densest AI chips. The project also illustrates how the lithography road map now stretches well beyond the present cycle of AI data-centre build-outs. Separately, ASML raised the lower end of its 2026 sales guidance to €44–45 billion, from a previous floor of €43 billion, and guided fourth-quarter sales at €14.2–15.2 billion. China is expected to remain around 20 per cent of total sales, subject to continuing export restrictions on the most advanced tools."
+     },
+     {
+      "label": "F",
+      "text": "Risks remain on both sides of the ledger. A sharper-than-expected slowdown in AI infrastructure spending would quickly translate into deferred bookings, because ASML’s customers plan capacity years ahead. Geopolitical export controls could further limit shipments to China or complicate the dual-use supply chain that feeds EUV light sources and optics. Conversely, if AI demand continues to outrun planned wafer capacity through 2028, ASML may need still more factory floor space and supplier commitments than it has so far announced. For policymakers and investors alike, the company’s results therefore serve as an early reading on whether the semiconductor equipment boom is broadening into a durable, multi-year investment cycle — or merely a concentrated surge that could reverse once the largest cloud providers pause Either way, High-NA's shift from laboratory curiosity to production tool is now a concrete planning assumption for the world's largest chipmakers."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison of the approximate prices of two generations of EUV tools",
+        "a": "C",
+        "ref": "C",
+        "ev": "Each tool is priced at around $400 million — roughly double a standard EUV machine",
+        "zh": "High-NA 約 4 億美元，約為標準 EUV 的兩倍 → 段落 C。"
+       },
+       {
+        "q": "evidence that chipmakers are improving the productivity of machines they already own",
+        "a": "B",
+        "ref": "B",
+        "ev": "Installed Base Management sales, which include service contracts and productivity upgrades on tools already in fabs, reached €3.3 billion",
+        "zh": "Installed Base Management／現場升級 → 段落 B。"
+       },
+       {
+        "q": "a project to change the physical size of the masks used in EUV scanners",
+        "a": "E",
+        "ref": "E",
+        "ev": "ASML and TSMC have launched an industry initiative to develop larger 12-inch EUV photomasks",
+        "zh": "12-inch photomasks 計畫 → 段落 E。"
+       },
+       {
+        "q": "a warning that High-NA sales will not jump all at once",
+        "a": "D",
+        "ref": "D",
+        "ev": "Analysts caution that High-NA revenue will arrive in stages rather than as a sudden step-change",
+        "zh": "revenue in stages / very initial ramps → 段落 D。"
+       },
+       {
+        "q": "two external factors that could reduce future orders",
+        "a": "F",
+        "ref": "F",
+        "ev": "A sharper-than-expected slowdown in AI infrastructure spending would quickly translate into deferred bookings… Geopolitical export controls could further limit shipments to China",
+        "zh": "AI 支出放緩與出口管制兩大風險 → 段落 F。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write:",
+       "**TRUE** if the statement agrees with the information",
+       "**FALSE** if the statement contradicts the information",
+       "**NOT GIVEN** if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "ASML is currently the sole manufacturer of EUV lithography systems for advanced chips.",
+        "a": "True",
+        "ref": "A",
+        "ev": "it is the only company that can ship extreme ultraviolet (EUV) lithography systems capable of printing the finest circuitry in advanced logic and memory chips",
+        "zh": "段落 A：only company that can ship EUV → True。"
+       },
+       {
+        "q": "Samsung plans to begin high-volume High-NA manufacturing earlier than TSMC.",
+        "a": "True",
+        "ref": "C",
+        "ev": "Samsung Electronics has said it aims to introduce High-NA into high-volume manufacturing in 2028, while Taiwan Semiconductor Manufacturing Company (TSMC) is targeting 2030",
+        "zh": "Samsung 2028、TSMC 2030 → Samsung 較早 → True。"
+       },
+       {
+        "q": "Logic customers generated a larger share of ASML’s third-quarter system sales than memory customers.",
+        "a": "True",
+        "ref": "D",
+        "ev": "Logic accounted for 54 per cent of system sales and memory for 46 per cent",
+        "zh": "54% > 46% → True。"
+       },
+       {
+        "q": "ASML has already signed binding purchase contracts covering all of its planned 2029 capacity.",
+        "a": "Not Given",
+        "ref": "A",
+        "ev": "some customers are already expressing interest in placing orders for 2029 and even 2030",
+        "zh": "原文只說 customers expressing interest，沒有說已簽下涵蓋全部 2029 產能的具約束力合約 → Not Given。陷阱：把「有興趣下單」讀成「已簽約」。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer."
+      ],
+      "heading": "Capacity, High-NA and the longer road map",
+      "bullets": false,
+      "lines": [
+       {
+        "t": "ASML says even its published capacity increases will leave planned output short of customer needs, so it is studying further expansion for 2028. Chipmakers are also buying [[10]] that raise the productivity of tools already installed. High-NA EUV uses a larger [[11]] to print finer features. Fouquet called current High-NA adoption ‘very initial [[12]]’. Looking ahead, ASML raised the lower end of its full-year sales [[13]] and is co-developing larger photomasks with TSMC."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "upgrades",
+         "productivity upgrades"
+        ],
+        "ref": "B",
+        "ev": "service contracts and productivity upgrades on tools already in fabs",
+        "zh": "提高已安裝機台產能的 ___ → upgrades / productivity upgrades。數字答案 0 題。"
+       },
+       {
+        "a": [
+         "numerical aperture",
+         "aperture"
+        ],
+        "ref": "C",
+        "ev": "uses a larger numerical aperture to print smaller features with fewer multi-patterning steps",
+        "zh": "High-NA 用更大的 numerical aperture；aperture 亦可（兩詞以內）。"
+       },
+       {
+        "a": [
+         "ramps"
+        ],
+        "ref": "D",
+        "ev": "still in ‘very initial ramps’",
+        "zh": "very initial ___ → ramps（爬坡／初期放量）。"
+       },
+       {
+        "a": [
+         "guidance",
+         "outlook"
+        ],
+        "ref": "E",
+        "ev": "ASML raised the lower end of its 2026 sales guidance to €44–45 billion",
+        "zh": "full-year sales ___ → guidance / outlook。本組無數字答案。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "lithography",
+     "pos": "n.",
+     "def": "the process of printing circuit patterns onto silicon wafers using light",
+     "zh": "微影／光刻",
+     "example": "EUV lithography is essential for the densest AI chips.",
+     "match": [
+      "lithography"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "monopoly",
+     "pos": "n.",
+     "def": "exclusive control of a market by a single supplier",
+     "zh": "壟斷",
+     "example": "ASML's EUV monopoly makes it a proxy for AI chip demand.",
+     "match": [
+      "monopoly"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "throughput",
+     "pos": "n.",
+     "def": "the amount of material a machine can process in a given time",
+     "zh": "產出量／產能吞吐",
+     "example": "Larger masks would improve scanner throughput.",
+     "match": [
+      "throughput"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "aperture",
+     "pos": "n.",
+     "def": "an opening that determines how much light a lens system gathers",
+     "zh": "數值孔徑／光圈",
+     "example": "High-NA tools use a larger numerical aperture.",
+     "match": [
+      "aperture",
+      "numerical aperture"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "staggered",
+     "pos": "adj.",
+     "def": "arranged to happen at different times rather than all at once",
+     "zh": "分階段的",
+     "example": "High-NA adoption will be a staggered multi-year process.",
+     "match": [
+      "staggered"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "validate",
+     "pos": "v.",
+     "def": "to confirm that something works as intended through testing",
+     "zh": "驗證",
+     "example": "Foundries must validate High-NA on a few layers first.",
+     "match": [
+      "validate"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "concession",
+     "pos": "n.",
+     "def": "an admission that a previous claim was incomplete or too optimistic",
+     "zh": "承認／讓步（此處指坦承不足）",
+     "example": "Fouquet's concession that capacity will still fall short alarmed few investors.",
+     "match": [
+      "conceded"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "proxy",
+     "pos": "n.",
+     "def": "something used as an indicator of a broader trend",
+     "zh": "指標／代理變數",
+     "example": "ASML's bookings are treated as a proxy for AI capex.",
+     "match": [
+      "proxy"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "deferred",
+     "pos": "adj.",
+     "def": "postponed to a later time",
+     "zh": "延後的",
+     "example": "A spending pause would mean deferred bookings.",
+     "match": [
+      "deferred"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "dual-use",
+     "pos": "adj.",
+     "def": "suitable for both civilian and military applications",
+     "zh": "軍民兩用",
+     "example": "Export rules tightly control dual-use lithography components.",
+     "match": [
+      "dual-use"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "immersion",
+     "pos": "n.",
+     "def": "a lithography technique that uses liquid between the lens and the wafer",
+     "zh": "浸潤式（微影）",
+     "example": "DUV immersion tools remain in high demand.",
+     "match": [
+      "immersion"
+     ],
+     "src": "L"
+    },
+    {
+     "word": "availability",
+     "pos": "n.",
+     "def": "the proportion of time a machine is ready and able to run",
+     "zh": "可用率",
+     "example": "High-NA fleet availability is approaching ninety percent.",
+     "match": [
+      "availability"
+     ],
+     "src": "L"
+    },
+    {
+     "word": "photomask",
+     "pos": "n.",
+     "def": "a patterned plate that transfers a circuit design onto a wafer",
+     "zh": "光罩",
+     "example": "Twelve-inch photomasks are still years from production.",
+     "match": [
+      "photomasks",
+      "photomask"
+     ],
+     "src": "L"
+    },
+    {
+     "word": "outlook",
+     "pos": "n.",
+     "def": "a forecast of future business performance",
+     "zh": "展望",
+     "example": "ASML raised the lower end of its full-year sales outlook.",
+     "match": [
+      "outlook"
+     ],
+     "src": "L"
+    },
+    {
+     "word": "curbs",
+     "pos": "n.",
+     "def": "official limits or restrictions",
+     "zh": "限制／管制",
+     "example": "Further export curbs could reshape the order book.",
+     "match": [
+      "curbs"
+     ],
+     "src": "L"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-16-1.mp3",
+    "times": [
+     [
+      0.36,
+      13.35
+     ],
+     [
+      13.69,
+      15.37
+     ],
+     [
+      16.15,
+      19.19
+     ],
+     [
+      19.38,
+      25.58
+     ],
+     [
+      25.85,
+      31.08
+     ],
+     [
+      31.4,
+      37.5
+     ],
+     [
+      37.73,
+      44.22
+     ],
+     [
+      44.5,
+      54.23
+     ],
+     [
+      55.01,
+      57.4
+     ],
+     [
+      57.65,
+      68.39
+     ],
+     [
+      68.76,
+      73.07
+     ],
+     [
+      73.28,
+      77.81
+     ],
+     [
+      78.07,
+      83.87
+     ],
+     [
+      84.65,
+      90.61
+     ],
+     [
+      90.83,
+      96.57
+     ],
+     [
+      96.84,
+      104.65
+     ],
+     [
+      104.97,
+      111.53
+     ],
+     [
+      111.76,
+      119.34
+     ],
+     [
+      120.12,
+      122.86
+     ],
+     [
+      123.19,
+      126.05
+     ],
+     [
+      126.3,
+      135.22
+     ],
+     [
+      135.51,
+      140.9
+     ],
+     [
+      141.11,
+      147.94
+     ],
+     [
+      148.72,
+      159.23
+     ],
+     [
+      159.62,
+      167.65
+     ],
+     [
+      167.87,
+      171.97
+     ],
+     [
+      172.24,
+      175.88
+     ],
+     [
+      176.2,
+      184.21
+     ],
+     [
+      184.52,
+      186.15
+     ],
+     [
+      186.4,
+      189.28
+     ]
+    ],
+    "duration": 189.9,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-16-1-words/"
+   }
+  },
+  {
+   "title": "PISA 2025: Reading and Maths Hit Record Lows Across the OECD",
+   "topic": "Education · assessment",
+   "source": {
+    "name": "OECD press release: PISA 2025: Students' reading and mathematics performance declined sharply across the OECD (8 Sep 2026)",
+    "url": "https://www.oecd.org/en/about/news/press-releases/2026/09/pisa-2025-students-reading-and-mathematics-performance-declined-sharply-across-the-oecd.html",
+    "links": [
+     {
+      "name": "OECD: International launch of PISA 2025, remarks by Secretary-General Mathias Cormann (8 Sep 2026)",
+      "url": "https://www.oecd.org/en/about/news/speech-statements/2026/09/international-launch-of-pisa-2025.html"
+     },
+     {
+      "name": "OECD: PISA 2025 Results (Volume I) – Future-Ready Students (published 8 Sep 2026)",
+      "url": "https://www.oecd.org/en/publications/2026/09/pisa-2025-results-volume-i_5265bfb1/full-report.html"
+     },
+     {
+      "name": "OECD blog: PISA findings on artificial intelligence use, reading skills and learning (Andreas Schleicher, Sep 2026)",
+      "url": "https://www.oecd.org/en/blogs/2026/09/pisa-findings-on-artificial-intelligence-use-reading-skills-and-learning.html"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "A major international study of fifteen-year-olds finds that reading and mathematics scores across rich countries have fallen to the lowest levels ever recorded by the OECD's PISA programme.",
+     "Here's the education report."
+    ],
+    [
+     "PISA twenty twenty-five is the largest assessment so far.",
+     "More than seven hundred and sixty thousand students took part, across ninety-one countries and economies, representing about thirty-three million fifteen-year-olds in school.",
+     "The main focus this cycle was science, where average performance across the OECD held steady between twenty twenty-two and twenty twenty-five, after years of decline.",
+     "That stability is welcome, Secretary-General Mathias Cormann said at the global launch on the eighth of September.",
+     "But holding steady, he argued, is not the same as recovery."
+    ],
+    [
+     "The picture in mathematics and reading is much darker.",
+     "Across OECD countries, mathematics scores fell by nine points between twenty twenty-two and twenty twenty-five — roughly half a school year of learning — on top of a fifteen-point drop in the previous round.",
+     "Reading fell even further, by fourteen points, the biggest fall between two PISA cycles the OECD has ever measured.",
+     "Over the decade from twenty fifteen to twenty twenty-five, reading scores are down twenty-eight points, about one and a half years of learning, and mathematics twenty-two points.",
+     "One in five fifteen-year-olds across the OECD is now a low performer in all three subjects, up from one in six, or sixteen percent, in twenty twenty-two."
+    ],
+    [
+     "Why are scores slipping?",
+     "The declines did not begin with the pandemic alone; in many countries results were already weakening before twenty twenty.",
+     "Since twenty twenty-two, the share of students spending more than an hour a day on social media has risen by almost six percentage points.",
+     "The share of so-called hasty readers — students who rush a text and give a quick wrong answer — has nearly doubled since twenty eighteen.",
+     "More than one in four students say classmates are distracted by digital devices in most or every science lesson.",
+     "And when devices are used for fun during class, results fall sharply."
+    ],
+    [
+     "Family background still matters a great deal.",
+     "Advantaged students scored eighty-five points higher in science than disadvantaged ones — a gap of about four years of learning.",
+     "That gap narrowed slightly between twenty twenty-two and twenty twenty-five, but mainly because better-off students did worse, not because poorer students caught up.",
+     "Parent engagement is also slipping: seventy-one percent of students said a parent asked about their school day at least weekly in twenty twenty-five, down from seventy-seven percent in twenty twenty-two.",
+     "On artificial intelligence, students who used AI to draft text for assignments scored lower in science, on average, than those who did not — though frequent users taught how to judge AI answers did better than those given no such guidance."
+    ],
+    [
+     "There is brighter news, too.",
+     "Science scores rose since twenty twenty-two in Costa Rica, Slovakia, Türkiye and the United Kingdom, among others.",
+     "Türkiye, the United Arab Emirates, Montenegro, Qatar and Slovakia managed to cut their share of low performers while growing their share of top performers.",
+     "A new digital assessment found that sixty-four percent of students reached proficiency in computational problem solving — but only about half combined that with solid basics in science, reading and maths.",
+     "Mr Cormann's message was blunt: focus on fewer topics in greater depth, back teachers, bring parents back in, and use technology to deepen learning, not to skip it.",
+     "That's the education report.",
+     "Next on the programme, the rest of this morning's news."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "PISA 2025: OECD findings",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Scale of the study"
+       },
+       {
+        "t": "Main subject focus this cycle: [[1]]"
+       },
+       {
+        "h": "Score changes"
+       },
+       {
+        "t": "Reading: largest [[2]] between two PISA rounds ever recorded"
+       },
+       {
+        "t": "Share of students who are low performers in all three subjects: one in [[3]]"
+       },
+       {
+        "h": "Possible drivers"
+       },
+       {
+        "t": "Rise in students on social media over an hour a day; more [[4]] readers since 2018"
+       },
+       {
+        "t": "Using devices for [[5]] in class linked to sharply lower results"
+       },
+       {
+        "h": "Equity and home"
+       },
+       {
+        "t": "Science gap of about four years between advantaged and [[6]] students"
+       },
+       {
+        "t": "Fewer students report that a [[7]] asks about the school day each week"
+       },
+       {
+        "h": "Technology and bright spots"
+       },
+       {
+        "t": "Students who used AI to [[8]] text for assignments scored lower on average"
+       },
+       {
+        "t": "Some systems cut low performers while growing [[9]] performers"
+       },
+       {
+        "t": "Advice: teach fewer topics in greater [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "science"
+        ],
+        "ref": "The main focus this cycle was science",
+        "ev": "The main focus this cycle was science, where average performance across the OECD held steady",
+        "zh": "本輪主測科目 → science（科學）。reading / mathematics 是大跌的科目，不是主焦點。"
+       },
+       {
+        "a": [
+         "fall",
+         "drop",
+         "decline"
+        ],
+        "ref": "the biggest fall between two PISA cycles",
+        "ev": "Reading fell even further, by fourteen points, the biggest fall between two PISA cycles the OECD has ever measured",
+        "zh": "largest ___ between two rounds → fall / drop / decline。fourteen points 是幅度干擾；題幹要的是「有史以來最大的」那個名詞。"
+       },
+       {
+        "a": [
+         "five"
+        ],
+        "ref": "One in five fifteen-year-olds",
+        "ev": "One in five fifteen-year-olds across the OECD is now a low performer in all three subjects, up from one in six, or sixteen percent, in twenty twenty-two",
+        "zh": "one in ___ → five（五分之一＝20%）。干擾：one in six / sixteen percent 是 2022 年舊數字。本篇唯一數字答案。"
+       },
+       {
+        "a": [
+         "hasty"
+        ],
+        "ref": "so-called hasty readers",
+        "ev": "The share of so-called hasty readers — students who rush a text and give a quick wrong answer — has nearly doubled since twenty eighteen",
+        "zh": "more ___ readers → hasty（倉促閱讀者）。social media 是另一條線，不是答案。"
+       },
+       {
+        "a": [
+         "fun",
+         "leisure"
+        ],
+        "ref": "used for fun during class",
+        "ev": "when devices are used for fun during class, results fall sharply",
+        "zh": "devices for ___ in class → fun（課堂上玩樂用）。用於學習（learning）則另當別論。"
+       },
+       {
+        "a": [
+         "disadvantaged",
+         "poorer"
+        ],
+        "ref": "higher in science than disadvantaged ones",
+        "ev": "Advantaged students scored eighty-five points higher in science than disadvantaged ones",
+        "zh": "advantaged vs ___ → disadvantaged / poorer。eighty-five points / four years 是差距大小，不是答案。"
+       },
+       {
+        "a": [
+         "parent"
+        ],
+        "ref": "a parent asked about their school day",
+        "ev": "seventy-one percent of students said a parent asked about their school day at least weekly in twenty twenty-five, down from seventy-seven percent",
+        "zh": "a ___ asks about the school day → parent。百分比 71 vs 77 是干擾。"
+       },
+       {
+        "a": [
+         "draft",
+         "write"
+        ],
+        "ref": "used AI to draft text for assignments",
+        "ev": "students who used AI to draft text for assignments scored lower in science, on average, than those who did not",
+        "zh": "used AI to ___ text → draft / write。教學生評估 AI 品質的那組表現較好，是對照，不是本題答案。"
+       },
+       {
+        "a": [
+         "top"
+        ],
+        "ref": "growing their share of top performers",
+        "ev": "cut their share of low performers while growing their share of top performers",
+        "zh": "growing ___ performers → top。與 cut low performers 相對。"
+       },
+       {
+        "a": [
+         "depth"
+        ],
+        "ref": "fewer topics in greater depth",
+        "ev": "focus on fewer topics in greater depth, back teachers, bring parents back in",
+        "zh": "fewer topics in greater ___ → depth（深度）。Cormann 六大優先中的第一條改述。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "When Scores Fall: What PISA 2025 Reveals",
+    "intro": "The OECD’s latest international assessment of 15-year-olds shows stable science results but historic declines in reading and mathematics, alongside new evidence on digital distraction and AI use.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "On 8 September 2026 the Organisation for Economic Co-operation and Development released the first volume of PISA 2025, its Programme for International Student Assessment. More than 760,000 students in 91 countries and economies sat the tests, a sample representing around 33 million 15-year-olds. Science was the major domain, with reading, mathematics and a new optional assessment of learning in the digital world also included. Secretary-General Mathias Cormann described the overall picture as mixed: science performance across OECD countries was broadly stable between 2022 and 2025, ending a long downward drift since 2009, yet mathematics and reading fell to the lowest OECD averages PISA has ever recorded. The findings matter, he argued, because weaker foundational skills foreshadow weaker productivity and less equal opportunity in economies reshaped by technology."
+     },
+     {
+      "label": "B",
+      "text": "The arithmetic of decline is stark. Across the OECD, mathematics scores dropped by nine points between 2022 and 2025 — about half a school year — on top of a 15-point fall between 2018 and 2022. Reading fell by 14 points in the latest cycle, the largest inter-cycle decline the programme has measured. Stretching the window to a decade, OECD reading scores are 28 points lower than in 2015, and mathematics 22 points lower, equivalent to roughly one and a half years and just over one year of learning respectively. One in five 15-year-olds is now classified as a low performer in science, mathematics and reading combined, up from 16 per cent — one in six — in 2022. These students struggle with tasks such as understanding a simple text or comparing value for money in a shop."
+     },
+     {
+      "label": "C",
+      "text": "Cormann stressed that the slide did not begin with COVID-19 alone. In many systems, scores were already softening before 2020, pointing to deeper changes in how adolescents read, study and spend their time. Since 2022 the share of students who spend more than an hour a day on social media has risen by almost six percentage points. The proportion of ‘hasty readers’ — those who skim a passage and select a quick but incorrect answer — has nearly doubled since 2018. Classroom distraction is widespread: more than one in four students report that classmates are diverted by digital devices in most or every science lesson, and those surrounded by distracted peers tend to score lower, feel less engaged and feel less connected to school. Device use for learning can help science results up to about five hours a day; beyond that threshold, and especially when devices are used for leisure in class, performance falls."
+     },
+     {
+      "label": "D",
+      "text": "Equity gaps remain stubborn. Advantaged students outscored disadvantaged peers by 85 points in science across the OECD, a difference of about four years of learning. The gap narrowed slightly between 2022 and 2025, yet the OECD notes that this was largely because advantaged students performed less well, not because disadvantaged students improved — ‘obviously not progress’, in Cormann’s words. Parental involvement is also eroding: 71 per cent of students said a parent asked about their school day at least once a week in 2025, down from 77 per cent in 2022, with the steepest drops among boys and disadvantaged students. On the positive side, Türkiye, the United Arab Emirates, Montenegro, Qatar and Slovakia all reduced their share of low performers while increasing their share of top performers over the past decade, showing that higher averages and fairer distributions can move together."
+     },
+     {
+      "label": "E",
+      "text": "Artificial intelligence enters the classroom story with caveats. Students who reported using AI to draft text for writing assignments scored lower in science, on average, than those who did not. Among frequent users, however, those who had been taught how to assess the quality of AI-generated information outperformed peers who received no such guidance. The OECD’s message is that AI should support effortful learning — feedback, personalised practice, cutting paperwork for teachers — rather than replace the thinking students need to do themselves. Separately, the new Learning in the Digital World assessment found that 64 per cent of students reached a proficient level in computational problem solving, yet only about half combined that digital proficiency with basic competence in science, reading and mathematics. Full analysis of the digital assessment is due in May 2027."
+     },
+     {
+      "label": "F",
+      "text": "Policy recommendations cluster around six priorities: set high, coherent expectations and teach fewer topics in greater depth; equip teachers with practical pedagogical skills and reduce administrative load; re-engage parents; keep top science performers interested in STEM careers — almost half of the roughly 1.9 million top science performers across participating systems do not expect to work in STEM at age 30; direct funding, experienced teachers and materials first to schools facing the greatest barriers, noting that around four in ten students attend schools where principals say teacher shortages hinder learning; and use digital tools purposefully and in moderation. Several systems have already shown improvement is possible: science scores rose between 2022 and 2025 in Costa Rica, Slovakia, Türkiye and the United Kingdom, among others, and Cambodia gained 35 points in three years. Decline, Cormann concluded, is not inevitable — but reversing it requires focus, discipline and action."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a statistic on how many top science students do not plan a STEM career",
+        "a": "F",
+        "ref": "F",
+        "ev": "almost half of the roughly 1.9 million top science performers across participating systems do not expect to work in STEM at age 30",
+        "zh": "約一半頂尖科學表現者不預期從事 STEM → 段落 F。"
+       },
+       {
+        "q": "evidence that classroom device distraction affects peers’ learning",
+        "a": "C",
+        "ref": "C",
+        "ev": "those surrounded by distracted peers tend to score lower, feel less engaged and feel less connected to school",
+        "zh": "被分心同學包圍者分數較低 → 段落 C。"
+       },
+       {
+        "q": "an explanation of why a narrower equity gap was not genuine progress",
+        "a": "D",
+        "ref": "D",
+        "ev": "this was largely because advantaged students performed less well, not because disadvantaged students improved",
+        "zh": "差距縮小是因為優勢學生退步 → 段落 D。"
+       },
+       {
+        "q": "the first release date and the number of participating systems",
+        "a": "A",
+        "ref": "A",
+        "ev": "On 8 September 2026… More than 760,000 students in 91 countries and economies sat the tests",
+        "zh": "發布日與 91 國／經濟體 → 段落 A。"
+       },
+       {
+        "q": "a finding that teaching students to judge AI output can improve results among heavy users",
+        "a": "E",
+        "ref": "E",
+        "ev": "those who had been taught how to assess the quality of AI-generated information outperformed peers who received no such guidance",
+        "zh": "教導評估 AI 品質 → 段落 E。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write:",
+       "**TRUE** if the statement agrees with the information",
+       "**FALSE** if the statement contradicts the information",
+       "**NOT GIVEN** if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "OECD average science scores continued their long decline between 2022 and 2025.",
+        "a": "False",
+        "ref": "A",
+        "ev": "science performance across OECD countries was broadly stable between 2022 and 2025, ending a long downward drift since 2009",
+        "zh": "科學是持平（stable），結束自 2009 起的下滑 → False（與「繼續下滑」相反）。"
+       },
+       {
+        "q": "The 14-point fall in reading was the largest drop between consecutive PISA cycles recorded by the OECD.",
+        "a": "True",
+        "ref": "B",
+        "ev": "Reading fell by 14 points in the latest cycle, the largest inter-cycle decline the programme has measured",
+        "zh": "有史以來最大的跨輪跌幅 → True。"
+       },
+       {
+        "q": "Boys in disadvantaged schools were more likely than girls to use AI for homework.",
+        "a": "Not Given",
+        "ref": "D",
+        "ev": "with the steepest drops among boys and disadvantaged students",
+        "zh": "原文只提家長詢問下降在男生與弱勢學生最明顯，完全沒比較男女生使用 AI 寫作業的比例 → Not Given。"
+       },
+       {
+        "q": "Cambodia’s science score rose by 35 points over a three-year period.",
+        "a": "True",
+        "ref": "F",
+        "ev": "Cambodia gained 35 points in three years",
+        "zh": "段落 F：Cambodia gained 35 points in three years → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer."
+      ],
+      "heading": "Drivers, equity and digital learning",
+      "bullets": false,
+      "lines": [
+       {
+        "t": "PISA links weaker results partly to changing habits: more social-media time and a near-doubling of [[10]] readers since 2018. Device use for learning can help, but leisure use in class hurts scores. The science gap between rich and poor remains about four years of learning. On AI, students who used tools to [[11]] assignment text scored lower unless they were taught to evaluate AI answers. Only about half of students combined digital problem-solving skill with solid [[12]] in core subjects. Policymakers are urged to teach fewer topics in greater [[13]] and to re-engage families."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "hasty"
+        ],
+        "ref": "C",
+        "ev": "The proportion of ‘hasty readers’ — those who skim a passage and select a quick but incorrect answer — has nearly doubled since 2018",
+        "zh": "near-doubling of ___ readers → hasty。"
+       },
+       {
+        "a": [
+         "draft"
+        ],
+        "ref": "E",
+        "ev": "using AI to draft text for writing assignments",
+        "zh": "used tools to ___ assignment text → draft。"
+       },
+       {
+        "a": [
+         "competence",
+         "basics",
+         "foundations"
+        ],
+        "ref": "E",
+        "ev": "combined that digital proficiency with basic competence in science, reading and mathematics",
+        "zh": "solid ___ in core subjects → competence（亦可 basics／foundations，文中 basic competence）。本組無數字答案。"
+       },
+       {
+        "a": [
+         "depth"
+        ],
+        "ref": "F",
+        "ev": "teach fewer topics in greater depth",
+        "zh": "fewer topics in greater ___ → depth。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "assessment",
+     "pos": "n.",
+     "def": "a formal evaluation of knowledge or skills",
+     "zh": "評量／測驗",
+     "example": "PISA is the OECD's flagship international assessment.",
+     "match": [
+      "assessment"
+     ],
+     "src": "L"
+    },
+    {
+     "word": "foundational",
+     "pos": "adj.",
+     "def": "forming the base on which later learning depends",
+     "zh": "基礎的",
+     "example": "Foundational skills in reading unlock every other subject.",
+     "match": [
+      "foundational"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "inter-cycle",
+     "pos": "adj.",
+     "def": "occurring between two successive rounds of a repeated study",
+     "zh": "跨週期的",
+     "example": "It was the largest inter-cycle decline on record.",
+     "match": [
+      "inter-cycle"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "hasty",
+     "pos": "adj.",
+     "def": "done too quickly, without enough care",
+     "zh": "倉促的",
+     "example": "Hasty readers often pick the first plausible option.",
+     "match": [
+      "hasty"
+     ],
+     "src": "L"
+    },
+    {
+     "word": "threshold",
+     "pos": "n.",
+     "def": "a level at which an effect begins or changes",
+     "zh": "門檻",
+     "example": "Beyond a five-hour threshold, device use stops helping.",
+     "match": [
+      "threshold"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "advantaged",
+     "pos": "adj.",
+     "def": "having greater socio-economic resources than others",
+     "zh": "社經優勢的",
+     "example": "Advantaged students still score far ahead of their peers.",
+     "match": [
+      "advantaged"
+     ],
+     "src": "L"
+    },
+    {
+     "word": "eroding",
+     "pos": "v./adj.",
+     "def": "gradually weakening or wearing away",
+     "zh": "侵蝕／逐漸削弱",
+     "example": "Parental involvement is eroding in several systems.",
+     "match": [
+      "eroding"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "caveat",
+     "pos": "n.",
+     "def": "a warning that limits how a claim should be understood",
+     "zh": "但書／保留條件",
+     "example": "AI enters classrooms with important caveats.",
+     "match": [
+      "caveats"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "effortful",
+     "pos": "adj.",
+     "def": "requiring deliberate mental work",
+     "zh": "需費心力的",
+     "example": "Real learning is effortful; tools should not skip the struggle.",
+     "match": [
+      "effortful"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "proficiency",
+     "pos": "n.",
+     "def": "a solid working ability in a skill",
+     "zh": "精熟／熟練程度",
+     "example": "Sixty-four percent reached proficiency in computational problem solving.",
+     "match": [
+      "proficiency",
+      "proficient"
+     ],
+     "src": "L"
+    },
+    {
+     "word": "pedagogical",
+     "pos": "adj.",
+     "def": "relating to teaching methods and practice",
+     "zh": "教學法的",
+     "example": "Teachers need pedagogical skills, not only subject knowledge.",
+     "match": [
+      "pedagogical"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "coherent",
+     "pos": "adj.",
+     "def": "logically consistent and well aligned",
+     "zh": "一致的／連貫的",
+     "example": "Curriculum, teaching and assessment must be coherent.",
+     "match": [
+      "coherent"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "distraction",
+     "pos": "n.",
+     "def": "something that takes attention away from what one should be doing",
+     "zh": "分心／干擾",
+     "example": "Digital distraction in science lessons is widespread.",
+     "match": [
+      "distraction",
+      "distracted"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "moderation",
+     "pos": "n.",
+     "def": "the avoidance of excess; a balanced amount",
+     "zh": "適度",
+     "example": "Digital tools help only when used in moderation.",
+     "match": [
+      "moderation"
+     ],
+     "src": "R"
+    },
+    {
+     "word": "inevitable",
+     "pos": "adj.",
+     "def": "certain to happen and impossible to avoid",
+     "zh": "不可避免的",
+     "example": "Cormann insisted that decline is not inevitable.",
+     "match": [
+      "inevitable"
+     ],
+     "src": "R"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-16-2.mp3",
+    "times": [
+     [
+      0.36,
+      1.09
+     ],
+     [
+      1.31,
+      12.06
+     ],
+     [
+      12.44,
+      14.21
+     ],
+     [
+      14.99,
+      18.41
+     ],
+     [
+      18.68,
+      28.5
+     ],
+     [
+      28.82,
+      38.9
+     ],
+     [
+      39.14,
+      45.59
+     ],
+     [
+      45.99,
+      49.6
+     ],
+     [
+      50.38,
+      53.31
+     ],
+     [
+      53.55,
+      66.03
+     ],
+     [
+      66.41,
+      73.48
+     ],
+     [
+      73.69,
+      83.74
+     ],
+     [
+      84.08,
+      93.55
+     ],
+     [
+      94.33,
+      95.69
+     ],
+     [
+      96.03,
+      103.35
+     ],
+     [
+      103.62,
+      111.56
+     ],
+     [
+      111.88,
+      119.52
+     ],
+     [
+      119.75,
+      126.06
+     ],
+     [
+      126.34,
+      130.5
+     ],
+     [
+      131.28,
+      133.82
+     ],
+     [
+      134.07,
+      141.74
+     ],
+     [
+      142.03,
+      151.23
+     ],
+     [
+      151.44,
+      163.32
+     ],
+     [
+      163.66,
+      177.53
+     ],
+     [
+      178.31,
+      179.74
+     ],
+     [
+      179.93,
+      187.6
+     ],
+     [
+      187.87,
+      196.81
+     ],
+     [
+      197.13,
+      208.73
+     ],
+     [
+      209.04,
+      219.68
+     ],
+     [
+      220.04,
+      221.83
+     ],
+     [
+      222.24,
+      225.45
+     ]
+    ],
+    "duration": 226.1,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-10-16-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
