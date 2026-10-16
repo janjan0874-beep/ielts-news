@@ -1,0 +1,2118 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-17",
+ "date": "2026-10-17",
+ "title": "GPS Collars Map the Jaguar's Highways Across the Americas · New York's Congestion Toll Cuts Fine-Particle Pollution by 13%, Study Finds",
+ "stories": [
+  {
+   "title": "GPS Collars Map the Jaguar's Highways Across the Americas",
+   "topic": "Nature · wildlife corridors",
+   "source": {
+    "name": "Wildlife Conservation Society: New Study Maps Jaguar Corridors Across the Americas (15 Oct 2026)",
+    "url": "https://newsroom.wcs.org/News-Releases/articleType/ArticleView/articleId/26733/New-Study-Maps-Jaguar-Corridors-Across-the-Americas.aspx",
+    "links": [
+     {
+      "name": "EurekAlert! / University of Southern Denmark: Largest-ever jaguar analysis identifies how jaguar populations are connected across the Americas (Global Change Biology, Oct 2026)",
+      "url": "https://www.eurekalert.org/news-releases/1146198"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "The most detailed maps yet of how jaguars travel across the Americas suggest the big cat still has room to roam, but that some of its old routes may already have been cut.",
+     "Here's the report."
+    ],
+    [
+     "The latest study, published this week in the journal Ecosphere, was led by the Wildlife Conservation Society.",
+     "Researchers analysed more than one hundred and thirty-four thousand GPS locations, collected from ninety-nine adult jaguars in five countries.",
+     "According to the team, it is the first assessment across the animal's whole range to rely on real movement data, rather than on expert opinion alone.",
+     "Lead author Harshad Karandikar said connectivity is fundamental to the long-term survival of the species."
+    ],
+    [
+     "So why does movement matter so much?",
+     "Over the last century, jaguars have vanished from more than half of their historic range.",
+     "Scientists blame habitat loss, new roads and other infrastructure, and conflict with people.",
+     "When separate groups of cats can still meet, they keep their genetic diversity, and young animals can disperse to find new territory.",
+     "When they cannot, populations become isolated and more likely to decline."
+    ],
+    [
+     "Among the most striking findings is a long corridor running from northern Bolivia, through the Pantanal and the Paraguay River region, into Paraguay and northern Argentina.",
+     "The study also points to new potential links in Central America.",
+     "Still, it warns that some routes proposed by earlier researchers may no longer match conditions on the ground."
+    ],
+    [
+     "Meanwhile, a second study, released earlier this month in the journal Global Change Biology, reached a similar picture from a larger sample.",
+     "That team, from the universities of Oxford and Southern Denmark, used data from one hundred and seventy-two collared jaguars.",
+     "It identified one vast stronghold spanning parts of the Amazon, the Llanos, the Pantanal and the Chaco, an area of about six and a half million square kilometres in eleven countries.",
+     "Outside that heartland, the picture is far patchier, with serious gaps in Mexico, Central America, Colombia and the Atlantic Forest.",
+     "Professor Samuel Cushman said jaguars are in a stronger position than many other large carnivores.",
+     "But he warned that several regions now depend on relatively narrow connections that could be lost if habitat conversion continues."
+    ],
+    [
+     "There are caveats, though.",
+     "Both teams stress that the corridors are modelled pathways, not confirmed routes.",
+     "The Wildlife Conservation Society says they now need validation in the field, using camera traps, genetic tests, environmental DNA surveys and the knowledge of local people.",
+     "Robin Naidoo of WWF said the maps show where jaguars can move and what barriers stand in their way, but that the real test is what happens on the ground."
+    ],
+    [
+     "Looking ahead, much of the work will happen outside national parks.",
+     "Many of the corridors run through land beyond protected areas, so their future depends on decisions about farming, planning and restoration.",
+     "Luke Hunter, who runs the society's big cats programme, said protecting corridors is not just about jaguars, but about the ecological processes that sustain entire ecosystems.",
+     "That's the wildlife report from the Americas.",
+     "In our next bulletin, we'll look at how camera traps are changing field research."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Mapping jaguar connectivity",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The Ecosphere study"
+       },
+       {
+        "t": "Earlier maps were based mainly on expert [[1]]"
+       },
+       {
+        "h": "Why connections matter"
+       },
+       {
+        "t": "Causes of range loss: habitat loss, infrastructure and [[2]] with humans"
+       },
+       {
+        "t": "Linked groups maintain their genetic [[3]]"
+       },
+       {
+        "t": "Major corridor begins in the north of [[4]] and ends in northern Argentina"
+       },
+       {
+        "h": "The Global Change Biology study"
+       },
+       {
+        "t": "Movement data from [[5]] jaguars"
+       },
+       {
+        "t": "Some regions rely on [[6]] links that may disappear"
+       },
+       {
+        "h": "Limitations and next steps"
+       },
+       {
+        "t": "Corridors still require [[7]] in the field"
+       },
+       {
+        "t": "Methods: [[8]], genetic tests, environmental DNA and local knowledge"
+       },
+       {
+        "t": "Many routes lie outside [[9]] areas"
+       },
+       {
+        "t": "Future depends on choices about farming, planning and [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "opinion",
+         "expert opinion"
+        ],
+        "ref": "rather than on expert opinion alone",
+        "ev": "rely on real movement data, rather than on expert opinion alone",
+        "zh": "based mainly on = rely on；早期地圖靠的是 expert opinion（專家意見），新研究改用真實移動數據。movement data 是新研究的依據，不是答案。"
+       },
+       {
+        "a": [
+         "conflict"
+        ],
+        "ref": "and conflict with people",
+        "ev": "Scientists blame habitat loss, new roads and other infrastructure, and conflict with people.",
+        "zh": "causes = scientists blame；with humans = with people。答案 conflict（人獸衝突）。habitat loss、infrastructure 題幹已給。"
+       },
+       {
+        "a": [
+         "diversity",
+         "genetic diversity"
+        ],
+        "ref": "they keep their genetic diversity",
+        "ev": "they keep their genetic diversity",
+        "zh": "linked groups = separate groups of cats can still meet；maintain = keep；genetic diversity（遺傳多樣性）。"
+       },
+       {
+        "a": [
+         "Bolivia"
+        ],
+        "ref": "running from northern Bolivia",
+        "ev": "a long corridor running from northern Bolivia, through the Pantanal and the Paraguay River region, into Paraguay and northern Argentina",
+        "zh": "begins in the north of = running from northern Bolivia（起點）。Pantanal、Paraguay 是途經地點，Argentina 是終點，都是干擾。"
+       },
+       {
+        "a": [
+         "172"
+        ],
+        "ref": "one hundred and seventy-two collared jaguars",
+        "ev": "used data from one hundred and seventy-two collared jaguars",
+        "zh": "第二項研究（Global Change Biology）用 172 隻戴項圈的美洲豹。ninety-nine（99）是第一項研究的數量；eleven 是國家數，都是干擾。"
+       },
+       {
+        "a": [
+         "narrow",
+         "relatively narrow"
+        ],
+        "ref": "depend on relatively narrow connections",
+        "ev": "several regions now depend on relatively narrow connections that could be lost",
+        "zh": "rely on = depend on；links = connections；may disappear = could be lost。答案 narrow（狹窄的）。"
+       },
+       {
+        "a": [
+         "validation"
+        ],
+        "ref": "they now need validation in the field",
+        "ev": "they now need validation in the field",
+        "zh": "still require = now need；validation in the field（實地驗證）。前一句 modelled pathways 說明它們只是模型推算。"
+       },
+       {
+        "a": [
+         "camera traps",
+         "camera trap"
+        ],
+        "ref": "using camera traps",
+        "ev": "using camera traps, genetic tests, environmental DNA surveys and the knowledge of local people",
+        "zh": "列舉的第一個方法 camera traps（自動相機陷阱）。genetic tests、environmental DNA、local knowledge 題幹已給。"
+       },
+       {
+        "a": [
+         "protected"
+        ],
+        "ref": "beyond protected areas",
+        "ev": "Many of the corridors run through land beyond protected areas",
+        "zh": "lie outside = run through land beyond；protected areas（保護區）。前一句 national parks 是改述線索，但空格後是 areas，要填 protected。"
+       },
+       {
+        "a": [
+         "restoration"
+        ],
+        "ref": "farming, planning and restoration",
+        "ev": "their future depends on decisions about farming, planning and restoration",
+        "zh": "choices = decisions；列舉的最後一項 restoration（棲地復育）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Mapping the Jaguar's Highways",
+    "intro": "Two large tracking studies published in 2026 have produced the most detailed picture yet of how the Americas' largest cat moves between populations, and of where those links are beginning to fail.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "The jaguar (Panthera onca) is the largest cat in the Americas, and its current range stretches from Mexico to northern Argentina. That range, however, is a fraction of what it once was. According to the Wildlife Conservation Society (WCS), habitat loss, fragmentation, infrastructure development and conflict with people have contributed to jaguars disappearing from more than half of their historic range over the last century. As a result, conservationists are paying growing attention not only to how much habitat remains but to whether the remaining patches are linked. Scientists increasingly view this connectivity as essential for maintaining genetic diversity, supporting dispersal, enabling the recolonisation of suitable habitat and helping wildlife adapt to environmental change."
+     },
+     {
+      "label": "B",
+      "text": "Until recently, attempts to map these links had a significant weakness. 'Previous efforts to map connectivity across the jaguar's range relied largely on expert opinion,' says Żaneta Kaszta of the University of Southern Denmark. Two studies published in 2026 have tried to replace judgement with evidence. The first, in the journal Global Change Biology, drew on movement data from 172 GPS-collared jaguars; its first author, Guilherme Costa Alvarenga, is based at the University of Oxford's Wildlife Conservation Research Unit and Brazil's Mamirauá Institute for Sustainable Development. The second, published in Ecosphere in October and led by WCS conservationist Harshad Karandikar, analysed more than 134,000 GPS locations from 99 adult jaguars across five countries. Its authors describe it as the first range-wide assessment of jaguar connectivity based on actual movement data rather than expert opinion alone."
+     },
+     {
+      "label": "C",
+      "text": "The Global Change Biology team identified 307 core living areas that support high levels of predicted jaguar movement, together with 176 corridors linking them. One finding dominated the results. A vast connected landscape spanning parts of the Amazon, Llanos, Pantanal and Chaco regions, covering approximately 6.5 million square kilometres across 11 countries, ranked as the most important core habitat and accounted for the vast majority of predicted movement density. 'Jaguars are in a stronger position than many other large carnivores because they still retain an extensive connected stronghold in South America,' says Samuel Cushman, one of the study's senior authors. That stronghold, however, is only part of the story."
+     },
+     {
+      "label": "D",
+      "text": "Outside this central stronghold, the picture was more fragmented. The researchers identified major connectivity gaps in parts of Mexico, Central America, Colombia and the Atlantic Forest, where many populations appear increasingly isolated, raising concerns about long-term gene flow and population persistence. Cushman warns that several regions now depend on relatively narrow connections that could be lost if habitat conversion continues. The Ecosphere study adds geographical detail. Among its most significant findings was a corridor extending from northern Bolivia through the Pantanal and Paraguay River region into Paraguay and northern Argentina. It also highlighted new potential connections in Central America, while suggesting that some earlier corridor hypotheses may no longer reflect current landscape conditions. Allison Devlin, director of the jaguar programme at the conservation group Panthera, points to the Bi-National Corridor in Honduras and Guatemala and the Amazon-Pantanal Corridor in Brazil as important links, and to Colombia's A2O Corridor as an area that warrants greater conservation efforts."
+     },
+     {
+      "label": "E",
+      "text": "The Global Change Biology team also took a second approach. Rather than starting from existing jaguar populations, it analysed connectivity among 905 protected areas and Indigenous lands, which produced 507 potential corridors. The researchers found the two methods complementary: connectivity based on current populations offered the most realistic representation of present-day conditions, whereas the protected-area analysis revealed opportunities for restoring or maintaining connectivity in the future. The distinction matters because, as the WCS authors note, many of the identified corridors occur outside protected areas. Keeping them open will therefore depend on sustainable land-use planning, restoration efforts and other effective area-based conservation measures, rather than on national parks alone."
+     },
+     {
+      "label": "F",
+      "text": "Both teams are careful about the limits of their work. The corridors are modelled pathways rather than confirmed movement routes, and the WCS researchers say they require field validation through camera trapping, genetic analyses, environmental DNA surveys and local ecological knowledge. 'Connectivity maps show us where jaguars can move and what barriers may stand in their way, but the real test is what happens on the ground,' says Robin Naidoo, lead scientist at WWF-US and a co-author of the Ecosphere paper. For Luke Hunter, who directs the WCS Big Cats Program, the stakes extend beyond a single species: protecting corridors, he argues, is about maintaining the ecological processes that sustain entire ecosystems. The new maps, in other words, may be best understood as a set of hypotheses to be tested rather than a finished plan."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison of two modelling methods that serve different purposes",
+        "a": "E",
+        "ref": "E",
+        "ev": "The researchers found the two methods complementary",
+        "zh": "E 段：以現有族群為起點 vs 以保護區為起點兩種模型互補——一個反映現況、一個指出未來可復育的機會。"
+       },
+       {
+        "q": "a list of the advantages that linked populations provide",
+        "a": "A",
+        "ref": "A",
+        "ev": "essential for maintaining genetic diversity, supporting dispersal, enabling the recolonisation of suitable habitat and helping wildlife adapt to environmental change",
+        "zh": "A 段：connectivity 的好處清單——遺傳多樣性、擴散、重新拓殖、適應環境變化。"
+       },
+       {
+        "q": "a criticism of the evidence that earlier maps were based on",
+        "a": "B",
+        "ref": "B",
+        "ev": "Previous efforts to map connectivity across the jaguar's range relied largely on expert opinion",
+        "zh": "B 段：過去的地圖主要靠專家意見（a significant weakness），新研究用 GPS 數據取代。"
+       },
+       {
+        "q": "a description of the single most important area for jaguar movement",
+        "a": "C",
+        "ref": "C",
+        "ev": "ranked as the most important core habitat and accounted for the vast majority of predicted movement density",
+        "zh": "C 段：亞馬遜—Llanos—Pantanal—Chaco 的巨大連通區，是最重要的核心棲地。"
+       },
+       {
+        "q": "examples of specific named corridors that one expert considers important",
+        "a": "D",
+        "ref": "D",
+        "ev": "points to the Bi-National Corridor in Honduras and Guatemala and the Amazon-Pantanal Corridor in Brazil as important links",
+        "zh": "D 段：Panthera 的 Allison Devlin 點名宏都拉斯—瓜地馬拉雙國廊道、巴西亞馬遜—Pantanal 廊道與哥倫比亞 A2O 廊道。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The Ecosphere study tracked more jaguars than the Global Change Biology study.",
+        "a": "False",
+        "ref": "B",
+        "ev": "analysed more than 134,000 GPS locations from 99 adult jaguars across five countries",
+        "zh": "B 段：Ecosphere 用 99 隻，Global Change Biology 用 172 隻 → 前者較少，與敘述相反，False。134,000 是定位點數、不是隻數（陷阱）。"
+       },
+       {
+        "q": "Jaguars are no longer found in over half of the area they once occupied.",
+        "a": "True",
+        "ref": "A",
+        "ev": "jaguars disappearing from more than half of their historic range over the last century",
+        "zh": "A 段：過去一世紀從超過一半的歷史分布範圍消失 → True（once occupied = historic range）。"
+       },
+       {
+        "q": "Jaguar numbers in the Atlantic Forest are falling faster than in any other region.",
+        "a": "Not Given",
+        "ref": "D",
+        "ev": "The researchers identified major connectivity gaps in parts of Mexico, Central America, Colombia and the Atlantic Forest",
+        "zh": "D 段只說大西洋森林有連通缺口、族群孤立，沒有提族群數量下降速度，更沒有和其他地區比較 → Not Given（典型陷阱：地名有出現，但「最快下降」沒提）。"
+       },
+       {
+        "q": "The researchers consider the corridors they identified to be proven movement routes.",
+        "a": "False",
+        "ref": "F",
+        "ev": "The corridors are modelled pathways rather than confirmed movement routes",
+        "zh": "F 段：是模型推算的路徑，而非已證實的路線（proven = confirmed）→ 相反，False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS AND/OR A NUMBER** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Gaps in the jaguar's network",
+      "lines": [
+       {
+        "t": "Beyond the huge South American [[1]], jaguar populations in several regions seem increasingly cut off, which threatens long-term [[2]] and the survival of those populations. Working from protected areas and Indigenous lands, one team identified [[3]] possible corridors. Since many routes lie outside reserves, their future will rely on sustainable land-use [[4]] and other conservation measures."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "stronghold"
+        ],
+        "ref": "D",
+        "ev": "Outside this central stronghold, the picture was more fragmented.",
+        "zh": "D 段開頭：Outside this central stronghold（核心據點以外）。beyond = outside。"
+       },
+       {
+        "a": [
+         "gene flow"
+        ],
+        "ref": "D",
+        "ev": "raising concerns about long-term gene flow and population persistence",
+        "zh": "D 段：threatens = raising concerns about；gene flow（基因交流）。population persistence 對應題幹 the survival of those populations。"
+       },
+       {
+        "a": [
+         "507"
+        ],
+        "ref": "E",
+        "ev": "it analysed connectivity among 905 protected areas and Indigenous lands, which produced 507 potential corridors",
+        "zh": "E 段：從 905 個保護區與原住民土地出發 → 得到 507 條潛在廊道（possible = potential）。905 是保護區數、176 是第一種方法的廊道數，都是干擾。"
+       },
+       {
+        "a": [
+         "planning"
+        ],
+        "ref": "E",
+        "ev": "Keeping them open will therefore depend on sustainable land-use planning",
+        "zh": "E 段：rely on = depend on；sustainable land-use planning（永續土地利用規劃）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "connectivity",
+     "pos": "n.",
+     "def": "the degree to which separate habitats or populations are linked",
+     "zh": "連通性",
+     "example": "Connectivity is fundamental to the long-term survival of jaguars.",
+     "match": [
+      "connectivity"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "disperse",
+     "pos": "v.",
+     "def": "(of young animals) to move away from where they were born to find new territory",
+     "zh": "擴散；離巢遷移",
+     "example": "Young jaguars can disperse to find new territory.",
+     "match": [
+      "disperse"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "isolated",
+     "pos": "adj.",
+     "def": "cut off from other groups of the same kind",
+     "zh": "孤立的；隔絕的",
+     "example": "When cats cannot meet, populations become isolated.",
+     "match": [
+      "isolated"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "corridor",
+     "pos": "n.",
+     "def": "a strip of habitat that allows animals to move between larger areas",
+     "zh": "（生態）廊道",
+     "example": "A long corridor runs from northern Bolivia into Argentina.",
+     "match": [
+      "corridor",
+      "corridors"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "stronghold",
+     "pos": "n.",
+     "def": "an area where a species is still common and secure",
+     "zh": "大本營；主要棲息地",
+     "example": "One vast stronghold spans the Amazon and the Pantanal.",
+     "match": [
+      "stronghold"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "carnivore",
+     "pos": "n.",
+     "def": "an animal that eats meat",
+     "zh": "肉食動物",
+     "example": "Jaguars are better placed than many other large carnivores.",
+     "match": [
+      "carnivores"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "caveat",
+     "pos": "n.",
+     "def": "a warning that limits how a statement should be understood",
+     "zh": "但書；保留說明",
+     "example": "There are caveats, though: the corridors are only models.",
+     "match": [
+      "caveats"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "validation",
+     "pos": "n.",
+     "def": "the process of checking that something is correct or accurate",
+     "zh": "驗證",
+     "example": "The corridors now need validation in the field.",
+     "match": [
+      "validation"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "fragmentation",
+     "pos": "n.",
+     "def": "the breaking up of a habitat into smaller, separated pieces",
+     "zh": "（棲地）破碎化",
+     "example": "Habitat loss and fragmentation have shrunk the jaguar's range.",
+     "match": [
+      "fragmentation"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "recolonisation",
+     "pos": "n.",
+     "def": "the return of a species to an area where it had disappeared",
+     "zh": "重新拓殖；重新定居",
+     "example": "Connectivity enables the recolonisation of suitable habitat.",
+     "match": [
+      "recolonisation"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "hypothesis",
+     "pos": "n.",
+     "def": "an idea or explanation that has not yet been proved and needs testing",
+     "zh": "假說（複數 hypotheses）",
+     "example": "The new maps are best understood as hypotheses to be tested.",
+     "match": [
+      "hypotheses"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "gene flow",
+     "pos": "n.",
+     "def": "the transfer of genetic material between populations through breeding",
+     "zh": "基因交流",
+     "example": "Isolation raises concerns about long-term gene flow.",
+     "match": [
+      "gene flow"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "persistence",
+     "pos": "n.",
+     "def": "the continued existence of something over time",
+     "zh": "存續；持續存在",
+     "example": "Narrow links put population persistence at risk.",
+     "match": [
+      "persistence"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "complementary",
+     "pos": "adj.",
+     "def": "different but useful together because each adds what the other lacks",
+     "zh": "互補的",
+     "example": "The researchers found the two methods complementary.",
+     "match": [
+      "complementary"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "warrant",
+     "pos": "v.",
+     "def": "to make a particular action necessary or justified",
+     "zh": "值得；使有正當理由",
+     "example": "Colombia's A2O Corridor warrants greater conservation efforts.",
+     "match": [
+      "warrants"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-17-1.mp3",
+    "times": [
+     [
+      0.36,
+      0.98
+     ],
+     [
+      1.2,
+      9.64
+     ],
+     [
+      10.02,
+      10.99
+     ],
+     [
+      11.77,
+      17.78
+     ],
+     [
+      18.05,
+      26.27
+     ],
+     [
+      26.59,
+      34.61
+     ],
+     [
+      34.85,
+      40.45
+     ],
+     [
+      41.23,
+      43.2
+     ],
+     [
+      43.69,
+      48.2
+     ],
+     [
+      48.44,
+      54.05
+     ],
+     [
+      54.35,
+      61.37
+     ],
+     [
+      61.58,
+      65.65
+     ],
+     [
+      66.43,
+      75.5
+     ],
+     [
+      75.8,
+      79.32
+     ],
+     [
+      79.54,
+      85.38
+     ],
+     [
+      86.16,
+      93.81
+     ],
+     [
+      94.13,
+      100.79
+     ],
+     [
+      101.03,
+      111.55
+     ],
+     [
+      111.91,
+      120.17
+     ],
+     [
+      120.5,
+      125.8
+     ],
+     [
+      126.16,
+      132.91
+     ],
+     [
+      133.69,
+      135.11
+     ],
+     [
+      135.3,
+      139.49
+     ],
+     [
+      139.75,
+      150.15
+     ],
+     [
+      150.46,
+      158.86
+     ],
+     [
+      159.64,
+      163.29
+     ],
+     [
+      163.56,
+      171.15
+     ],
+     [
+      171.47,
+      181.64
+     ],
+     [
+      181.87,
+      184.21
+     ],
+     [
+      184.49,
+      188.82
+     ]
+    ],
+    "duration": 189.5,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-10-17-1-words/"
+   }
+  },
+  {
+   "title": "New York's Congestion Toll Cuts Fine-Particle Pollution by 13%, Study Finds",
+   "topic": "Transport · congestion pricing",
+   "source": {
+    "name": "Columbia Climate School, State of the Planet: Study Links NYC Congestion Pricing Policy to Cleaner Air in Lower Manhattan (7 Oct 2026)",
+    "url": "https://news.climate.columbia.edu/2026/10/07/study-nyc-congestion-pricing-air-quality/",
+    "links": [
+     {
+      "name": "VTI (Swedish National Road and Transport Research Institute): Transport economics – how to influence traffic (7 Oct 2026)",
+      "url": "https://www.vti.se/en/archives/news/archives/2026-10-07-transport-economics---how-to-influence-traffic"
+     },
+     {
+      "name": "Office of the Governor of New York: first-anniversary results of congestion pricing (Jan 2026)",
+      "url": "https://www.governor.ny.gov/news/less-traffic-better-transit-its-first-anniversary-governor-hochul-celebrates-transformational"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Our lead story from the city desk.",
+     "New York's charge on drivers entering central Manhattan has cut fine-particle pollution inside the zone by about thirteen per cent, according to the first full-year study of the scheme.",
+     "Here's the report."
+    ],
+    [
+     "The toll began in January last year and applies to most vehicles heading into Manhattan south of Sixtieth Street.",
+     "It is the first programme of its kind in the United States, and the money it raises goes to public transport.",
+     "Researchers at Columbia University's Lamont-Doherty Earth Observatory examined readings from fifteen monitoring sites, hourly traffic counts from two major tunnels, and satellite images."
+    ],
+    [
+     "The headline figure needs some care.",
+     "Pollution had already been falling across the region, partly because of the weather and partly because of other policies.",
+     "So the team compared sites inside the zone with sites outside it.",
+     "After those adjustments, fine particles inside the zone were roughly thirteen per cent lower than expected.",
+     "That closely tracks the eleven per cent fall in vehicles entering the zone.",
+     "The data also showed fewer sharp spikes in pollution during the rush hour."
+    ],
+    [
+     "Study co-author Daniel Westervelt said that, for the most part, the programme appears to be working.",
+     "In his words, it reduced particulate pollution by a modest amount.",
+     "That is a more cautious figure than some earlier claims.",
+     "A study from Cornell University, cited by New York's governor in January, had put the fall at twenty-two per cent.",
+     "By contrast, the Columbia team removed regional trends that had nothing to do with the toll."
+    ],
+    [
+     "Meanwhile, critics had warned that traffic and fumes would simply move elsewhere.",
+     "Two monitoring sites just outside the zone did record a small rise, but it was not statistically significant.",
+     "One was near the Brooklyn Queens Expressway, and the other was in Mott Haven, in the Bronx.",
+     "Mr Westervelt said it would be premature to say there were definitely increases caused by the policy.",
+     "Satellites showed nitrogen dioxide falling by more than twenty per cent across the metropolitan area, though the researchers could not link that wider drop to the charge."
+    ],
+    [
+     "Still, other cities are watching closely.",
+     "First author Polina Goldberg, who began the work as an undergraduate intern, said other cities had been waiting to see what happens in New York before considering anything similar.",
+     "Stockholm offers a longer view.",
+     "Its congestion tax was introduced twenty years ago, and Swedish researchers say its effect on traffic is now greater than it was at the start.",
+     "Professor Maria Borjesson of the Swedish transport research institute VTI says people simply need time to adapt.",
+     "Her team's study of registry data found that most drivers pay only small amounts, and that commuters who cross the charging cordon pay almost twice as much as other commuters.",
+     "Even so, the gap averages less than two hundred kronor, the cost of just a few trips a year."
+    ],
+    [
+     "There are limits to the evidence, though.",
+     "The New York study did not measure health effects, and the authors say longer-term work, covering more pollutants, is needed to show whether the gains will last.",
+     "That's the transport report.",
+     "Next time, we'll ask whether other big cities are ready to follow."
+    ]
+   ],
+   "listening": {
+    "minutes": 0,
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Congestion charging: New York and Stockholm",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "New York's toll"
+       },
+       {
+        "t": "Income from the charge funds [[1]]"
+       },
+       {
+        "t": "Data sources included hourly vehicle counts at two [[2]]"
+       },
+       {
+        "h": "Measuring the effect"
+       },
+       {
+        "t": "Pollution already dropping, partly due to the [[3]]"
+       },
+       {
+        "t": "Fewer pollution [[4]] at the busiest times of day"
+       },
+       {
+        "t": "Westervelt: the reduction was [[5]]"
+       },
+       {
+        "t": "Earlier estimate from Cornell: a [[6]] % fall"
+       },
+       {
+        "h": "Concerns and wider evidence"
+       },
+       {
+        "t": "Slight increase at two nearby sites — not statistically [[7]]"
+       },
+       {
+        "t": "Drop in nitrogen dioxide across the [[8]] area not linked to the toll"
+       },
+       {
+        "t": "Stockholm: impact on traffic now [[9]] than at launch"
+       },
+       {
+        "t": "Analysis of [[10]] data: most drivers pay little"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "public transport",
+         "transport"
+        ],
+        "ref": "goes to public transport",
+        "ev": "the money it raises goes to public transport",
+        "zh": "income = the money it raises；funds = goes to。答案 public transport（大眾運輸）。"
+       },
+       {
+        "a": [
+         "tunnels",
+         "major tunnels"
+        ],
+        "ref": "two major tunnels",
+        "ev": "hourly traffic counts from two major tunnels",
+        "zh": "hourly vehicle counts = hourly traffic counts；at two ___ → two major tunnels。fifteen monitoring sites 與 satellite images 是另兩種資料。"
+       },
+       {
+        "a": [
+         "weather"
+        ],
+        "ref": "partly because of the weather",
+        "ev": "partly because of the weather and partly because of other policies",
+        "zh": "already dropping = had already been falling；partly due to = partly because of the weather。other policies 是另一個原因，但空格前有 the，只能填 weather。"
+       },
+       {
+        "a": [
+         "spikes",
+         "sharp spikes"
+        ],
+        "ref": "fewer sharp spikes in pollution",
+        "ev": "fewer sharp spikes in pollution during the rush hour",
+        "zh": "busiest times of day = the rush hour；答案 spikes（尖峰、驟升）。"
+       },
+       {
+        "a": [
+         "modest"
+        ],
+        "ref": "by a modest amount",
+        "ev": "it reduced particulate pollution by a modest amount",
+        "zh": "Westervelt 說減少幅度是 modest（不大、適度的）。注意 cautious 是主播的評論、不是他的原話。"
+       },
+       {
+        "a": [
+         "22",
+         "twenty-two"
+        ],
+        "ref": "put the fall at twenty-two per cent",
+        "ev": "had put the fall at twenty-two per cent",
+        "zh": "Cornell 先前的估計是 22%。thirteen（13%）是 Columbia 的結果、eleven（11%）是車流下降、twenty（NO2 超過 20%）都是干擾。"
+       },
+       {
+        "a": [
+         "significant"
+        ],
+        "ref": "it was not statistically significant",
+        "ev": "did record a small rise, but it was not statistically significant",
+        "zh": "slight increase = small rise；two nearby sites = two monitoring sites just outside the zone。statistically significant（統計上顯著）。"
+       },
+       {
+        "a": [
+         "metropolitan"
+        ],
+        "ref": "across the metropolitan area",
+        "ev": "nitrogen dioxide falling by more than twenty per cent across the metropolitan area",
+        "zh": "drop = falling；not linked = could not link。答案 metropolitan（大都會區的）。"
+       },
+       {
+        "a": [
+         "greater"
+        ],
+        "ref": "its effect on traffic is now greater",
+        "ev": "its effect on traffic is now greater than it was at the start",
+        "zh": "impact = effect；at launch = at the start。答案 greater（更大）——很多人以為效果會變弱，正好相反。"
+       },
+       {
+        "a": [
+         "registry"
+        ],
+        "ref": "study of registry data",
+        "ev": "Her team's study of registry data found that most drivers pay only small amounts",
+        "zh": "analysis = study；registry data（登記／行政資料）。most drivers pay little = pay only small amounts。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Paying to Drive: What Congestion Charges Reveal",
+    "intro": "A year of data from New York and two decades of experience in Stockholm suggest that road pricing works, but measuring exactly how well it works is harder than it looks.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Charging drivers to enter a crowded city centre is one of the oldest ideas in transport economics, yet it remains politically contentious. Stockholm introduced its congestion tax 20 years ago. New York followed with the Central Business District Tolling Program, which took effect on 5 January 2025 and is the first congestion pricing programme in the United States. It charges most vehicles entering Manhattan south of 60th Street, with the twin aims of reducing traffic and generating revenue for public transit. Because other cities are considering similar schemes, the evidence emerging from both places is being followed closely."
+     },
+     {
+      "label": "B",
+      "text": "The headline figures released by New York State on the programme's first anniversary were striking. According to the governor's office, 27 million fewer vehicles entered the Congestion Relief Zone during the first year, an average reduction of 11 per cent, or more than 73,000 vehicles a day. Morning rush-hour speeds at crossings into the zone rose by an average of 23 per cent, and bus speeds within it increased by 2.3 per cent, reversing a decline seen in 2023 and 2024. Crashes in the zone fell by 7 per cent and traffic injuries by 8 per cent, while vehicle noise complaints dropped by 17 per cent. The scheme generated over $550 million in net revenue, allowing the Metropolitan Transportation Authority to proceed with $15 billion in transit improvements."
+     },
+     {
+      "label": "C",
+      "text": "Air quality, however, is harder to measure than traffic. A study by researchers at Columbia University's Lamont-Doherty Earth Observatory, published in Environmental Science & Technology Letters, is among the first year-long assessments of the scheme. The team analysed ground-level measurements from 15 sites in the city's Community Air Survey network, hourly traffic counts from the Queens Midtown and Brooklyn Battery tunnels, and satellite observations of nitrogen dioxide. While daily traffic patterns remained similar, vehicle numbers during the morning and evening rush hours fell. All six representative monitoring sites examined in detail recorded lower median concentrations of fine particles (PM2.5) in 2025 than in 2022–2024. The largest decrease, about 2.7 micrograms per cubic metre, was at Broadway and 35th Street in midtown Manhattan; the smallest was at Queens College, the site farthest from the zone, where the change was not statistically significant."
+     },
+     {
+      "label": "D",
+      "text": "Raw declines, though, cannot simply be credited to the toll, since PM2.5 had been falling across the region for seasonal and policy reasons. The researchers therefore compared sites inside the zone with those outside it while controlling for weather and seasonal effects. On this basis, concentrations inside the zone were about 1.3 to 1.4 micrograms per cubic metre, or roughly 13 per cent, lower than expected. This is smaller than the largest site-level falls because it reflects only the share of the improvement attributable to the programme, and it is notably more conservative than a Cornell University estimate, cited by the governor, of a 22 per cent drop. The team also examined a possible rise of about 0.5 micrograms per cubic metre at two sites just outside the zone, but this did not meet conventional levels of statistical significance. Similarly, nitrogen dioxide fell by more than 20 per cent across the metropolitan area compared with a 2018–2024 baseline, yet the difference between lower Manhattan and other boroughs was too small to attribute that decline to congestion pricing."
+     },
+     {
+      "label": "E",
+      "text": "Stockholm offers a longer perspective. According to Maria Börjesson, a professor at the Swedish National Road and Transport Research Institute (VTI), the charge's effect on traffic is greater now than it was two decades ago, which surprised many who had expected it to fade; people, she says, need time to adapt to changes. With her colleague Nanna Fukushima, she has used registry data, rather than questionnaires, to examine who actually pays. The results challenge common assumptions: the vast majority pay only small amounts, few pay several times a week, and differences between income groups are small, although differences between individuals within the same income group are large. Commuters who cross the charging cordon pay almost twice as much as other commuters, but the difference averages less than SEK 200. The pair's research on the city's referendum found a clear correlation between car ownership and opposition to the tax, but no clear link with left–right politics."
+     },
+     {
+      "label": "F",
+      "text": "Underlying these schemes is what economists call the marginal-cost principle. Each extra journey imposes costs on others, such as congestion, emissions, wear and tear, noise and accident risk, and these undesirable consequences are known as externalities. In theory, a fee should match the cost of those external effects, no more and no less. Sweden's parliament has formally adopted the principle, but Börjesson notes that in practice decisions are often governed by what is considered politically possible. Her broader conclusion is that economic instruments often have a greater effect than investing in new roads or railways. 'We cannot simply build our way out of congestion and other transport problems,' she says. Whether New York's early gains prove durable remains an open question: the Columbia study did not evaluate health benefits, and its authors say longer-term analyses will be needed."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "an explanation of why one pollution estimate is lower than the raw measurements",
+        "a": "D",
+        "ref": "D",
+        "ev": "it reflects only the share of the improvement attributable to the programme",
+        "zh": "D 段：13% 小於個別測站的最大降幅，因為只計算「可歸因於收費」的部分。"
+       },
+       {
+        "q": "a finding about how payments differ among people with similar incomes",
+        "a": "E",
+        "ref": "E",
+        "ev": "differences between individuals within the same income group are large",
+        "zh": "E 段：不同所得組之間差異小，但同一所得組內的個人差異很大。"
+       },
+       {
+        "q": "a rule stating how large a charge should ideally be",
+        "a": "F",
+        "ref": "F",
+        "ev": "In theory, a fee should match the cost of those external effects, no more and no less.",
+        "zh": "F 段：邊際成本原則——費用應等於外部成本，不多也不少。"
+       },
+       {
+        "q": "a reference to faster journeys for public buses",
+        "a": "B",
+        "ref": "B",
+        "ev": "bus speeds within it increased by 2.3 per cent",
+        "zh": "B 段：收費區內公車速度提升 2.3%，扭轉 2023–2024 年的下降趨勢。"
+       },
+       {
+        "q": "details of where the greatest and smallest falls in pollution were recorded",
+        "a": "C",
+        "ref": "C",
+        "ev": "The largest decrease, about 2.7 micrograms per cubic metre, was at Broadway and 35th Street",
+        "zh": "C 段：最大降幅在 Broadway & 35th Street，最小在離收費區最遠的 Queens College。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The influence of Stockholm's charge on traffic has weakened since it was introduced.",
+        "a": "False",
+        "ref": "E",
+        "ev": "the charge's effect on traffic is greater now than it was two decades ago",
+        "zh": "E 段：效果比二十年前更大，與「減弱」相反 → False。"
+       },
+       {
+        "q": "In Stockholm, car owners were more likely than others to oppose the tax.",
+        "a": "True",
+        "ref": "E",
+        "ev": "a clear correlation between car ownership and opposition to the tax",
+        "zh": "E 段：擁有汽車與反對收費明顯相關 → True。"
+       },
+       {
+        "q": "The Columbia researchers concluded that the toll's health benefits outweigh its costs.",
+        "a": "Not Given",
+        "ref": "F",
+        "ev": "the Columbia study did not evaluate health benefits",
+        "zh": "F 段：Columbia 研究根本沒有評估健康效益，也沒有成本比較 → 文中無此資訊，Not Given（不是 False：文章沒有說效益「小於」成本）。"
+       },
+       {
+        "q": "Most Stockholm drivers pay the charge several times every week.",
+        "a": "False",
+        "ref": "E",
+        "ev": "the vast majority pay only small amounts, few pay several times a week",
+        "zh": "E 段：絕大多數只付少量，每週付好幾次的人很少 → 相反，False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "The economics behind road pricing",
+      "lines": [
+       {
+        "t": "The unwanted side effects of an additional journey, such as noise and the risk of accidents, are referred to as [[1]]. Ideally, a charge should be equal to the cost of these effects. Although Sweden's [[2]] has officially accepted this idea, choices are frequently shaped by what is seen as politically [[3]]. Börjesson believes that pricing tools often achieve more than spending on new roads or [[4]]."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "externalities"
+        ],
+        "ref": "F",
+        "ev": "these undesirable consequences are known as externalities",
+        "zh": "F 段：unwanted side effects = undesirable consequences；referred to as = known as；externalities（外部性）。"
+       },
+       {
+        "a": [
+         "parliament"
+        ],
+        "ref": "F",
+        "ev": "Sweden's parliament has formally adopted the principle",
+        "zh": "F 段：officially accepted = formally adopted；答案 parliament（國會）。"
+       },
+       {
+        "a": [
+         "possible"
+        ],
+        "ref": "F",
+        "ev": "decisions are often governed by what is considered politically possible",
+        "zh": "F 段：choices = decisions；shaped by = governed by；seen as = considered；politically possible（政治上可行）。"
+       },
+       {
+        "a": [
+         "railways",
+         "railway"
+        ],
+        "ref": "F",
+        "ev": "economic instruments often have a greater effect than investing in new roads or railways",
+        "zh": "F 段：pricing tools = economic instruments；achieve more = have a greater effect；spending on = investing in → new roads or railways。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "toll",
+     "pos": "n.",
+     "def": "a fee charged for using a road, bridge or tunnel",
+     "zh": "通行費",
+     "example": "The toll applies to most vehicles entering lower Manhattan.",
+     "match": [
+      "toll"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "particulate",
+     "pos": "adj.",
+     "def": "consisting of very small separate particles",
+     "zh": "微粒的；顆粒狀的",
+     "example": "The toll reduced particulate pollution by a modest amount.",
+     "match": [
+      "particulate"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "spike",
+     "pos": "n.",
+     "def": "a sudden, sharp increase in a level or amount",
+     "zh": "驟升；尖峰",
+     "example": "There were fewer sharp spikes in pollution during the rush hour.",
+     "match": [
+      "spikes"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "statistically significant",
+     "pos": "adj.",
+     "def": "large enough that it is unlikely to be due to chance",
+     "zh": "統計上顯著的",
+     "example": "The small rise outside the zone was not statistically significant.",
+     "match": [
+      "statistically significant"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "premature",
+     "pos": "adj.",
+     "def": "happening or done too early, before there is enough evidence",
+     "zh": "過早的；言之過早",
+     "example": "It would be premature to blame the policy for the increase.",
+     "match": [
+      "premature"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "cordon",
+     "pos": "n.",
+     "def": "a line or boundary around an area that controls entry",
+     "zh": "警戒線；（收費）邊界",
+     "example": "Commuters who cross the charging cordon pay more.",
+     "match": [
+      "cordon"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "registry",
+     "pos": "n.",
+     "def": "an official record or database kept by an authority",
+     "zh": "登記資料；登記處",
+     "example": "The study used registry data rather than questionnaires.",
+     "match": [
+      "registry"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "contentious",
+     "pos": "adj.",
+     "def": "likely to cause disagreement or argument",
+     "zh": "有爭議的",
+     "example": "Road pricing remains politically contentious.",
+     "match": [
+      "contentious"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "attributable",
+     "pos": "adj.",
+     "def": "able to be explained as caused by a particular thing",
+     "zh": "可歸因於…的",
+     "example": "Only part of the improvement is attributable to the programme.",
+     "match": [
+      "attributable"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "conservative",
+     "pos": "adj.",
+     "def": "(of an estimate) cautious and deliberately low",
+     "zh": "（估計）保守的",
+     "example": "Columbia's figure is more conservative than Cornell's.",
+     "match": [
+      "conservative"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "baseline",
+     "pos": "n.",
+     "def": "a starting point used for comparison",
+     "zh": "基準線；比較基準",
+     "example": "NO2 fell compared with a 2018–2024 baseline.",
+     "match": [
+      "baseline"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "correlation",
+     "pos": "n.",
+     "def": "a connection between two things in which one changes with the other",
+     "zh": "相關性",
+     "example": "There was a clear correlation between car ownership and opposition.",
+     "match": [
+      "correlation"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "externality",
+     "pos": "n.",
+     "def": "a cost or benefit that affects people who did not choose to incur it",
+     "zh": "外部性",
+     "example": "Noise and emissions are externalities of driving.",
+     "match": [
+      "externalities"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "instrument",
+     "pos": "n.",
+     "def": "a means, such as a tax or rule, used to achieve a policy goal",
+     "zh": "（政策）工具",
+     "example": "Economic instruments often beat building new roads.",
+     "match": [
+      "instruments"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "durable",
+     "pos": "adj.",
+     "def": "able to last for a long time",
+     "zh": "持久的",
+     "example": "It is not yet clear whether the gains will prove durable.",
+     "match": [
+      "durable"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-17-2.mp3",
+    "times": [
+     [
+      0.36,
+      2.2
+     ],
+     [
+      2.46,
+      11.49
+     ],
+     [
+      11.87,
+      12.92
+     ],
+     [
+      13.7,
+      19.35
+     ],
+     [
+      19.62,
+      25.12
+     ],
+     [
+      25.44,
+      35.08
+     ],
+     [
+      35.86,
+      37.72
+     ],
+     [
+      37.96,
+      43.96
+     ],
+     [
+      44.29,
+      47.76
+     ],
+     [
+      48.01,
+      53.54
+     ],
+     [
+      53.83,
+      57.74
+     ],
+     [
+      57.95,
+      61.86
+     ],
+     [
+      62.64,
+      67.88
+     ],
+     [
+      68.19,
+      72.03
+     ],
+     [
+      72.25,
+      75.12
+     ],
+     [
+      75.39,
+      81.74
+     ],
+     [
+      82.06,
+      86.92
+     ],
+     [
+      87.7,
+      91.88
+     ],
+     [
+      92.16,
+      98.1
+     ],
+     [
+      98.43,
+      103.44
+     ],
+     [
+      103.69,
+      108.6
+     ],
+     [
+      108.89,
+      117.18
+     ],
+     [
+      117.96,
+      120.46
+     ],
+     [
+      120.68,
+      129.97
+     ],
+     [
+      130.36,
+      132.22
+     ],
+     [
+      132.41,
+      139.51
+     ],
+     [
+      139.78,
+      146.09
+     ],
+     [
+      146.4,
+      155.16
+     ],
+     [
+      155.48,
+      160.76
+     ],
+     [
+      161.54,
+      163.56
+     ],
+     [
+      163.89,
+      171.7
+     ],
+     [
+      172.02,
+      173.52
+     ],
+     [
+      173.9,
+      177.51
+     ]
+    ],
+    "duration": 178.2,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-17-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
