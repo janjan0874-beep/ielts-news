@@ -1,0 +1,2180 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-18",
+ "date": "2026-10-18",
+ "title": "Forest Soils Are Absorbing More Methane, a 24-Year German Study Finds · WTO Raises Goods-Trade Forecast on AI Boom, but Services and Regions Diverge",
+ "stories": [
+  {
+   "title": "Forest Soils Are Absorbing More Methane, a 24-Year German Study Finds",
+   "topic": "Nature · forest soils & methane",
+   "source": {
+    "name": "ScienceDaily / University of Göttingen: A 24-year study uncovers a surprising climate benefit beneath forests (17 Oct 2026)",
+    "url": "https://www.sciencedaily.com/releases/2026/10/261014015525.htm",
+    "links": [
+     {
+      "name": "Agricultural and Forest Meteorology (Lang, Gartiser, Hartmann, Maier): Trend analysis of methane uptake in 13 forest soils",
+      "url": "https://doi.org/10.1016/j.agrformet.2025.110823"
+     },
+     {
+      "name": "Phys.org: Forest soils increasingly extract methane from the atmosphere, long-term study reveals",
+      "url": "https://phys.org/news/2026-02-forest-soils-methane-atmosphere-term.html"
+     },
+     {
+      "name": "University of Göttingen press release No. 10 (28 Jan 2026)",
+      "url": "https://www.uni-goettingen.de/en/135974.html?id=8075"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead story from the environment desk.",
+     "Forest soils in Germany are taking more methane out of the air each year, and a warmer, drier climate appears to be helping.",
+     "Here's the report."
+    ],
+    [
+     "Methane is a potent greenhouse gas.",
+     "Microorganisms living in the soil can break it down before it builds up in the atmosphere.",
+     "Forest soils are considered the most important land-based methane sinks.",
+     "Until now, though, long-term evidence on how that process responds to climate change has been thin, because few sites have been measured continuously for years."
+    ],
+    [
+     "Researchers at the University of Göttingen and the Baden-Württemberg Forest Research Institute have analysed what they describe as the world's most comprehensive collection of such measurements.",
+     "The data come from thirteen forest sites in south-west Germany, some of them observed for up to twenty-four years.",
+     "They were gathered through a long-running soil gas programme run by the institute."
+    ],
+    [
+     "The team did not rely on a single technique.",
+     "Every two weeks, researchers collected air samples through thin tubes installed beneath the ground, at different depths, then analysed them in a laboratory.",
+     "To check those results, they also placed airtight chambers on the soil surface and tracked how the gas changed inside.",
+     "The findings appear in the journal Agricultural and Forest Meteorology."
+    ],
+    [
+     "The headline result is steady.",
+     "Averaged across the sites, methane uptake rose by about three per cent a year.",
+     "The pattern was not identical everywhere, though, and absorption varied considerably between locations.",
+     "Even so, the overall direction was clear.",
+     "Over the same period, annual precipitation and soil moisture fell, while soil temperatures rose."
+    ],
+    [
+     "The researchers link the trend to declining precipitation and warmer soils.",
+     "Drier soil contains more air-filled pores, so methane can travel deeper into the ground.",
+     "Once it arrives, microorganisms use it as an energy source, and higher temperatures can speed up their activity.",
+     "Put simply, the gas gets in more easily, and it is consumed more quickly."
+    ],
+    [
+     "The finding cuts against earlier work.",
+     "The largest previous study, from the United States, reported methane uptake falling by as much as eighty per cent, and blamed increasing rainfall.",
+     "Several international reviews have also concluded that uptake by forest soils is declining.",
+     "In short, wet soil blocks the gas, while dry soil lets it in.",
+     "That is a very different picture from the one those studies painted."
+    ],
+    [
+     "Professor Martin Maier, who led the study, said the long-term data show that climate change does not necessarily reduce how much methane forest soils absorb.",
+     "He added that measurements taken over many years, together with monitoring programmes, are indispensable for judging its real effects.",
+     "Shorter studies, or analyses that mix very different environments, may miss gradual changes of this kind."
+    ],
+    [
+     "The authors add that climate projections need reliable predictions of rainfall, because local precipitation drives the trend.",
+     "Still, the team stresses that this does not mean climate change is beneficial for forests overall.",
+     "The effects depend on local temperature, rainfall patterns and soil conditions.",
+     "There are limits to the finding, too, because the measurements come from one region of Germany.",
+     "That's the environment report. Stay with us for the news at the top of the hour."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Forest soils and methane: a long-term German study",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The study"
+       },
+       {
+        "t": "Records gathered at 13 separate forest [[1]] in south-west Germany"
+       },
+       {
+        "t": "Air drawn through thin [[2]] installed underground and tested in a laboratory"
+       },
+       {
+        "t": "Second check: sealed [[3]] placed on the ground"
+       },
+       {
+        "h": "Findings"
+       },
+       {
+        "t": "Average yearly rise in methane uptake: [[4]] %"
+       },
+       {
+        "t": "In drier soil, methane enters easily because there are more air-filled [[5]]"
+       },
+       {
+        "t": "Microbes consume methane as a source of [[6]]"
+       },
+       {
+        "t": "Rising temperatures increase microbial [[7]]"
+       },
+       {
+        "h": "Wider context"
+       },
+       {
+        "t": "A US study explained falling uptake by heavier [[8]]"
+       },
+       {
+        "t": "Maier: judging real effects needs long-term [[9]] programmes"
+       },
+       {
+        "t": "Researchers stress that warming is not [[10]] for forests as a whole"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "sites",
+         "plots"
+        ],
+        "ref": "The data come from thirteen forest sites",
+        "ev": "The data come from thirteen forest sites in south-west Germany",
+        "zh": "records gathered at 13 separate = The data come from thirteen；答案 sites。注意 twenty-four years 與 thirteen 是兩個數字，題目問的是地點單位。"
+       },
+       {
+        "a": [
+         "tubes"
+        ],
+        "ref": "through thin tubes installed beneath the ground",
+        "ev": "collected air samples through thin tubes installed beneath the ground",
+        "zh": "drawn through = collected through；underground = beneath the ground。答案 tubes（細管）。"
+       },
+       {
+        "a": [
+         "chambers"
+        ],
+        "ref": "airtight chambers on the soil surface",
+        "ev": "placed airtight chambers on the soil surface",
+        "zh": "second check = To check those results；sealed = airtight；答案 chambers（氣室）。"
+       },
+       {
+        "a": [
+         "3",
+         "three"
+        ],
+        "ref": "rose by about three per cent a year",
+        "ev": "methane uptake rose by about three per cent a year",
+        "zh": "答案 three（3）。干擾：後面美國研究的 eighty per cent 是『下降』，不是德國研究的平均年增幅。"
+       },
+       {
+        "a": [
+         "pores"
+        ],
+        "ref": "more air-filled pores",
+        "ev": "Drier soil contains more air-filled pores",
+        "zh": "easily enters = can travel deeper。答案 pores（孔隙）。"
+       },
+       {
+        "a": [
+         "energy"
+        ],
+        "ref": "use it as an energy source",
+        "ev": "microorganisms use it as an energy source",
+        "zh": "consume as a source of = use as an ... source。答案 energy。"
+       },
+       {
+        "a": [
+         "activity"
+        ],
+        "ref": "speed up their activity",
+        "ev": "higher temperatures can speed up their activity",
+        "zh": "increase = speed up；microbial = microorganisms'。答案 activity。"
+       },
+       {
+        "a": [
+         "rainfall"
+        ],
+        "ref": "blamed increasing rainfall",
+        "ev": "and blamed increasing rainfall",
+        "zh": "explained = blamed；heavier = increasing。答案 rainfall。注意前面講稿用的是 precipitation（德國研究），美國研究怪罪的是 rainfall。"
+       },
+       {
+        "a": [
+         "monitoring"
+        ],
+        "ref": "together with monitoring programmes",
+        "ev": "together with monitoring programmes",
+        "zh": "long-term ___ programmes → monitoring programmes（監測計畫）。"
+       },
+       {
+        "a": [
+         "beneficial"
+        ],
+        "ref": "is beneficial for forests overall",
+        "ev": "does not mean climate change is beneficial for forests overall",
+        "zh": "not ___ for forests as a whole = not beneficial for forests overall。答案是形容詞 beneficial。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Breathing Underground: What Forest Soils Reveal About Methane",
+    "intro": "A 24-year record from German forests challenges the assumption that a changing climate must weaken the soil's methane filter.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Methane is a potent greenhouse gas, and its accumulation in the atmosphere contributes to global warming. Fortunately, microorganisms living in the soil can break it down before it builds up, and forest soils are considered the most important terrestrial methane sinks. Understanding how this natural filter responds to a changing climate is therefore a pressing question. The difficulty is that long-term trends have remained underexplored, largely because of a lack of continuous field measurements on the same site. Without such records, it is arguably hard to separate a genuine trend from the year-to-year variation caused by the weather. Because forest soils cover large areas, even modest changes in their behaviour could matter for the global methane balance."
+     },
+     {
+      "label": "B",
+      "text": "A team from the University of Göttingen and the Baden-Württemberg Forest Research Institute (FVA) set out to fill that gap. Drawing on the institute's long-running soil gas monitoring programme, they analysed data from 13 forest sites in south-west Germany, some of which had been observed for up to 24 years. According to the researchers, this is the largest collection of continuous methane measurements from forest soils anywhere in the world. The study, published in the journal Agricultural and Forest Meteorology, was led by Professor Martin Maier of Göttingen's Department of Crop Sciences, who had earlier been involved in the monitoring programme. Because the same plots were measured year after year, changes in uptake could be compared with changes in rainfall and temperature over the same period."
+     },
+     {
+      "label": "C",
+      "text": "The measurement method combined two independent approaches. Every two weeks, researchers collected air samples through thin tubes installed beneath the ground, at several depths, and analysed them in a laboratory. These soil gas profiles reveal the chemical composition of the gases trapped between soil particles, from which the rate of methane uptake can be calculated. To check the results, the team also placed airtight chambers directly on the soil surface. By monitoring how gas concentrations changed inside each chamber, they could confirm whether the soil was removing methane, and how much. Using two techniques in this way gave the scientists greater confidence that the trend was real rather than an artefact of a single method. Combining the methods gave the scientists a detailed picture of how methane uptake responded to changing environmental conditions at each site."
+     },
+     {
+      "label": "D",
+      "text": "Uptake varied considerably from one location to another, ranging from 0.55 to 3.31 nanomoles per square metre per second, with an average of 1.40. Nevertheless, a clear overall pattern emerged: across the sites, methane uptake increased by approximately 3 per cent a year. During the same period, annual precipitation and soil moisture declined while soil temperatures rose. The authors identify this combination as the most probable explanation for the trend, noting that the soils were particularly effective at removing methane in periods of lower rainfall and higher temperatures. The authors note that this finding stands in contrast to the most recent studies, although they agree with those studies about the cause."
+     },
+     {
+      "label": "E",
+      "text": "The mechanism rests partly on physics and partly on biology. When soil is saturated with moisture, water fills many of the tiny spaces between particles, which restricts the movement of gases through them. Drier soil contains more air-filled pores, so atmospheric methane can penetrate more deeply. Once the gas arrives, microorganisms use it as an energy source, and rising temperatures can accelerate their activity slightly, allowing them to consume methane more quickly. In other words, the same soil can behave very differently depending on how wet it is. These findings contrast with those of the largest previous study, from the United States, which reported a decline in methane uptake of up to 80 per cent and attributed it to increasing rainfall. Several major international reviews, known as meta-analyses, have likewise concluded that uptake by forest soils is falling."
+     },
+     {
+      "label": "F",
+      "text": "The researchers are careful not to overstate their case. The results do not mean that climate change is beneficial for forests overall; rather, they show that its effects on methane absorption can differ considerably depending on local temperature, rainfall patterns and soil conditions. Interestingly, the two sets of studies agree about the underlying explanation, namely that local precipitation patterns drive the trend. They differ only because rainfall has moved in different directions in different places. This is why long-term monitoring matters. Shorter studies, or analyses that merge measurements from very different environments, may miss gradual changes that become apparent only after years of observation. Maier argues that measurements taken over many years are indispensable for judging the real effects of climate change, and the authors add that climate projections should include reliable precipitation predictions. In the authors' view, the study demonstrates the value of long-term datasets."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a warning that some kinds of study could overlook slow changes",
+        "a": "F",
+        "ref": "F",
+        "ev": "may miss gradual changes that become apparent only after years of observation",
+        "zh": "F 段：較短的研究或混合差異很大環境的分析，可能錯過多年後才顯現的漸變。"
+       },
+       {
+        "q": "a description of a second technique used to verify the main measurements",
+        "a": "C",
+        "ref": "C",
+        "ev": "To check the results, the team also placed airtight chambers directly on the soil surface",
+        "zh": "C 段：除了土壤氣體剖面，還用氣室（chambers）驗證。"
+       },
+       {
+        "q": "an earlier finding that explained falling methane absorption by wetter conditions",
+        "a": "E",
+        "ref": "E",
+        "ev": "attributed it to increasing rainfall",
+        "zh": "E 段：美國的大型研究報告吸收量下降達 80%，並歸因於降雨增加。"
+       },
+       {
+        "q": "an explanation of why the long-term behaviour of soil methane sinks was poorly understood",
+        "a": "A",
+        "ref": "A",
+        "ev": "largely because of a lack of continuous field measurements on the same site",
+        "zh": "A 段：缺乏同一地點的連續野外量測，所以長期趨勢研究不足。"
+       },
+       {
+        "q": "a set of figures showing how much the sites differed from one another",
+        "a": "D",
+        "ref": "D",
+        "ev": "ranging from 0.55 to 3.31 nanomoles per square metre per second",
+        "zh": "D 段：各地點吸收量從 0.55 到 3.31 不等，差異很大。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Soils at every site absorbed methane at about the same rate.",
+        "a": "False",
+        "ref": "D",
+        "ev": "Uptake varied considerably from one location to another",
+        "zh": "D 段：各地點差異很大，與『速率相近』相反 → False。"
+       },
+       {
+        "q": "Falling precipitation during the study period forms part of the researchers' explanation.",
+        "a": "True",
+        "ref": "D",
+        "ev": "annual precipitation and soil moisture declined while soil temperatures rose",
+        "zh": "D 段：降水與土壤濕度下降被認為是最可能的解釋 → True。"
+       },
+       {
+        "q": "Forest soils in Germany absorb more methane than forest soils in the United States.",
+        "a": "Not Given",
+        "ref": "E",
+        "zh": "文章只比較『趨勢』（德國上升、美國下降），沒有比較兩地的絕對吸收量 → Not Given。"
+       },
+       {
+        "q": "The authors conclude that climate change is generally good for forests.",
+        "a": "False",
+        "ref": "F",
+        "ev": "do not mean that climate change is beneficial for forests overall",
+        "zh": "F 段：作者明確說不代表氣候變遷對森林整體有益 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "How methane is measured and absorbed",
+      "lines": [
+       {
+        "t": "Gas samples drawn through buried tubes were analysed in a [[1]], while uptake rates were calculated from soil gas [[2]]. In wet soils, water-filled spaces restrict the [[3]] of gases, whereas higher temperatures can [[4]] the activity of microbes."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "laboratory"
+        ],
+        "ref": "C",
+        "ev": "analysed them in a laboratory",
+        "zh": "C 段：analysed ... in a laboratory。"
+       },
+       {
+        "a": [
+         "profiles"
+        ],
+        "ref": "C",
+        "ev": "These soil gas profiles reveal the chemical composition",
+        "zh": "C 段：soil gas profiles（土壤氣體剖面）用來計算吸收速率。"
+       },
+       {
+        "a": [
+         "movement"
+        ],
+        "ref": "E",
+        "ev": "restricts the movement of gases through them",
+        "zh": "E 段：水填滿孔隙，限制氣體的移動（movement）。"
+       },
+       {
+        "a": [
+         "accelerate"
+        ],
+        "ref": "E",
+        "ev": "rising temperatures can accelerate their activity",
+        "zh": "E 段：升溫可加速（accelerate）微生物活動。答案是動詞。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "potent",
+     "pos": "adj.",
+     "def": "having a powerful effect",
+     "zh": "強效的",
+     "example": "Methane is a potent greenhouse gas.",
+     "match": [
+      "potent"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "comprehensive",
+     "pos": "adj.",
+     "def": "including all or nearly all the relevant elements",
+     "zh": "全面的",
+     "example": "They analysed the world's most comprehensive collection of such measurements.",
+     "match": [
+      "comprehensive"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "airtight",
+     "pos": "adj.",
+     "def": "not allowing air to escape or enter",
+     "zh": "密閉的",
+     "example": "They placed airtight chambers on the soil surface.",
+     "match": [
+      "airtight"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "uptake",
+     "pos": "n.",
+     "def": "the absorption of a substance by an organism or soil",
+     "zh": "吸收量",
+     "example": "Methane uptake rose by about three per cent a year.",
+     "match": [
+      "uptake"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "precipitation",
+     "pos": "n.",
+     "def": "rain, snow or other water falling from the sky",
+     "zh": "降水",
+     "example": "The trend is linked to declining precipitation.",
+     "match": [
+      "precipitation"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "pore",
+     "pos": "n.",
+     "def": "a tiny space or opening, for example between soil particles",
+     "zh": "孔隙",
+     "example": "Drier soil contains more air-filled pores.",
+     "match": [
+      "pores"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "microorganism",
+     "pos": "n.",
+     "def": "a living thing too small to see without a microscope",
+     "zh": "微生物",
+     "example": "Microorganisms use methane as an energy source.",
+     "match": [
+      "Microorganisms",
+      "microorganisms"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "indispensable",
+     "pos": "adj.",
+     "def": "absolutely necessary",
+     "zh": "不可或缺的",
+     "example": "Long-term measurements are indispensable for judging real effects.",
+     "match": [
+      "indispensable"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "sink",
+     "pos": "n.",
+     "def": "a natural system that absorbs more of a substance than it releases",
+     "zh": "(碳或甲烷的) 匯",
+     "example": "Forest soils are important methane sinks.",
+     "match": [
+      "sinks"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "underexplored",
+     "pos": "adj.",
+     "def": "not yet studied in enough depth",
+     "zh": "研究不足的",
+     "example": "Long-term trends have remained underexplored.",
+     "match": [
+      "underexplored"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "saturated",
+     "pos": "adj.",
+     "def": "completely filled with liquid so that no more can be absorbed",
+     "zh": "飽和的",
+     "example": "When soil is saturated with moisture, gases move less easily.",
+     "match": [
+      "saturated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "accelerate",
+     "pos": "v.",
+     "def": "to make something happen faster",
+     "zh": "加速",
+     "example": "Rising temperatures can accelerate microbial activity.",
+     "match": [
+      "accelerate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "artefact",
+     "pos": "n.",
+     "def": "a result produced by the method of measurement rather than reality",
+     "zh": "(由方法造成的) 假象",
+     "example": "The trend was real rather than an artefact of a single method.",
+     "match": [
+      "artefact"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "meta-analysis",
+     "pos": "n.",
+     "def": "a study that combines the results of many earlier studies",
+     "zh": "統合分析",
+     "example": "Several meta-analyses have concluded that uptake is falling.",
+     "match": [
+      "meta-analyses"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "contrast with",
+     "pos": "v.",
+     "def": "to differ strikingly from",
+     "zh": "與…形成對比",
+     "example": "These findings contrast with those of the largest previous study.",
+     "match": [
+      "contrast"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-18-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      3.42
+     ],
+     [
+      3.72,
+      10.33
+     ],
+     [
+      10.56,
+      11.61
+     ],
+     [
+      12.39,
+      14.53
+     ],
+     [
+      14.8,
+      19.26
+     ],
+     [
+      19.5,
+      23.3
+     ],
+     [
+      23.58,
+      32.14
+     ],
+     [
+      32.92,
+      42.05
+     ],
+     [
+      42.3,
+      48.23
+     ],
+     [
+      48.52,
+      52.22
+     ],
+     [
+      53.0,
+      55.5
+     ],
+     [
+      55.76,
+      63.78
+     ],
+     [
+      64.08,
+      69.94
+     ],
+     [
+      70.17,
+      74.07
+     ],
+     [
+      74.85,
+      76.47
+     ],
+     [
+      76.74,
+      81.14
+     ],
+     [
+      81.38,
+      87.12
+     ],
+     [
+      87.4,
+      90.09
+     ],
+     [
+      90.42,
+      96.2
+     ],
+     [
+      96.98,
+      101.02
+     ],
+     [
+      101.31,
+      106.39
+     ],
+     [
+      106.6,
+      112.95
+     ],
+     [
+      113.21,
+      117.45
+     ],
+     [
+      118.23,
+      120.26
+     ],
+     [
+      120.45,
+      128.47
+     ],
+     [
+      128.74,
+      133.68
+     ],
+     [
+      134.0,
+      138.06
+     ],
+     [
+      138.29,
+      141.37
+     ],
+     [
+      142.15,
+      150.26
+     ],
+     [
+      150.59,
+      157.59
+     ],
+     [
+      157.84,
+      163.83
+     ],
+     [
+      164.61,
+      171.25
+     ],
+     [
+      171.46,
+      176.75
+     ],
+     [
+      177.01,
+      181.4
+     ],
+     [
+      181.7,
+      186.4
+     ],
+     [
+      186.63,
+      191.08
+     ]
+    ],
+    "duration": 191.7,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-18-1-words/"
+   }
+  },
+  {
+   "title": "WTO Raises Goods-Trade Forecast on AI Boom, but Services and Regions Diverge",
+   "topic": "Economics · global trade",
+   "source": {
+    "name": "WTO: AI boom and trade resilience to Middle East crisis lift outlook, but gains to be uneven (8 Oct 2026)",
+    "url": "https://www.wto.org/english/news_e/news26_e/stat_08oct26_510_e.htm",
+    "links": [
+     {
+      "name": "WTO: Global Trade Outlook and Statistics, October 2026 update (PDF)",
+      "url": "https://www.wto.org/english/res_e/booksp_e/gtos1026_e.pdf"
+     },
+     {
+      "name": "IMF: World Economic Outlook, October 2026",
+      "url": "https://www.imf.org/en/publications/weo/issues/2026/10/13/world-economic-outlook-october-2026"
+     },
+     {
+      "name": "OECD Economic Outlook, Interim Report September 2026",
+      "url": "https://www.oecd.org/en/publications/2026/09/oecd-economic-outlook-interim-report-september-2026_8312492f/full-report.html"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Our top story from the economy desk.",
+     "The World Trade Organization has raised its forecast for global goods trade this year, crediting a surge in spending on artificial intelligence.",
+     "Here's the report."
+    ],
+    [
+     "In its latest outlook, released on the eighth of October, the WTO says the volume of merchandise trade should grow by three point nine per cent this year.",
+     "Back in March, it had been forecasting one point nine per cent.",
+     "That is a big upgrade.",
+     "The first half of the year also came in ahead of expectations, at three point five per cent, despite the conflict in the Middle East."
+    ],
+    [
+     "So what went right?",
+     "Economists at the WTO say supply chains adapted.",
+     "Crude oil exports from the Middle East fell by roughly twenty-four per cent in the first half, and exports of liquefied natural gas by forty-seven per cent.",
+     "But extra shipments from other suppliers meant that global crude exports dropped by only about six per cent.",
+     "For gas, the global fall was just one per cent.",
+     "Fertiliser markets adjusted as well, and cargoes were rerouted through alternative ports.",
+     "Container traffic kept rising through July."
+    ],
+    [
+     "The biggest single driver, however, was artificial intelligence.",
+     "Demand for goods that enable AI, such as semiconductors and servers, accounted for forty-seven per cent of global merchandise trade growth in the first half.",
+     "Trade in those products rose by sixty-seven per cent compared with a year earlier.",
+     "The WTO expects spending on AI infrastructure to climb by at least thirty per cent in 2026, with market projections pointing to a further ten to twenty per cent next year."
+    ],
+    [
+     "Services tell a different story.",
+     "The WTO has cut its forecast for services trade this year to three point three per cent, from four point eight per cent in March.",
+     "The weak spots are transport and travel.",
+     "Shipping routes have been reorganised, and sharply higher freight costs have followed.",
+     "Travellers' spending abroad rose by just five per cent in the second quarter, down from fifteen per cent in the first.",
+     "International tourist arrivals actually fell in the second quarter.",
+     "By contrast, digitally delivered services held up well, and computer services exports grew by eighteen per cent in the first quarter."
+    ],
+    [
+     "Looking ahead, the gains will be uneven.",
+     "Asia is expected to post the fastest growth in merchandise exports this year.",
+     "Europe's exports, by contrast, are forecast to stay flat.",
+     "On the import side, Asia, Africa and the Commonwealth of Independent States should see the strongest growth.",
+     "Exports from the Middle East are projected to contract by more than seventeen per cent.",
+     "In services, Europe is expected to lead, and to account for more than half of the global increase."
+    ],
+    [
+     "WTO Director-General Ngozi Okonjo-Iweala said the numbers reflect trade resilience in action.",
+     "She added that some economies have felt the shock more than others, and that not everyone can reach emerging opportunities such as AI."
+    ],
+    [
+     "There are risks, though.",
+     "The WTO says the conflict is still expected to weigh on trade this year, through higher energy prices and disrupted transport routes.",
+     "Meanwhile, the WTO still sees merchandise trade growing by four point one per cent in 2027.",
+     "That's the economy report. More at the top of the hour."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "World trade outlook: WTO forecast, October 2026",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Goods trade"
+       },
+       {
+        "t": "Forecast raised thanks to a boom in spending on [[1]]"
+       },
+       {
+        "t": "Economists say [[2]] adapted to the conflict"
+       },
+       {
+        "t": "Global crude oil exports fell by only about [[3]] %"
+       },
+       {
+        "t": "AI-related goods include semiconductors and [[4]]"
+       },
+       {
+        "h": "Services trade"
+       },
+       {
+        "t": "Forecast cut because of weak shipping and [[5]]"
+       },
+       {
+        "t": "Reorganised routes have pushed up freight [[6]]"
+       },
+       {
+        "t": "A fast-growing segment: [[7]] services exports"
+       },
+       {
+        "h": "Outlook"
+       },
+       {
+        "t": "Fastest growth in merchandise exports expected in [[8]]"
+       },
+       {
+        "t": "Europe's merchandise exports expected to stay [[9]]"
+       },
+       {
+        "t": "Conflict still a risk through higher [[10]] prices"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "artificial intelligence",
+         "AI"
+        ],
+        "ref": "crediting a surge in spending on artificial intelligence",
+        "ev": "crediting a surge in spending on artificial intelligence",
+        "zh": "boom in spending = a surge in spending；答案 artificial intelligence。"
+       },
+       {
+        "a": [
+         "supply chains"
+        ],
+        "ref": "Economists at the WTO say supply chains adapted",
+        "ev": "say supply chains adapted",
+        "zh": "adapted to the conflict = adapted；答案 supply chains。"
+       },
+       {
+        "a": [
+         "6",
+         "six"
+        ],
+        "ref": "dropped by only about six per cent",
+        "ev": "global crude exports dropped by only about six per cent",
+        "zh": "答案 six。干擾：中東原油出口下降 twenty-four per cent（中東本身），而『全球』只降約 six per cent。"
+       },
+       {
+        "a": [
+         "servers"
+        ],
+        "ref": "such as semiconductors and servers",
+        "ev": "such as semiconductors and servers",
+        "zh": "include = such as；答案 servers（伺服器）。"
+       },
+       {
+        "a": [
+         "travel"
+        ],
+        "ref": "The weak spots are transport and travel.",
+        "ev": "The weak spots are transport and travel.",
+        "zh": "shipping = transport；weak = weak spots。答案 travel。"
+       },
+       {
+        "a": [
+         "costs"
+        ],
+        "ref": "sharply higher freight costs have followed",
+        "ev": "sharply higher freight costs have followed",
+        "zh": "pushed up = sharply higher；答案 costs（運費成本）。"
+       },
+       {
+        "a": [
+         "computer"
+        ],
+        "ref": "computer services exports grew",
+        "ev": "computer services exports grew by eighteen per cent",
+        "zh": "fast-growing segment = held up well/grew；答案 computer。"
+       },
+       {
+        "a": [
+         "Asia"
+        ],
+        "ref": "Asia is expected to post the fastest growth",
+        "ev": "Asia is expected to post the fastest growth in merchandise exports",
+        "zh": "答案 Asia。同段還有 Europe 與 Middle East 作干擾。"
+       },
+       {
+        "a": [
+         "flat"
+        ],
+        "ref": "are forecast to stay flat",
+        "ev": "Europe's exports, by contrast, are forecast to stay flat",
+        "zh": "stay = stay；答案 flat（持平）。形容詞答案。"
+       },
+       {
+        "a": [
+         "energy"
+        ],
+        "ref": "through higher energy prices",
+        "ev": "through higher energy prices and disrupted transport routes",
+        "zh": "答案 energy。transport routes 是另一項風險，不是 prices 前面的字。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Trade Under Pressure: How an AI Boom Kept World Commerce Moving",
+    "intro": "The WTO has upgraded its forecast for goods trade, but the gains are far from evenly distributed.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Global trade entered 2026 under considerable strain. The conflict in the Middle East has disrupted markets for energy and fertiliser, reorganised shipping routes and pushed up freight costs. Yet in its latest Global Trade Outlook and Statistics, released on 8 October, the World Trade Organization (WTO) concluded that global trade proved more resilient than expected in the first half of the year. Its economists now expect the volume of merchandise trade to grow by 3.9 per cent in 2026, a sharp revision from the 1.9 per cent they projected in March, and by 4.1 per cent in 2027. At the same time, they have lowered their outlook for services trade. The result is a picture of resilience, but resilience that is far from evenly shared."
+     },
+     {
+      "label": "B",
+      "text": "Merchandise trade volume grew by 3.5 per cent in the first half of 2026, exceeding expectations. According to the WTO, the main reason was the ability of supply chains to adapt. Crude oil exports from the Middle East fell by roughly 24 per cent in the first half of the year, and exports of liquefied natural gas (LNG) by 47 per cent. However, increased shipments from other suppliers limited the decline in global exports to around 6 per cent for crude oil and just 1 per cent for LNG. A similar adjustment occurred in fertiliser markets. Global imports of nitrogenous fertilisers were only 2.8 per cent below recent averages, while imports of phosphatic fertilisers were 2.2 per cent higher, as alternative suppliers stepped in. Meanwhile, trade flows were rerouted through alternative ports and corridors, and global container throughput rose by 3.9 per cent in the year to July."
+     },
+     {
+      "label": "C",
+      "text": "The second force was artificial intelligence. Strong demand linked to AI investment more than offset the negative effects of the conflict, the WTO says. Goods that enable AI, such as semiconductors and servers, accounted for 47 per cent of global merchandise trade growth in the first half, and trade in these products rose by 67 per cent year on year, accelerating from the already rapid expansion of 2024 and 2025. The organisation expects AI-related investment to remain a major driver of goods trade through 2027. Global spending on AI infrastructure is projected to increase by at least 30 per cent in 2026, and current market projections suggest that AI capital expenditure will rise by a further 10–20 per cent in 2027. The report also contains an analytical chapter examining how the investment boom is reshaping global trade patterns, regional specialisation and the geography of demand and supply."
+     },
+     {
+      "label": "D",
+      "text": "Commercial services trade grew by 14 per cent year on year in value terms in the first quarter of 2026 but by only 10 per cent in the second, as the conflict disrupted transport and travel, two sectors that depend heavily on the Middle East's role as a global hub. Shipping routes were reorganised and freight costs rose sharply, while travellers' spending abroad increased by just 5 per cent in the second quarter, compared with 15 per cent in the first. International tourist arrivals fell by 0.8 per cent in the second quarter. Digitally delivered services were more resilient. Computer services exports rose by 18 per cent in the first quarter and an estimated 12 per cent in the second. For these reasons, the WTO now expects services trade volume to grow by 3.3 per cent in 2026, down from 4.8 per cent forecast in March, before rebounding to 6.4 per cent in 2027."
+     },
+     {
+      "label": "E",
+      "text": "The regional picture is uneven. Asia is expected to record the fastest merchandise export growth in 2026, at 9.9 per cent, followed by North America (5.7 per cent), Africa (5.6 per cent) and South America (3.4 per cent). Exports from Europe are projected to remain weak, at minus 0.1 per cent, and to contract sharply in the Commonwealth of Independent States (minus 3.9 per cent) and the Middle East (minus 17.2 per cent). On the import side, Asia (9.5 per cent), Africa (8.9 per cent) and the CIS (8.8 per cent) are forecast to post the strongest growth, while North America (1.4 per cent) and Europe (0.5 per cent) will see only modest increases. In services, Europe is expected to lead export growth at 4.6 per cent."
+     },
+     {
+      "label": "F",
+      "text": "Other institutions paint a broadly similar but not identical picture. The International Monetary Fund projects global growth of 3.1 per cent in 2026 and 3.4 per cent in 2027, describing the economy as resilient but warning that risks are skewed to the downside, including a reassessment of expectations surrounding AI. The OECD expects 2.9 per cent and 3.0 per cent, and has noted that AI investment returns that fail to meet expectations could prompt a repricing in asset markets. The WTO's own projections for global GDP are 2.6 and 2.9 per cent. WTO Director-General Ngozi Okonjo-Iweala said that the numbers reflect trade resilience in action, but cautioned that some economies have felt the shock more than others and that not everyone can access emerging opportunities such as AI. The organisation also expects the conflict to weigh on trade in 2026 through higher energy prices and disruptions to transport routes."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a contrast between regions expected to import strongly and those expected to import little",
+        "a": "E",
+        "ref": "E",
+        "ev": "North America (1.4 per cent) and Europe (0.5 per cent) will see only modest increases",
+        "zh": "E 段：亞洲、非洲、CIS 進口成長強，北美與歐洲僅小幅增加。"
+       },
+       {
+        "q": "an explanation of why problems in one region affected international services",
+        "a": "D",
+        "ref": "D",
+        "ev": "two sectors that depend heavily on the Middle East's role as a global hub",
+        "zh": "D 段：運輸與旅遊高度依賴中東作為全球樞紐的角色。"
+       },
+       {
+        "q": "evidence that other producers compensated for reduced fuel exports from one region",
+        "a": "B",
+        "ref": "B",
+        "ev": "increased shipments from other suppliers limited the decline in global exports",
+        "zh": "B 段：其他供應者增加出貨，限制了全球原油與 LNG 出口的跌幅。"
+       },
+       {
+        "q": "a warning from another organisation about the effects of disappointing returns on technology investment",
+        "a": "F",
+        "ref": "F",
+        "ev": "could prompt a repricing in asset markets",
+        "zh": "F 段：OECD 指出 AI 投資報酬若不如預期，可能引發資產市場重新定價。"
+       },
+       {
+        "q": "a reference to a section of the report analysing a particular category of products",
+        "a": "C",
+        "ref": "C",
+        "ev": "The report also contains an analytical chapter",
+        "zh": "C 段：報告另有一章分析 AI 相關商品貿易。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The WTO found that merchandise trade grew more slowly than expected in early 2026.",
+        "a": "False",
+        "ref": "B",
+        "ev": "exceeding expectations",
+        "zh": "B 段：上半年成長超出預期 → False。"
+       },
+       {
+        "q": "Imports of one type of fertiliser were above their recent average.",
+        "a": "True",
+        "ref": "B",
+        "ev": "imports of phosphatic fertilisers were 2.2 per cent higher",
+        "zh": "B 段：磷肥進口比近期平均高 2.2% → True。"
+       },
+       {
+        "q": "Computer services are likely to become the largest category of services trade.",
+        "a": "Not Given",
+        "ref": "D",
+        "zh": "文章只說電腦服務出口成長快，沒有提到它會成為最大類別 → Not Given。"
+       },
+       {
+        "q": "The WTO expects services trade to grow more slowly in 2027 than in 2026.",
+        "a": "False",
+        "ref": "D",
+        "ev": "before rebounding to 6.4 per cent in 2027",
+        "zh": "D 段：2026 為 3.3%，2027 反彈到 6.4%，與『更慢』相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "What kept trade moving",
+      "lines": [
+       {
+        "t": "Despite the disruption in the Middle East, [[1]] suppliers helped keep oil, gas and fertiliser flowing, and trade flows were [[2]] through different ports. Heavy spending on AI [[3]] also boosted goods trade, but the outlook for [[4]] trade was lowered because transport and tourism suffered."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "alternative",
+         "other"
+        ],
+        "ref": "B",
+        "ev": "as alternative suppliers stepped in",
+        "zh": "B 段：alternative suppliers stepped in。"
+       },
+       {
+        "a": [
+         "rerouted"
+        ],
+        "ref": "B",
+        "ev": "trade flows were rerouted through alternative ports and corridors",
+        "zh": "B 段：貿易流被改道（rerouted）。"
+       },
+       {
+        "a": [
+         "infrastructure"
+        ],
+        "ref": "C",
+        "ev": "Global spending on AI infrastructure",
+        "zh": "C 段：AI infrastructure（基礎設施）支出。"
+       },
+       {
+        "a": [
+         "services"
+        ],
+        "ref": "A",
+        "ev": "lowered their outlook for services trade",
+        "zh": "A 段：下調的是 services trade（服務貿易）的展望。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "resilient",
+     "pos": "adj.",
+     "def": "able to recover quickly from difficulty",
+     "zh": "有韌性的",
+     "example": "Global trade proved more resilient than expected.",
+     "match": [
+      "resilient"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "upgrade",
+     "pos": "n.",
+     "def": "a change that raises a forecast or rating",
+     "zh": "上調",
+     "example": "That is a big upgrade.",
+     "match": [
+      "upgrade"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "merchandise",
+     "pos": "n.",
+     "def": "goods that are bought and sold",
+     "zh": "(實體) 商品",
+     "example": "Merchandise trade should grow by three point nine per cent.",
+     "match": [
+      "merchandise"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "supply chain",
+     "pos": "n.",
+     "def": "the network of firms and steps that bring a product to buyers",
+     "zh": "供應鏈",
+     "example": "Economists say supply chains adapted.",
+     "match": [
+      "supply chains"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "surge",
+     "pos": "n.",
+     "def": "a sudden strong increase",
+     "zh": "激增",
+     "example": "The forecast reflects a surge in spending on AI.",
+     "match": [
+      "surge"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "contract",
+     "pos": "v.",
+     "def": "to become smaller",
+     "zh": "萎縮；收縮",
+     "example": "Exports from the Middle East are projected to contract.",
+     "match": [
+      "contract"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "freight",
+     "pos": "n.",
+     "def": "goods transported in bulk; the cost of transporting them",
+     "zh": "貨運",
+     "example": "Sharply higher freight costs have followed.",
+     "match": [
+      "freight"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "reroute",
+     "pos": "v.",
+     "def": "to send along a different route",
+     "zh": "改道",
+     "example": "Cargoes were rerouted through alternative ports.",
+     "match": [
+      "rerouted"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "uneven",
+     "pos": "adj.",
+     "def": "not equal or regular",
+     "zh": "不均衡的",
+     "example": "Looking ahead, the gains will be uneven.",
+     "match": [
+      "uneven"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "revision",
+     "pos": "n.",
+     "def": "a change made to an earlier estimate",
+     "zh": "修正",
+     "example": "A sharp revision from the 1.9 per cent projected in March.",
+     "match": [
+      "revision"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "offset",
+     "pos": "v.",
+     "def": "to balance or cancel out the effect of something",
+     "zh": "抵銷",
+     "example": "AI demand more than offset the negative effects of the conflict.",
+     "match": [
+      "offset"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "throughput",
+     "pos": "n.",
+     "def": "the amount of goods handled in a given period",
+     "zh": "吞吐量",
+     "example": "Container throughput rose by 3.9 per cent.",
+     "match": [
+      "throughput"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "hub",
+     "pos": "n.",
+     "def": "a central point where activity or routes meet",
+     "zh": "樞紐",
+     "example": "The Middle East's role as a global hub matters for transport.",
+     "match": [
+      "hub"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "skewed",
+     "pos": "adj.",
+     "def": "distorted or leaning in one direction",
+     "zh": "偏向一方的",
+     "example": "Risks are skewed to the downside.",
+     "match": [
+      "skewed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "repricing",
+     "pos": "n.",
+     "def": "a change in the market price of assets",
+     "zh": "重新定價",
+     "example": "Disappointing returns could prompt a repricing in asset markets.",
+     "match": [
+      "repricing"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-18-2.mp3",
+    "times": [
+     [
+      0.36,
+      2.73
+     ],
+     [
+      2.99,
+      11.15
+     ],
+     [
+      11.45,
+      12.52
+     ],
+     [
+      13.3,
+      22.09
+     ],
+     [
+      22.44,
+      26.21
+     ],
+     [
+      26.53,
+      27.78
+     ],
+     [
+      27.98,
+      35.78
+     ],
+     [
+      36.56,
+      37.62
+     ],
+     [
+      38.07,
+      41.46
+     ],
+     [
+      41.7,
+      50.76
+     ],
+     [
+      51.26,
+      57.39
+     ],
+     [
+      57.6,
+      60.41
+     ],
+     [
+      60.54,
+      66.26
+     ],
+     [
+      66.57,
+      69.17
+     ],
+     [
+      69.95,
+      73.95
+     ],
+     [
+      74.22,
+      83.64
+     ],
+     [
+      83.96,
+      88.65
+     ],
+     [
+      88.88,
+      99.75
+     ],
+     [
+      100.53,
+      102.47
+     ],
+     [
+      102.76,
+      110.24
+     ],
+     [
+      110.49,
+      112.89
+     ],
+     [
+      113.18,
+      117.71
+     ],
+     [
+      117.92,
+      124.67
+     ],
+     [
+      124.93,
+      128.84
+     ],
+     [
+      129.15,
+      137.2
+     ],
+     [
+      137.98,
+      140.26
+     ],
+     [
+      140.53,
+      145.21
+     ],
+     [
+      145.52,
+      149.48
+     ],
+     [
+      149.72,
+      156.12
+     ],
+     [
+      156.4,
+      161.19
+     ],
+     [
+      161.52,
+      167.64
+     ],
+     [
+      168.42,
+      174.86
+     ],
+     [
+      175.15,
+      182.76
+     ],
+     [
+      183.54,
+      184.62
+     ],
+     [
+      184.84,
+      192.78
+     ],
+     [
+      193.21,
+      199.6
+     ],
+     [
+      199.82,
+      203.31
+     ]
+    ],
+    "duration": 204.0,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-10-18-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
