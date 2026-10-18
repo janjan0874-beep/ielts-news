@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-19",
+ "date": "2026-10-19",
+ "title": "TSMC Beats Forecasts with Record Profit as AI Demand Outruns Supply · A 'Good Ear' for Sound Helps Learners Master Foreign Pronunciation, Study Finds",
+ "stories": [
+  {
+   "title": "TSMC Beats Forecasts with Record Profit as AI Demand Outruns Supply",
+   "topic": "Investing · chip earnings",
+   "source": {
+    "name": "TSMC: Third Quarter 2026 results press release (15 Oct 2026)",
+    "url": "https://pr.tsmc.com/english/news/3346",
+    "links": [
+     {
+      "name": "TSMC 3Q26 earnings call transcript (PDF)",
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/eba4fac72873bf546b669bd2b5d973df5c93215d/TSMC%203Q26%20Transcript.pdf"
+     },
+     {
+      "name": "CNBC: TSMC posts record profit for a sixth straight quarter",
+      "url": "https://www.cnbc.com/2026/10/15/tsmc-third-quarter-profit-global-ai-.html"
+     },
+     {
+      "name": "Reuters (via Investing.com): TSMC Q3 profit jumps 69% to record",
+      "url": "https://www.investing.com/news/stock-market-news/tsmc-q3-profit-jumps-69-to-record-beating-expectations-4950551"
+     },
+     {
+      "name": "TSMC 3Q26 quarterly results and guidance",
+      "url": "https://investor.tsmc.com/english/quarterly-results/2026/q3"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Taiwan's TSMC, the world's largest contract chipmaker, has reported another record profit, as demand for artificial intelligence chips keeps running ahead of its factories.",
+     "Here's the report."
+    ],
+    [
+     "For the July-to-September quarter, net profit came in at seven hundred and sixty-three billion Taiwan dollars.",
+     "That's up almost sixty-nine per cent on a year earlier, and according to CNBC, it's the sixth record quarter in a row.",
+     "Analysts surveyed by LSEG had been expecting around seven hundred and forty-six billion.",
+     "Revenue beat forecasts as well.",
+     "In US dollar terms, it reached forty-six point seven billion, above the top of the company's own guidance."
+    ],
+    [
+     "Profitability was strong, but not quite as strong as last quarter.",
+     "The gross margin slipped by one point three percentage points, to sixty-six point four per cent.",
+     "Chief Financial Officer Wendell Huang told analysts the main reason was dilution from the early ramp-up of its newest technology, known as two nanometre.",
+     "That process already brings in eight per cent of wafer revenue.",
+     "The three-nanometre generation is still the biggest contributor, at a third."
+    ],
+    [
+     "By platform, high-performance computing, which includes AI processors, made up sixty-eight per cent of sales.",
+     "Smartphones came next.",
+     "The fastest growth, though, came from a less obvious corner.",
+     "Sales of automotive chips jumped twenty-three per cent from the previous quarter."
+    ],
+    [
+     "So where is all this demand coming from?",
+     "Chairman and chief executive C.C. Wei pointed to what's called agentic AI, as the industry moves from chatbots to AI assistants.",
+     "He also highlighted the wider use of open-source models.",
+     "Accelerators remain the core of the business, he said, but processors for agentic AI and networking chips are adding to demand.",
+     "When an analyst asked whether growth in AI chips might cool, Mr Wei said demand was extremely robust, and that he saw no sign of a slowdown."
+    ],
+    [
+     "Looking ahead, TSMC expects fourth-quarter revenue of between fifty-two point three and fifty-four point three billion dollars.",
+     "At the midpoint, that would be a fourteen per cent rise on the quarter, and fifty-eight per cent on the year.",
+     "For 2026 as a whole, the company now sees growth of around forty-four per cent in dollar terms.",
+     "Spending is going up, too.",
+     "TSMC kept its capital budget for this year at sixty to sixty-four billion dollars, and said spending from 2026 to 2028 would be significantly higher than in the previous three years."
+    ],
+    [
+     "Meanwhile, the building programme is moving at what Mr Wei called an unprecedented pace.",
+     "Nearly twenty fabs are in progress around the world, including thirteen in Taiwan.",
+     "In Arizona, construction of the second factory is complete, and volume production should begin in the third quarter of next year, slightly ahead of schedule.",
+     "Mr Wei also confirmed that TSMC has sent teams to Texas to evaluate further sites.",
+     "And in an unusual step, the company is sending its own people to check on data-centre construction and the power supply in the United States.",
+     "So far, he said, the feedback has been good."
+    ],
+    [
+     "There are risks on both sides, though.",
+     "Mr Wei said consumer and price-sensitive markets are being squeezed by rising component prices and economic uncertainty, so the company is being prudent in its planning for 2027.",
+     "And the finance chief warned that the higher cost of running overseas factories will weigh on margins, by three to four percentage points in the next few years.",
+     "Still, an analyst at the research firm SemiAnalysis, Sravan Kundojjala, told CNBC that even after all those checks, TSMC says demand remains well above its supply capacity.",
+     "That's the business report from Taipei."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "TSMC: third-quarter results, October 2026",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Results"
+       },
+       {
+        "t": "Net profit forecast by analysts: about NT$ [[1]] billion"
+       },
+       {
+        "t": "Gross margin fell, mainly because of [[2]] from the newest process"
+       },
+       {
+        "t": "Fastest-growing platform: [[3]] chips"
+       },
+       {
+        "h": "Sources of demand"
+       },
+       {
+        "t": "Shift from chatbots towards AI [[4]]"
+       },
+       {
+        "t": "Extra demand from agentic AI processors and [[5]] chips"
+       },
+       {
+        "h": "Outlook and expansion"
+       },
+       {
+        "t": "Full-year 2026 revenue growth: around [[6]] % in US dollars"
+       },
+       {
+        "t": "Teams sent to [[7]] to assess new locations"
+       },
+       {
+        "t": "Company checking US data-centre building and the [[8]]"
+       },
+       {
+        "h": "Risks"
+       },
+       {
+        "t": "Planning for 2027 described as [[9]]"
+       },
+       {
+        "t": "Margins hit by the expense of [[10]] factories"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "746",
+         "746.3"
+        ],
+        "ref": "had been expecting around seven hundred and forty-six billion",
+        "ev": "Analysts surveyed by LSEG had been expecting around seven hundred and forty-six billion.",
+        "zh": "題目問『分析師預估』：seven hundred and forty-six billion → 746。干擾：實際淨利 seven hundred and sixty-three billion（763）是實際數字，不是預估。"
+       },
+       {
+        "a": [
+         "dilution"
+        ],
+        "ref": "the main reason was dilution from the early ramp-up",
+        "ev": "the main reason was dilution from the early ramp-up of its newest technology",
+        "zh": "mainly because of = the main reason was；答案 dilution（稀釋，新製程初期拉低毛利）。"
+       },
+       {
+        "a": [
+         "automotive"
+        ],
+        "ref": "Sales of automotive chips jumped",
+        "ev": "Sales of automotive chips jumped twenty-three per cent from the previous quarter.",
+        "zh": "fastest-growing = The fastest growth；答案 automotive。干擾：HPC 佔比最大（68%）、smartphones 第二，但成長最快的是車用。"
+       },
+       {
+        "a": [
+         "assistants"
+        ],
+        "ref": "moves from chatbots to AI assistants",
+        "ev": "as the industry moves from chatbots to AI assistants",
+        "zh": "shift from…towards = moves from…to；答案 assistants。"
+       },
+       {
+        "a": [
+         "networking"
+        ],
+        "ref": "processors for agentic AI and networking chips",
+        "ev": "processors for agentic AI and networking chips are adding to demand",
+        "zh": "extra demand = adding to demand；答案 networking。注意 accelerators 是『核心』，不是額外來源。"
+       },
+       {
+        "a": [
+         "44",
+         "forty-four"
+        ],
+        "ref": "now sees growth of around forty-four per cent",
+        "ev": "For 2026 as a whole, the company now sees growth of around forty-four per cent in dollar terms.",
+        "zh": "full-year = For 2026 as a whole；答案 44。干擾：fourteen（第四季季增）與 fifty-eight（第四季年增）。"
+       },
+       {
+        "a": [
+         "Texas"
+        ],
+        "ref": "has sent teams to Texas to evaluate further sites",
+        "ev": "TSMC has sent teams to Texas to evaluate further sites",
+        "zh": "assess new locations = evaluate further sites；答案 Texas。干擾：Arizona 是已在興建的地點。"
+       },
+       {
+        "a": [
+         "power supply"
+        ],
+        "ref": "data-centre construction and the power supply",
+        "ev": "to check on data-centre construction and the power supply in the United States",
+        "zh": "building = construction；答案 power supply（電力供應），兩個字。"
+       },
+       {
+        "a": [
+         "prudent"
+        ],
+        "ref": "the company is being prudent in its planning for 2027",
+        "ev": "so the company is being prudent in its planning for 2027",
+        "zh": "described as = being；答案 prudent（審慎的），形容詞。"
+       },
+       {
+        "a": [
+         "overseas"
+        ],
+        "ref": "the higher cost of running overseas factories",
+        "ev": "the higher cost of running overseas factories will weigh on margins",
+        "zh": "expense = higher cost；hit = weigh on；答案 overseas（海外的）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Record Profits, Careful Plans: Inside TSMC's AI-Driven Quarter",
+    "intro": "The world's largest contract chipmaker is expanding faster than ever, but insists that its growth is carefully measured.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "When Taiwan Semiconductor Manufacturing Company (TSMC) reported its results for the third quarter of 2026 on 15 October, the headline figures left little room for doubt about the strength of demand for advanced chips. Net income reached NT$763.06 billion, up 68.7 per cent from a year earlier and comfortably ahead of the NT$746.3 billion LSEG SmartEstimate, a consensus weighted towards analysts with more consistently accurate forecasts. Revenue of NT$1,494.24 billion, or US$46.72 billion, exceeded the top of the company's own guidance range of US$44.6–45.8 billion, and the operating margin of 58.7 per cent was above the upper end of its forecast. According to CNBC, it was the sixth consecutive quarter of record profit for the world's largest contract chipmaker."
+     },
+     {
+      "label": "B",
+      "text": "Beneath these figures, however, lies a more nuanced picture of profitability. Gross margin fell by 1.3 percentage points from the previous quarter to 66.4 per cent, which the company attributed mainly to the initial ramp-up of its 2-nanometre (N2) technology. It expects this effect to continue, guiding fourth-quarter gross margin down by a further 40 basis points to 66 per cent at the midpoint. N2 already contributed 8 per cent of wafer revenue, while 3-nanometre chips remained the largest single category at 33 per cent, and technologies of 7 nanometres and below together accounted for 79 per cent. Chairman and chief executive C.C. Wei said N2, which entered high-volume manufacturing in the fourth quarter of 2025, is ramping at both its Hsinchu and Kaohsiung sites, and that annual capacity for the N2 family should more than double in 2027. Preparations are also under way for the following node, A14, with risk production planned for 2027 and volume production in 2028; Mr Wei expects A14 to be a bigger node than N2."
+     },
+     {
+      "label": "C",
+      "text": "The sources of demand are also evolving. Mr Wei described a transition from chatbots to AI assistants, a trend widely referred to as agentic AI. He also pointed to the greater adoption of open-source AI models, which, he argued, would drive greater efficiencies and help lower the barriers to future AI usage, resulting in more demand for leading-edge silicon. Accelerators remain the foundation, but processors designed for agentic AI and networking chips are adding further demand. TSMC had previously guided that revenue from AI accelerators would grow at a compound annual rate in the mid- to high 50s per cent between 2024 and 2029. Asked whether that forecast still held, Mr Wei declined to give a new number, replying instead that demand was extremely robust and that growth would probably be higher."
+     },
+     {
+      "label": "D",
+      "text": "Perhaps the most revealing part of the earnings call concerned how TSMC decides how much to build. Mr Wei said the company has a 'very sophisticated capacity planning process' that takes into account cloud providers' capital spending, the build-out of data centres, financing, power supply and the availability of other components. It has now gone a step further by sending its own teams to check on data-centre construction and electricity supply in the United States; so far, according to Mr Wei, the feedback has been good. Sravan Kundojjala, an analyst at SemiAnalysis, told CNBC that this careful approach helps ensure that investment decisions reflect customers' ability to deploy the chips they order, and that, even after these checks, demand remains well above TSMC's supply capacity."
+     },
+     {
+      "label": "E",
+      "text": "The response is an expansion programme that the company itself describes as unprecedented in pace. Nearly 20 fabs are in progress worldwide: 13 leading-edge and advanced packaging fabs in Taiwan over the next several years, and another five to six overseas. Historically, TSMC has not added capacity to a node once it reached its target, but it is now building new fabs for 3-nanometre production, including one in the Tainan Science Park due to start volume production in the first half of 2027 and an additional Tainan fab scheduled for the first half of 2028. Its second fab in Japan is also planned to use 3-nanometre technology, from 2028. In Arizona, construction of the second fab is complete and volume production is expected in the third quarter of 2027, slightly earlier than planned. The company has also sent teams to evaluate Texas and is in discussions with a customer planning its own fab, although Mr Wei stressed that any such facility would have to be run by TSMC."
+     },
+     {
+      "label": "F",
+      "text": "None of this comes cheap. TSMC reiterated its 2026 capital budget of US$60–64 billion and expects spending between 2026 and 2028 to be significantly higher than in the previous three years. Overseas fabs remain more expensive to operate: Chief Financial Officer Wendell Huang said they would dilute gross margin by close to 2 percentage points this year, widening to 3–4 points in the next few years as more US fabs ramp up. Mr Wei acknowledged that consumer and price-sensitive end markets were being challenged by rising component prices and economic uncertainty. Even so, the company now expects full-year revenue growth of around 44 per cent in US dollar terms, and it has promised a sustainable and steadily increasing cash dividend. For investors, the question is arguably less whether demand exists than whether such rapid expansion can be achieved without eroding the margins that make the company so profitable."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison between the company's results and what analysts had predicted",
+        "a": "A",
+        "ref": "A",
+        "ev": "comfortably ahead of the NT$746.3 billion LSEG SmartEstimate",
+        "zh": "A 段：淨利明顯高於 LSEG SmartEstimate（分析師預估）。"
+       },
+       {
+        "q": "the reason for a decline in one measure of profitability",
+        "a": "B",
+        "ref": "B",
+        "ev": "which the company attributed mainly to the initial ramp-up of its 2-nanometre (N2) technology",
+        "zh": "B 段：毛利率下滑主要歸因於 2 奈米初期量產。"
+       },
+       {
+        "q": "a question about whether an earlier growth forecast was still valid",
+        "a": "C",
+        "ref": "C",
+        "ev": "Asked whether that forecast still held",
+        "zh": "C 段：分析師問 AI 加速器 CAGR 的舊預估是否仍成立。"
+       },
+       {
+        "q": "a list of factors considered before deciding how much to build",
+        "a": "D",
+        "ref": "D",
+        "ev": "takes into account cloud providers' capital spending, the build-out of data centres, financing, power supply and the availability of other components",
+        "zh": "D 段：產能規劃會考慮雲端業者資本支出、資料中心、融資、電力與其他零件。"
+       },
+       {
+        "q": "a condition the company would insist on in a possible arrangement with a customer",
+        "a": "E",
+        "ref": "E",
+        "ev": "any such facility would have to be run by TSMC",
+        "zh": "E 段：魏哲家強調任何這類工廠都必須由台積電營運。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "TSMC's operating margin was higher than the company itself had predicted.",
+        "a": "True",
+        "ref": "A",
+        "ev": "the operating margin of 58.7 per cent was above the upper end of its forecast",
+        "zh": "A 段：營業利益率 58.7% 高於公司預測區間上緣 → True。"
+       },
+       {
+        "q": "TSMC has traditionally continued to expand capacity for a node after reaching its target.",
+        "a": "False",
+        "ref": "E",
+        "ev": "Historically, TSMC has not added capacity to a node once it reached its target",
+        "zh": "E 段：過去達到目標產能後就不再加產能，與題目相反 → False。"
+       },
+       {
+        "q": "The second fab in Japan will cost more to build than the second fab in Arizona.",
+        "a": "Not Given",
+        "ref": "E",
+        "zh": "E 段提到日本二廠與亞利桑那二廠的時程，F 段說海外廠營運成本較高，但完全沒有比較兩座廠的建造成本 → Not Given（陷阱：兩個地點都出現在文中）。"
+       },
+       {
+        "q": "The company expects the impact of its overseas fabs on margins to increase.",
+        "a": "True",
+        "ref": "F",
+        "ev": "widening to 3–4 points in the next few years",
+        "zh": "F 段：海外廠對毛利的稀釋從約 2 個百分點擴大到 3–4 個百分點 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Demand, technology and risk",
+      "lines": [
+       {
+        "t": "According to TSMC, the wider use of open-source AI models will reduce the [[1]] to using AI and so increase demand for advanced chips. The company predicts that its A14 technology will be a [[2]] node than N2. However, it accepts that [[3]] and price-sensitive markets are under pressure, partly because [[4]] prices are rising."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "barriers"
+        ],
+        "ref": "C",
+        "ev": "help lower the barriers to future AI usage",
+        "zh": "C 段：reduce = lower；答案 barriers（門檻、障礙）。"
+       },
+       {
+        "a": [
+         "bigger"
+        ],
+        "ref": "B",
+        "ev": "Mr Wei expects A14 to be a bigger node than N2",
+        "zh": "B 段：answer bigger（比 N2 更大的製程節點）。只能填一個字，larger 不是原文用字。"
+       },
+       {
+        "a": [
+         "consumer"
+        ],
+        "ref": "F",
+        "ev": "consumer and price-sensitive end markets were being challenged",
+        "zh": "F 段：under pressure = being challenged；答案 consumer。"
+       },
+       {
+        "a": [
+         "component"
+        ],
+        "ref": "F",
+        "ev": "rising component prices",
+        "zh": "F 段：答案 component（零組件），原文 rising component prices。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "outpace",
+     "pos": "v.",
+     "def": "to grow or develop faster than something else",
+     "zh": "超越、快過",
+     "example": "Demand for advanced chips continues to outpace production capacity.",
+     "match": [
+      "outpace"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "dilution",
+     "pos": "n.",
+     "def": "a reduction in the strength or value of something",
+     "zh": "稀釋（使比率下降）",
+     "example": "The main reason was dilution from the early ramp-up of its newest technology.",
+     "match": [
+      "dilution"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "ramp-up",
+     "pos": "n.",
+     "def": "a rapid increase in production",
+     "zh": "產能拉升、量產爬坡",
+     "example": "The ramp-up of the 2-nanometre process lowered margins.",
+     "match": [
+      "ramp-up"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "robust",
+     "pos": "adj.",
+     "def": "strong and unlikely to weaken",
+     "zh": "強勁的",
+     "example": "Mr Wei said demand was extremely robust.",
+     "match": [
+      "robust"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "prudent",
+     "pos": "adj.",
+     "def": "careful and sensible, avoiding unnecessary risk",
+     "zh": "審慎的",
+     "example": "The company is being prudent in its planning for 2027.",
+     "match": [
+      "prudent"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "unprecedented",
+     "pos": "adj.",
+     "def": "never having happened before",
+     "zh": "前所未有的",
+     "example": "The building programme is moving at an unprecedented pace.",
+     "match": [
+      "unprecedented"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "reiterate",
+     "pos": "v.",
+     "def": "to say something again, often for emphasis",
+     "zh": "重申",
+     "example": "TSMC reiterated its 2026 capital budget.",
+     "match": [
+      "reiterated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "nuanced",
+     "pos": "adj.",
+     "def": "having subtle differences that are not obvious at first",
+     "zh": "細緻、有微妙差異的",
+     "example": "Beneath these figures lies a more nuanced picture of profitability.",
+     "match": [
+      "nuanced"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "consensus",
+     "pos": "n.",
+     "def": "a generally agreed view or average forecast",
+     "zh": "共識；市場預估",
+     "example": "The figure beat a consensus weighted towards more accurate analysts.",
+     "match": [
+      "consensus"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "attribute (to)",
+     "pos": "v.",
+     "def": "to say that something is caused by something else",
+     "zh": "歸因於",
+     "example": "The company attributed the fall mainly to the new process.",
+     "match": [
+      "attributed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "contributor",
+     "pos": "n.",
+     "def": "something that provides part of a total",
+     "zh": "貢獻來源",
+     "example": "The three-nanometre generation is still the biggest contributor.",
+     "match": [
+      "contributor"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "squeeze",
+     "pos": "v.",
+     "def": "to put financial pressure on someone or something",
+     "zh": "擠壓、施壓",
+     "example": "Consumer markets are being squeezed by rising component prices.",
+     "match": [
+      "squeezed"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "weigh on",
+     "pos": "phr. v.",
+     "def": "to have a negative effect on",
+     "zh": "拖累、壓低",
+     "example": "Higher costs will weigh on margins.",
+     "match": [
+      "weigh on"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "deploy",
+     "pos": "v.",
+     "def": "to put something into use",
+     "zh": "部署、投入使用",
+     "example": "Customers must be able to deploy the chips they order.",
+     "match": [
+      "deploy"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "erode",
+     "pos": "v.",
+     "def": "to gradually reduce or weaken",
+     "zh": "侵蝕、削弱",
+     "example": "Rapid expansion could erode the company's margins.",
+     "match": [
+      "eroding"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-19-1.mp3",
+    "times": [
+     [
+      0.36,
+      0.98
+     ],
+     [
+      1.2,
+      11.08
+     ],
+     [
+      11.38,
+      12.36
+     ],
+     [
+      13.14,
+      18.92
+     ],
+     [
+      19.19,
+      26.15
+     ],
+     [
+      26.47,
+      31.54
+     ],
+     [
+      31.78,
+      33.75
+     ],
+     [
+      33.99,
+      40.09
+     ],
+     [
+      40.87,
+      44.7
+     ],
+     [
+      44.94,
+      49.81
+     ],
+     [
+      49.98,
+      57.97
+     ],
+     [
+      58.18,
+      61.46
+     ],
+     [
+      61.72,
+      65.64
+     ],
+     [
+      66.42,
+      73.02
+     ],
+     [
+      73.24,
+      74.8
+     ],
+     [
+      75.03,
+      78.47
+     ],
+     [
+      78.79,
+      82.98
+     ],
+     [
+      83.76,
+      85.83
+     ],
+     [
+      86.27,
+      93.85
+     ],
+     [
+      94.18,
+      97.35
+     ],
+     [
+      97.59,
+      104.6
+     ],
+     [
+      104.9,
+      112.74
+     ],
+     [
+      113.52,
+      120.9
+     ],
+     [
+      121.16,
+      126.71
+     ],
+     [
+      127.01,
+      132.79
+     ],
+     [
+      133.01,
+      134.86
+     ],
+     [
+      135.09,
+      146.25
+     ],
+     [
+      147.03,
+      152.18
+     ],
+     [
+      152.42,
+      157.21
+     ],
+     [
+      157.49,
+      165.95
+     ],
+     [
+      166.28,
+      171.61
+     ],
+     [
+      171.86,
+      179.08
+     ],
+     [
+      179.37,
+      182.31
+     ],
+     [
+      183.09,
+      185.29
+     ],
+     [
+      185.55,
+      195.99
+     ],
+     [
+      196.37,
+      204.11
+     ],
+     [
+      204.42,
+      215.67
+     ],
+     [
+      216.02,
+      218.02
+     ]
+    ],
+    "duration": 218.7,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-10-19-1-words/"
+   }
+  },
+  {
+   "title": "A 'Good Ear' for Sound Helps Learners Master Foreign Pronunciation, Study Finds",
+   "topic": "Language · pronunciation",
+   "source": {
+    "name": "UCL News: People with a 'good ear' for sounds make better language learners (14 Oct 2026)",
+    "url": "https://www.ucl.ac.uk/news/2026/oct/people-good-ear-sounds-make-better-language-learners",
+    "links": [
+     {
+      "name": "Journal of Experimental Psychology: General — Saito-van Poeteren et al. (doi:10.1037/xge0001991)",
+      "url": "https://www.ovid.com/journals/jepge/fulltext/10.1037/xge0001991~individual-differences-in-motor-and-auditory-activation-in"
+     },
+     {
+      "name": "News-Medical: Good ear for sound details accelerates foreign language pronunciation",
+      "url": "https://www.news-medical.net/news/20261014/Good-ear-for-sound-details-accelerates-foreign-language-pronunciation.aspx"
+     },
+     {
+      "name": "Language Magazine: Precise Listeners Learn Languages Easier",
+      "url": "https://languagemagazine.com/2026/10/14/precise-listeners-learn-languages-easier/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning, and welcome to the science bulletin.",
+     "If you have ever wondered why some people pick up a foreign accent faster than others, new research suggests the answer may lie not only in practice, but in how precisely they hear sound.",
+     "Here's the report."
+    ],
+    [
+     "The study, by researchers at University College London and Tohoku University in Japan, has just been published in the Journal of Experimental Psychology: General.",
+     "It focused on Japanese learners of English, and on two vowels that cause them real trouble: the vowel in cat, and the vowel in cup.",
+     "Neither sound maps neatly onto a Japanese vowel."
+    ],
+    [
+     "First, the team measured what they call auditory precision.",
+     "Volunteers listened to artificial tones that sounded nothing like speech, and tried to spot tiny differences between them, in some cases as small as two hertz.",
+     "The test was adaptive, so it got harder as people did better, and it took about five minutes.",
+     "They also sat a vowel test, recorded by four native British speakers.",
+     "To make sure that test was fair, the researchers gave it to fifty native speakers of British English.",
+     "Almost all of them scored full marks, or very close to it."
+    ],
+    [
+     "In total, two hundred and seven Japanese learners took part, across two experiments.",
+     "In the first, involving one hundred and forty students, a sharper ear went hand in hand with better vowel recognition.",
+     "Experience mattered too.",
+     "Time spent studying abroad helped, and so did pronunciation lessons.",
+     "In the second experiment, the researchers ranked how much each factor contributed.",
+     "Auditory precision came out on top, at around forty per cent, ahead of study abroad, at roughly thirty-five, and pronunciation training, at eighteen."
+    ],
+    [
+     "That second experiment also looked inside the brain.",
+     "Sixty-seven of the students were scanned with fMRI while they compared the two English vowels, and then similar tones that weren't speech.",
+     "Learners with a less precise ear showed more activity on the left side of the brain's sensorimotor network, a set of regions involved in planning speech movements.",
+     "In other words, they seemed to be processing the new sounds through the mouth movements of Japanese.",
+     "By contrast, the brain activity of learners with a sharper ear looked much like it did when they heard plain tones."
+    ],
+    [
+     "The lead author, Doctor Kazuya Saito-van Poeteren of the UCL Institute of Education, said learners with a good ear can hear a new foreign-language sound objectively, without immediately processing it as language.",
+     "Instead, according to Doctor Saito-van Poeteren, their brains analyse the acoustic information itself."
+    ],
+    [
+     "So what does this mean for the classroom?",
+     "Most people approach a new language by memorising vocabulary and listening to speech.",
+     "The researchers argue that teaching should move beyond simply asking for more practice, and should help learners develop their ear as well.",
+     "The team now plans to design a combined course of language and auditory training, to sharpen people's ability to detect fine differences in pitch."
+    ],
+    [
+     "Still, there are limits.",
+     "The study tested listening rather than speaking, and only one pair of languages.",
+     "The authors themselves describe their reading of the brain scans as tentative.",
+     "That's all from the science desk for now."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Hearing and learning foreign-language sounds",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Measuring auditory precision"
+       },
+       {
+        "t": "Listening test used [[1]] tones rather than speech"
+       },
+       {
+        "t": "Vowel test checked on native speakers: nearly all got [[2]]"
+       },
+       {
+        "h": "Behavioural results"
+       },
+       {
+        "t": "Experience factors: studying [[3]] and pronunciation lessons"
+       },
+       {
+        "t": "Contribution of auditory precision: about [[4]] %"
+       },
+       {
+        "h": "Brain scans"
+       },
+       {
+        "t": "Weaker listeners: extra activity on the [[5]] side of the sensorimotor network"
+       },
+       {
+        "t": "They appeared to use the [[6]] of their first language"
+       },
+       {
+        "t": "Stronger listeners hear new sounds [[7]]"
+       },
+       {
+        "h": "Implications"
+       },
+       {
+        "t": "Teaching should go beyond simply doing more [[8]]"
+       },
+       {
+        "t": "Planned course: language study combined with [[9]]"
+       },
+       {
+        "t": "Goal: better detection of small differences in [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "artificial"
+        ],
+        "ref": "listened to artificial tones",
+        "ev": "Volunteers listened to artificial tones that sounded nothing like speech",
+        "zh": "rather than speech = sounded nothing like speech；答案 artificial（人工的），形容詞。"
+       },
+       {
+        "a": [
+         "full marks"
+        ],
+        "ref": "Almost all of them scored full marks",
+        "ev": "Almost all of them scored full marks, or very close to it.",
+        "zh": "nearly all = Almost all；答案 full marks（滿分）。干擾：fifty（人數）、four（錄音者人數）。"
+       },
+       {
+        "a": [
+         "abroad"
+        ],
+        "ref": "Time spent studying abroad helped",
+        "ev": "Time spent studying abroad helped, and so did pronunciation lessons.",
+        "zh": "答案 abroad（studying abroad 留學）。"
+       },
+       {
+        "a": [
+         "40",
+         "forty"
+        ],
+        "ref": "at around forty per cent",
+        "ev": "Auditory precision came out on top, at around forty per cent",
+        "zh": "答案 40。干擾：study abroad 約 thirty-five、pronunciation training eighteen。"
+       },
+       {
+        "a": [
+         "left"
+        ],
+        "ref": "more activity on the left side",
+        "ev": "showed more activity on the left side of the brain's sensorimotor network",
+        "zh": "weaker listeners = less precise ear；答案 left。"
+       },
+       {
+        "a": [
+         "mouth movements"
+        ],
+        "ref": "through the mouth movements of Japanese",
+        "ev": "processing the new sounds through the mouth movements of Japanese",
+        "zh": "first language = Japanese；答案 mouth movements（口部動作）。"
+       },
+       {
+        "a": [
+         "objectively"
+        ],
+        "ref": "can hear a new foreign-language sound objectively",
+        "ev": "learners with a good ear can hear a new foreign-language sound objectively",
+        "zh": "stronger listeners = learners with a good ear；答案 objectively（客觀地），副詞。"
+       },
+       {
+        "a": [
+         "practice"
+        ],
+        "ref": "move beyond simply asking for more practice",
+        "ev": "teaching should move beyond simply asking for more practice",
+        "zh": "go beyond = move beyond；答案 practice。"
+       },
+       {
+        "a": [
+         "auditory training"
+        ],
+        "ref": "a combined course of language and auditory training",
+        "ev": "a combined course of language and auditory training",
+        "zh": "combined with = combined course of language and；答案 auditory training（聽覺訓練）。"
+       },
+       {
+        "a": [
+         "pitch"
+        ],
+        "ref": "detect fine differences in pitch",
+        "ev": "to sharpen people's ability to detect fine differences in pitch",
+        "zh": "small differences = fine differences；答案 pitch（音高）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Hearing Before Speaking: Why Some Ears Learn Languages Faster",
+    "intro": "A study of Japanese learners of English links pronunciation success to a basic listening skill, and to what happens in the brain's speech-movement regions.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Adults who learn a second language after childhood reach strikingly different levels of pronunciation. Even when learners have similar backgrounds, motivation and opportunities to hear the language, some come to sound almost native while others keep a strong foreign accent. Over the past five decades, researchers have tried to explain this gap by looking at external factors, such as arriving at an earlier age in a country where the language is spoken, using it consistently every day, receiving extended foreign-language education, and taking pronunciation-focused or even music training. Yet, according to a new paper in the Journal of Experimental Psychology: General, such factors alone do not fully explain the variation in outcomes. The authors, led by Kazuya Saito-van Poeteren of the UCL Institute of Education, working with colleagues at Tohoku University in Japan, argue that part of the answer lies inside the learner: certain people appear to be better equipped to process the same input and therefore to learn more from the same experience."
+     },
+     {
+      "label": "B",
+      "text": "The ability at the centre of the study is auditory processing, which the researchers define as a lower-order capacity to encode the frequency and time characteristics of sounds, such as formants, duration and amplitude. Because every later stage of learning depends on it, auditory processing has been described as 'the gateway to spoken language'. Earlier training studies had already suggested that learners who improve most after a few hours of focused pronunciation work often possess stronger auditory skills. What remained unclear was the mechanism: how might people with different levels of auditory precision actually process a new sound differently?"
+     },
+     {
+      "label": "C",
+      "text": "To find out, the team focused on how Japanese speakers learn the English vowels in words such as 'cat' and 'cup'. This contrast was chosen partly because it is relatively attainable for Japanese speakers, even with brief exposure, which allowed the researchers to observe learning as it develops. The two vowels differ mainly in their second formant, at roughly 1,200 Hz versus 1,600 Hz. Participants' sensitivity to that same acoustic difference was measured with simple synthetic tones that changed in steps as small as 2 Hz. To confirm that these sounds were not heard as language, ten native English speakers rated them for how English-like they sounded; the average score was just 1.25 on a seven-point scale. The listening test was adaptive, becoming harder after correct answers, and took about five minutes to complete."
+     },
+     {
+      "label": "D",
+      "text": "In the first experiment, 140 Japanese learners completed both the tone test and a vowel identification test recorded by native British speakers, and in total 207 learners took part across the two experiments. The results confirmed a significant link between auditory precision and the accurate identification of the two vowels. Not surprisingly, experience-related variables, such as study abroad and pronunciation training, accounted for a substantial proportion of the variation in performance, between 20 and 40 per cent. Auditory precision, however, accounted for a broadly equivalent share. In the authors' words, the findings underscore the importance of not only the quantity and quality of practice but also the foundational auditory skills that enable learners to maximise the benefits of each practice opportunity."
+     },
+     {
+      "label": "E",
+      "text": "The second experiment used functional magnetic resonance imaging to examine 67 learners as they compared the English vowels and, as a control task, comparable non-speech tones. Learners with less precise hearing showed greater activation in a left-hemisphere sensorimotor network, including regions that plan and evaluate speech movements. Crucially, this link appeared only during the speech task, not during the tone task. The researchers interpret this pattern, drawing on established theories of second-language perception, as a sign that weaker listeners were processing English sounds through the articulatory routines of Japanese, in effect simulating the new vowels with familiar mouth movements. Learners with higher auditory precision, by contrast, showed lower sensorimotor activity, similar to that observed during non-verbal listening. The authors suggest that such learners may be able to bypass first-language interference and focus directly on the acoustic properties of the new sounds."
+     },
+     {
+      "label": "F",
+      "text": "If this interpretation is correct, it may have practical consequences. The authors suggest that asking beginners to produce new sounds too early could be counterproductive, because they may rely on, and possibly reinforce, first-language patterns rather than forming new categories. They cite earlier research in which Spanish speakers learning a Basque consonant contrast learned less when they had to speak during training; a two-second delay before speaking reduced this interference, and a four-second delay eliminated it. Nonetheless, the researchers acknowledge that their account is still tentative: they cannot rule out a general difference between processing speech and non-speech, and they call for longitudinal studies that follow learners over time. The team also hopes to develop a form of combined language and auditory training."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "an example involving speakers of a different first language",
+        "a": "F",
+        "ref": "F",
+        "ev": "Spanish speakers learning a Basque consonant contrast",
+        "zh": "F 段：引用西班牙語母語者學巴斯克語子音的研究。"
+       },
+       {
+        "q": "a check that the test sounds were not perceived as speech",
+        "a": "C",
+        "ref": "C",
+        "ev": "ten native English speakers rated them for how English-like they sounded",
+        "zh": "C 段：請十位英語母語者評分，確認測試音不像英語。"
+       },
+       {
+        "q": "the claim that learners' backgrounds cannot fully account for differences in results",
+        "a": "A",
+        "ref": "A",
+        "ev": "such factors alone do not fully explain the variation in outcomes",
+        "zh": "A 段：外在因素無法完全解釋學習成果的差異。"
+       },
+       {
+        "q": "a brain pattern that appeared in one task but not in another",
+        "a": "E",
+        "ref": "E",
+        "ev": "this link appeared only during the speech task, not during the tone task",
+        "zh": "E 段：關聯只出現在語音作業，不在純音作業。"
+       },
+       {
+        "q": "a definition of the ability being investigated",
+        "a": "B",
+        "ref": "B",
+        "ev": "which the researchers define as a lower-order capacity to encode the frequency and time characteristics of sounds",
+        "zh": "B 段：定義 auditory processing。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The two vowels were selected partly because Japanese speakers can make progress with them quickly.",
+        "a": "True",
+        "ref": "C",
+        "ev": "relatively attainable for Japanese speakers, even with brief exposure",
+        "zh": "C 段：即使短暫接觸也相對能學會 → True。"
+       },
+       {
+        "q": "Learners with sharper hearing showed more sensorimotor activity when listening to the English vowels.",
+        "a": "False",
+        "ref": "E",
+        "ev": "Learners with higher auditory precision, by contrast, showed lower sensorimotor activity",
+        "zh": "E 段：聽力較精準者感覺運動區活動『較低』，與題目相反 → False。"
+       },
+       {
+        "q": "Female participants generally had better auditory precision than male participants.",
+        "a": "Not Given",
+        "ref": "D",
+        "zh": "文章完全沒有依性別比較受試者 → Not Given（陷阱：看似合理的研究細節，但文中沒有）。"
+       },
+       {
+        "q": "In an earlier study, waiting briefly before speaking lessened the negative effect of speaking during training.",
+        "a": "True",
+        "ref": "F",
+        "ev": "a two-second delay before speaking reduced this interference",
+        "zh": "F 段：延遲兩秒再說就減少干擾 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Implications and limits",
+      "lines": [
+       {
+        "t": "The researchers believe it may be [[1]] to make beginners say new sounds too early, since they might strengthen first-language patterns. In one earlier study, speaking during training caused [[2]] that a short pause could reduce. The authors admit that their explanation is [[3]], and they recommend [[4]] research that tracks learners over a long period."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "counterproductive"
+        ],
+        "ref": "F",
+        "ev": "asking beginners to produce new sounds too early could be counterproductive",
+        "zh": "F 段：答案 counterproductive（適得其反的）。"
+       },
+       {
+        "a": [
+         "interference"
+        ],
+        "ref": "F",
+        "ev": "a two-second delay before speaking reduced this interference",
+        "zh": "F 段：pause = delay；答案 interference（干擾）。"
+       },
+       {
+        "a": [
+         "tentative"
+        ],
+        "ref": "F",
+        "ev": "their account is still tentative",
+        "zh": "F 段：admit = acknowledge；答案 tentative（暫定的、尚未確定的）。"
+       },
+       {
+        "a": [
+         "longitudinal"
+        ],
+        "ref": "F",
+        "ev": "they call for longitudinal studies that follow learners over time",
+        "zh": "F 段：tracks learners over a long period = follow learners over time；答案 longitudinal（縱貫性的）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "precision",
+     "pos": "n.",
+     "def": "the quality of being exact and accurate",
+     "zh": "精確度",
+     "example": "The team measured what they call auditory precision.",
+     "match": [
+      "precision"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "adaptive",
+     "pos": "adj.",
+     "def": "changing to suit the person or situation",
+     "zh": "適性的、會自動調整的",
+     "example": "The test was adaptive, so it got harder as people did better.",
+     "match": [
+      "adaptive"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "map onto",
+     "pos": "phr. v.",
+     "def": "to correspond directly to something",
+     "zh": "對應到",
+     "example": "Neither sound maps neatly onto a Japanese vowel.",
+     "match": [
+      "maps neatly onto"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "go hand in hand",
+     "pos": "idiom",
+     "def": "to be closely connected and occur together",
+     "zh": "密切相關、相伴出現",
+     "example": "A sharper ear went hand in hand with better vowel recognition.",
+     "match": [
+      "hand in hand"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "tentative",
+     "pos": "adj.",
+     "def": "not certain or fixed; provisional",
+     "zh": "暫定的、不確定的",
+     "example": "The authors describe their reading of the scans as tentative.",
+     "match": [
+      "tentative"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "strikingly",
+     "pos": "adv.",
+     "def": "in a very noticeable way",
+     "zh": "顯著地",
+     "example": "Adults reach strikingly different levels of pronunciation.",
+     "match": [
+      "strikingly"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "equipped",
+     "pos": "adj.",
+     "def": "having the abilities needed for something",
+     "zh": "具備能力的",
+     "example": "Some people appear better equipped to process the same input.",
+     "match": [
+      "equipped"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "encode",
+     "pos": "v.",
+     "def": "to convert information into a form that can be processed",
+     "zh": "編碼、轉換成訊號",
+     "example": "Auditory processing is the capacity to encode the features of sounds.",
+     "match": [
+      "encode"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "attainable",
+     "pos": "adj.",
+     "def": "possible to achieve",
+     "zh": "可達成的",
+     "example": "The contrast is relatively attainable even with brief exposure.",
+     "match": [
+      "attainable"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "substantial",
+     "pos": "adj.",
+     "def": "large in amount or importance",
+     "zh": "相當大的",
+     "example": "Experience accounted for a substantial proportion of the variation.",
+     "match": [
+      "substantial"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "underscore",
+     "pos": "v.",
+     "def": "to emphasise or show clearly",
+     "zh": "凸顯、強調",
+     "example": "The findings underscore the importance of basic auditory skills.",
+     "match": [
+      "underscore"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "foundational",
+     "pos": "adj.",
+     "def": "forming the basis of something",
+     "zh": "基礎的",
+     "example": "Foundational auditory skills help learners benefit from practice.",
+     "match": [
+      "foundational"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "counterproductive",
+     "pos": "adj.",
+     "def": "having the opposite effect to the one intended",
+     "zh": "適得其反的",
+     "example": "Producing new sounds too early could be counterproductive.",
+     "match": [
+      "counterproductive"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "reinforce",
+     "pos": "v.",
+     "def": "to make something stronger",
+     "zh": "強化",
+     "example": "Learners may reinforce first-language patterns.",
+     "match": [
+      "reinforce"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "longitudinal",
+     "pos": "adj.",
+     "def": "following the same people over a long period",
+     "zh": "縱貫性的（長期追蹤的）",
+     "example": "They call for longitudinal studies.",
+     "match": [
+      "longitudinal"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-19-2.mp3",
+    "times": [
+     [
+      0.36,
+      3.0
+     ],
+     [
+      3.26,
+      12.6
+     ],
+     [
+      12.98,
+      14.03
+     ],
+     [
+      14.81,
+      23.98
+     ],
+     [
+      24.33,
+      31.29
+     ],
+     [
+      31.69,
+      34.42
+     ],
+     [
+      35.2,
+      38.51
+     ],
+     [
+      38.79,
+      47.38
+     ],
+     [
+      47.71,
+      52.81
+     ],
+     [
+      53.06,
+      57.03
+     ],
+     [
+      57.32,
+      62.45
+     ],
+     [
+      62.66,
+      65.98
+     ],
+     [
+      66.76,
+      71.56
+     ],
+     [
+      71.87,
+      78.09
+     ],
+     [
+      78.31,
+      79.8
+     ],
+     [
+      80.03,
+      84.11
+     ],
+     [
+      84.43,
+      88.75
+     ],
+     [
+      88.98,
+      97.76
+     ],
+     [
+      98.54,
+      101.44
+     ],
+     [
+      101.77,
+      108.9
+     ],
+     [
+      109.15,
+      117.07
+     ],
+     [
+      117.56,
+      122.29
+     ],
+     [
+      122.5,
+      128.33
+     ],
+     [
+      129.11,
+      140.38
+     ],
+     [
+      140.77,
+      146.72
+     ],
+     [
+      147.5,
+      149.58
+     ],
+     [
+      150.01,
+      154.34
+     ],
+     [
+      154.66,
+      161.28
+     ],
+     [
+      161.51,
+      169.05
+     ],
+     [
+      169.83,
+      171.44
+     ],
+     [
+      171.73,
+      176.13
+     ],
+     [
+      176.38,
+      180.24
+     ],
+     [
+      180.53,
+      182.58
+     ]
+    ],
+    "duration": 183.2,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-19-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
