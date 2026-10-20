@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-21",
+ "date": "2026-10-21",
+ "title": "Bleached Corals Recover in Weeks After Touching a Healthy Clone, Stanford Study Finds · Alaska's Near-Record Landslide Tsunami Left Clues for a Warning System, Seismologists Say",
+ "stories": [
+  {
+   "title": "Bleached Corals Recover in Weeks After Touching a Healthy Clone, Stanford Study Finds",
+   "topic": "Nature · coral recovery",
+   "source": {
+    "name": "Stanford Doerr School of Sustainability: Stanford scientists discover a way to reverse coral bleaching at record speed (Oct 2026)",
+    "url": "https://sustainability.stanford.edu/news/stanford-scientists-discover-way-to-reverse-coral-bleaching-record-speed/",
+    "links": [
+     {
+      "name": "Science Advances — Collins et al., Rapid coral bleaching recovery via symbiont transfer from healthy corals (14 Oct 2026, doi:10.1126/sciadv.aeh1580)",
+      "url": "https://www.science.org/doi/10.1126/sciadv.aeh1580"
+     },
+     {
+      "name": "Science (news) — Warren Cornwall: Coral can heal rapidly from bleaching—if it touches a clone (14 Oct 2026)",
+      "url": "https://www.science.org/content/article/coral-can-heal-rapidly-bleaching-if-it-touches-clone"
+     },
+     {
+      "name": "ScienceDaily: A simple touch can bring dying corals back to life in just 7 weeks (19 Oct 2026)",
+      "url": "https://www.sciencedaily.com/releases/2026/10/261017230025.htm"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning, and welcome to the environment desk.",
+     "Corals that have been bleached almost to the point of death can recover in a matter of weeks, simply by touching a healthy piece of themselves, according to scientists at Stanford University in California.",
+     "Here's the report."
+    ],
+    [
+     "Bleaching happens when the ocean gets too warm.",
+     "Corals push out the tiny algae that live inside their tissues, and those algae supply much of the energy that corals need to grow.",
+     "Without them, a coral turns white, begins to starve, and becomes vulnerable to harmful algae.",
+     "Even when bleached corals do survive, recovery normally takes months, or even years.",
+     "One of the study's authors, Professor Fiorenza Micheli, says bleached corals are often considered a lost cause."
+    ],
+    [
+     "The new work, published in the journal Science Advances, began with an accident.",
+     "In 2025, the marine biologist Steve Palumbi noticed that two fragments from the same colony had tipped over in an aquarium and were resting against each other.",
+     "One was healthy; the other was bleached.",
+     "Where they touched, colour started returning to the pale fragment."
+    ],
+    [
+     "So the lead author, doctoral student Danny Collins, set up a simple test.",
+     "He used ten pairs of fragments of cauliflower coral, each pair made up of one healthy piece and one bleached piece from the same animal.",
+     "Five pairs were allowed to touch.",
+     "The other five were separated by gaps of just a few millimetres.",
+     "The difference was stark.",
+     "Every bleached fragment that touched its partner recovered completely within seven weeks, while those kept apart died."
+    ],
+    [
+     "The explanation appears to be tissue fusion.",
+     "Corals are animals, and most colonies are made up of clones that are genetically identical.",
+     "Professor Palumbi explained that when such clones meet, they recognise one another and their tissues fuse, rather as an organ transplant tends to succeed when the donor is an identical twin.",
+     "Under the microscope, the team saw tiny channels in the tissue line up, creating a pathway for algae and nutrients.",
+     "Algae were moving across within three days."
+    ],
+    [
+     "Meanwhile, a second finding surprised the researchers.",
+     "The contact didn't have to last.",
+     "After a single week together, a bleached fragment could be separated and still make a full recovery.",
+     "That's because the algae, once inside, multiplied rapidly, doubling roughly every four days, which is about ten times faster than in wild corals.",
+     "In other words, the healthy partner only had to get the process started."
+    ],
+    [
+     "By contrast, pairing corals from different colonies failed.",
+     "According to a report in the journal Science, the polyps sent out tiny stinging structures, as if attacking an intruder.",
+     "In those cases, the bleached corals eventually died."
+    ],
+    [
+     "There are serious limits, though.",
+     "Every bleached coral would need a genetically identical partner, and the researchers admit that supplying those across an entire reef would be impractical.",
+     "Andrew Baker, a coral biologist at the University of Miami who wasn't involved in the study, has also pointed out that restoring the same algae could leave a coral just as exposed to the next heatwave.",
+     "Looking ahead, the team hopes to collect beneficial algae from healthy corals before heatwaves strike, and deliver them in large quantities afterwards.",
+     "That's all from the environment desk this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Rescuing bleached corals: a Stanford experiment",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Background"
+       },
+       {
+        "t": "Algae inside the coral provide a large part of its [[1]]"
+       },
+       {
+        "t": "After bleaching, a coral loses its colour and starts to [[2]]"
+       },
+       {
+        "h": "How the study began"
+       },
+       {
+        "t": "Starting point: an [[3]] in a university laboratory in 2025"
+       },
+       {
+        "t": "Two fragments from one colony had fallen against each other in an [[4]]"
+       },
+       {
+        "h": "The experiment"
+       },
+       {
+        "t": "Ten pairs of fragments of [[5]] coral"
+       },
+       {
+        "t": "Pairs not in contact: kept apart by only a few [[6]]"
+       },
+       {
+        "t": "Pairs in contact: bleached fragments fully healthy within [[7]] weeks"
+       },
+       {
+        "h": "Explanation"
+       },
+       {
+        "t": "Fusing tissue compared to an organ transplant from an identical [[8]]"
+       },
+       {
+        "t": "Corals from other colonies behaved as if facing an [[9]]"
+       },
+       {
+        "h": "Limitations"
+       },
+       {
+        "t": "Restoring the original algae may leave corals at risk in the next [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "energy"
+        ],
+        "ref": "those algae supply much of the energy",
+        "ev": "those algae supply much of the energy that corals need to grow",
+        "zh": "provide a large part of = supply much of；答案 energy（能量）。"
+       },
+       {
+        "a": [
+         "starve"
+        ],
+        "ref": "begins to starve",
+        "ev": "a coral turns white, begins to starve",
+        "zh": "loses its colour = turns white；starts to = begins to；答案 starve（挨餓，動詞）。干擾：vulnerable to harmful algae 是另一個後果，但空格前是 starts to，需要動詞。"
+       },
+       {
+        "a": [
+         "accident"
+        ],
+        "ref": "began with an accident",
+        "ev": "The new work, published in the journal Science Advances, began with an accident.",
+        "zh": "starting point = began with；答案 accident（意外、偶然）。"
+       },
+       {
+        "a": [
+         "aquarium"
+        ],
+        "ref": "had tipped over in an aquarium",
+        "ev": "two fragments from the same colony had tipped over in an aquarium",
+        "zh": "fallen against each other = tipped over … resting against each other；答案 aquarium（水族箱）。"
+       },
+       {
+        "a": [
+         "cauliflower"
+        ],
+        "ref": "ten pairs of fragments of cauliflower coral",
+        "ev": "He used ten pairs of fragments of cauliflower coral",
+        "zh": "答案 cauliflower（花椰菜珊瑚，Pocillopora damicornis 的俗名）。ten pairs 已寫在題幹，不是答案。"
+       },
+       {
+        "a": [
+         "millimetres",
+         "millimeters",
+         "mm"
+        ],
+        "ref": "separated by gaps of just a few millimetres",
+        "ev": "The other five were separated by gaps of just a few millimetres.",
+        "zh": "not in contact = separated；only a few = just a few；答案 millimetres（公釐；美式 millimeters 也對）。"
+       },
+       {
+        "a": [
+         "seven",
+         "7"
+        ],
+        "ref": "recovered completely within seven weeks",
+        "ev": "Every bleached fragment that touched its partner recovered completely within seven weeks",
+        "zh": "fully healthy = recovered completely；答案 seven（7 週）。干擾：three days（藻類開始移動）、a single week（接觸一週就夠）、four days（倍增時間）都不是復原時間。"
+       },
+       {
+        "a": [
+         "twin"
+        ],
+        "ref": "the donor is an identical twin",
+        "ev": "an organ transplant tends to succeed when the donor is an identical twin",
+        "zh": "答案 twin（雙胞胎）。講者用器官移植比喻同一 clone 的珊瑚組織會融合。"
+       },
+       {
+        "a": [
+         "intruder"
+        ],
+        "ref": "as if attacking an intruder",
+        "ev": "the polyps sent out tiny stinging structures, as if attacking an intruder",
+        "zh": "other colonies = different colonies；behaved as if facing = as if attacking；答案 intruder（入侵者）。"
+       },
+       {
+        "a": [
+         "heatwave",
+         "heat wave"
+        ],
+        "ref": "just as exposed to the next heatwave",
+        "ev": "restoring the same algae could leave a coral just as exposed to the next heatwave",
+        "zh": "at risk = exposed；答案 heatwave（熱浪；heat wave 兩字也可）。注意最後一句也有 heatwaves，但題幹 the next ___ 對應的是 Baker 的看法。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "A Touch of Recovery: Can Healthy Corals Rescue Their Bleached Neighbours?",
+    "intro": "A laboratory study suggests that bleached corals can recover with remarkable speed when they come into contact with genetically identical partners.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Coral reefs depend on a partnership that is easily broken. Reef-building corals are animals, but much of the energy they need comes from microscopic algae, known as symbionts, that live inside their tissues. When seawater becomes unusually warm, corals expel these algae, a process called bleaching. Deprived of their partners, the corals turn pale, struggle to feed themselves and become susceptible to being overgrown by harmful algae. Those that survive normally regain their symbionts slowly, either from the few that remain in their tissues or from algae drifting in the surrounding water, and full recovery can take months or years. By some estimates, reefs could disappear within a few decades as marine heatwaves grow more frequent and intense. Scientists have tried several interventions to improve their resilience, including selectively breeding heat-tolerant corals, raising young corals in nurseries and transferring communities of microorganisms between colonies."
+     },
+     {
+      "label": "B",
+      "text": "The latest approach emerged largely by chance. In 2025 Stephen Palumbi, a professor of marine sciences at Stanford University, noticed that two fragments from the same colony, one bleached and one healthy, had toppled over in a tank in his laboratory and come to rest against each other. Where they touched, colour began to return to the bleached piece, a sign that its algae were coming back. At around the same time, Danny Collins, a doctoral student, was studying how coral diseases spread, particularly through bacteria carried on plastic debris that settles on reefs. \"Harmful bacteria enter corals through physical contact,\" he explained. The two observations prompted an obvious question: could contact also be used to deliver something beneficial?"
+     },
+     {
+      "label": "C",
+      "text": "To find out, Collins bleached fingertip-sized fragments of cauliflower coral, Pocillopora damicornis, by exposing them to warm water. He then set up ten pairs, each consisting of a bleached fragment and a healthy one taken from the same animal. Five pairs were positioned so that the fragments touched, while in the other five the fragments were separated by a gap of only a few millimetres. The contrast was stark. Every bleached fragment that touched its healthy counterpart recovered fully within seven weeks, which the Stanford team describes as the fastest recovery from bleaching yet documented. The fragments that were kept apart, by contrast, suffered extensive algal overgrowth and died."
+     },
+     {
+      "label": "D",
+      "text": "Microscopy revealed the mechanism. Because most corals grow by cloning themselves, the members of a colony are genetically identical, and clones that come into contact recognise one another and fuse their tissues. Tiny channels in the tissue line up, creating a passage through which algae and nutrients can flow from the healthy fragment to the bleached one; algae were seen crossing within three days. The researchers then separated pairs after different periods. According to the paper, a single week of contact, and in some cases as few as three days, supplied enough symbionts to trigger complete self-recovery, even after the fragments had been pulled apart. Once inside, the algae multiplied rapidly: by the end of the first week their population was doubling roughly every four days, up to ten times faster than in most recovering corals in the field. The team also identified a second, slower route, in which polyps take up symbionts released by the healthy coral. This route operated even between fragments from different colonies, but on its own it was not enough to restore a colony."
+     },
+     {
+      "label": "E",
+      "text": "Contact between different genetic individuals, however, proved antagonistic. Rather than fusing, the healthy coral overtook the bleached fragment. A report in the journal Science described the polyps sending out stinging appendages as if attacking an intruder, and Collins likened the response to a person's immune system rejecting a transplant from a stranger. A parallel study led by Bede Johnston of the Australian Institute of Marine Science explored a related idea. His team inoculated fragments of two other species with laboratory-bred algae selected for tolerance to extreme temperatures, and found that some of these algae spread into neighbouring bleached polyps when fragments were joined. The transfer was quicker than relying on free-floating algae, but slower than in the Stanford experiment. Madeleine van Oppen, a co-author of the Australian study, said she \"was quite blown away how quickly the symbionts were transmitted\" in the Stanford work."
+     },
+     {
+      "label": "F",
+      "text": "Even so, the findings do not yet amount to a practical tool for reef restoration. For the technique to work as demonstrated, every bleached coral would need a healthy, genetically identical donor, and the researchers acknowledge that finding such matches across entire reefs would be impractical. Andrew Baker, a coral biologist at the University of Miami, has also noted that reinstating the original algae could leave a coral just as vulnerable when the next heatwave arrives, because different algal strains influence how well corals cope with heat. The Stanford team now hopes to harvest beneficial algae from healthy corals before heatwaves occur and to deliver them in large quantities to bleached corals afterwards. Fiorenza Micheli, one of the authors, argues that keeping corals alive long enough could allow slower processes, such as growth, reproduction and the recruitment of new colonies, to complete their recovery. Whether that ambition can be realised at reef scale remains, for now, an open question."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "an account of how the research idea arose from an unplanned observation",
+        "a": "B",
+        "ref": "B",
+        "ev": "The latest approach emerged largely by chance.",
+        "zh": "B 段：by chance = unplanned；兩塊珊瑚碎片意外倒在一起而發現。"
+       },
+       {
+        "q": "a list of earlier methods intended to make reefs better able to survive",
+        "a": "A",
+        "ref": "A",
+        "ev": "Scientists have tried several interventions to improve their resilience",
+        "zh": "A 段：selective breeding、nurseries、轉移微生物群 = earlier methods；resilience = better able to survive。"
+       },
+       {
+        "q": "evidence that recovery continued after the fragments were no longer touching",
+        "a": "D",
+        "ref": "D",
+        "ev": "even after the fragments had been pulled apart",
+        "zh": "D 段：接觸一週（有時三天）後分開，仍能完全自行復原。"
+       },
+       {
+        "q": "a description of research carried out by scientists in another country",
+        "a": "E",
+        "ref": "E",
+        "ev": "A parallel study led by Bede Johnston of the Australian Institute of Marine Science",
+        "zh": "E 段：澳洲海洋科學研究所的平行研究。"
+       },
+       {
+        "q": "a concern that recovered corals might be no better prepared for future warming",
+        "a": "F",
+        "ref": "F",
+        "ev": "could leave a coral just as vulnerable when the next heatwave arrives",
+        "zh": "F 段：Baker 指出放回原本的藻類，珊瑚面對下一次熱浪仍一樣脆弱。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The bleached fragments that were kept apart from healthy partners survived but remained pale.",
+        "a": "False",
+        "ref": "C",
+        "ev": "The fragments that were kept apart, by contrast, suffered extensive algal overgrowth and died.",
+        "zh": "C 段：沒接觸的碎片被藻類覆蓋並死亡，不是『存活但仍蒼白』→ False。"
+       },
+       {
+        "q": "Larger coral fragments recovered more quickly than smaller ones in the Stanford experiment.",
+        "a": "Not Given",
+        "ref": "C",
+        "zh": "C 段只說用 fingertip-sized（指尖大小）的碎片，文章從未比較不同大小碎片的復原速度 → Not Given（陷阱：文中確實提到碎片大小）。"
+       },
+       {
+        "q": "Symbionts can pass from a healthy coral to a bleached one even when the two come from different colonies.",
+        "a": "True",
+        "ref": "D",
+        "ev": "This route operated even between fragments from different colonies",
+        "zh": "D 段：第二條較慢的途徑（polyp uptake）在不同 colony 之間也會發生，只是不足以讓珊瑚復原 → True。注意 E 段說不同個體會互相排斥，但『藻類能否轉移』與『能否完全復原』是兩件事。"
+       },
+       {
+        "q": "The Australian team achieved faster recovery than the Stanford researchers.",
+        "a": "False",
+        "ref": "E",
+        "ev": "but slower than in the Stanford experiment",
+        "zh": "E 段：澳洲研究比靠漂浮藻類快，但比 Stanford 實驗慢 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "From laboratory to reef",
+      "lines": [
+       {
+        "t": "The technique cannot yet be used to restore whole reefs, because each bleached coral would require a genetically identical [[1]]. Putting back the original algae might also leave corals equally [[2]] in future heatwaves. The researchers therefore plan to [[3]] algae from healthy corals in advance and supply them after bleaching. If corals can be kept alive, natural processes, including growth, reproduction and the [[4]] of new colonies, may eventually complete their recovery."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "donor"
+        ],
+        "ref": "F",
+        "ev": "every bleached coral would need a healthy, genetically identical donor",
+        "zh": "F 段：require = need；答案 donor（捐贈者，此指提供藻類的健康珊瑚）。"
+       },
+       {
+        "a": [
+         "vulnerable"
+        ],
+        "ref": "F",
+        "ev": "could leave a coral just as vulnerable when the next heatwave arrives",
+        "zh": "F 段：equally = just as；答案 vulnerable（脆弱的、易受害的）。"
+       },
+       {
+        "a": [
+         "harvest"
+        ],
+        "ref": "F",
+        "ev": "hopes to harvest beneficial algae from healthy corals before heatwaves occur",
+        "zh": "F 段：in advance = before heatwaves occur；答案 harvest（採集，動詞）。"
+       },
+       {
+        "a": [
+         "recruitment"
+        ],
+        "ref": "F",
+        "ev": "such as growth, reproduction and the recruitment of new colonies",
+        "zh": "F 段：答案 recruitment（新個體加入族群；生態學用語）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "symbiont",
+     "pos": "n.",
+     "def": "an organism that lives in a close, usually mutually beneficial, relationship with another",
+     "zh": "共生生物",
+     "example": "Much of a coral's energy comes from symbionts living inside its tissues.",
+     "match": [
+      "symbionts"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "expel",
+     "pos": "v.",
+     "def": "to force something out",
+     "zh": "排出、驅逐",
+     "example": "When seawater becomes unusually warm, corals expel these algae.",
+     "match": [
+      "expel"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "susceptible",
+     "pos": "adj.",
+     "def": "likely to be harmed or affected by something",
+     "zh": "易受影響的、易感的",
+     "example": "Bleached corals become susceptible to being overgrown by harmful algae.",
+     "match": [
+      "susceptible"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "intervention",
+     "pos": "n.",
+     "def": "an action taken deliberately to improve a situation",
+     "zh": "介入措施",
+     "example": "Scientists have tried several interventions to improve reef resilience.",
+     "match": [
+      "interventions"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "resilience",
+     "pos": "n.",
+     "def": "the ability to recover quickly from damage or difficulty",
+     "zh": "韌性、復原力",
+     "example": "Breeding heat-tolerant corals may improve the resilience of reefs.",
+     "match": [
+      "resilience"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "prompt",
+     "pos": "v.",
+     "def": "to cause someone to do or ask something",
+     "zh": "促使、引發",
+     "example": "The two observations prompted an obvious question.",
+     "match": [
+      "prompted"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "stark",
+     "pos": "adj.",
+     "def": "very clear and obvious, often unpleasantly so",
+     "zh": "鮮明的、明顯的",
+     "example": "The difference between the two groups was stark.",
+     "match": [
+      "stark"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "counterpart",
+     "pos": "n.",
+     "def": "a person or thing that corresponds to another in a different place or situation",
+     "zh": "對應的一方",
+     "example": "Every bleached fragment that touched its healthy counterpart recovered.",
+     "match": [
+      "counterpart"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "fuse",
+     "pos": "v.",
+     "def": "to join together to form a single thing",
+     "zh": "融合、結合",
+     "example": "Clones that come into contact recognise one another and fuse their tissues.",
+     "match": [
+      "fuse"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "antagonistic",
+     "pos": "adj.",
+     "def": "showing opposition or hostility",
+     "zh": "對抗的、敵對的",
+     "example": "Contact between different genetic individuals proved antagonistic.",
+     "match": [
+      "antagonistic"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "liken",
+     "pos": "v.",
+     "def": "to say that one thing is similar to another",
+     "zh": "把……比作",
+     "example": "Collins likened the response to an immune system rejecting a transplant.",
+     "match": [
+      "likened"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "inoculate",
+     "pos": "v.",
+     "def": "to introduce microorganisms or a substance into something deliberately",
+     "zh": "接種、植入",
+     "example": "The team inoculated fragments with laboratory-bred algae.",
+     "match": [
+      "inoculated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "impractical",
+     "pos": "adj.",
+     "def": "not sensible or realistic to do",
+     "zh": "不切實際的",
+     "example": "Supplying identical partners across an entire reef would be impractical.",
+     "match": [
+      "impractical"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "reinstate",
+     "pos": "v.",
+     "def": "to put something back into its former position or state",
+     "zh": "恢復、使復原",
+     "example": "Reinstating the original algae could leave a coral just as vulnerable.",
+     "match": [
+      "reinstating"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "realise",
+     "pos": "v.",
+     "def": "to achieve something that was hoped for or planned",
+     "zh": "實現（目標）",
+     "example": "Whether that ambition can be realised at reef scale remains an open question.",
+     "match": [
+      "realised"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-21-1.mp3",
+    "times": [
+     [
+      0.36,
+      3.06
+     ],
+     [
+      3.32,
+      13.83
+     ],
+     [
+      14.21,
+      15.19
+     ],
+     [
+      15.97,
+      18.38
+     ],
+     [
+      18.65,
+      25.37
+     ],
+     [
+      25.69,
+      31.24
+     ],
+     [
+      31.48,
+      36.69
+     ],
+     [
+      36.97,
+      43.34
+     ],
+     [
+      44.12,
+      48.53
+     ],
+     [
+      48.77,
+      57.44
+     ],
+     [
+      57.82,
+      59.98
+     ],
+     [
+      60.19,
+      63.55
+     ],
+     [
+      64.33,
+      68.56
+     ],
+     [
+      68.86,
+      75.59
+     ],
+     [
+      75.82,
+      77.65
+     ],
+     [
+      77.88,
+      81.2
+     ],
+     [
+      81.51,
+      82.74
+     ],
+     [
+      82.94,
+      88.85
+     ],
+     [
+      89.63,
+      92.06
+     ],
+     [
+      92.39,
+      97.1
+     ],
+     [
+      97.34,
+      107.62
+     ],
+     [
+      108.0,
+      114.59
+     ],
+     [
+      114.8,
+      117.24
+     ],
+     [
+      118.02,
+      121.28
+     ],
+     [
+      121.58,
+      123.21
+     ],
+     [
+      123.4,
+      128.41
+     ],
+     [
+      128.68,
+      137.45
+     ],
+     [
+      137.89,
+      141.7
+     ],
+     [
+      142.48,
+      145.97
+     ],
+     [
+      146.25,
+      152.45
+     ],
+     [
+      152.78,
+      155.81
+     ],
+     [
+      156.59,
+      158.34
+     ],
+     [
+      158.6,
+      166.3
+     ],
+     [
+      166.51,
+      176.86
+     ],
+     [
+      177.2,
+      185.05
+     ],
+     [
+      185.35,
+      187.69
+     ]
+    ],
+    "duration": 188.3,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-10-21-1-words/"
+   }
+  },
+  {
+   "title": "Alaska's Near-Record Landslide Tsunami Left Clues for a Warning System, Seismologists Say",
+   "topic": "Natural hazards · landslide tsunamis",
+   "source": {
+    "name": "The Conversation, republished by ScienceDaily (19 Oct 2026): Alaska's monster tsunami sent water 1,580 feet up a mountain (Michael West & Ezgi Karasözen, Alaska Earthquake Center)",
+    "url": "https://www.sciencedaily.com/releases/2026/10/261018205047.htm",
+    "links": [
+     {
+      "name": "The Conversation (original): Alaska's near-record landslide tsunami sent a wave 1,580 feet up the fjord walls – and left clues for building a warning system",
+      "url": "https://theconversation.com/alaskas-near-record-landslide-tsunami-sent-a-wave-1-580-feet-up-the-fjord-walls-and-left-clues-for-building-a-warning-system-282017"
+     },
+     {
+      "name": "Science — A 481-meter-high landslide-tsunami in a cruise ship–frequented Alaska fjord (doi:10.1126/science.aec3187)",
+      "url": "https://www.science.org/doi/10.1126/science.aec3187"
+     },
+     {
+      "name": "Alaska Public Media / KHNS — 'We should be acting more quickly': Tracy Arm tsunami highlights unseen hazards (8 May 2026)",
+      "url": "https://alaskapublic.org/news/alaska-desk/2026-05-08/we-should-be-acting-more-quickly-tracy-arm-tsunami-highlights-unseen-hazards-in-busy-alaska-fjords"
+     },
+     {
+      "name": "USGS: 2025 Tracy Arm Landslide-Generated Tsunami",
+      "url": "https://www.usgs.gov/programs/landslide-hazards/science/2025-tracy-arm-landslide-generated-tsunami"
+     },
+     {
+      "name": "Alaska Earthquake Center: 2025 Tracy Arm Landslide",
+      "url": "http://earthquake.alaska.edu/event/025a7d7cil/detail"
+     },
+     {
+      "name": "EGU General Assembly 2026 abstract — Seismic observations and modelling of the August 2025 Tracy Arm landslide (doi:10.5194/egusphere-egu26-17665)",
+      "url": "https://doi.org/10.5194/egusphere-egu26-17665"
+     }
+    ]
+   },
+   "script": [
+    [
+     "This is the Earth and environment report.",
+     "A mountainside that collapsed into an Alaskan fjord last year produced the second-highest tsunami ever recorded, and the seismologists who studied it now say the warning signs were there at least a day in advance.",
+     "Here's the report."
+    ],
+    [
+     "It happened just before half past five on the morning of the tenth of August, 2025, in Tracy Arm, a narrow fjord south of Juneau that's popular with cruise ships.",
+     "Only twelve hours earlier, a ship called the Hanse Explorer had headed back down the fjord, after its passengers had spent the evening photographing the South Sawyer Glacier.",
+     "Then more than sixty-four million cubic metres of rock fell into the water."
+    ],
+    [
+     "The numbers are extraordinary.",
+     "According to a study in the journal Science, the wave ran up the opposite wall of the fjord to a height of four hundred and eighty-one metres.",
+     "Only one tsunami has climbed higher: the five-hundred-and-thirty-metre wave at Lituya Bay, also in Alaska, in 1958.",
+     "As the water surged out of the fjord, it stripped the slopes of their vegetation.",
+     "Kayakers camped on an island near the mouth of Tracy Arm had their gear swept away, according to the US Geological Survey, but no one was killed."
+    ],
+    [
+     "Still, it was a near miss.",
+     "In summer, an average of three cruise ships a day visit Tracy Arm, and some cruise lines have since started avoiding it."
+    ],
+    [
+     "So what made this slope fail?",
+     "Michael West, Alaska's state seismologist, and his colleague Ezgi Karasozen, of the Alaska Earthquake Center, point first to the glacier.",
+     "In the two months before the collapse, it retreated by more than a third of a mile, which, according to local reporting on the study, left the base of the slope exposed and without support.",
+     "Heavy rain had also been falling, and rainwater raises the pressure inside cracks in the rock.",
+     "Most striking of all were thousands of small tremors coming from the slope in the days before it gave way."
+    ],
+    [
+     "Normally, geologists look for unstable slopes by searching for deformation: rock that is cracking and slowly shifting downhill.",
+     "At Tracy Arm, there was none to see.",
+     "The geologist Bretwood Higman, who had looked at the fjord while mapping landslide risks across Alaska, told the radio station KHNS that experts had clearly failed to identify the danger beforehand."
+    ],
+    [
+     "Looking ahead, the seismologists propose a colour-coded alert system, similar to those already used for avalanches and volcanic unrest.",
+     "A yellow alert would mean the hazard is temporarily raised across a general area, for example after rapid glacier retreat and heavy rain.",
+     "An orange alert would follow a sharp rise in small quakes, and the shift to a continuous seismic hum known as tremor.",
+     "And a red alert would signal that a landslide is actually under way, something seismic stations can now detect within a couple of minutes.",
+     "Even that, they say, might give people farther from the slide perhaps ten minutes of warning."
+    ],
+    [
+     "There are hurdles, though.",
+     "No landslide monitoring system on this scale yet exists in the United States, and building one will require cooperation between state and federal agencies.",
+     "With glaciers retreating from Alaska to Greenland and Norway, the scientists argue that the real question is not whether to avoid these places, but how to help visitors make better-informed choices.",
+     "That's all from the Earth and environment desk."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "The 2025 Tracy Arm landslide and tsunami",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The event"
+       },
+       {
+        "t": "Location: a narrow [[1]] often visited by cruise ships"
+       },
+       {
+        "t": "A ship had left 12 hours before, after passengers took pictures of a [[2]]"
+       },
+       {
+        "t": "Height reached by the water on the far side: [[3]] metres"
+       },
+       {
+        "t": "The surge removed the [[4]] from the slopes"
+       },
+       {
+        "t": "Kayakers near the entrance lost their [[5]]"
+       },
+       {
+        "h": "Causes and warning signs"
+       },
+       {
+        "t": "Retreating ice left the bottom of the slope with no [[6]]"
+       },
+       {
+        "t": "Rain increased the [[7]] in cracks in the rock"
+       },
+       {
+        "t": "The usual warning sign geologists check for, [[8]], was absent"
+       },
+       {
+        "h": "Proposed alert system"
+       },
+       {
+        "t": "Orange: many small quakes and a steady seismic [[9]]"
+       },
+       {
+        "t": "A national system would need [[10]] between state and federal bodies"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "fjord",
+         "fiord"
+        ],
+        "ref": "a narrow fjord south of Juneau",
+        "ev": "in Tracy Arm, a narrow fjord south of Juneau that's popular with cruise ships",
+        "zh": "often visited by cruise ships = popular with cruise ships；答案 fjord（峽灣）。Tracy Arm 是地名，Juneau 是城市，都不是答案。"
+       },
+       {
+        "a": [
+         "glacier"
+        ],
+        "ref": "photographing the South Sawyer Glacier",
+        "ev": "after its passengers had spent the evening photographing the South Sawyer Glacier",
+        "zh": "took pictures of = photographing；答案 glacier（冰河）。South Sawyer Glacier 是三個字，超過字數限制，只寫 glacier（題幹已有 a）。"
+       },
+       {
+        "a": [
+         "481"
+        ],
+        "ref": "to a height of four hundred and eighty-one metres",
+        "ev": "the wave ran up the opposite wall of the fjord to a height of four hundred and eighty-one metres",
+        "zh": "far side = opposite wall；答案 481。干擾：530 公尺是 1958 年 Lituya Bay 的紀錄；sixty-four million 是岩石體積（立方公尺）。"
+       },
+       {
+        "a": [
+         "vegetation"
+        ],
+        "ref": "stripped the slopes of their vegetation",
+        "ev": "it stripped the slopes of their vegetation",
+        "zh": "removed = stripped；答案 vegetation（植被）。"
+       },
+       {
+        "a": [
+         "gear",
+         "equipment"
+        ],
+        "ref": "had their gear swept away",
+        "ev": "Kayakers camped on an island near the mouth of Tracy Arm had their gear swept away",
+        "zh": "entrance = mouth；lost = swept away；答案 gear（裝備）。"
+       },
+       {
+        "a": [
+         "support"
+        ],
+        "ref": "exposed and without support",
+        "ev": "left the base of the slope exposed and without support",
+        "zh": "bottom = base；with no = without；答案 support（支撐）。干擾：a third of a mile 是冰河退縮距離。"
+       },
+       {
+        "a": [
+         "pressure",
+         "water pressure"
+        ],
+        "ref": "rainwater raises the pressure inside cracks",
+        "ev": "rainwater raises the pressure inside cracks in the rock",
+        "zh": "increased = raises；答案 pressure（壓力）。"
+       },
+       {
+        "a": [
+         "deformation"
+        ],
+        "ref": "by searching for deformation",
+        "ev": "geologists look for unstable slopes by searching for deformation",
+        "zh": "usual warning sign = Normally, geologists look for…；was absent = there was none to see；答案 deformation（變形）。"
+       },
+       {
+        "a": [
+         "hum",
+         "seismic hum"
+        ],
+        "ref": "continuous seismic hum known as tremor",
+        "ev": "the shift to a continuous seismic hum known as tremor",
+        "zh": "steady = continuous；答案 hum（嗡嗡聲；此指持續的地震訊號）。tremor 是這種訊號的名稱，但題幹問的是 seismic ___ 的那個名詞；先前的 small tremors 是干擾。"
+       },
+       {
+        "a": [
+         "cooperation",
+         "co-operation"
+        ],
+        "ref": "will require cooperation between state and federal agencies",
+        "ev": "building one will require cooperation between state and federal agencies",
+        "zh": "would need = will require；bodies = agencies；答案 cooperation（合作）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Reading the Warning Signs: Landslide Tsunamis in a Warming North",
+    "intro": "A near-record tsunami in an Alaskan fjord has exposed the limits of conventional landslide monitoring and sharpened the case for early-warning systems.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "At 5:26 a.m. local time on 10 August 2025, more than 64 million cubic metres of rock broke away from a mountainside in Tracy Arm, a fjord in south-east Alaska, and fell about one vertical kilometre onto the South Sawyer Glacier and into the water below. According to a study later published in the journal Science, the impact generated an initial breaking wave roughly 100 metres high, travelling at more than 70 metres per second. The tsunami ran up the opposite wall of the fjord, 1.6 kilometres away, to an elevation of 481 metres. Only one tsunami has been recorded climbing higher: the 530-metre wave at Lituya Bay, also in Alaska, in 1958. An hour after the collapse, a wave of at least 0.4 metres registered on a tide gauge in Juneau, some 130 kilometres away."
+     },
+     {
+      "label": "B",
+      "text": "What makes the event especially sobering is its location. In summer, Tracy Arm is visited by an average of three cruise ships a day, according to the Science paper, in addition to an unknown number of smaller vessels. The slope failed early in the morning, before boats had reached the upper fjord; just twelve hours earlier, passengers on the Hanse Explorer had been photographing the glacier. \"This could be really catastrophic if it were to happen at 10 a.m., during the day,\" Ezgi Karasözen, a research seismologist at the Alaska Earthquake Center, told the radio station KHNS. Vessels farther away still felt the effects. The captain of one yacht anchored inside the fjord reported that water \"was rushing out of the bay at a rate that I had never seen before\", while a small cruise ship nearby, the National Geographic Venture, experienced only minor effects."
+     },
+     {
+      "label": "C",
+      "text": "The collapse also left an unusual signature in the world's seismic records. The landslide produced long-period waves detected around the globe, equivalent in size to those of a magnitude 5.4 earthquake. It was followed by a seiche, a standing wave that sloshed back and forth across the fjord, generating a seismic signal with a period of about 66 seconds that persisted for up to 36 hours. According to the Science paper, it was only the second seiche ever to produce an observable global seismic signal. A separate analysis presented at a European geosciences conference inferred a total mass of roughly 370 million tonnes from seismic data, more than remote-sensing estimates suggested, which the authors attribute partly to the water displaced by the initial wave."
+     },
+     {
+      "label": "D",
+      "text": "Perhaps the most uncomfortable lesson concerns detection. Geologists conventionally identify dangerous slopes by looking for deformation, the slow cracking and downhill creep of bedrock. Before the collapse, Bretwood Higman, a geologist who has mapped potential landslides across Alaska, had examined the fjord and marked nothing; satellite images showed an old slide but no deformation. \"Even with the knowledge of what's going to happen, we can't really identify it using those approaches,\" he said. Nor was the slide detected automatically as it happened, because the area lay outside the Alaska Earthquake Center's recently expanded landslide-detection coverage. Instead, the centre applied its algorithm to regional seismic data afterwards to locate the source and estimate its volume."
+     },
+     {
+      "label": "E",
+      "text": "In retrospect, however, several precursors stand out. The South Sawyer Glacier had retreated by several hundred metres in the preceding months, and the authors of the Science paper conclude that without this rapid retreat the landslide would probably have collapsed entirely onto glacier ice, and might not have occurred at all. Prolonged rain may also have played a part by raising water pressure in fractures. Most strikingly, the slope generated several days of small earthquakes that became increasingly frequent until about an hour before it failed. Similar collapses at the margins of retreating glaciers have been documented from Alaska to Greenland and Norway, sometimes with deadly consequences, and Higman warns that \"the rate of these events is increasing now\"."
+     },
+     {
+      "label": "F",
+      "text": "West and Karasözen argue that these signals could underpin an escalating, colour-coded alert system of the kind already used for avalanches and volcanic unrest. Avalanches still kill people, they note, yet alerts have helped to make winter backcountry travel safer for many more. Such warnings do not remove the risk, and no system will ever be infallible, but over time they also build awareness among communities and visitors. The alternatives are unattractive: abandoning vast stretches of coastline, or living with a poorly understood hazard. With continued warming, the Science paper observes, these hazards are growing just as exposure rises through the expansion of infrastructure and cruise-ship tourism. The goal, the seismologists contend, is not to keep people away from such compelling landscapes, but to help them make more informed decisions."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a suggestion that a different time of day could have produced a far worse outcome",
+        "a": "B",
+        "ref": "B",
+        "ev": "This could be really catastrophic if it were to happen at 10 a.m., during the day",
+        "zh": "B 段：Karasözen 說若發生在早上 10 點會是災難 → different time of day / far worse outcome。"
+       },
+       {
+        "q": "the reason the landslide was not picked up by an automated system",
+        "a": "D",
+        "ref": "D",
+        "ev": "because the area lay outside the Alaska Earthquake Center's recently expanded landslide-detection coverage",
+        "zh": "D 段：該區不在偵測範圍內，所以沒有自動偵測。"
+       },
+       {
+        "q": "an estimate of the landslide's size that exceeded other measurements",
+        "a": "C",
+        "ref": "C",
+        "ev": "more than remote-sensing estimates suggested",
+        "zh": "C 段：由地震資料推估約 3.7 億噸，高於遙測估計。"
+       },
+       {
+        "q": "a claim that the collapse might not have happened if the ice had not disappeared",
+        "a": "E",
+        "ref": "E",
+        "ev": "and might not have occurred at all",
+        "zh": "E 段：若冰河沒有快速退縮，山崩可能根本不會發生。"
+       },
+       {
+        "q": "a comparison with a hazard for which warnings have already improved safety",
+        "a": "F",
+        "ref": "F",
+        "ev": "alerts have helped to make winter backcountry travel safer for many more",
+        "zh": "F 段：以雪崩警報為例 → 已經提高安全性。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The Tracy Arm tsunami was the highest ever recorded in Alaska.",
+        "a": "False",
+        "ref": "A",
+        "ev": "Only one tsunami has been recorded climbing higher: the 530-metre wave at Lituya Bay, also in Alaska, in 1958.",
+        "zh": "A 段：1958 年 Lituya Bay（也在阿拉斯加）的 530 公尺更高 → False。"
+       },
+       {
+        "q": "The National Geographic Venture was the vessel closest to the landslide when it occurred.",
+        "a": "Not Given",
+        "ref": "B",
+        "zh": "B 段只說這艘小郵輪在附近（nearby）、只受輕微影響，並沒有比較各船與山崩的距離 → Not Given（陷阱：船名與 nearby 都出現在文中）。"
+       },
+       {
+        "q": "A geologist had examined Tracy Arm for landslide risk before the collapse without finding signs of deformation.",
+        "a": "True",
+        "ref": "D",
+        "ev": "had examined the fjord and marked nothing; satellite images showed an old slide but no deformation",
+        "zh": "D 段：Higman 在崩塌前檢查過該峽灣，沒有標記任何風險，衛星影像也沒有變形跡象 → True。"
+       },
+       {
+        "q": "The small earthquakes before the collapse became less frequent in its final hours.",
+        "a": "False",
+        "ref": "E",
+        "ev": "small earthquakes that became increasingly frequent until about an hour before it failed",
+        "zh": "E 段：小地震愈來愈頻繁，直到崩塌前約一小時 → 與『變少』相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "The case for alerts",
+      "lines": [
+       {
+        "t": "The seismologists accept that warnings cannot eliminate danger and that no monitoring system will be [[1]]. Nevertheless, alerts gradually raise [[2]] among residents and tourists. Meanwhile, the risk is increasing, because warming makes such events more likely while the growth of [[3]] and cruise-ship tourism places more people in harm's way. The aim is therefore to help people make better-[[4]] choices rather than to close these landscapes to visitors."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "infallible"
+        ],
+        "ref": "F",
+        "ev": "no system will ever be infallible",
+        "zh": "F 段：答案 infallible（萬無一失的、絕對可靠的）。"
+       },
+       {
+        "a": [
+         "awareness"
+        ],
+        "ref": "F",
+        "ev": "over time they also build awareness among communities and visitors",
+        "zh": "F 段：gradually raise = over time build；residents and tourists = communities and visitors；答案 awareness（意識、警覺）。"
+       },
+       {
+        "a": [
+         "infrastructure"
+        ],
+        "ref": "F",
+        "ev": "exposure rises through the expansion of infrastructure and cruise-ship tourism",
+        "zh": "F 段：growth = expansion；places more people in harm's way = exposure rises；答案 infrastructure（基礎設施）。"
+       },
+       {
+        "a": [
+         "informed"
+        ],
+        "ref": "F",
+        "ev": "to help them make more informed decisions",
+        "zh": "F 段：better-informed choices = more informed decisions；答案 informed（有充分資訊的）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "sobering",
+     "pos": "adj.",
+     "def": "making you feel serious and thoughtful",
+     "zh": "令人警醒的",
+     "example": "What makes the event especially sobering is its location.",
+     "match": [
+      "sobering"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "near miss",
+     "pos": "n.",
+     "def": "a situation in which a disaster is only just avoided",
+     "zh": "險些釀禍、差點出事",
+     "example": "Still, it was a near miss.",
+     "match": [
+      "near miss"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "deformation",
+     "pos": "n.",
+     "def": "a change in the shape of rock or a structure caused by stress",
+     "zh": "變形",
+     "example": "Geologists look for unstable slopes by searching for deformation.",
+     "match": [
+      "deformation"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "signature",
+     "pos": "n.",
+     "def": "a distinctive pattern that identifies something",
+     "zh": "特徵訊號",
+     "example": "The collapse left an unusual signature in the world's seismic records.",
+     "match": [
+      "signature"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "persist",
+     "pos": "v.",
+     "def": "to continue to exist for longer than expected",
+     "zh": "持續存在",
+     "example": "The seismic signal persisted for up to 36 hours.",
+     "match": [
+      "persisted"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "infer",
+     "pos": "v.",
+     "def": "to reach a conclusion from evidence rather than direct observation",
+     "zh": "推論、推斷",
+     "example": "The analysis inferred a total mass of roughly 370 million tonnes.",
+     "match": [
+      "inferred"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "attribute",
+     "pos": "v.",
+     "def": "to say that something is caused by a particular thing",
+     "zh": "歸因於",
+     "example": "The authors attribute the difference partly to displaced water.",
+     "match": [
+      "attribute"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "conventionally",
+     "pos": "adv.",
+     "def": "in the usual or traditional way",
+     "zh": "按慣例地、傳統上",
+     "example": "Geologists conventionally identify dangerous slopes by looking for deformation.",
+     "match": [
+      "conventionally"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "in retrospect",
+     "pos": "phr.",
+     "def": "when looking back on a past event",
+     "zh": "回頭來看、事後看來",
+     "example": "In retrospect, several precursors stand out.",
+     "match": [
+      "In retrospect"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "precursor",
+     "pos": "n.",
+     "def": "a sign or event that comes before something and indicates its approach",
+     "zh": "前兆",
+     "example": "Several precursors stand out in the seismic data.",
+     "match": [
+      "precursors"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "prolonged",
+     "pos": "adj.",
+     "def": "continuing for a long time",
+     "zh": "長時間的",
+     "example": "Prolonged rain may also have played a part.",
+     "match": [
+      "Prolonged"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "underpin",
+     "pos": "v.",
+     "def": "to support or form the basis of something",
+     "zh": "支撐、作為……的基礎",
+     "example": "These signals could underpin a colour-coded alert system.",
+     "match": [
+      "underpin"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "escalating",
+     "pos": "adj.",
+     "def": "becoming gradually more serious or intense",
+     "zh": "逐步升級的",
+     "example": "They propose an escalating, colour-coded alert system.",
+     "match": [
+      "escalating"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "infallible",
+     "pos": "adj.",
+     "def": "never failing or making mistakes",
+     "zh": "萬無一失的",
+     "example": "No warning system will ever be infallible.",
+     "match": [
+      "infallible"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "contend",
+     "pos": "v.",
+     "def": "to state something as an argument",
+     "zh": "主張、聲稱",
+     "example": "The goal, the seismologists contend, is to help people make informed decisions.",
+     "match": [
+      "contend"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-21-2.mp3",
+    "times": [
+     [
+      0.36,
+      2.51
+     ],
+     [
+      2.77,
+      13.1
+     ],
+     [
+      13.48,
+      14.53
+     ],
+     [
+      15.31,
+      24.57
+     ],
+     [
+      24.92,
+      33.38
+     ],
+     [
+      33.78,
+      37.53
+     ],
+     [
+      38.31,
+      39.99
+     ],
+     [
+      40.23,
+      46.85
+     ],
+     [
+      47.26,
+      54.84
+     ],
+     [
+      55.17,
+      59.32
+     ],
+     [
+      59.61,
+      67.54
+     ],
+     [
+      68.32,
+      70.13
+     ],
+     [
+      70.35,
+      76.69
+     ],
+     [
+      77.47,
+      79.16
+     ],
+     [
+      79.5,
+      87.64
+     ],
+     [
+      87.91,
+      97.69
+     ],
+     [
+      98.09,
+      103.22
+     ],
+     [
+      103.46,
+      108.73
+     ],
+     [
+      109.51,
+      116.72
+     ],
+     [
+      117.13,
+      119.37
+     ],
+     [
+      119.61,
+      130.17
+     ],
+     [
+      130.95,
+      138.69
+     ],
+     [
+      138.9,
+      146.28
+     ],
+     [
+      146.54,
+      152.71
+     ],
+     [
+      153.02,
+      159.7
+     ],
+     [
+      159.92,
+      164.98
+     ],
+     [
+      165.76,
+      167.21
+     ],
+     [
+      167.49,
+      175.82
+     ],
+     [
+      176.05,
+      185.88
+     ],
+     [
+      186.24,
+      188.68
+     ]
+    ],
+    "duration": 189.3,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-21-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
