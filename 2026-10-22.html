@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1>今日兩篇新聞練習 · Two stories</h1>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-22",
+ "date": "2026-10-22",
+ "title": "Lam Research Posts Record Quarter as AI Demand Runs Into Cleanroom and Supply Limits · A Victorian Train Delay Blamed on a Solar Storm Happened in 1848, Not 1841, Scientists Find",
+ "stories": [
+  {
+   "title": "Lam Research Posts Record Quarter as AI Demand Runs Into Cleanroom and Supply Limits",
+   "topic": "Investing · chip equipment",
+   "source": {
+    "name": "Lam Research press release: Lam Research Corporation Reports Financial Results for the Quarter Ended September 27, 2026 (21 Oct 2026)",
+    "url": "https://investor.lamresearch.com/2026-10-21-Lam-Research-Corporation-Reports-Financial-Results-for-the-Quarter-Ended-September-27,-2026",
+    "links": [
+     {
+      "name": "MarketWatch: Lam Research 1Q sales pop with AI demand from Asia (21 Oct 2026)",
+      "url": "https://www.marketwatch.com/story/lam-research-1q-sales-pop-with-ai-demand-from-asia-eef6573b"
+     },
+     {
+      "name": "Investing.com: Earnings call transcript: Lam Research tops estimates, shares fall (21 Oct 2026)",
+      "url": "https://uk.investing.com/news/stock-market-news/earnings-call-transcript-lam-research-tops-q1-2026-estimates-shares-fall-93CH-4923882"
+     },
+     {
+      "name": "Benzinga: Lam Research Q1 2027 earnings call transcript (21 Oct 2026)",
+      "url": "https://www.benzinga.com/news/26/10/62514820/lam-research-q1-2027-earnings-call-transcript"
+     },
+     {
+      "name": "Lam Research: September quarter 2026 results slides (21 Oct 2026)",
+      "url": "https://filecache.investorroom.com/mr5ir_lamresearch2/1520/Q1_2027-slides_final.pdf"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning, and welcome to the business hour.",
+     "Lam Research, one of the world's biggest makers of chip-making equipment, has reported the strongest quarter in its history, but its shares still fell, as investors focused on bottlenecks in its supply chain.",
+     "Here's the report."
+    ],
+    [
+     "Lam, which is based in Fremont, California, sells the machines that etch and deposit the microscopic layers inside computer chips.",
+     "For the three months to late September, revenue came to eight point two two billion dollars.",
+     "That was up twenty-two per cent on the previous quarter, and fifty-four per cent on a year earlier.",
+     "Analysts had been expecting a little over eight point one billion.",
+     "Adjusted earnings were two dollars and twenty cents a share, just above forecasts.",
+     "It was the company's fifth record quarter in a row, and for the first time ever, its operating margin rose above forty per cent."
+    ],
+    [
+     "Chief executive Tim Archer credited artificial intelligence.",
+     "In a statement, he said the technology was driving higher demand for semiconductors, and greater device complexity.",
+     "He added that the company's investments in new technology and manufacturing capacity were paying off.",
+     "Most of the growth came from new machines, with systems sales jumping to five point seven three billion dollars, from four point two five billion three months earlier."
+    ],
+    [
+     "Meanwhile, the map of Lam's sales shifted sharply.",
+     "China accounted for thirty-five per cent of revenue, up from twenty-six per cent in the previous quarter.",
+     "Taiwan's share, by contrast, fell from twenty-seven per cent to eighteen, while South Korea held steady at twenty.",
+     "Chief financial officer Doug Bettinger said Chinese customers would make up a significantly lower share of sales in the current quarter."
+    ],
+    [
+     "Looking ahead, Lam expects revenue of about eight point six billion dollars in the final three months of the year.",
+     "Mr Bettinger told analysts that the forecast would have been a bit higher if not for some near-term supply chain constraints.",
+     "He declined to say exactly which parts were in short supply.",
+     "Mr Archer, for his part, said the situation was nothing like the shortages of the pandemic era, and that he expected the company to catch up very shortly."
+    ],
+    [
+     "The bigger picture, though, is about factory space.",
+     "Lam estimates that global spending on wafer fabrication equipment will be in the mid one-hundred-and-fifty-billion-dollar range this year.",
+     "Its preliminary forecast for next year is more than two hundred billion, with growth led by DRAM memory, followed by advanced logic chips and NAND flash storage.",
+     "But the company says a lack of cleanroom space, the ultra-clean buildings where chips are made, is still limiting how fast chipmakers can expand.",
+     "Mr Bettinger expects around ten new top-tier fabs, or chip factories, to come online over the course of next year.",
+     "Mr Archer, meanwhile, described the industry as being in the early stages of an investment cycle lasting several years."
+    ],
+    [
+     "Investors, however, were not impressed.",
+     "Lam's shares fell about six per cent in after-hours trading, as attention turned to the supply squeeze and a less favourable regional mix.",
+     "In other words, the problem for now is not demand, but how quickly the industry can deliver.",
+     "That's the business hour for this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Lam Research: results for the September quarter",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The company"
+       },
+       {
+        "t": "Its equipment builds up and removes extremely thin [[1]] in chips"
+       },
+       {
+        "h": "Results"
+       },
+       {
+        "t": "Revenue growth compared with twelve months earlier: [[2]] %"
+       },
+       {
+        "t": "CEO's explanation: AI is increasing chip demand and the [[3]] of devices"
+       },
+       {
+        "h": "Where the sales came from"
+       },
+       {
+        "t": "Largest share of revenue: [[4]]"
+       },
+       {
+        "h": "Outlook"
+       },
+       {
+        "t": "Forecast held back by short-term [[5]] constraints"
+       },
+       {
+        "t": "CEO: current problems much less serious than the [[6]] during the pandemic"
+       },
+       {
+        "t": "Next year's equipment spending: biggest growth expected in [[7]] memory"
+       },
+       {
+        "t": "Expansion restricted by limited [[8]] space"
+       },
+       {
+        "t": "About ten new high-end [[9]] expected to open next year"
+       },
+       {
+        "h": "Market reaction"
+       },
+       {
+        "t": "Share price dropped; investors worried about supply and the regional [[10]] of sales"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "layers"
+        ],
+        "ref": "deposit the microscopic layers inside computer chips",
+        "ev": "sells the machines that etch and deposit the microscopic layers inside computer chips",
+        "zh": "builds up and removes = deposit and etch（沉積與蝕刻）；extremely thin = microscopic；答案 layers（層）。"
+       },
+       {
+        "a": [
+         "54",
+         "fifty-four"
+        ],
+        "ref": "fifty-four per cent on a year earlier",
+        "ev": "That was up twenty-two per cent on the previous quarter, and fifty-four per cent on a year earlier.",
+        "zh": "compared with twelve months earlier = on a year earlier（年增）；答案 54。干擾：22% 是季增（on the previous quarter）；forty per cent 是營業利益率。"
+       },
+       {
+        "a": [
+         "complexity",
+         "device complexity"
+        ],
+        "ref": "greater device complexity",
+        "ev": "he said the technology was driving higher demand for semiconductors, and greater device complexity",
+        "zh": "increasing chip demand = driving higher demand for semiconductors；the ___ of devices = device complexity；答案 complexity（複雜度）。"
+       },
+       {
+        "a": [
+         "China"
+        ],
+        "ref": "China accounted for thirty-five per cent of revenue",
+        "ev": "China accounted for thirty-five per cent of revenue, up from twenty-six per cent in the previous quarter",
+        "zh": "largest share = 35%，最高；答案 China。干擾：Taiwan 從 27% 降到 18%，South Korea 持平 20%。"
+       },
+       {
+        "a": [
+         "supply chain",
+         "supply-chain"
+        ],
+        "ref": "near-term supply chain constraints",
+        "ev": "the forecast would have been a bit higher if not for some near-term supply chain constraints",
+        "zh": "held back = would have been higher if not for；short-term = near-term；答案 supply chain（供應鏈）。"
+       },
+       {
+        "a": [
+         "shortages"
+        ],
+        "ref": "nothing like the shortages of the pandemic era",
+        "ev": "the situation was nothing like the shortages of the pandemic era",
+        "zh": "much less serious than = nothing like；during the pandemic = of the pandemic era；答案 shortages（短缺）。注意前一句 in short supply 是形容詞片語，不是名詞答案。"
+       },
+       {
+        "a": [
+         "DRAM"
+        ],
+        "ref": "with growth led by DRAM memory",
+        "ev": "with growth led by DRAM memory, followed by advanced logic chips and NAND flash storage",
+        "zh": "biggest growth = growth led by；答案 DRAM。干擾：logic chips、NAND flash 排第二、第三，且 NAND 是 storage 不是題幹的 memory。"
+       },
+       {
+        "a": [
+         "cleanroom",
+         "clean room",
+         "cleanroom space"
+        ],
+        "ref": "a lack of cleanroom space",
+        "ev": "a lack of cleanroom space, the ultra-clean buildings where chips are made, is still limiting how fast chipmakers can expand",
+        "zh": "restricted = limiting；limited = a lack of；答案 cleanroom（無塵室）。"
+       },
+       {
+        "a": [
+         "fabs",
+         "chip factories",
+         "factories"
+        ],
+        "ref": "around ten new top-tier fabs",
+        "ev": "Mr Bettinger expects around ten new top-tier fabs, or chip factories, to come online",
+        "zh": "high-end = top-tier；open = come online；答案 fabs（晶圓廠；chip factories 也可）。"
+       },
+       {
+        "a": [
+         "mix"
+        ],
+        "ref": "a less favourable regional mix",
+        "ev": "as attention turned to the supply squeeze and a less favourable regional mix",
+        "zh": "dropped = fell about six per cent；worried about = attention turned to；答案 mix（組合、比重分布）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Etch, Deposit, Repeat: Why Chip-Equipment Makers Are Running Up Against Physical Limits",
+    "intro": "Record results at Lam Research suggest that the AI investment cycle is constrained less by demand than by factory space and suppliers.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Most discussions of the artificial intelligence boom focus on the companies that design chips or the foundries that manufacture them. Less attention is paid to the firms that supply the machinery inside those factories, yet their order books arguably offer one of the clearest indications of how much the industry intends to invest. Lam Research, based in Fremont, California, is among the largest of these suppliers. Its tools perform two of the most fundamental steps in chipmaking: deposition, in which ultra-thin films of material are laid down on a silicon wafer, and etching, in which material is selectively removed to carve out circuit patterns. Because a modern chip is built up from many such layers, these steps may be repeated many times, and their number tends to rise as devices become more complex."
+     },
+     {
+      "label": "B",
+      "text": "On 21 October 2026 the company reported revenue of $8.22 billion for the quarter ended 27 September, 22% more than in the previous quarter and 54% more than a year earlier. It was, according to the company, its fifth consecutive quarter of record revenue. Net income reached $2.75 billion, and the operating margin, the share of revenue left after the costs of running the business, exceeded 40% for the first time. Most of the growth came from sales of new equipment: systems revenue climbed to $5.73 billion from $4.25 billion three months earlier. The remainder came from the Customer Support Business Group, which sells spare parts, upgrades and services to factories that already own Lam tools. That division generated nearly $2.5 billion, around 40% more than a year before, which the company attributes to high utilisation of existing plants, an indication of how intensively they are being run."
+     },
+     {
+      "label": "C",
+      "text": "Memory chips have been a particular source of strength. According to chief financial officer Doug Bettinger, memory accounted for 46% of systems revenue in the quarter, and revenue from equipment for NAND flash, the type of memory used for data storage, rose by roughly 40% from the previous quarter. Chief executive Tim Archer argued that AI is changing the nature of storage itself. Data centres, he explained, are adopting several tiers of NAND, each suited to different workloads, including a faster, low-latency class of device. Because converting to such devices reduces the number of bits each one holds by roughly three times, he estimated that every percentage point of NAND output shifted towards them would require about 2% more installed wafer capacity to meet the same demand. If that projection proves accurate, the same quantity of data would require more machines."
+     },
+     {
+      "label": "D",
+      "text": "The principal obstacle, paradoxically, is not a shortage of customers but a shortage of space. Lam expects global spending on wafer fabrication equipment to reach the mid-$150 billion range in 2026 and, on a preliminary basis, more than $200 billion in 2027. However, the company states that the availability of cleanroom space and supply constraints for certain components are preventing the industry from fully meeting demand. Mr Bettinger told analysts that the forecast for the December quarter, $8.6 billion plus or minus $400 million, would have been somewhat higher had it not been for near-term supply problems, though he declined to identify where the tightness lay. He indicated that around ten new top-tier fabs would come online during 2027, which should ease, though not remove, the constraint."
+     },
+     {
+      "label": "E",
+      "text": "Geography added a further complication. China accounted for 35% of Lam's revenue in the September quarter, up from 26% in the June quarter, while Taiwan's share fell from 27% to 18%. Mr Bettinger said he expected China to represent a significantly lower percentage of revenue in the December quarter, driven by domestic Chinese customers; multinational companies operating in China, he added, would probably remain reasonably strong. Despite the record figures, the market reaction was negative. The results had only narrowly exceeded analysts' forecasts, and the shares fell by about 6% in after-hours trading as investors concentrated on the supply constraints and a less favourable regional mix."
+     },
+     {
+      "label": "F",
+      "text": "Management, for its part, remains emphatic about the longer term. Mr Archer described the industry as being in the early stages of a multi-year investment cycle, with customer visibility extending through 2028. He identified advanced packaging, in which several chips are combined in a single package, as a major growth driver, and said the company now expected cumulative revenue from its Aether dry resist technology to reach about $2.5 billion by the end of the decade, roughly $1 billion more than previously anticipated. Such projections are, of course, inherently uncertain. Demand for chipmaking equipment has historically been cyclical, and much depends on whether spending on AI infrastructure is sustained. For now, however, the evidence suggests that the industry's chief constraint is not its customers' appetite but the pace at which factories, cleanrooms and suppliers can expand."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a prediction that one country will account for a smaller proportion of sales",
+        "a": "E",
+        "ref": "E",
+        "ev": "he expected China to represent a significantly lower percentage of revenue in the December quarter",
+        "zh": "E 段：Bettinger 預期 12 月季中國營收占比會明顯下降 → smaller proportion of sales。"
+       },
+       {
+        "q": "an explanation of two basic stages in the manufacture of chips",
+        "a": "A",
+        "ref": "A",
+        "ev": "Its tools perform two of the most fundamental steps in chipmaking",
+        "zh": "A 段：deposition（沉積）與 etching（蝕刻）兩個基本步驟。"
+       },
+       {
+        "q": "a calculation linking a change in product type to a need for additional production capacity",
+        "a": "C",
+        "ref": "C",
+        "ev": "would require about 2% more installed wafer capacity to meet the same demand",
+        "zh": "C 段：每 1 個百分點的 NAND 產出轉向低延遲產品，需要約 2% 更多晶圓產能。"
+       },
+       {
+        "q": "the reason why a revenue forecast was lower than it might have been",
+        "a": "D",
+        "ref": "D",
+        "ev": "would have been somewhat higher had it not been for near-term supply problems",
+        "zh": "D 段：若非短期供應問題，12 月季財測會更高。"
+       },
+       {
+        "q": "a division of income between new machines and services for existing equipment",
+        "a": "B",
+        "ref": "B",
+        "ev": "systems revenue climbed to $5.73 billion",
+        "zh": "B 段：systems revenue（新設備）與 Customer Support Business Group（零件、升級、服務）的營收拆分。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Lam's operating margin had already been above 40% in some earlier quarters.",
+        "a": "False",
+        "ref": "B",
+        "ev": "exceeded 40% for the first time",
+        "zh": "B 段：營業利益率是「第一次」超過 40% → 以前從未超過 → False。"
+       },
+       {
+        "q": "Lam intends to construct additional cleanrooms of its own to overcome the shortage of space.",
+        "a": "Not Given",
+        "ref": "D",
+        "zh": "D 段只說無塵室空間不足、2027 年約有十座新的頂級晶圓廠（客戶的工廠）上線，從未提到 Lam 自己要蓋無塵室 → Not Given（陷阱：cleanroom 和 new fabs 都出現在文中）。"
+       },
+       {
+        "q": "Mr Bettinger expected multinational companies in China to cut their purchases sharply in the December quarter.",
+        "a": "False",
+        "ref": "E",
+        "ev": "multinational companies operating in China, he added, would probably remain reasonably strong",
+        "zh": "E 段：下滑主要來自中國本土客戶，跨國公司在中國的採購『可能仍相當強勁』→ 與『大幅削減』相反 → False。"
+       },
+       {
+        "q": "Lam's results were only slightly better than analysts had predicted.",
+        "a": "True",
+        "ref": "E",
+        "ev": "The results had only narrowly exceeded analysts' forecasts",
+        "zh": "E 段：only narrowly exceeded = only slightly better → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "The longer-term view",
+      "lines": [
+       {
+        "t": "Lam's chief executive believes that the industry has entered a multi-year investment cycle and that customers have [[1]] as far ahead as 2028. He sees advanced [[2]], which combines several chips in one unit, as an important source of growth. Forecasts of this kind are uncertain, however, because demand for equipment has traditionally been [[3]]. At present, the main limit on the industry appears to be the [[4]] at which factories, cleanrooms and suppliers are able to grow."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "visibility"
+        ],
+        "ref": "F",
+        "ev": "with customer visibility extending through 2028",
+        "zh": "F 段：as far ahead as 2028 = extending through 2028；答案 visibility（能見度，指客戶對未來需求的掌握）。"
+       },
+       {
+        "a": [
+         "packaging"
+        ],
+        "ref": "F",
+        "ev": "He identified advanced packaging, in which several chips are combined in a single package, as a major growth driver",
+        "zh": "F 段：important source of growth = major growth driver；答案 packaging（先進封裝）。"
+       },
+       {
+        "a": [
+         "cyclical"
+        ],
+        "ref": "F",
+        "ev": "Demand for chipmaking equipment has historically been cyclical",
+        "zh": "F 段：traditionally = historically；答案 cyclical（週期性的）。"
+       },
+       {
+        "a": [
+         "pace"
+        ],
+        "ref": "F",
+        "ev": "the pace at which factories, cleanrooms and suppliers can expand",
+        "zh": "F 段：are able to grow = can expand；答案 pace（速度）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "bottleneck",
+     "pos": "n.",
+     "def": "a point of congestion that slows down a process",
+     "zh": "瓶頸",
+     "example": "Investors focused on bottlenecks in the company's supply chain.",
+     "match": [
+      "bottlenecks"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "credit",
+     "pos": "v.",
+     "def": "to say that something is responsible for a success",
+     "zh": "把（成功）歸功於",
+     "example": "The chief executive credited artificial intelligence.",
+     "match": [
+      "credited"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "preliminary",
+     "pos": "adj.",
+     "def": "coming before a final or more detailed version",
+     "zh": "初步的",
+     "example": "Its preliminary forecast for next year is more than two hundred billion dollars.",
+     "match": [
+      "preliminary"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "squeeze",
+     "pos": "n.",
+     "def": "a situation in which something is in short supply or under pressure",
+     "zh": "緊縮、吃緊",
+     "example": "Attention turned to the supply squeeze.",
+     "match": [
+      "squeeze"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "selectively",
+     "pos": "adv.",
+     "def": "in a way that affects only chosen parts",
+     "zh": "選擇性地",
+     "example": "Material is selectively removed to carve out circuit patterns.",
+     "match": [
+      "selectively"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "consecutive",
+     "pos": "adj.",
+     "def": "following one after another without a break",
+     "zh": "連續的",
+     "example": "It was the fifth consecutive quarter of record revenue.",
+     "match": [
+      "consecutive"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "utilisation",
+     "pos": "n.",
+     "def": "the degree to which equipment or capacity is being used",
+     "zh": "使用率、稼動率",
+     "example": "Growth reflected high utilisation of existing plants.",
+     "match": [
+      "utilisation"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "intensively",
+     "pos": "adv.",
+     "def": "in a concentrated way, with great effort or use",
+     "zh": "密集地",
+     "example": "Existing plants are being run intensively.",
+     "match": [
+      "intensively"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "paradoxically",
+     "pos": "adv.",
+     "def": "in a way that seems contradictory but is true",
+     "zh": "矛盾地、弔詭地",
+     "example": "The obstacle, paradoxically, is not a shortage of customers.",
+     "match": [
+      "paradoxically"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "complication",
+     "pos": "n.",
+     "def": "something that makes a situation more difficult",
+     "zh": "複雜因素",
+     "example": "Geography added a further complication.",
+     "match": [
+      "complication"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "narrowly",
+     "pos": "adv.",
+     "def": "only by a small margin",
+     "zh": "勉強地、些微地",
+     "example": "The results only narrowly exceeded analysts' forecasts.",
+     "match": [
+      "narrowly"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "emphatic",
+     "pos": "adj.",
+     "def": "expressing something forcefully and clearly",
+     "zh": "堅定的、強調的",
+     "example": "Management remains emphatic about the longer term.",
+     "match": [
+      "emphatic"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "cumulative",
+     "pos": "adj.",
+     "def": "increasing by successive additions over time",
+     "zh": "累計的",
+     "example": "Cumulative revenue could reach about $2.5 billion by the end of the decade.",
+     "match": [
+      "cumulative"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "inherently",
+     "pos": "adv.",
+     "def": "as a basic, permanent quality",
+     "zh": "本質上、固有地",
+     "example": "Such projections are inherently uncertain.",
+     "match": [
+      "inherently"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "appetite",
+     "pos": "n.",
+     "def": "a strong desire or demand for something",
+     "zh": "（市場）胃口、需求",
+     "example": "The constraint is not customers' appetite but the pace of expansion.",
+     "match": [
+      "appetite"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-22-1.mp3",
+    "times": [
+     [
+      0.36,
+      2.85
+     ],
+     [
+      3.11,
+      13.9
+     ],
+     [
+      14.28,
+      15.33
+     ],
+     [
+      16.11,
+      23.75
+     ],
+     [
+      24.02,
+      28.77
+     ],
+     [
+      29.09,
+      34.02
+     ],
+     [
+      34.26,
+      37.6
+     ],
+     [
+      37.88,
+      42.34
+     ],
+     [
+      42.67,
+      49.23
+     ],
+     [
+      50.01,
+      53.36
+     ],
+     [
+      53.65,
+      59.87
+     ],
+     [
+      60.08,
+      65.13
+     ],
+     [
+      65.39,
+      73.88
+     ],
+     [
+      74.66,
+      77.62
+     ],
+     [
+      77.84,
+      83.1
+     ],
+     [
+      83.37,
+      89.83
+     ],
+     [
+      90.15,
+      96.48
+     ],
+     [
+      97.26,
+      103.05
+     ],
+     [
+      103.33,
+      109.3
+     ],
+     [
+      109.63,
+      112.82
+     ],
+     [
+      113.07,
+      121.3
+     ],
+     [
+      122.08,
+      124.99
+     ],
+     [
+      125.2,
+      131.99
+     ],
+     [
+      132.25,
+      140.56
+     ],
+     [
+      141.06,
+      148.52
+     ],
+     [
+      148.74,
+      155.3
+     ],
+     [
+      155.57,
+      162.24
+     ],
+     [
+      163.02,
+      165.81
+     ],
+     [
+      166.01,
+      173.17
+     ],
+     [
+      173.57,
+      178.62
+     ],
+     [
+      178.95,
+      180.81
+     ]
+    ],
+    "duration": 181.5,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-22-1-words/"
+   }
+  },
+  {
+   "title": "A Victorian Train Delay Blamed on a Solar Storm Happened in 1848, Not 1841, Scientists Find",
+   "topic": "History · space weather",
+   "source": {
+    "name": "Lancaster University: Mystery of one of the earliest recorded space weather impacts solved (16 Sep 2026; covered by ScienceDaily 21 Oct 2026)",
+    "url": "https://www.lancaster.ac.uk/sci-tech/research/space-weather/news/mystery-of-one-of-the-earliest-recorded-space-weather-impacts-solved",
+    "links": [
+     {
+      "name": "Space Weather (AGU) — Wild et al., Did Space Weather Delay the 10:05 p.m. Train Departure From Exeter on 18 October 1841? (2026, doi:10.1029/2026SW005239)",
+      "url": "https://doi.org/10.1029/2026SW005239"
+     },
+     {
+      "name": "ScienceDaily (RMIT University): A train was delayed by a solar storm. But something didn't add up. (21 Oct 2026)",
+      "url": "https://www.sciencedaily.com/releases/2026/10/261020085021.htm"
+     },
+     {
+      "name": "Eos — Matthew R. Francis: Of Cosmic Rains and Delayed Trains (21 Sep 2026)",
+      "url": "https://eos.org/research-spotlights/of-cosmic-rains-and-delayed-trains"
+     },
+     {
+      "name": "British Geological Survey: Mystery of one of the earliest recorded space weather impacts solved (17 Sep 2026)",
+      "url": "https://www.bgs.ac.uk/news/mystery-of-one-of-the-earliest-recorded-space-weather-impacts-solved/"
+     },
+     {
+      "name": "STFC RAL Space: A Solar 'Detective Story' (16 Sep 2026)",
+      "url": "https://www.ralspace.stfc.ac.uk/news/a-solar-detective-story-mystery-of-one-of-the-earliest-recorded-space-weather-impacts-solved"
+     }
+    ]
+   },
+   "script": [
+    [
+     "From the science desk this morning, a story about the Sun, the railways, and a very old typing mistake.",
+     "A train delay in south-west England, long cited as possibly the first time a solar storm disrupted human technology, actually happened seven years later than the records say, according to an international team of scientists.",
+     "Here's the report."
+    ],
+    [
+     "The story first appeared in eighteen seventy-one, in an anonymous account in the journal Nature.",
+     "It described how, on the eighteenth of October, eighteen forty-one, the ten-oh-five evening train from Exeter was held for sixteen minutes.",
+     "The cause, it said, was a very intense magnetic disturbance.",
+     "That disturbance had interfered with the electric telegraph that railway staff used to check whether the line ahead was clear."
+    ],
+    [
+     "For years, that account put Exeter at the very start of the history of space weather.",
+     "But when a team led by Professor Jim Wild of Lancaster University looked again, they spotted a problem.",
+     "The railway line in question didn't open until eighteen forty-six, almost five years after the supposed incident.",
+     "In other words, the delay couldn't have happened on that line in eighteen forty-one."
+    ],
+    [
+     "So the researchers turned detective.",
+     "They combined railway timetables and old newspapers with observations of sunspots, reports of the aurora, and digitised records of the Earth's magnetic field.",
+     "According to the science news site Eos, the timetables show that the ten-oh-five train ran for only a little over a year, beginning in eighteen forty-eight.",
+     "Then there were the magnetic records themselves.",
+     "The British Geological Survey holds traces from the Greenwich Observatory in London, captured on photographic paper.",
+     "They show a strong geomagnetic disturbance on the eighteenth of October, eighteen forty-eight, and sunspots and aurora were reported across Britain and Europe around the same time.",
+     "The conclusion: the day and month were right, but the year was a typographical error."
+    ],
+    [
+     "That correction rewrites the record books.",
+     "The Exeter delay is no longer the earliest known case.",
+     "That title now goes to telegraph interference on the Midland Railway, in March eighteen forty-seven.",
+     "Still, Professor Wild says the Exeter event remains one of the first clear examples of solar activity disrupting critical infrastructure.",
+     "It came more than a decade before the famous Carrington Event of eighteen fifty-nine, when a huge solar storm played havoc with telegraph networks around the world."
+    ],
+    [
+     "Why does a seven-year error matter?",
+     "Brett Carter, an associate professor at RMIT University in Australia, says the eighteen-forties mark the point where the rise of our technological age met space weather.",
+     "Professor Wild argues that space weather is not a new threat, but a long-standing natural hazard.",
+     "And Dr Mike Hapgood, of the UK's national space laboratory, RAL Space, says the project had a hint of a detective story, and shows why older records must be preserved."
+    ],
+    [
+     "There are lessons for today, though.",
+     "Solar storms can still disrupt power systems, railway signalling, satellite navigation and communications networks.",
+     "Dr Hapgood warns that while forecasting is far more advanced than it was in the eighteen hundreds, the technology we depend on is also much more vulnerable.",
+     "With a new solar cycle due in the twenty-thirties, scientists say that understanding past storms is one way to prepare.",
+     "That's all from the science desk for today."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "The Exeter train delay: correcting the date",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The original report"
+       },
+       {
+        "t": "Telegraph was used to confirm that the track ahead was [[1]]"
+       },
+       {
+        "h": "The investigation"
+       },
+       {
+        "t": "Evidence included railway [[2]] and old newspapers"
+       },
+       {
+        "t": "Magnetic traces from Greenwich were recorded on [[3]]"
+       },
+       {
+        "t": "Strong magnetic disturbance found in the year [[4]]"
+       },
+       {
+        "t": "The wrong year was caused by a [[5]]"
+       },
+       {
+        "h": "The new historical record"
+       },
+       {
+        "t": "Earliest known case: interference on the [[6]] Railway"
+       },
+       {
+        "h": "Experts' views"
+       },
+       {
+        "t": "Wild: space weather is a long-standing natural [[7]]"
+       },
+       {
+        "t": "Hapgood: the work resembled a [[8]]"
+       },
+       {
+        "h": "Today"
+       },
+       {
+        "t": "Systems at risk include power systems and satellite [[9]]"
+       },
+       {
+        "t": "Modern technology is more [[10]] than in the past"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "clear"
+        ],
+        "ref": "check whether the line ahead was clear",
+        "ev": "the electric telegraph that railway staff used to check whether the line ahead was clear",
+        "zh": "confirm = check；track = line；答案 clear（暢通的，形容詞）。"
+       },
+       {
+        "a": [
+         "timetables",
+         "timetable"
+        ],
+        "ref": "They combined railway timetables and old newspapers",
+        "ev": "They combined railway timetables and old newspapers with observations of sunspots",
+        "zh": "evidence included = combined；答案 timetables（時刻表）。old newspapers 已在題幹中。"
+       },
+       {
+        "a": [
+         "photographic paper"
+        ],
+        "ref": "captured on photographic paper",
+        "ev": "The British Geological Survey holds traces from the Greenwich Observatory in London, captured on photographic paper.",
+        "zh": "recorded = captured；答案 photographic paper（相紙）。"
+       },
+       {
+        "a": [
+         "1848",
+         "eighteen forty-eight"
+        ],
+        "ref": "They show a strong geomagnetic disturbance on the eighteenth of October, eighteen forty-eight",
+        "ev": "They show a strong geomagnetic disturbance on the eighteenth of October, eighteen forty-eight",
+        "zh": "答案 1848。干擾：1841 是原文誤植的年份、1846 是鐵路通車年、1847 是 Midland Railway 事件、1859 是 Carrington Event、1871 是 Nature 文章刊出年。"
+       },
+       {
+        "a": [
+         "typographical error",
+         "typo"
+        ],
+        "ref": "the year was a typographical error",
+        "ev": "the day and month were right, but the year was a typographical error",
+        "zh": "the wrong year = the year was…；答案 typographical error（排印錯誤；typo 也可）。開頭 typing mistake 是同義改述。"
+       },
+       {
+        "a": [
+         "Midland"
+        ],
+        "ref": "telegraph interference on the Midland Railway",
+        "ev": "That title now goes to telegraph interference on the Midland Railway, in March eighteen forty-seven.",
+        "zh": "earliest known case = that title now goes to；答案 Midland（題幹已有 Railway）。"
+       },
+       {
+        "a": [
+         "hazard"
+        ],
+        "ref": "but a long-standing natural hazard",
+        "ev": "space weather is not a new threat, but a long-standing natural hazard",
+        "zh": "答案 hazard（危害、災害）。注意 threat 是被否定的『new threat』，題幹 long-standing natural ___ 對應 hazard。"
+       },
+       {
+        "a": [
+         "detective story"
+        ],
+        "ref": "had a hint of a detective story",
+        "ev": "the project had a hint of a detective story",
+        "zh": "resembled = had a hint of；答案 detective story（偵探故事）。前面 turned detective 是另一句，題幹需要名詞片語。"
+       },
+       {
+        "a": [
+         "navigation"
+        ],
+        "ref": "satellite navigation and communications networks",
+        "ev": "Solar storms can still disrupt power systems, railway signalling, satellite navigation and communications networks.",
+        "zh": "systems at risk = can still disrupt；答案 navigation（導航）。"
+       },
+       {
+        "a": [
+         "vulnerable"
+        ],
+        "ref": "is also much more vulnerable",
+        "ev": "the technology we depend on is also much more vulnerable",
+        "zh": "答案 vulnerable（脆弱的、易受影響的）。干擾：forecasting is far more advanced 說的是預報能力，題幹問的是技術本身。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Reading the Sun in Victorian Archives",
+    "intro": "A misdated train delay shows how historical records can sharpen our understanding of a natural hazard that modern societies cannot ignore.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "The Sun periodically releases enormous bursts of energy, charged particles and magnetic field into space. When such material reaches the Earth, it can disturb the planet's magnetic field, a phenomenon now known as space weather. Its most visible effect is the aurora, but disturbances can also generate unwanted electrical currents in infrastructure. The most dramatic historical example is the Carrington Event of September 1859, during which aurorae were reportedly seen as far south as Hawaii and Central America. According to accounts of the storm, it wreaked havoc on telegraph networks around the world: equipment failed, sparks flew from wires, operators received shocks and some systems even continued operating without batteries. Yet the Carrington Event is not the earliest example of geomagnetic activity affecting technology, and establishing which incident deserves that distinction has proved surprisingly complicated."
+     },
+     {
+      "label": "B",
+      "text": "For more than a decade, a strong candidate was a railway incident in Devon, in south-west England. In 1871 an anonymous article in the journal Nature reported that, on 18 October 1841, a \"very intense magnetic disturbance\" had interfered with the signalling telegraph of the South Devon Railway Company. Because staff used the telegraph to confirm whether the line ahead was clear, the 10:05 p.m. express from Exeter to Newton Abbot was said to have been held for 16 minutes. The account had been largely overlooked until 2013, when the space weather researcher William Cade drew attention to it. If accurate, it would have represented the first recorded instance of space weather disrupting human technology, preceding all other known cases by several years. It was, however, written some 30 years after the event it described."
+     },
+     {
+      "label": "C",
+      "text": "When a team led by Jim Wild, a professor in the School of Physics and Astronomy at Lancaster University, re-examined the report, a fundamental inconsistency emerged. The railway line between Exeter and Newton Abbot did not open until 1846, almost five years after the alleged incident. The timing reported in Nature therefore could not be correct. \"In this study, we effectively investigated what had to be a typo in a Nature paper from 1871,\" said Brett Carter, an associate professor at RMIT University in Australia and one of the authors. The group also included scientists from the British Geological Survey (BGS), Natural Resources Canada, Baylor University and RAL Space, the United Kingdom's national space laboratory."
+     },
+     {
+      "label": "D",
+      "text": "To establish what had actually happened, the researchers cross-referenced several independent types of evidence: railway timetables, contemporary newspapers, observations of sunspots, reports of aurorae and digitised geomagnetic records. Timetables revealed that a 10:05 p.m. departure from Exeter had been scheduled for a period of just over a year, beginning in 1848. Crucially, the BGS archive contains magnetic traces recorded on photographic paper at Greenwich Observatory in London, which register changes in the direction of the Earth's magnetic field and in its horizontal strength. These show a strong geomagnetic disturbance on 18 October 1848, while sunspots and aurorae were reported across the United Kingdom and Europe at the same time. \"Preserving long-term records is vital for informing research on the vulnerabilities of modern technology,\" said Ciarán Beggan, a geophysicist at the BGS."
+     },
+     {
+      "label": "E",
+      "text": "Taken together, these sources point to a single, plausible conclusion: the Nature article recorded the correct day and month but the wrong year, almost certainly as a result of a printing error. The correction has an important consequence for the chronology of space weather. The Exeter delay can no longer be regarded as the first known case; that distinction now belongs to the interference experienced by the telegraph system of the Midland Railway, near Derby, during an auroral display on 19 March 1847. Nevertheless, as Wild points out, the Exeter incident \"remains one of the first clear examples of solar activity disrupting critical infrastructure\", and it occurred at a moment when railways were beginning to depend on electrical communication."
+     },
+     {
+      "label": "F",
+      "text": "The study also carries a contemporary message. Railways and other critical infrastructure remain vulnerable to space weather, though through very different technologies, including power systems, signalling equipment, satellite navigation and communications networks. Wild argues that the technologies affected have evolved, but that the challenge remains the same: understanding the risk and ensuring that society is resilient to its impacts. Instruments and forecasting methods are now far more sophisticated than anything available to Victorian telegraph operators. Even so, Mike Hapgood of RAL Space cautions that \"the modern technologies we depend on are also much more vulnerable to solar storms\". In his view, deepening our understanding of past events is essential for preparing for, and mitigating, future impacts, particularly as a new solar cycle approaches in the 2030s. A seven-year error in a nineteenth-century journal may seem trivial, but it illustrates how carefully preserved archives can still inform decisions about modern risk."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a description of the evidence that confirmed when a magnetic storm took place",
+        "a": "D",
+        "ref": "D",
+        "ev": "These show a strong geomagnetic disturbance on 18 October 1848",
+        "zh": "D 段：時刻表、報紙、太陽黑子與極光紀錄，以及 Greenwich 的磁力紀錄證實 1848 年 10 月 18 日的磁暴。"
+       },
+       {
+        "q": "an account of how electrical equipment behaved during a well-known storm",
+        "a": "A",
+        "ref": "A",
+        "ev": "equipment failed, sparks flew from wires, operators received shocks",
+        "zh": "A 段：1859 年 Carrington Event 期間電報設備故障、電線冒火花、操作員觸電。"
+       },
+       {
+        "q": "the identification of a different incident as the earliest on record",
+        "a": "E",
+        "ref": "E",
+        "ev": "that distinction now belongs to the interference experienced by the telegraph system of the Midland Railway",
+        "zh": "E 段：最早紀錄改為 1847 年 Midland Railway 的電報干擾。"
+       },
+       {
+        "q": "the length of time between an incident and the first published description of it",
+        "a": "B",
+        "ref": "B",
+        "ev": "It was, however, written some 30 years after the event it described.",
+        "zh": "B 段：Nature 文章是在事件約 30 年後才寫的。"
+       },
+       {
+        "q": "a conflict between a reported event and the history of a transport route",
+        "a": "C",
+        "ref": "C",
+        "ev": "The railway line between Exeter and Newton Abbot did not open until 1846",
+        "zh": "C 段：報導說 1841 年發生，但該鐵路 1846 年才通車 → 矛盾。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The 1871 article in Nature was written by an employee of the South Devon Railway Company.",
+        "a": "Not Given",
+        "ref": "B",
+        "zh": "B 段只說文章是匿名的（anonymous），沒有說作者身分 → Not Given（陷阱：South Devon Railway Company 確實出現在同一句）。"
+       },
+       {
+        "q": "The 10:05 p.m. service from Exeter ran for several decades.",
+        "a": "False",
+        "ref": "D",
+        "ev": "had been scheduled for a period of just over a year, beginning in 1848",
+        "zh": "D 段：這班車只排班約一年多 → 與『數十年』相反 → False。"
+       },
+       {
+        "q": "The Midland Railway incident occurred while an aurora was visible.",
+        "a": "True",
+        "ref": "E",
+        "ev": "during an auroral display on 19 March 1847",
+        "zh": "E 段：during an auroral display = while an aurora was visible → True。"
+       },
+       {
+        "q": "Hapgood believes that modern technology is less exposed to solar storms than Victorian equipment was.",
+        "a": "False",
+        "ref": "F",
+        "ev": "the modern technologies we depend on are also much more vulnerable to solar storms",
+        "zh": "F 段：Hapgood 說現代技術『更加』脆弱 → 與『較不受影響』相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Why the past still matters",
+      "lines": [
+       {
+        "t": "Although the technologies at risk have changed, Wild believes the basic task is unchanged: to understand the danger and make society [[1]] to its effects. Today's instruments and forecasts are much more [[2]] than those of the nineteenth century, yet Hapgood warns that modern systems are more easily harmed. Studying earlier storms, he says, is necessary for preparing for and [[3]] future impacts. The case shows how well-kept [[4]] can continue to guide decisions about present-day risk."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "resilient"
+        ],
+        "ref": "F",
+        "ev": "ensuring that society is resilient to its impacts",
+        "zh": "F 段：make society ___ to its effects = ensuring that society is resilient to its impacts；答案 resilient（有韌性的）。"
+       },
+       {
+        "a": [
+         "sophisticated"
+        ],
+        "ref": "F",
+        "ev": "Instruments and forecasting methods are now far more sophisticated",
+        "zh": "F 段：much more = far more；答案 sophisticated（精密的、先進的）。"
+       },
+       {
+        "a": [
+         "mitigating"
+        ],
+        "ref": "F",
+        "ev": "essential for preparing for, and mitigating, future impacts",
+        "zh": "F 段：necessary = essential；答案 mitigating（減輕，需用 -ing 與 preparing 並列）。"
+       },
+       {
+        "a": [
+         "archives"
+        ],
+        "ref": "F",
+        "ev": "it illustrates how carefully preserved archives can still inform decisions about modern risk",
+        "zh": "F 段：well-kept = carefully preserved；guide decisions = inform decisions；答案 archives（檔案、檔案庫）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "anonymous",
+     "pos": "adj.",
+     "def": "written or done by someone whose name is not known",
+     "zh": "匿名的",
+     "example": "The story first appeared in an anonymous account in the journal Nature.",
+     "match": [
+      "anonymous"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "supposed",
+     "pos": "adj.",
+     "def": "believed or claimed to be true, though possibly not",
+     "zh": "據稱的、所謂的",
+     "example": "The line opened almost five years after the supposed incident.",
+     "match": [
+      "supposed"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "play havoc with",
+     "pos": "phr.",
+     "def": "to cause serious disorder or damage to something",
+     "zh": "嚴重破壞、搞亂",
+     "example": "A huge solar storm played havoc with telegraph networks.",
+     "match": [
+      "played havoc with"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "long-standing",
+     "pos": "adj.",
+     "def": "having existed for a long time",
+     "zh": "長期存在的",
+     "example": "Space weather is a long-standing natural hazard.",
+     "match": [
+      "long-standing"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "periodically",
+     "pos": "adv.",
+     "def": "happening at intervals, from time to time",
+     "zh": "週期性地、不時地",
+     "example": "The Sun periodically releases enormous bursts of energy.",
+     "match": [
+      "periodically"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "wreak havoc",
+     "pos": "phr.",
+     "def": "to cause great damage or disorder",
+     "zh": "造成嚴重破壞",
+     "example": "The storm wreaked havoc on telegraph networks around the world.",
+     "match": [
+      "wreaked havoc"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "distinction",
+     "pos": "n.",
+     "def": "a special honour or status that marks something out",
+     "zh": "殊榮、特別地位",
+     "example": "That distinction now belongs to the Midland Railway incident.",
+     "match": [
+      "distinction"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "overlook",
+     "pos": "v.",
+     "def": "to fail to notice or consider something",
+     "zh": "忽略、未注意到",
+     "example": "The account had been largely overlooked until 2013.",
+     "match": [
+      "overlooked"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "precede",
+     "pos": "v.",
+     "def": "to come before something in time",
+     "zh": "先於、在……之前",
+     "example": "It would have preceded all other known cases by several years.",
+     "match": [
+      "preceding"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "inconsistency",
+     "pos": "n.",
+     "def": "a situation in which two things do not agree",
+     "zh": "不一致、矛盾",
+     "example": "A fundamental inconsistency emerged.",
+     "match": [
+      "inconsistency"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "cross-reference",
+     "pos": "v.",
+     "def": "to compare information from different sources to check it",
+     "zh": "交叉比對",
+     "example": "The researchers cross-referenced several independent types of evidence.",
+     "match": [
+      "cross-referenced"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "contemporary",
+     "pos": "adj.",
+     "def": "belonging to the same period of time; or modern",
+     "zh": "同時代的；當代的",
+     "example": "They examined contemporary newspapers from the 1840s.",
+     "match": [
+      "contemporary"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "plausible",
+     "pos": "adj.",
+     "def": "seeming reasonable or likely to be true",
+     "zh": "合理可信的",
+     "example": "The sources point to a single, plausible conclusion.",
+     "match": [
+      "plausible"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "chronology",
+     "pos": "n.",
+     "def": "the order in which a series of events happened",
+     "zh": "年表、時間順序",
+     "example": "The correction changes the chronology of space weather.",
+     "match": [
+      "chronology"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "mitigate",
+     "pos": "v.",
+     "def": "to make something bad less severe",
+     "zh": "減輕、緩和",
+     "example": "Understanding past events helps in mitigating future impacts.",
+     "match": [
+      "mitigating"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-22-2.mp3",
+    "times": [
+     [
+      0.36,
+      6.9
+     ],
+     [
+      7.16,
+      21.2
+     ],
+     [
+      21.58,
+      22.58
+     ],
+     [
+      23.36,
+      28.71
+     ],
+     [
+      28.98,
+      37.23
+     ],
+     [
+      37.55,
+      41.29
+     ],
+     [
+      41.53,
+      48.02
+     ],
+     [
+      48.8,
+      53.65
+     ],
+     [
+      54.1,
+      60.23
+     ],
+     [
+      60.47,
+      67.13
+     ],
+     [
+      67.55,
+      71.9
+     ],
+     [
+      72.68,
+      74.79
+     ],
+     [
+      75.0,
+      84.57
+     ],
+     [
+      84.88,
+      93.54
+     ],
+     [
+      93.76,
+      96.23
+     ],
+     [
+      96.5,
+      103.22
+     ],
+     [
+      103.54,
+      113.77
+     ],
+     [
+      114.08,
+      119.1
+     ],
+     [
+      119.88,
+      122.28
+     ],
+     [
+      122.57,
+      126.14
+     ],
+     [
+      126.39,
+      132.28
+     ],
+     [
+      132.57,
+      140.55
+     ],
+     [
+      140.76,
+      149.89
+     ],
+     [
+      150.67,
+      152.56
+     ],
+     [
+      152.99,
+      163.1
+     ],
+     [
+      163.32,
+      169.05
+     ],
+     [
+      169.32,
+      180.18
+     ],
+     [
+      180.96,
+      182.64
+     ],
+     [
+      182.84,
+      190.23
+     ],
+     [
+      190.51,
+      199.28
+     ],
+     [
+      199.69,
+      206.56
+     ],
+     [
+      206.8,
+      209.18
+     ]
+    ],
+    "duration": 209.8,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-10-22-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    Story 1 聽力（考試流程：閱題 30 秒 + 錄音 ${fmtT(STORIES[0].audio.duration)} + 檢查 30 秒 ≈ ${lm[0]} 分）→ 核對答案 ${REVIEW_L} 分 →
+    Story 2 聽力（≈ ${lm[1]} 分）→ 核對答案 ${REVIEW_L} 分。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${chip("listen",0,"🎧 Story 1 聽力")}${chip("listen",1,"🎧 Story 2 聽力")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘，可拆開做）：兩篇閱讀</b>
+    每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（Story 1 ≈ ${rm[0]+REVIEW_R} 分、Story 2 ≈ ${rm[1]+REVIEW_R} 分）。
+    <div class="chips">${chip("read",0,"📖 Story 1 閱讀")}${chip("read",1,"📖 Story 2 閱讀")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（每篇 ${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
