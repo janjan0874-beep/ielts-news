@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-23",
+ "date": "2026-10-23",
+ "title": "World's Oldest Shipwreck? Turkish Find Dated to the Age of the Pyramids, but Experts Urge Caution",
+ "stories": [
+  {
+   "title": "World's Oldest Shipwreck? Turkish Find Dated to the Age of the Pyramids, but Experts Urge Caution",
+   "topic": "Archaeology · shipwrecks",
+   "source": {
+    "name": "BBC News: World's oldest shipwreck found off coast of Turkey (14 Oct 2026)",
+    "url": "https://www.bbc.com/news/articles/c6gr80rk1yyko",
+    "links": [
+     {
+      "name": "New Scientist — Jo Marchant: Ancient shipwreck discovered off Turkey claimed to be world's oldest (14 Oct 2026)",
+      "url": "https://www.newscientist.com/article/2593986-ancient-shipwreck-discovered-off-turkey-claimed-to-be-worlds-oldest/"
+     },
+     {
+      "name": "The Conversation — Karin Sowada: World's oldest shipwreck discovered off coast of Turkey (14 Oct 2026)",
+      "url": "https://theconversation.com/worlds-oldest-shipwreck-discovered-off-coast-of-turkey-294248"
+     },
+     {
+      "name": "The New York Times — Alan Yuhas: The World's Oldest Shipwreck? Maybe, but 'We're All Excited by Maybe.' (16 Oct 2026)",
+      "url": "https://www.nytimes.com/2026/10/16/world/middleeast/oldest-shipwreck-amphora-turkey.html"
+     },
+     {
+      "name": "Akdeniz University (Turkish press release): Akdeniz Üniversitesi'nden Dünya Arkeoloji Tarihine Geçecek Keşif (15 Oct 2026)",
+      "url": "https://www.akdeniz.edu.tr/tr/haber/akdeniz_universitesinden_dunya_arkeoloji_tarihine_gececek_kesif-4477"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning, and welcome to the heritage report.",
+     "Archaeologists in Turkey say they have found the oldest shipwreck ever discovered, a trading vessel that may have sunk while the Great Pyramid was being built, although some outside experts are not yet convinced.",
+     "Here's the report."
+    ],
+    [
+     "The site lies off Kekova Island, in Antalya province, on Turkey's Mediterranean coast.",
+     "It was first spotted in twenty twenty-four by a team led by Associate Professor Hakan Oniz of Akdeniz University, who had been following clues from local seafarers.",
+     "The remains are scattered across an underwater slope about thirty metres down, in waters known for strong currents and winds.",
+     "Because of that depth, divers could only spend thirty minutes at a time on the seabed."
+    ],
+    [
+     "First, the puzzle of the missing ship.",
+     "Its timbers disappeared long ago, so radiocarbon dating, the standard way of measuring the age of organic material, simply isn't possible.",
+     "Instead, the team has dated the wreck from its cargo: more than thirty large clay storage jars, known as amphorae.",
+     "They're distinctive.",
+     "Each has two handles, a raised ridge around the middle, and a flat base.",
+     "According to Professor Oniz, that design matches jars from Egypt and the Middle East that are known to be between four thousand four hundred and four thousand seven hundred years old."
+    ],
+    [
+     "Meanwhile, the jars have produced a surprise.",
+     "Some still contain a dark, glossy residue.",
+     "Dr Karin Sowada, an archaeologist at Macquarie University in Australia, told the BBC that when she looked inside, she nearly fainted.",
+     "Laboratory tests are still to come, but olive oil, wine and tree resin are all possibilities.",
+     "Professor Oniz says small differences between the jars suggest they came from different workshops, and probably different settlements.",
+     "The team believes the ship, about ten metres long, set out from the eastern Mediterranean and was heading either for the city of Troy or for the Minoan civilisation on Crete."
+    ],
+    [
+     "Still, not everyone is ready to rewrite the record books.",
+     "Until now, the title of oldest known wreck has belonged to a site off the Greek island of Dokos, thought to be about four thousand two hundred years old.",
+     "Jon Henderson, of the University of Edinburgh, called the Turkish find a fascinating and potentially very important discovery.",
+     "But he told New Scientist he'd like to see published evidence before accepting the claim, because dating by pottery isn't always very accurate.",
+     "Similar shapes, he explained, can stay in use for long periods.",
+     "The marine archaeologist Sean Kingsley, speaking to the New York Times, raised another possibility: that the jars were simply thrown overboard, rather than going down with a ship."
+    ],
+    [
+     "The excavators, by contrast, point to tiny tubes left behind by shipworms, which attack wooden vessels, as evidence that a ship really did lie there.",
+     "Three stone anchors were also found, although experts say designs like these are very hard to date.",
+     "Looking ahead, the recovered jars are being carefully conserved.",
+     "Turkey's culture minister, Mehmet Nuri Ersoy, says they will go on display at a new underwater archaeology museum in Antalya when it opens in the coming months.",
+     "Whatever the final verdict, as Jon Henderson points out, physical remains of sea trade this old are extraordinarily rare.",
+     "That's the heritage report for this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "A claimed Bronze Age shipwreck off Turkey",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The site"
+       },
+       {
+        "t": "Maximum time divers could stay on the seabed on each dive: [[1]] minutes"
+       },
+       {
+        "h": "Dating the wreck"
+       },
+       {
+        "t": "No wood survives, so [[2]] dating cannot be used"
+       },
+       {
+        "t": "Jars have two handles, a ridge in the centre and a flat [[3]]"
+       },
+       {
+        "h": "The cargo"
+       },
+       {
+        "t": "Some jars still hold a dark, shiny [[4]]"
+       },
+       {
+        "t": "Slight variations: jars probably produced in several [[5]] (and possibly in different places)"
+       },
+       {
+        "t": "Possible destinations: Troy or the island of [[6]]"
+       },
+       {
+        "h": "Doubts and responses"
+       },
+       {
+        "t": "Henderson wants to see [[7]] before accepting the record"
+       },
+       {
+        "t": "Kingsley: the jars may have been [[8]] overboard"
+       },
+       {
+        "t": "Team's evidence of a real vessel: tubes made by [[9]]"
+       },
+       {
+        "h": "Next steps"
+       },
+       {
+        "t": "Jars to be exhibited in a new [[10]] in Antalya"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "30",
+         "thirty"
+        ],
+        "ref": "divers could only spend thirty minutes at a time",
+        "ev": "divers could only spend thirty minutes at a time on the seabed",
+        "zh": "maximum time … each dive = could only spend … at a time；答案 30（分鐘）。干擾：前一句 thirty metres 是深度，後面 more than thirty jars 是陶罐數量——三個 thirty，只有『分鐘』符合題幹。"
+       },
+       {
+        "a": [
+         "radiocarbon"
+        ],
+        "ref": "so radiocarbon dating, the standard way",
+        "ev": "Its timbers disappeared long ago, so radiocarbon dating, the standard way of measuring the age of organic material, simply isn't possible",
+        "zh": "No wood survives = timbers disappeared long ago；cannot be used = simply isn't possible；答案 radiocarbon（放射性碳定年）。"
+       },
+       {
+        "a": [
+         "base"
+        ],
+        "ref": "a raised ridge around the middle, and a flat base",
+        "ev": "Each has two handles, a raised ridge around the middle, and a flat base",
+        "zh": "ridge in the centre = raised ridge around the middle；答案 base（底部）。handles、ridge 已在題幹中出現，是干擾。"
+       },
+       {
+        "a": [
+         "residue",
+         "glossy residue"
+        ],
+        "ref": "Some still contain a dark, glossy residue",
+        "ev": "Some still contain a dark, glossy residue",
+        "zh": "still hold = still contain；shiny = glossy；答案 residue（殘留物）。"
+       },
+       {
+        "a": [
+         "workshops"
+        ],
+        "ref": "they came from different workshops",
+        "ev": "small differences between the jars suggest they came from different workshops, and probably different settlements",
+        "zh": "Slight variations = small differences；produced in several ___ = came from different workshops；括號裡 possibly in different places 對應 probably different settlements，所以答案是 workshops（作坊），不是 settlements。"
+       },
+       {
+        "a": [
+         "Crete"
+        ],
+        "ref": "the Minoan civilisation on Crete",
+        "ev": "was heading either for the city of Troy or for the Minoan civilisation on Crete",
+        "zh": "destinations = heading for；題幹已給 Troy；the island of ___ → Crete（克里特島）。注意 Minoan 是文明名，不是島名。"
+       },
+       {
+        "a": [
+         "published evidence",
+         "evidence"
+        ],
+        "ref": "he'd like to see published evidence",
+        "ev": "he'd like to see published evidence before accepting the claim",
+        "zh": "wants to see = would like to see；答案 published evidence（已發表的證據）。"
+       },
+       {
+        "a": [
+         "thrown"
+        ],
+        "ref": "the jars were simply thrown overboard",
+        "ev": "that the jars were simply thrown overboard, rather than going down with a ship",
+        "zh": "may have been ___ overboard = were simply thrown overboard；答案 thrown（被丟出，動詞過去分詞）。going down with a ship 是相反的情況。"
+       },
+       {
+        "a": [
+         "shipworms",
+         "shipworm"
+        ],
+        "ref": "tiny tubes left behind by shipworms",
+        "ev": "point to tiny tubes left behind by shipworms",
+        "zh": "evidence of a real vessel = evidence that a ship really did lie there；tubes made by = tubes left behind by；答案 shipworms（船蛆）。干擾：stone anchors 也被提到，但專家說很難定年。"
+       },
+       {
+        "a": [
+         "museum",
+         "underwater museum",
+         "archaeology museum"
+        ],
+        "ref": "a new underwater archaeology museum in Antalya",
+        "ev": "they will go on display at a new underwater archaeology museum in Antalya",
+        "zh": "exhibited = go on display；答案 museum（博物館）。前一句 being carefully conserved 是保存修復，不是展出地點。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Reading the Clay: The Debate over the World's Oldest Shipwreck",
+    "intro": "A cargo of Bronze Age jars off the Turkish coast has revived old questions about how archaeologists date the past.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "In mid-October 2026, Turkey's culture minister announced that a team led by Hakan Öniz of Akdeniz University had recovered the cargo of what was described as the world's oldest shipwreck. The site, near Kekova Island off Turkey's southern coast, was first documented during an underwater survey in 2024 and excavated in 2026. On the basis of the pottery, the team has proposed a date of roughly 2700 to 2400 BC, the era in which the Great Pyramid of Giza was built. If confirmed, Kekova would displace the previous record holder, a site off the Greek island of Dokos thought to be about 4,200 years old. Yet the announcement has been greeted with a mixture of enthusiasm and caution, and the reasons for that caution reveal a great deal about how the past is dated."
+     },
+     {
+      "label": "B",
+      "text": "The central difficulty is that the ship itself has vanished. Wood rarely survives thousands of years on the seabed, and none of the Kekova hull remains. This rules out radiocarbon dating, which measures a form of carbon in once-living material and is often the most dependable way of fixing a date. The researchers have therefore relied on typology: the comparison of artefacts with similar objects whose age is already known. The Kekova jars are large, ovoid and flat-based, with two handles and, in many cases, a raised band of clay around the widest part. According to Öniz, this design matches amphorae from Egypt and the Middle East that are known to date from the Early Bronze Age. The flat bases are themselves suggestive: as international trade became established, merchants switched to jars with tapered, carrot-shaped bottoms, which pack more efficiently onto ships."
+     },
+     {
+      "label": "C",
+      "text": "Typology, however, has well-known limitations. Jon Henderson, an archaeologist at the University of Edinburgh, has called the find \"a fascinating and potentially very important discovery\", but cautions that dating by pottery comparisons is not always accurate, because similar forms and decorative features can persist over long periods. He has also suggested that the Kekova and Dokos wrecks could in fact be contemporary. Other specialists consulted by The New York Times went further. One noted that two wrecks found in the 1980s appeared to hold similar amphorae, yet these were estimated to date from between the fifteenth and twelfth centuries BC; another saw a strong resemblance to jars from a Byzantine-era wreck. Nor do the three stone anchors settle the matter, since such anchors are very difficult to date and their designs were used across many eras."
+     },
+     {
+      "label": "D",
+      "text": "A second question is whether Kekova is a shipwreck at all. In the absence of timbers, the marine archaeologist Sean Kingsley has asked whether it might be a jettison site, where cargo was thrown into the sea, or whether the jars simply fell from a vessel struck by a large wave. The excavators, however, are confident that it is a wreck. They point to calcium carbonate tubes at the site, the characteristic secretions of shipworms, which bore into submerged wood, as evidence that a wooden vessel once lay there. The anchors also lay some distance from the cargo, a detail taken to suggest that the crew may have thrown them overboard when the ship got into difficulty during a storm. Intriguingly, even the earlier record holder is disputed: some archaeologists are now unsure whether the remains at Dokos, discovered in 1975, represent a shipwreck, a sunken settlement or something else entirely."
+     },
+     {
+      "label": "E",
+      "text": "Whatever its precise age, the cargo is a valuable source of evidence about Early Bronze Age commerce. Some jars still contain a black, glossy coating, which may prove to be olive oil, wine, tree resin or a mixture left behind as the jars were emptied and refilled. Clay analysis suggests that at least some of the vessels originated in the Central Jordan Valley, while slight variations between them imply, in Öniz's words, \"different workshops and probably different settlements\". One unusual jar, bearing nine different marks and pierced by two holes, has been tentatively identified by the university as a churn for making cheese or butter, raising the possibility that sailors kept live goats on board. Such details matter because, as Karin Sowada of Macquarie University has written, trade in the eastern Mediterranean during the third millennium BC is poorly understood compared with later periods."
+     },
+     {
+      "label": "F",
+      "text": "For many specialists, the question of the record is therefore secondary. Henderson has said that what excites him is not whether the wreck is \"a century or two older than another one\" but that it offers \"a snapshot of Mediterranean maritime trade more than 4000 years ago\". Justin Leidwanger of Stanford University captured the mood when he told The New York Times that \"the burden of proof is pretty high archaeologically\". Öniz, for his part, has described scepticism as the rule in his field and says his team now has more data. The decisive evidence may come from laboratory analysis of the residues and from a full, peer-reviewed publication of the results. Until then, Kekova is arguably best regarded as a strong candidate rather than a confirmed record."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reference to an object that may have been used to produce food at sea",
+        "a": "E",
+        "ref": "E",
+        "ev": "has been tentatively identified by the university as a churn for making cheese or butter",
+        "zh": "E 段：一個有九個記號、兩個孔的陶罐，可能是做乳酪或奶油的攪乳器（churn），暗示船上養活羊 → produce food at sea。"
+       },
+       {
+        "q": "an explanation of why a widely used scientific method could not be applied",
+        "a": "B",
+        "ref": "B",
+        "ev": "This rules out radiocarbon dating",
+        "zh": "B 段：船身木材完全沒留下 → 無法用放射性碳定年（often the most dependable way = widely used scientific method）。"
+       },
+       {
+        "q": "a suggestion that the site previously regarded as the oldest may not be a wreck",
+        "a": "D",
+        "ref": "D",
+        "ev": "some archaeologists are now unsure whether the remains at Dokos, discovered in 1975, represent a shipwreck",
+        "zh": "D 段最後：有些考古學家不確定 Dokos 遺址到底是不是沉船（也可能是沉沒的聚落）。注意 A 段雖提到 Dokos，但只說它是舊紀錄保持者。"
+       },
+       {
+        "q": "the view that the age ranking of the wreck matters less than what it reveals",
+        "a": "F",
+        "ref": "F",
+        "ev": "the question of the record is therefore secondary",
+        "zh": "F 段：Henderson 說讓他興奮的不是『早一兩百年』，而是它提供古代海上貿易的快照 → 排名次要。"
+       },
+       {
+        "q": "a comparison with containers from a much later historical period",
+        "a": "C",
+        "ref": "C",
+        "ev": "another saw a strong resemblance to jars from a Byzantine-era wreck",
+        "zh": "C 段：有專家認為這些罐子很像拜占庭時期沉船（遠晚於青銅時代）的陶罐 → much later period。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The Kekova site was first discovered during the excavations carried out in 2026.",
+        "a": "False",
+        "ref": "A",
+        "ev": "was first documented during an underwater survey in 2024 and excavated in 2026",
+        "zh": "A 段：2024 年水下調查時首次記錄，2026 年才開挖 → 題目說 2026 年才發現，與原文相反 → False。"
+       },
+       {
+        "q": "The position of the anchors has been seen as a sign that they were deliberately discarded.",
+        "a": "True",
+        "ref": "D",
+        "ev": "a detail taken to suggest that the crew may have thrown them overboard",
+        "zh": "D 段：錨離貨物有一段距離 → 被解讀為船員在暴風雨中可能把錨丟下海 → deliberately discarded → True。"
+       },
+       {
+        "q": "Shipworms are now the main cause of damage to ancient wrecks along the Turkish coast.",
+        "a": "Not Given",
+        "ref": "D",
+        "zh": "D 段只說 shipworm 會鑽入泡水的木頭、留下的管狀物是『曾有木船』的證據；完全沒說它們是土耳其沿岸古沉船的『主要』破壞原因 → Not Given（陷阱：shipworms、wood 都出現在文中）。"
+       },
+       {
+        "q": "Trade in the eastern Mediterranean in the third millennium BC is better documented than trade in later periods.",
+        "a": "False",
+        "ref": "E",
+        "ev": "is poorly understood compared with later periods",
+        "zh": "E 段：與後來的時期相比，西元前第三千紀的貿易『了解很少』→ 與 better documented 相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Dating a wreck without a hull",
+      "lines": [
+       {
+        "t": "Because no wood survives at Kekova, the researchers have depended on [[1]], comparing the jars with objects of a known age. Critics point out that the same shapes and decorative features may [[2]] for a long time, so pottery is an imprecise guide. The stone anchors cannot resolve the question either, as similar designs appear in many different [[3]]. A firmer answer may eventually come from laboratory work on the residues and from a complete [[4]] account of the findings."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "typology"
+        ],
+        "ref": "B",
+        "ev": "The researchers have therefore relied on typology",
+        "zh": "B 段：depended on = relied on；答案 typology（類型學：與已知年代器物比對）。"
+       },
+       {
+        "a": [
+         "persist"
+        ],
+        "ref": "C",
+        "ev": "similar forms and decorative features can persist over long periods",
+        "zh": "C 段：for a long time = over long periods；答案 persist（持續存在，動詞）。"
+       },
+       {
+        "a": [
+         "eras"
+        ],
+        "ref": "C",
+        "ev": "their designs were used across many eras",
+        "zh": "C 段：appear in many different ___ = were used across many eras；答案 eras（時代）。"
+       },
+       {
+        "a": [
+         "peer-reviewed",
+         "peer reviewed"
+        ],
+        "ref": "F",
+        "ev": "a full, peer-reviewed publication of the results",
+        "zh": "F 段：complete = full；account of the findings = publication of the results；答案 peer-reviewed（經同儕審查的）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "seafarer",
+     "pos": "n.",
+     "def": "a person who regularly travels by sea, especially a sailor",
+     "zh": "航海者、水手",
+     "example": "He had been following clues from local seafarers.",
+     "match": [
+      "seafarers"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "overboard",
+     "pos": "adv.",
+     "def": "from a ship into the water",
+     "zh": "（從船上）落水、拋到海裡",
+     "example": "The jars may simply have been thrown overboard.",
+     "match": [
+      "overboard"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "conserve",
+     "pos": "v.",
+     "def": "to protect and treat an old object so that it is not damaged further",
+     "zh": "（文物）保存修復",
+     "example": "The recovered jars are being carefully conserved.",
+     "match": [
+      "conserved"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "verdict",
+     "pos": "n.",
+     "def": "a final opinion or decision reached after consideration",
+     "zh": "定論、裁決",
+     "example": "Whatever the final verdict, such finds are extraordinarily rare.",
+     "match": [
+      "verdict"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "displace",
+     "pos": "v.",
+     "def": "to take the place or position of something else",
+     "zh": "取代",
+     "example": "Kekova would displace the previous record holder.",
+     "match": [
+      "displace"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "artefact",
+     "pos": "n.",
+     "def": "an object made by a person, especially one of historical interest",
+     "zh": "人工製品、文物",
+     "example": "Typology compares artefacts with objects whose age is known.",
+     "match": [
+      "artefacts"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "ovoid",
+     "pos": "adj.",
+     "def": "shaped like an egg",
+     "zh": "卵形的",
+     "example": "The jars are large, ovoid and flat-based.",
+     "match": [
+      "ovoid"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "tapered",
+     "pos": "adj.",
+     "def": "becoming gradually narrower towards one end",
+     "zh": "漸細的、錐形的",
+     "example": "Merchants switched to jars with tapered bottoms.",
+     "match": [
+      "tapered"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "contemporary",
+     "pos": "adj.",
+     "def": "existing or happening at the same period of time",
+     "zh": "同時代的",
+     "example": "The two wrecks could in fact be contemporary.",
+     "match": [
+      "contemporary"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "resemblance",
+     "pos": "n.",
+     "def": "the state of looking or being similar to something",
+     "zh": "相似之處",
+     "example": "Another expert saw a strong resemblance to Byzantine jars.",
+     "match": [
+      "resemblance"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "jettison",
+     "pos": "n./v.",
+     "def": "(the act of) throwing goods from a ship to lighten it",
+     "zh": "（為減輕船重）拋棄貨物",
+     "example": "The site might be a jettison site rather than a wreck.",
+     "match": [
+      "jettison"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "secretion",
+     "pos": "n.",
+     "def": "a substance produced and released by a living thing",
+     "zh": "分泌物",
+     "example": "The tubes are the characteristic secretions of shipworms.",
+     "match": [
+      "secretions"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "tentatively",
+     "pos": "adv.",
+     "def": "in a way that is not yet certain or final",
+     "zh": "暫時地、試探性地",
+     "example": "One jar has been tentatively identified as a churn.",
+     "match": [
+      "tentatively"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "millennium",
+     "pos": "n.",
+     "def": "a period of a thousand years",
+     "zh": "千年（期）",
+     "example": "Trade during the third millennium BC is poorly understood.",
+     "match": [
+      "millennium"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "burden of proof",
+     "pos": "phr.",
+     "def": "the obligation to provide evidence for a claim",
+     "zh": "舉證責任",
+     "example": "The burden of proof is pretty high archaeologically.",
+     "match": [
+      "burden of proof"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-23-1.mp3",
+    "times": [
+     [
+      0.36,
+      2.97
+     ],
+     [
+      3.23,
+      13.55
+     ],
+     [
+      13.93,
+      14.9
+     ],
+     [
+      15.68,
+      21.14
+     ],
+     [
+      21.41,
+      30.17
+     ],
+     [
+      30.57,
+      37.08
+     ],
+     [
+      37.32,
+      41.51
+     ],
+     [
+      42.29,
+      44.44
+     ],
+     [
+      44.77,
+      52.51
+     ],
+     [
+      52.75,
+      59.25
+     ],
+     [
+      59.63,
+      60.55
+     ],
+     [
+      60.74,
+      64.92
+     ],
+     [
+      65.17,
+      74.29
+     ],
+     [
+      75.07,
+      77.83
+     ],
+     [
+      78.06,
+      80.78
+     ],
+     [
+      81.05,
+      89.35
+     ],
+     [
+      89.66,
+      95.22
+     ],
+     [
+      95.46,
+      102.49
+     ],
+     [
+      102.77,
+      111.64
+     ],
+     [
+      112.42,
+      115.76
+     ],
+     [
+      116.01,
+      123.8
+     ],
+     [
+      124.17,
+      130.91
+     ],
+     [
+      131.24,
+      138.46
+     ],
+     [
+      138.72,
+      142.75
+     ],
+     [
+      143.05,
+      152.52
+     ],
+     [
+      153.3,
+      162.06
+     ],
+     [
+      162.33,
+      167.68
+     ],
+     [
+      168.0,
+      171.52
+     ],
+     [
+      171.76,
+      180.57
+     ],
+     [
+      180.93,
+      187.7
+     ],
+     [
+      188.03,
+      190.01
+     ]
+    ],
+    "duration": 190.7,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-10-23-1-words/"
+   }
+  }
+ ],
+ "note": "🏃 半馬賽前週（10/25 半馬、10/23–24 補碳）：今天是輕量版，只有一篇（聽力＋閱讀＋單字），早點休息！"
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
