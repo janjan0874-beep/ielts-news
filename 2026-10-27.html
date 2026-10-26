@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-27",
+ "date": "2026-10-27",
+ "title": "Texas Instruments Beats Forecasts as Data Centres and Factories Lift Demand for Analog Chips · Fewer Than One in Four Melbourne Homes Have a Safe Cycling Route to the Local School, Study Finds",
+ "stories": [
+  {
+   "title": "Texas Instruments Beats Forecasts as Data Centres and Factories Lift Demand for Analog Chips",
+   "topic": "Investing · analog chips",
+   "source": {
+    "name": "Texas Instruments: TI reports third quarter 2026 financial results and shareholder returns (21 Oct 2026)",
+    "url": "https://www.ti.com/about-ti/newsroom/news-releases/2026/2026-10-21-ti-reports-third-quarter-2026-financial-results-and-shareholder-returns.html",
+    "links": [
+     {
+      "name": "Reuters (via Investing.com): Analog chipmaker Texas Instruments sees quarterly sales above estimates (21 Oct 2026)",
+      "url": "https://www.investing.com/news/stock-market-news/analog-chipmaker-texas-instruments-sees-quarterly-sales-above-estimates-4964092"
+     },
+     {
+      "name": "Investing.com: Earnings call transcript – Texas Instruments tops Q3 2026 forecasts (21 Oct 2026)",
+      "url": "https://www.investing.com/news/transcripts/earnings-call-transcript-texas-instruments-tops-q3-2026-forecasts-93CH-4964231"
+     },
+     {
+      "name": "Texas Instruments Form 10-Q for Q3 2026 (filed 23 Oct 2026)",
+      "url": "https://investor.ti.com/static-files/b862a18d-c3ee-4f08-ba4d-583019cdd4f8"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead story in business this morning: Texas Instruments, the Dallas-based maker of analog chips, has beaten Wall Street's expectations and forecast a stronger end to the year than analysts had pencilled in.",
+     "Here's the report."
+    ],
+    [
+     "First, the numbers.",
+     "Analysts surveyed by LSEG had been expecting third-quarter revenue of around five point nine two billion dollars.",
+     "The actual figure was six point zero six billion, up twenty-eight percent from a year earlier.",
+     "Compared with the previous quarter, sales rose eleven percent.",
+     "Earnings came in at two dollars and sixty-two cents a share, comfortably ahead of forecasts.",
+     "That's a rise of seventy-seven percent on a year ago."
+    ],
+    [
+     "So what exactly does the company sell?",
+     "Unlike Nvidia, TI doesn't make the powerful processors that train artificial intelligence.",
+     "Instead, its analog chips manage power and turn real-world signals, such as sound, light and temperature, into digital data that other chips can process.",
+     "Those parts end up in cars, smartphones, laptops and factory equipment.",
+     "And because it is one of the first major chipmakers to report each quarter, investors treat it as a bellwether for the wider electronics industry."
+    ],
+    [
+     "The analog business did most of the heavy lifting.",
+     "Its revenue climbed thirty-two percent, while the smaller embedded processing unit, whose chips act as the digital brains of many devices, grew twenty-one percent.",
+     "Profitability improved sharply, too.",
+     "Gross margin rose to sixty-four point two percent, from fifty-seven point four percent a year ago.",
+     "The company owns much of its own manufacturing, so when its factories run fuller, its fixed costs are spread over more output.",
+     "Cash flow from operations over the past twelve months reached nine point nine billion dollars, which Mr Ilan credited partly to making chips on larger, three-hundred-millimetre wafers."
+    ],
+    [
+     "Meanwhile, data centres have become a growth engine.",
+     "Chief executive Haviv Ilan told analysts the market made up roughly thirteen percent of revenue in the quarter, and one analyst on the call suggested it had almost doubled in a year.",
+     "Mr Ilan said the computing racks that customers are building need a lot of telemetry and cooling, and that power efficiency is critical.",
+     "Much of that, he added, comes from the company's foundational chips.",
+     "Industrial demand is also recovering, he said, especially in aerospace and defence, energy infrastructure and robotics.",
+     "And automotive customers, in his words, appear to be waking up."
+    ],
+    [
+     "Looking ahead, TI expects fourth-quarter revenue of between five point eight and six point three billion dollars.",
+     "The midpoint implies a slight dip from the third quarter, but management says that is still better than the usual seasonal pattern.",
+     "It is also above the average analyst estimate of five point seven three billion.",
+     "Capital spending this year is expected to land near the top of a two-to-three-billion-dollar range.",
+     "TI says it is planning factory space through the rest of the decade, but will adjust investment to match demand.",
+     "Over the past year it also returned five point eight billion dollars to shareholders, while pressing ahead with its planned purchase of the chip designer Silicon Labs."
+    ],
+    [
+     "There are risks, though.",
+     "The company itself describes part of the upturn as a cyclical recovery, and cycles eventually turn.",
+     "That's the business report for this morning; more chipmakers report their results later this week."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Texas Instruments: third-quarter results",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Headline figures"
+       },
+       {
+        "t": "Revenue: $ [[1]] billion (analysts' forecast: about $5.92 billion)"
+       },
+       {
+        "h": "What the company makes"
+       },
+       {
+        "t": "Chips convert inputs such as sound, light and [[2]] into digital data"
+       },
+       {
+        "t": "Used in vehicles, phones, laptops and industrial [[3]]"
+       },
+       {
+        "t": "Regarded by investors as a [[4]] for the electronics sector"
+       },
+       {
+        "h": "Business units"
+       },
+       {
+        "t": "Embedded processing chips serve as the digital [[5]] of devices"
+       },
+       {
+        "t": "Fuller factories mean [[6]] costs are shared across more output"
+       },
+       {
+        "h": "Sources of growth"
+       },
+       {
+        "t": "Data-centre racks need telemetry, cooling and power [[7]]"
+       },
+       {
+        "t": "Industrial recovery led by aerospace, defence, energy [[8]] and robotics"
+       },
+       {
+        "h": "Outlook and risks"
+       },
+       {
+        "t": "Q4 dip expected to be smaller than the normal [[9]] pattern"
+       },
+       {
+        "t": "Part of the upturn described as a [[10]] recovery"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "6.06",
+         "6.06 billion"
+        ],
+        "ref": "The actual figure was six point zero six billion",
+        "ev": "The actual figure was six point zero six billion, up twenty-eight percent from a year earlier.",
+        "zh": "答案 6.06（six point zero six）。干擾：5.92 是 LSEG 分析師預期（had been expecting），題目已給；28% 是年增率、11% 是季增率。"
+       },
+       {
+        "a": [
+         "temperature"
+        ],
+        "ref": "such as sound, light and temperature",
+        "ev": "turn real-world signals, such as sound, light and temperature, into digital data",
+        "zh": "convert = turn…into；inputs = real-world signals；答案 temperature（溫度）。"
+       },
+       {
+        "a": [
+         "equipment"
+        ],
+        "ref": "Those parts end up in cars, smartphones, laptops and factory equipment.",
+        "ev": "Those parts end up in cars, smartphones, laptops and factory equipment.",
+        "zh": "vehicles = cars；industrial = factory；答案 equipment（設備，不可數名詞，不加 s）。"
+       },
+       {
+        "a": [
+         "bellwether"
+        ],
+        "ref": "investors treat it as a bellwether",
+        "ev": "investors treat it as a bellwether for the wider electronics industry",
+        "zh": "regarded by = treat it as；sector = industry；答案 bellwether（風向指標、領頭羊）。"
+       },
+       {
+        "a": [
+         "brains"
+        ],
+        "ref": "act as the digital brains of many devices",
+        "ev": "whose chips act as the digital brains of many devices",
+        "zh": "serve as = act as；答案 brains（大腦，複數）。干擾：同句的 32% / 21% 是成長率。"
+       },
+       {
+        "a": [
+         "fixed"
+        ],
+        "ref": "its fixed costs are spread over more output",
+        "ev": "its fixed costs are spread over more output",
+        "zh": "shared across = spread over；答案 fixed（固定的，形容詞）。這是自有工廠的『產能利用率→毛利率』邏輯。"
+       },
+       {
+        "a": [
+         "efficiency"
+        ],
+        "ref": "power efficiency is critical",
+        "ev": "need a lot of telemetry and cooling, and that power efficiency is critical",
+        "zh": "答案 efficiency（效率）→ power efficiency 電源效率。干擾：13% 是資料中心營收占比，不是題目要的。"
+       },
+       {
+        "a": [
+         "infrastructure"
+        ],
+        "ref": "energy infrastructure and robotics",
+        "ev": "especially in aerospace and defence, energy infrastructure and robotics",
+        "zh": "led by = especially in；答案 infrastructure（基礎設施）。"
+       },
+       {
+        "a": [
+         "seasonal"
+        ],
+        "ref": "better than the usual seasonal pattern",
+        "ev": "that is still better than the usual seasonal pattern",
+        "zh": "normal = usual；答案 seasonal（季節性的，形容詞）。干擾：5.8–6.3 billion 是第四季財測區間、5.73 billion 是分析師預估。"
+       },
+       {
+        "a": [
+         "cyclical"
+        ],
+        "ref": "part of the upturn as a cyclical recovery",
+        "ev": "The company itself describes part of the upturn as a cyclical recovery",
+        "zh": "答案 cyclical（週期性的）。結尾風險提示：景氣循環終究會反轉（cycles eventually turn）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "The Quiet Chips Behind the Boom",
+    "intro": "Why the fortunes of a maker of unglamorous analog chips are read as a signal for the wider electronics economy.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "The physical world is analog. Sound, light, temperature and pressure vary continuously, and before any computer can make use of them they must be captured, conditioned and translated into the ones and zeros of digital logic. That is the task of analog semiconductors, which detect real-world signals, amplify them and often convert them into a stream of digital data for other chips to process. A second family of analog devices manages power: according to Texas Instruments (TI), these chips convert, distribute, store, discharge, isolate and measure electrical energy in all electronic equipment, whether it is plugged into a wall or running on a battery. Unlike the high-performance processors that dominate headlines about artificial intelligence, such components are cheap, numerous and rarely noticed. In the news they are routinely eclipsed by more glamorous processors, yet the economy could not function without them."
+     },
+     {
+      "label": "B",
+      "text": "It is precisely this ubiquity that makes TI's quarterly results so closely watched. The company's analog and embedded chips are used in smartphones, laptops, cars and factory equipment, and, as one of the first major chipmakers to report each quarter, it is widely considered a bellwether for the electronics and semiconductor industries as a whole. Its figures for the third quarter of 2026 were therefore read as a broad economic signal. Revenue reached $6.06 billion, 28 per cent higher than a year earlier and 11 per cent above the previous quarter, exceeding the $5.92 billion that analysts had expected, according to data compiled by LSEG. Earnings per share rose 77 per cent to $2.62."
+     },
+     {
+      "label": "C",
+      "text": "The scale of the profit increase reflects a distinctive business model. Unlike many chip designers, which outsource production, TI owns much of its manufacturing capacity, so a significant portion of its operating cost is fixed. As the company explains in its quarterly filing, when factory loadings increase, those fixed costs are spread over a larger output and margins tend to rise; conversely, when loadings fall, margins contract. In the third quarter, gross profit as a share of revenue climbed to 64.2 per cent from 57.4 per cent a year earlier. Chief executive Haviv Ilan said that cash flow from operations of $9.9 billion over the previous twelve months underscored the strength of this model and the benefit of producing chips on larger 300mm wafers."
+     },
+     {
+      "label": "D",
+      "text": "Perhaps the most striking development is the company's growing exposure to data centres, a market more commonly associated with graphics processors. Ilan told analysts that data centres accounted for roughly 13 per cent of revenue in the quarter, and one analyst on the call suggested that the business had almost doubled year on year. The explanation lies in what surrounds the processors. Computing and networking racks, Ilan noted, are very expensive assets that need extensive telemetry and cooling, and efficiency and power density are critical. Customers are therefore adding parts drawn mainly from TI's portfolio of foundational analog and embedded chips. In other words, the AI boom appears to be creating demand not only for the celebrated processors themselves but also for the modest components that keep them powered, monitored and cool."
+     },
+     {
+      "label": "E",
+      "text": "Nevertheless, data centres explain only part of the improvement. In its quarterly filing, TI reported revenue growth across all end markets and regions, and described the secular growth of semiconductor content continuing alongside a strong cyclical recovery. Ilan highlighted momentum in industrial sectors such as aerospace and defence, energy infrastructure, test and measurement, and robotics, and suggested that automotive customers were showing renewed demand. The company's guidance reflected this optimism: fourth-quarter revenue is forecast at between $5.80 billion and $6.30 billion, above the consensus estimate of $5.73 billion. The midpoint implies a slight sequential decline, but management characterised this as better than the typical seasonal pattern."
+     },
+     {
+      "label": "F",
+      "text": "Whether the recovery will last is another matter. TI expects its capital spending for 2026 to fall between $2 billion and $3 billion, probably towards the high end, and says it is planning manufacturing capacity through the rest of the decade, although investment will be adjusted according to demand and growth goals. At the same time, it returned $5.8 billion to its owners over the previous twelve months and is pursuing the planned acquisition of Silicon Labs. Building factories ahead of orders is arguably a wager on the durability of demand. If the cyclical element of the upturn fades, plants would run below their potential and the same fixed-cost logic that has lifted margins would work in reverse. For investors, the quiet chips may yet prove to be the most revealing ones."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reason why the company's results attract attention beyond its own shareholders",
+        "a": "B",
+        "ref": "B",
+        "ev": "it is widely considered a bellwether for the electronics and semiconductor industries as a whole",
+        "zh": "B 段：因為 TI 晶片無所不在、又是最早公布財報的大廠之一，被視為整個產業的風向指標。"
+       },
+       {
+        "q": "an explanation of how owning factories affects profitability",
+        "a": "C",
+        "ref": "C",
+        "ev": "when factory loadings increase, those fixed costs are spread over a larger output and margins tend to rise",
+        "zh": "C 段：自有產能→固定成本高→產能利用率上升時毛利率上升，反之下降。"
+       },
+       {
+        "q": "a list of tasks involved in handling electrical energy",
+        "a": "A",
+        "ref": "A",
+        "ev": "these chips convert, distribute, store, discharge, isolate and measure electrical energy",
+        "zh": "A 段：電源管理晶片的功能清單（轉換、分配、儲存、放電、隔離、量測）。"
+       },
+       {
+        "q": "a statement that future investment may change depending on demand",
+        "a": "F",
+        "ref": "F",
+        "ev": "investment will be adjusted according to demand and growth goals",
+        "zh": "F 段：資本支出會依需求與成長目標調整。"
+       },
+       {
+        "q": "a claim that certain expensive equipment needs to be monitored and kept cool",
+        "a": "D",
+        "ref": "D",
+        "ev": "are very expensive assets that need extensive telemetry and cooling",
+        "zh": "D 段：資料中心機櫃是昂貴資產，需要大量遙測（monitoring）與散熱（cooling）。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "TI's third-quarter revenue was higher than analysts had predicted.",
+        "a": "True",
+        "ref": "B",
+        "ev": "exceeding the $5.92 billion that analysts had expected",
+        "zh": "B 段：營收 60.6 億超過分析師預期的 59.2 億 → True。"
+       },
+       {
+        "q": "TI's main products are the high-performance processors used in artificial intelligence.",
+        "a": "False",
+        "ref": "A",
+        "ev": "Unlike the high-performance processors that dominate headlines about artificial intelligence",
+        "zh": "A 段明確說 TI 的類比晶片『不同於』AI 高效能處理器 → 與題目相反 → False。"
+       },
+       {
+        "q": "TI's automotive revenue grew faster than its industrial revenue in the third quarter.",
+        "a": "Not Given",
+        "ref": "E",
+        "zh": "E 段提到 industrial 動能強、汽車客戶需求回溫，但沒有比較兩者的成長速度 → Not Given（陷阱：兩個市場都出現在同一段）。"
+       },
+       {
+        "q": "Management expects fourth-quarter revenue to fall more sharply than is normal for that time of year.",
+        "a": "False",
+        "ref": "E",
+        "ev": "management characterised this as better than the typical seasonal pattern",
+        "zh": "E 段：中位數雖略降，但管理層說『優於』一般季節性模式 → 與『跌得比平常多』相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Planning for the future",
+      "lines": [
+       {
+        "t": "TI expects its 2026 capital spending to be close to the upper end of its range, as it plans manufacturing [[1]] for the rest of the decade. It has stated, however, that the amount it invests will be changed in line with [[2]] and growth goals. Meanwhile, it continues to return cash to its owners and is pursuing the [[3]] of another chip company. Building plants before orders arrive could be seen as a [[4]]: if demand weakens, factories would operate below their potential."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "capacity"
+        ],
+        "ref": "F",
+        "ev": "says it is planning manufacturing capacity through the rest of the decade",
+        "zh": "F 段：plans manufacturing ___ = planning manufacturing capacity；答案 capacity（產能）。"
+       },
+       {
+        "a": [
+         "demand"
+        ],
+        "ref": "F",
+        "ev": "investment will be adjusted according to demand and growth goals",
+        "zh": "F 段：changed in line with = adjusted according to；答案 demand（需求）。"
+       },
+       {
+        "a": [
+         "acquisition"
+        ],
+        "ref": "F",
+        "ev": "is pursuing the planned acquisition of Silicon Labs",
+        "zh": "F 段：答案 acquisition（收購），題幹 another chip company = Silicon Labs。"
+       },
+       {
+        "a": [
+         "wager"
+        ],
+        "ref": "F",
+        "ev": "Building factories ahead of orders is arguably a wager on the durability of demand.",
+        "zh": "F 段：could be seen as = arguably；before orders arrive = ahead of orders；答案 wager（賭注）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "bellwether",
+     "pos": "n.",
+     "def": "something that shows the direction in which a trend is moving",
+     "zh": "風向指標、領頭羊",
+     "example": "Investors treat TI as a bellwether for the wider electronics industry.",
+     "match": [
+      "bellwether"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "do the heavy lifting",
+     "pos": "phr.",
+     "def": "to do the hardest or most important part of the work",
+     "zh": "扛起主要重擔、貢獻最大",
+     "example": "The analog business did most of the heavy lifting.",
+     "match": [
+      "did most of the heavy lifting"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "pencil in",
+     "pos": "phr. v.",
+     "def": "to plan or expect something provisionally",
+     "zh": "暫定、預估",
+     "example": "TI forecast a stronger end to the year than analysts had pencilled in.",
+     "match": [
+      "pencilled in"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "telemetry",
+     "pos": "n.",
+     "def": "the automatic measurement and remote transmission of data from equipment",
+     "zh": "遙測（遠端監測數據）",
+     "example": "Computing racks need a lot of telemetry and cooling.",
+     "match": [
+      "telemetry"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "imply",
+     "pos": "v.",
+     "def": "to suggest something without stating it directly",
+     "zh": "意味著、隱含",
+     "example": "The midpoint implies a slight dip from the third quarter.",
+     "match": [
+      "implies"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "amplify",
+     "pos": "v.",
+     "def": "to make a signal or sound stronger",
+     "zh": "放大（訊號）",
+     "example": "Analog chips detect real-world signals and amplify them.",
+     "match": [
+      "amplify"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "eclipse",
+     "pos": "v.",
+     "def": "to make something seem less important by comparison",
+     "zh": "使相形失色、掩蓋",
+     "example": "In the news they are routinely eclipsed by more glamorous processors.",
+     "match": [
+      "eclipsed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "ubiquity",
+     "pos": "n.",
+     "def": "the fact of being found everywhere",
+     "zh": "無所不在",
+     "example": "This ubiquity makes TI's results closely watched.",
+     "match": [
+      "ubiquity"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "conversely",
+     "pos": "adv.",
+     "def": "in an opposite way",
+     "zh": "相反地",
+     "example": "Conversely, when loadings fall, margins contract.",
+     "match": [
+      "conversely"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "underscore",
+     "pos": "v.",
+     "def": "to emphasise or show clearly that something is important",
+     "zh": "凸顯、強調",
+     "example": "Strong cash flow underscored the strength of the model.",
+     "match": [
+      "underscored"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "foundational",
+     "pos": "adj.",
+     "def": "forming the basis on which other things are built",
+     "zh": "基礎的",
+     "example": "Customers add parts from TI's portfolio of foundational chips.",
+     "match": [
+      "foundational"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "secular",
+     "pos": "adj.",
+     "def": "(economics) long-term, not linked to short business cycles",
+     "zh": "長期結構性的（非週期性）",
+     "example": "Secular growth continued alongside a cyclical recovery.",
+     "match": [
+      "secular"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "consensus",
+     "pos": "n.",
+     "def": "a generally agreed view; in finance, the average analyst forecast",
+     "zh": "共識；市場預期平均值",
+     "example": "Guidance was above the consensus estimate.",
+     "match": [
+      "consensus"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "wager",
+     "pos": "n.",
+     "def": "a bet; a risky decision based on expectations",
+     "zh": "賭注",
+     "example": "Building factories ahead of orders is arguably a wager.",
+     "match": [
+      "wager"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "durability",
+     "pos": "n.",
+     "def": "the ability to last for a long time",
+     "zh": "持久性",
+     "example": "It is a wager on the durability of demand.",
+     "match": [
+      "durability"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-27-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.05
+     ],
+     [
+      1.27,
+      13.7
+     ],
+     [
+      14.08,
+      15.1
+     ],
+     [
+      15.88,
+      17.17
+     ],
+     [
+      17.4,
+      24.02
+     ],
+     [
+      24.34,
+      30.1
+     ],
+     [
+      30.34,
+      34.3
+     ],
+     [
+      34.58,
+      39.96
+     ],
+     [
+      40.29,
+      43.47
+     ],
+     [
+      44.25,
+      46.46
+     ],
+     [
+      46.91,
+      52.77
+     ],
+     [
+      52.98,
+      62.49
+     ],
+     [
+      62.75,
+      67.25
+     ],
+     [
+      67.56,
+      75.86
+     ],
+     [
+      76.64,
+      79.48
+     ],
+     [
+      79.75,
+      89.17
+     ],
+     [
+      89.48,
+      91.82
+     ],
+     [
+      92.02,
+      97.97
+     ],
+     [
+      98.25,
+      105.7
+     ],
+     [
+      106.03,
+      117.06
+     ],
+     [
+      117.84,
+      120.95
+     ],
+     [
+      121.24,
+      131.6
+     ],
+     [
+      131.89,
+      139.68
+     ],
+     [
+      139.94,
+      144.05
+     ],
+     [
+      144.36,
+      151.7
+     ],
+     [
+      151.92,
+      155.85
+     ],
+     [
+      156.63,
+      163.4
+     ],
+     [
+      163.72,
+      170.6
+     ],
+     [
+      170.83,
+      175.37
+     ],
+     [
+      175.65,
+      181.02
+     ],
+     [
+      181.35,
+      187.63
+     ],
+     [
+      187.88,
+      197.02
+     ],
+     [
+      197.8,
+      198.87
+     ],
+     [
+      199.06,
+      205.24
+     ],
+     [
+      205.5,
+      210.98
+     ]
+    ],
+    "duration": 211.6,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-10-27-1-words/"
+   }
+  },
+  {
+   "title": "Fewer Than One in Four Melbourne Homes Have a Safe Cycling Route to the Local School, Study Finds",
+   "topic": "Urban planning · cycling",
+   "source": {
+    "name": "UNSW Sydney Newsroom: Melbourne's cycling network falls short for school journeys (Oct 2026)",
+    "url": "https://www.unsw.edu.au/newsroom/news/2026/10/melbournes-cycling-network-falls-short-for-school-journeys",
+    "links": [
+     {
+      "name": "Journal of Transport Geography — Zhang et al., Safe cycling to school: Rethinking inequalities in the distribution of cycling infrastructure (2026, doi:10.1016/j.jtrangeo.2026.104843)",
+      "url": "https://doi.org/10.1016/j.jtrangeo.2026.104843"
+     },
+     {
+      "name": "TRID (Transportation Research Board) record of the study",
+      "url": "https://trid.trb.org/View/2781356"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning, and we begin with transport and city planning.",
+     "Fewer than one in four homes in Greater Melbourne are linked to their local public school by a safe cycling route, according to new research from the University of New South Wales.",
+     "Here's the report."
+    ],
+    [
+     "Melbourne has a reputation as one of Australia's most bike-friendly cities.",
+     "Much of it is relatively flat, and the conditions generally suit cycling.",
+     "But the study, published in the Journal of Transport Geography, suggests that having bike lanes is not the same as being able to use them.",
+     "Especially if you're a child."
+    ],
+    [
+     "The team was led by Dr Zehua Zhang, of the university's City Futures Research Centre.",
+     "Their aim was to find out which homes could reach their designated public primary or secondary school by bike.",
+     "Using OpenStreetMap, the free online map, they classified separated bike paths, shared paths, quiet streets and painted bike lanes across the city.",
+     "They then checked their results against street-view imagery.",
+     "The key question was not whether a path existed somewhere near a home or a school.",
+     "It was whether that path formed part of a continuous network."
+    ],
+    [
+     "Dr Zhang says local governments spend a lot of money creating space for cyclists, but often in isolated road segments that don't join up.",
+     "A route, he says, may look close to a school on a map, yet still be unsuitable if it's disconnected, or if children have to ride alongside fast-moving traffic.",
+     "For the study, a safe route meant one that was physically separated from motor vehicles, for example by a kerb.",
+     "A painted line on the road, by contrast, was not enough."
+    ],
+    [
+     "Then came the question of fairness.",
+     "At first glance, safe access looked fairly evenly spread across richer and poorer areas.",
+     "But the researchers say that apparent equity was mainly a sign of a city-wide shortage.",
+     "In other words, most communities had similarly limited access.",
+     "The worst-served places included areas where many households don't own a car, and, together with areas that have fewer families with children, they contain around eighty percent of all homes.",
+     "Areas with more families with children generally had better access, but they make up a relatively small part of the city.",
+     "Dr Zhang describes residents without a car as double disadvantaged: they can't drive, and they don't have connected cycle paths either."
+    ],
+    [
+     "Meanwhile, many middle-ring suburbs fared poorly.",
+     "Dr Zhang suggests they may be overlooked by investment that concentrates either on the inner city or on new growth areas on the fringe.",
+     "Secondary schools were better connected than primary schools.",
+     "That's because teenagers were judged safe on painted lanes, while younger children need greater protection from cars."
+    ],
+    [
+     "Looking ahead, the researchers want planners to ask whether cycling routes actually link homes to everyday destinations.",
+     "They say the same method could be used for parks, shopping centres and health services.",
+     "Dr Zhang points out that cycling has well-recognised health and environmental benefits, and says better connections could help more people use the bike as a practical form of transport.",
+     "Still, joining up protected routes across a sprawling city won't happen quickly.",
+     "That's all from our transport desk this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Safe cycling routes to school in Melbourne",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Background"
+       },
+       {
+        "t": "City considered bike-friendly partly because the land is largely [[1]]"
+       },
+       {
+        "h": "Method"
+       },
+       {
+        "t": "Map data verified using street-view [[2]]"
+       },
+       {
+        "t": "Main test: does a path belong to a continuous [[3]]?"
+       },
+       {
+        "h": "Problems identified"
+       },
+       {
+        "t": "Councils often build separate road [[4]] that do not connect"
+       },
+       {
+        "t": "Some routes force children to cycle beside fast [[5]]"
+       },
+       {
+        "t": "Safe route = physical barrier from vehicles, e.g. a [[6]]"
+       },
+       {
+        "h": "Fairness"
+       },
+       {
+        "t": "Even distribution of access actually reflects a general [[7]]"
+       },
+       {
+        "t": "Areas with lowest access hold about [[8]] % of homes"
+       },
+       {
+        "t": "People without cars are described as double [[9]]"
+       },
+       {
+        "h": "Schools"
+       },
+       {
+        "t": "Primary-age children require more [[10]] than teenagers"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "flat"
+        ],
+        "ref": "Much of it is relatively flat",
+        "ev": "Much of it is relatively flat, and the conditions generally suit cycling.",
+        "zh": "the land is largely = much of it is relatively；答案 flat（平坦的，形容詞）。"
+       },
+       {
+        "a": [
+         "imagery"
+        ],
+        "ref": "They then checked their results against street-view imagery.",
+        "ev": "They then checked their results against street-view imagery.",
+        "zh": "verified = checked against；答案 imagery（影像）。OpenStreetMap 是資料來源，不是答案。"
+       },
+       {
+        "a": [
+         "network"
+        ],
+        "ref": "It was whether that path formed part of a continuous network.",
+        "ev": "It was whether that path formed part of a continuous network.",
+        "zh": "belong to = formed part of；答案 network（網絡）。干擾：前一句的 near a home or a school 被否定（not whether…）。"
+       },
+       {
+        "a": [
+         "segments"
+        ],
+        "ref": "often in isolated road segments that don't join up",
+        "ev": "often in isolated road segments that don't join up",
+        "zh": "do not connect = don't join up；separate = isolated；答案 segments（路段）。"
+       },
+       {
+        "a": [
+         "traffic",
+         "moving traffic"
+        ],
+        "ref": "ride alongside fast-moving traffic",
+        "ev": "if children have to ride alongside fast-moving traffic",
+        "zh": "cycle beside = ride alongside；答案 traffic（題幹已有 fast，填 traffic；moving traffic 也接受）。"
+       },
+       {
+        "a": [
+         "kerb",
+         "curb"
+        ],
+        "ref": "for example by a kerb",
+        "ev": "physically separated from motor vehicles, for example by a kerb",
+        "zh": "physical barrier = physically separated；答案 kerb（路緣石，美式拼法 curb）。干擾：painted line 被說 not enough。"
+       },
+       {
+        "a": [
+         "shortage"
+        ],
+        "ref": "a sign of a city-wide shortage",
+        "ev": "that apparent equity was mainly a sign of a city-wide shortage",
+        "zh": "even distribution = apparent equity；reflects = a sign of；general = city-wide；答案 shortage（短缺）。"
+       },
+       {
+        "a": [
+         "80",
+         "eighty"
+        ],
+        "ref": "they contain around eighty percent of all homes",
+        "ev": "they contain around eighty percent of all homes",
+        "zh": "答案 80。干擾：開頭的 one in four（不到四分之一的住家有安全路線）是另一個數字。"
+       },
+       {
+        "a": [
+         "disadvantaged"
+        ],
+        "ref": "as double disadvantaged",
+        "ev": "Dr Zhang describes residents without a car as double disadvantaged",
+        "zh": "答案 disadvantaged（處於劣勢的）。"
+       },
+       {
+        "a": [
+         "protection"
+        ],
+        "ref": "younger children need greater protection from cars",
+        "ev": "while younger children need greater protection from cars",
+        "zh": "primary-age = younger；require more = need greater；答案 protection（保護）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Bikeability: Why a Cycle Path Is Not Enough",
+    "intro": "A study of Greater Melbourne argues that the value of cycling infrastructure depends less on how much exists than on whether it connects.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Cycling as a mode of transport is advocated by academics, governments and community organisations alike, largely because of its well-recognised health and environmental benefits. Children occupy a special place in this agenda. The journey to school is one of the most regular trips a young person makes, and enabling children to ride it safely is often described as fundamental to developing lifelong cycling habits. Yet the number of children who actually cycle to school is shaped heavily by adults. According to previous research summarised by a team at UNSW Sydney, the lack of safe cycling infrastructure is the main parental concern that restricts children from cycling. If that is so, the quality of the routes available to families matters at least as much as their existence."
+     },
+     {
+      "label": "B",
+      "text": "Traditional assessments of how cyclable a neighbourhood is have tended to rely on relatively simple measures, such as the total length of cycle paths in an area or the distance between a home and a destination. Dr Zehua Zhang of UNSW's City Futures Research Centre argues that such measures can be misleading. In his view, bikeability cannot be measured simply by counting cycle paths, because a route may appear close to a school on a map but still be unsuitable if it is disconnected or requires children to ride alongside fast-moving traffic. His team's study, published in the Journal of Transport Geography, therefore introduces two dimensions that it describes as underexamined: the quality of infrastructure and its connectivity to key destinations. It conceptualises bikeability as continuous access to a destination via high-quality, or safe, cycling infrastructure."
+     },
+     {
+      "label": "C",
+      "text": "To apply this definition across Greater Melbourne, the researchers first developed a Cycling Infrastructure Classification System based on OpenStreetMap data, sorting facilities into types such as separated bike paths, shared paths, quiet ways and painted bike lanes. The classification was validated using street-view imagery. Spatial queries were then employed to identify dwellings with general, as opposed to safe, cycling access to their designated public primary or secondary school. Finally, the distribution of these dwellings and its association with socioeconomic factors were analysed using inequality statistics and a statistical tool known as a Robust Geographical Detector. For children, a route counted as safe only if it offered continuous protection, for example a physically separated path; a painted line on the road was not considered equivalent."
+     },
+     {
+      "label": "D",
+      "text": "The headline result is sobering for a city that is often regarded as one of Australia's most bike-friendly, thanks in part to its relatively flat landscape. Fewer than one in four homes in Greater Melbourne were connected to their local public school by a safe cycling route. More surprising was the pattern across social groups. Dwellings with safe access were distributed with relative equality across socioeconomic groups, a finding that might ordinarily be welcomed. The researchers, however, interpret it differently. As Zhang puts it, cycling access to public schools is statistically even but low, and the apparent equity is primarily driven by an overall scarcity of safe infrastructure. Equality, in this case, is arguably a symptom of a problem rather than evidence of good provision."
+     },
+     {
+      "label": "E",
+      "text": "A closer look at the map reveals more uneven outcomes. Areas with the highest proportions of households without vehicles were among those with the lowest levels of safe cycling access, and areas with fewer families with children also fared poorly; together, these areas contain around 80 per cent of all dwellings. Zhang describes residents without a car as double disadvantaged, since they lack both motorised transport and connected cycle paths. Areas with more families with children generally had better access, but they represented a relatively small proportion of the city. Many middle-suburban areas also had poor access, which suggests that they may be overlooked by investment focused either on central networks or on outer growth areas. Secondary schools, meanwhile, were better served than primary schools, because older students were judged able to use painted lanes."
+     },
+     {
+      "label": "F",
+      "text": "The authors conclude that future cycling networks should prioritise both quality and equitable coverage, and that investment should be judged by whether it provides continuous, safe connections to everyday destinations rather than by whether a path exists nearby. Zhang notes that the framework could also be used to assess access to parks, shopping centres and health services. Local governments, he observes, spend a lot of money building space for cyclists, but these projects often consist of road segments that do not form a connecting network. Whether the Melbourne pattern applies in other cities cannot be determined from a single case study. Nevertheless, the work offers planners a clear principle: a cycle lane that ends abruptly may look impressive on paper while doing little to change how children travel."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a description of how the researchers checked the accuracy of their categories",
+        "a": "C",
+        "ref": "C",
+        "ev": "The classification was validated using street-view imagery.",
+        "zh": "C 段：分類系統用街景影像驗證（validated）。"
+       },
+       {
+        "q": "an explanation of why older pupils had better access than younger ones",
+        "a": "E",
+        "ref": "E",
+        "ev": "because older students were judged able to use painted lanes",
+        "zh": "E 段：中學生被認為可以騎彩繪自行車道，所以中學的可達性較好。"
+       },
+       {
+        "q": "a reference to the main worry that stops parents letting children cycle",
+        "a": "A",
+        "ref": "A",
+        "ev": "the lack of safe cycling infrastructure is the main parental concern that restricts children from cycling",
+        "zh": "A 段：家長最主要的顧慮是缺乏安全的自行車設施。"
+       },
+       {
+        "q": "a suggestion that the approach could be used for places other than schools",
+        "a": "F",
+        "ref": "F",
+        "ev": "the framework could also be used to assess access to parks, shopping centres and health services",
+        "zh": "F 段：方法也可用來評估到公園、購物中心、醫療服務的可達性。"
+       },
+       {
+        "q": "a criticism of basic methods for measuring how suitable an area is for cycling",
+        "a": "B",
+        "ref": "B",
+        "ev": "argues that such measures can be misleading",
+        "zh": "B 段：只算自行車道長度或距離的傳統方法可能誤導。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Melbourne's hilly terrain makes cycling physically demanding.",
+        "a": "False",
+        "ref": "D",
+        "ev": "thanks in part to its relatively flat landscape",
+        "zh": "D 段：墨爾本地形相對平坦 → 與『多丘陵』相反 → False。"
+       },
+       {
+        "q": "Safe cycling access to schools varied little between socioeconomic groups.",
+        "a": "True",
+        "ref": "D",
+        "ev": "Dwellings with safe access were distributed with relative equality across socioeconomic groups",
+        "zh": "D 段：各社經族群分布相對平均 → True（但作者認為那是因為整體都很少）。"
+       },
+       {
+        "q": "Children who cycle to school achieve better academic results than those who are driven.",
+        "a": "Not Given",
+        "ref": "A",
+        "zh": "A 段只提到騎車的健康與環境好處、以及養成終身習慣，完全沒提學業成績 → Not Given（陷阱：文章主題是上學通勤）。"
+       },
+       {
+        "q": "Areas with many families with children make up most of Greater Melbourne.",
+        "a": "False",
+        "ref": "E",
+        "ev": "but they represented a relatively small proportion of the city",
+        "zh": "E 段：有較多兒童家庭的區域只占城市一小部分 → 與『大部分』相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "A new way to measure bikeability",
+      "lines": [
+       {
+        "t": "The researchers argue that earlier assessments paid too little attention to two factors: the [[1]] of infrastructure and how well it connects to important destinations. They therefore define bikeability as [[2]] access to a destination using safe routes. After sorting cycling facilities into types, they used spatial [[3]] to find homes with access to their designated school, and then examined the results with [[4]] statistics."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "quality"
+        ],
+        "ref": "B",
+        "ev": "the quality of infrastructure and its connectivity to key destinations",
+        "zh": "B 段：two dimensions = quality + connectivity；答案 quality（品質）。"
+       },
+       {
+        "a": [
+         "continuous"
+        ],
+        "ref": "B",
+        "ev": "It conceptualises bikeability as continuous access to a destination",
+        "zh": "B 段：define = conceptualises；答案 continuous（連續的）。"
+       },
+       {
+        "a": [
+         "queries"
+        ],
+        "ref": "C",
+        "ev": "Spatial queries were then employed to identify dwellings",
+        "zh": "C 段：used = employed；find homes = identify dwellings；答案 queries（查詢）。"
+       },
+       {
+        "a": [
+         "inequality"
+        ],
+        "ref": "C",
+        "ev": "were analysed using inequality statistics",
+        "zh": "C 段：examined = analysed；答案 inequality（不平等）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "kerb",
+     "pos": "n.",
+     "def": "the raised edge between a road and a pavement (US: curb)",
+     "zh": "路緣石",
+     "example": "A safe route is physically separated from traffic, for example by a kerb.",
+     "match": [
+      "kerb"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "join up",
+     "pos": "phr. v.",
+     "def": "to connect separate parts into a whole",
+     "zh": "連接起來",
+     "example": "Councils often build isolated road segments that don't join up.",
+     "match": [
+      "join up"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "fare",
+     "pos": "v.",
+     "def": "to perform or progress in a particular way",
+     "zh": "表現、境況（好/差）",
+     "example": "Many middle-ring suburbs fared poorly.",
+     "match": [
+      "fared"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "fringe",
+     "pos": "n.",
+     "def": "the outer edge of an area",
+     "zh": "邊緣、外圍",
+     "example": "Investment often concentrates on new growth areas on the fringe.",
+     "match": [
+      "fringe"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "sprawling",
+     "pos": "adj.",
+     "def": "spreading out over a large area in an untidy way",
+     "zh": "向外蔓延的、幅員廣大的",
+     "example": "Joining up routes across a sprawling city won't happen quickly.",
+     "match": [
+      "sprawling"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "advocate",
+     "pos": "v.",
+     "def": "to publicly support or recommend",
+     "zh": "提倡、擁護",
+     "example": "Cycling is advocated by academics and governments alike.",
+     "match": [
+      "advocated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "agenda",
+     "pos": "n.",
+     "def": "a set of aims or issues that people want to deal with",
+     "zh": "議程、目標規劃",
+     "example": "Children occupy a special place in this agenda.",
+     "match": [
+      "agenda"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "misleading",
+     "pos": "adj.",
+     "def": "giving a wrong idea or impression",
+     "zh": "誤導的",
+     "example": "Such measures can be misleading.",
+     "match": [
+      "misleading"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "conceptualise",
+     "pos": "v.",
+     "def": "to form an idea or definition of something",
+     "zh": "將……概念化、定義為",
+     "example": "It conceptualises bikeability as continuous access to a destination.",
+     "match": [
+      "conceptualises"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "validate",
+     "pos": "v.",
+     "def": "to check or prove that something is accurate",
+     "zh": "驗證",
+     "example": "The classification was validated using street-view imagery.",
+     "match": [
+      "validated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "designated",
+     "pos": "adj.",
+     "def": "officially chosen or assigned for a purpose",
+     "zh": "指定的",
+     "example": "They identified homes with access to their designated school.",
+     "match": [
+      "designated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sobering",
+     "pos": "adj.",
+     "def": "making you think seriously about something",
+     "zh": "發人深省的、令人清醒的",
+     "example": "The headline result is sobering.",
+     "match": [
+      "sobering"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "scarcity",
+     "pos": "n.",
+     "def": "a situation in which something is not easy to find or get",
+     "zh": "稀缺、匱乏",
+     "example": "The apparent equity is driven by an overall scarcity of safe infrastructure.",
+     "match": [
+      "scarcity"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "symptom",
+     "pos": "n.",
+     "def": "a sign that a problem exists",
+     "zh": "徵兆、症狀",
+     "example": "Equality is arguably a symptom of a problem.",
+     "match": [
+      "symptom"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "prioritise",
+     "pos": "v.",
+     "def": "to treat something as more important than other things",
+     "zh": "優先考慮",
+     "example": "Future networks should prioritise quality and equitable coverage.",
+     "match": [
+      "prioritise"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-27-2.mp3",
+    "times": [
+     [
+      0.36,
+      3.6
+     ],
+     [
+      3.86,
+      12.42
+     ],
+     [
+      12.8,
+      13.85
+     ],
+     [
+      14.63,
+      18.53
+     ],
+     [
+      18.8,
+      23.03
+     ],
+     [
+      23.47,
+      30.45
+     ],
+     [
+      30.69,
+      32.3
+     ],
+     [
+      33.08,
+      38.09
+     ],
+     [
+      38.42,
+      43.81
+     ],
+     [
+      44.05,
+      52.83
+     ],
+     [
+      53.13,
+      55.98
+     ],
+     [
+      56.19,
+      60.28
+     ],
+     [
+      60.53,
+      63.7
+     ],
+     [
+      64.48,
+      71.64
+     ],
+     [
+      71.87,
+      80.62
+     ],
+     [
+      80.97,
+      86.82
+     ],
+     [
+      87.13,
+      90.59
+     ],
+     [
+      91.37,
+      93.23
+     ],
+     [
+      93.48,
+      98.64
+     ],
+     [
+      99.09,
+      103.52
+     ],
+     [
+      103.88,
+      107.51
+     ],
+     [
+      107.81,
+      117.85
+     ],
+     [
+      118.14,
+      124.36
+     ],
+     [
+      124.61,
+      131.86
+     ],
+     [
+      132.64,
+      135.64
+     ],
+     [
+      135.83,
+      142.5
+     ],
+     [
+      142.77,
+      145.8
+     ],
+     [
+      146.12,
+      152.34
+     ],
+     [
+      153.12,
+      159.42
+     ],
+     [
+      159.7,
+      164.18
+     ],
+     [
+      164.51,
+      173.64
+     ],
+     [
+      173.97,
+      178.39
+     ],
+     [
+      178.68,
+      181.06
+     ]
+    ],
+    "duration": 181.7,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-27-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
