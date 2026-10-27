@@ -1,0 +1,2150 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-28",
+ "date": "2026-10-28",
+ "title": "Marathons Leave Deeper Muscle Fatigue Than Mountain Trail Runs of Equal Effort, French Study Finds · People With a 'Good Ear' Pick Up New Speech Sounds More Easily, Brain-Scan Study Finds",
+ "stories": [
+  {
+   "title": "Marathons Leave Deeper Muscle Fatigue Than Mountain Trail Runs of Equal Effort, French Study Finds",
+   "topic": "Sport · race recovery",
+   "source": {
+    "name": "Medicine & Science in Sports & Exercise: Neuromuscular Fatigue and Recovery: Are Marathon and Trail Running Different? (23 Oct 2026)",
+    "url": "https://doi.org/10.1249/mss.0000000000004200",
+    "links": [
+     {
+      "name": "KnowPace: Marathon and Trail – a study of 41 runners measures which race leaves more muscle fatigue (25 Oct 2026)",
+      "url": "https://knowpace.com/en/marathon-and-trail-fatigue/"
+     },
+     {
+      "name": "ClinicalTrials.gov NCT06282341: Fatigue and Recovery – a Comparison Between Trail and Marathon (CHU Saint-Etienne)",
+      "url": "https://clinicaltrials.gov/study/NCT06282341"
+     },
+     {
+      "name": "BMC Sports Science, Medicine and Rehabilitation: Recovery strategies in Japanese recreational marathon runners (16 Oct 2026)",
+      "url": "https://link.springer.com/article/10.1186/s13102-026-02184-9"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead story in sport and health: a road marathon appears to leave runners' thigh muscles more fatigued, and slower to recover, than a mountain trail run of similar effort, according to new research from France.",
+     "Here's the report."
+    ],
+    [
+     "The study was carried out by sports scientists at Jean Monnet University in Saint-Etienne, working with colleagues from Loughborough University in England.",
+     "It was published last week in Medicine and Science in Sports and Exercise, the journal of the American College of Sports Medicine.",
+     "The question sounds simple.",
+     "Trail runners often race several times a year over distances longer than forty kilometres, while road runners tend to manage just one or two marathons.",
+     "So which discipline actually takes more out of the body?"
+    ],
+    [
+     "First, the design.",
+     "Forty-one trained runners took part, and each one did the event of their own speciality.",
+     "Road specialists ran a simulated marathon on a treadmill.",
+     "Trail specialists covered twenty-nine kilometres, either indoors on the same kind of machine or out in the mountains, with fourteen hundred metres of climbing and the same amount of descent.",
+     "That distance was chosen so that the effort would roughly match the forty-two kilometres of a marathon.",
+     "The runners were tested before the event, straight afterwards, and again one, two and seven days later.",
+     "Researchers measured muscle force and jump height, took blood samples to look for signs of muscle damage, and asked about soreness for a month."
+    ],
+    [
+     "Now, the results.",
+     "After the marathon, voluntary activation in the quadriceps, the large muscles at the front of the thigh, fell by twenty-three and a half percent.",
+     "Voluntary activation is essentially how much of a muscle the nervous system manages to recruit.",
+     "After the two trail runs, the drop was much smaller: about nine percent on the treadmill and thirteen percent outdoors.",
+     "Jump height told a similar story.",
+     "It fell by almost twelve percent after the marathon, but actually rose after both trail runs.",
+     "And the day after the marathon, blood markers of muscle damage were almost five times higher than after the outdoor trail run."
+    ],
+    [
+     "Meanwhile, recovery took longer on the road.",
+     "Activation and jump height returned to normal later after the marathon, and the trail runners stopped feeling sore sooner.",
+     "Still, not everything differed.",
+     "Maximal thigh strength, every measure taken from the calf muscles, and the so-called force-velocity profile showed no difference between the groups."
+    ],
+    [
+     "That may seem counter-intuitive, because running downhill is known to be very demanding on the quadriceps.",
+     "The published summary does not explain the result.",
+     "However, one independent analysis of the paper points out that the extra loss was mainly in activation, not in the muscle's response to electrical stimulation.",
+     "That suggests the additional fatigue after the marathon was largely nervous in origin."
+    ],
+    [
+     "There are limits, though.",
+     "Each runner did only one event, so differences between road and trail specialists, rather than the race itself, could explain part of the gap.",
+     "And the marathon was run on a treadmill, without the wind, the bends or the crowds of a real race.",
+     "Even so, for anyone who mixes both in one season, that analysis suggests leaving more room after a road race, and not returning to hard sessions just because the soreness has gone.",
+     "That's the sport and health report for this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Fatigue after road marathons and trail runs",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Study design"
+       },
+       {
+        "t": "Each participant did the event matching his or her [[1]]"
+       },
+       {
+        "t": "Road runners: marathon simulated on a [[2]]"
+       },
+       {
+        "t": "Trail runners: 29 km including [[3]] metres of ascent"
+       },
+       {
+        "t": "Blood samples checked for evidence of muscle [[4]]"
+       },
+       {
+        "h": "Key findings"
+       },
+       {
+        "t": "Quadriceps: muscles at the [[5]] of the upper leg"
+       },
+       {
+        "t": "Marathon: activation dropped by [[6]] %"
+       },
+       {
+        "t": "Voluntary activation = how much muscle the [[7]] can use"
+       },
+       {
+        "t": "[[8]] height increased after both trail runs"
+       },
+       {
+        "t": "No group differences in maximal thigh strength or [[9]] muscles"
+       },
+       {
+        "h": "Limitations"
+       },
+       {
+        "t": "Treadmill marathon lacked wind, bends and [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "speciality",
+         "specialty"
+        ],
+        "ref": "each one did the event of their own speciality",
+        "ev": "each one did the event of their own speciality",
+        "zh": "matching = of their own；答案 speciality（專長，英式拼法；美式 specialty 也可）。"
+       },
+       {
+        "a": [
+         "treadmill",
+         "a treadmill"
+        ],
+        "ref": "Road specialists ran a simulated marathon on a treadmill.",
+        "ev": "Road specialists ran a simulated marathon on a treadmill.",
+        "zh": "simulated = 模擬的；答案 treadmill（跑步機）。後面越野組用 the same kind of machine 改述，沒有再說 treadmill。"
+       },
+       {
+        "a": [
+         "1400",
+         "1,400",
+         "fourteen hundred"
+        ],
+        "ref": "with fourteen hundred metres of climbing",
+        "ev": "with fourteen hundred metres of climbing and the same amount of descent",
+        "zh": "ascent = climbing；答案 1400（fourteen hundred）。干擾：twenty-nine 是距離（題目已給）、forty-two 是馬拉松距離。"
+       },
+       {
+        "a": [
+         "damage"
+        ],
+        "ref": "took blood samples to look for signs of muscle damage",
+        "ev": "took blood samples to look for signs of muscle damage",
+        "zh": "checked for evidence = look for signs；答案 damage（損傷）。"
+       },
+       {
+        "a": [
+         "front"
+        ],
+        "ref": "the large muscles at the front of the thigh",
+        "ev": "the quadriceps, the large muscles at the front of the thigh",
+        "zh": "upper leg = thigh；答案 front（前側）。股四頭肌在大腿前側。"
+       },
+       {
+        "a": [
+         "23.5"
+        ],
+        "ref": "fell by twenty-three and a half percent",
+        "ev": "fell by twenty-three and a half percent",
+        "zh": "dropped = fell；答案 23.5。干擾：nine percent（跑步機越野）、thirteen percent（戶外越野）是另外兩組。"
+       },
+       {
+        "a": [
+         "nervous system"
+        ],
+        "ref": "how much of a muscle the nervous system manages to recruit",
+        "ev": "how much of a muscle the nervous system manages to recruit",
+        "zh": "can use = manages to recruit；答案 nervous system（神經系統，兩個字）。"
+       },
+       {
+        "a": [
+         "jump"
+        ],
+        "ref": "Jump height told a similar story.",
+        "ev": "Jump height told a similar story.",
+        "zh": "increased = rose；答案 jump（跳躍高度）。干擾：馬拉松後是下降 almost twelve percent。"
+       },
+       {
+        "a": [
+         "calf"
+        ],
+        "ref": "every measure taken from the calf muscles",
+        "ev": "every measure taken from the calf muscles",
+        "zh": "答案 calf（小腿；calf muscles 小腿肌）。大腿最大肌力與小腿都『沒有差異』。"
+       },
+       {
+        "a": [
+         "crowds",
+         "the crowds"
+        ],
+        "ref": "the bends or the crowds of a real race",
+        "ev": "without the wind, the bends or the crowds of a real race",
+        "zh": "lacked = without；答案 crowds（人群、觀眾）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Road or Mountain? Rethinking How Runners Recover",
+    "intro": "New research on fatigue after long races, together with a large survey of amateur marathoners, suggests that recovery is more complicated than many runners assume.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "For many recreational athletes, the weeks after a long race are guided more by habit than by evidence. Some take a fixed number of rest days; others return to training as soon as their legs stop aching. Yet the physiological effects of endurance running are far from uniform. Road marathons and trail races, the two most popular forms of long-distance running, differ markedly in terrain, elevation and the type of muscle work they demand. Trail running involves a greater eccentric contribution, in which muscles lengthen under load as runners brake on steep descents. According to the researchers who registered a clinical trial comparing the two disciplines, trail runners also take part in several races longer than 40 km each year, whereas road runners typically enter one or two marathons. Until recently, however, no study had compared fatigue and recovery in the two disciplines directly."
+     },
+     {
+      "label": "B",
+      "text": "That gap has now been addressed by a team from Jean Monnet University in Saint-Étienne, France, and Loughborough University in the UK, whose findings appeared in October 2026 in Medicine & Science in Sports & Exercise. Forty-one trained runners each completed the event that matched their speciality: road specialists ran a simulated marathon on a treadmill, while trail specialists ran 29 km with roughly 1,400 m of ascent and descent, either on a treadmill or outdoors in natural conditions. The trail distance was intended to represent an effort equivalent to the marathon. Fatigue was assessed before the run, immediately afterwards, and one, two and seven days later, using measures of voluntary muscle activation, electrically evoked muscle responses, jump performance and blood markers of muscle damage. Muscle pain questionnaires were administered over the following month."
+     },
+     {
+      "label": "C",
+      "text": "The marathon proved the more punishing event, at least for the knee extensors. Voluntary activation of these muscles fell by 23.5% after the marathon, compared with 9.2% and 13.0% after the treadmill and outdoor trail runs respectively. Squat-jump height declined by 11.7% after the marathon but rose after both trail runs, and blood markers of muscle damage one day later were substantially higher in the marathon group. Recovery was also slower: activation and jump height returned to baseline later after the marathon, and soreness persisted for longer. Yet the picture was not one-sided. Maximal voluntary strength of the knee extensors, every measure taken from the plantar flexors of the calf, and the force-velocity profile showed no differences between the groups. The authors conclude that marathon running appears to induce greater acute neuromuscular alterations than trail running."
+     },
+     {
+      "label": "D",
+      "text": "These results may seem counter-intuitive, since downhill running is widely regarded as especially demanding on the quadriceps. Earlier work co-authored by one of the team's senior researchers, Guillaume Millet, hints at a possible explanation. In a 2013 study of a 330 km mountain race, maximal quadriceps force fell by 24% and calf force by 26%, which the authors described as less fatigue than in shorter mountain ultramarathons and attributed partly to cautious pacing. More distance and more climbing, in other words, do not simply add up to more fatigue. Nevertheless, the design of the new study demands caution. Because it was not a crossover trial, each group consisted of different specialists, so part of the difference may reflect how road and trail runners are adapted rather than the type of race itself. The marathon was also run on a treadmill rather than on a real course."
+     },
+     {
+      "label": "E",
+      "text": "If laboratory studies reveal what happens inside the muscles, surveys reveal what runners actually do about it. A cross-sectional study published in October 2026 in BMC Sports Science, Medicine and Rehabilitation invited 206,000 Japanese recreational marathon runners to answer questions about recovery; 6,082 responded, and data from 5,204 were analysed. Bathing was the most common strategy, reported by 86.5% of participants, followed by stretching, hot spring use and massage. More than 60% of respondents bathed daily. Methods requiring specialised services, such as acupuncture and moxibustion or electrical nerve stimulation, were used far less often, although interest in trying most methods in future exceeded current use."
+     },
+     {
+      "label": "F",
+      "text": "The survey did identify modest associations between certain practices, notably active recovery and contrast baths, and both faster personal bests and higher training volume. The authors, however, stress that such cross-sectional patterns should not be interpreted as evidence that any individual strategy improves performance, and that the low response rate means the results describe respondents rather than all runners. Taken together, the two studies point to a cautious conclusion. The disappearance of soreness may not mark the end of recovery, particularly after a road marathon, and popular remedies, however widespread, remain largely untested. For runners planning their next race, the most reliable guide may still be patience."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reference to how many people were originally asked to take part in a study",
+        "a": "E",
+        "ref": "E",
+        "ev": "invited 206,000 Japanese recreational marathon runners",
+        "zh": "E 段：邀請了 206,000 名跑者（originally asked），實際回覆 6,082、分析 5,204。"
+       },
+       {
+        "q": "a mention of a type of muscle action that is more typical of one discipline",
+        "a": "A",
+        "ref": "A",
+        "ev": "Trail running involves a greater eccentric contribution",
+        "zh": "A 段：越野跑有較多離心收縮（eccentric，肌肉在負重下拉長）。"
+       },
+       {
+        "q": "details of the points at which the participants' fatigue was measured",
+        "a": "B",
+        "ref": "B",
+        "ev": "Fatigue was assessed before the run, immediately afterwards, and one, two and seven days later",
+        "zh": "B 段：賽前、賽後立刻、第 1/2/7 天。"
+       },
+       {
+        "q": "a warning that findings may not apply to everyone in a population",
+        "a": "F",
+        "ref": "F",
+        "ev": "the results describe respondents rather than all runners",
+        "zh": "F 段：回覆率低，結果只描述『回覆者』而非所有跑者。"
+       },
+       {
+        "q": "an example of an extreme event that caused less fatigue than might be expected",
+        "a": "D",
+        "ref": "D",
+        "ev": "which the authors described as less fatigue than in shorter mountain ultramarathons",
+        "zh": "D 段：330 km 山地賽的疲勞反而比較短的超馬少。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in the Reading Passage?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Several earlier experiments had already compared fatigue in road marathons and trail races.",
+        "a": "False",
+        "ref": "A",
+        "zh": "A 段：之前『沒有研究』直接比較 → 與『已有多項實驗』相反 → False。",
+        "ev": "no study had compared fatigue and recovery in the two disciplines directly"
+       },
+       {
+        "q": "The trail distance was chosen to demand a similar level of effort to a marathon.",
+        "a": "True",
+        "ref": "B",
+        "zh": "B 段：29 km 是為了代表與馬拉松相當的負荷 → True。",
+        "ev": "The trail distance was intended to represent an effort equivalent to the marathon."
+       },
+       {
+        "q": "Female runners in the Saint-Étienne study recovered more quickly than male runners.",
+        "a": "Not Given",
+        "ref": "B",
+        "zh": "文章完全沒有提到男女差異（B、C 段只比較馬拉松組與越野組）→ Not Given。陷阱：主題是『誰恢復比較快』，但沒有性別比較。"
+       },
+       {
+        "q": "The calf muscles were more severely affected by the marathon than by the trail runs.",
+        "a": "False",
+        "ref": "C",
+        "zh": "C 段：小腿（plantar flexors）所有指標兩組『沒有差異』→ 與『馬拉松影響較大』相反 → False。",
+        "ev": "every measure taken from the plantar flexors of the calf, and the force-velocity profile showed no differences between the groups"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "How Japanese amateur marathoners recover",
+      "lines": [
+       {
+        "t": "In the Japanese survey, [[1]] was the most frequently reported way of recovering. Treatments that depend on [[2]] services were much less common. A few practices showed [[3]] links with better race times, although the authors warn against reading these as cause and effect. The passage concludes that, for runners, the best guide may be [[4]]."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "bathing"
+        ],
+        "ref": "E",
+        "ev": "Bathing was the most common strategy",
+        "zh": "E 段：most frequently reported = most common；答案 bathing（泡澡）。"
+       },
+       {
+        "a": [
+         "specialised",
+         "specialized"
+        ],
+        "ref": "E",
+        "ev": "Methods requiring specialised services",
+        "zh": "E 段：depend on = requiring；答案 specialised（專門的；美式 specialized）。"
+       },
+       {
+        "a": [
+         "modest"
+        ],
+        "ref": "F",
+        "ev": "The survey did identify modest associations",
+        "zh": "F 段：links = associations；答案 modest（些微的、不大的）。"
+       },
+       {
+        "a": [
+         "patience"
+        ],
+        "ref": "F",
+        "ev": "the most reliable guide may still be patience",
+        "zh": "F 段：best guide = most reliable guide；答案 patience（耐心）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "discipline",
+     "pos": "n.",
+     "def": "a particular sport or type of event within a sport",
+     "zh": "（運動的）項目、類別",
+     "example": "So which discipline actually takes more out of the body?",
+     "match": [
+      "discipline"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "take it out of someone",
+     "pos": "phr.",
+     "def": "to make someone very tired",
+     "zh": "使人精疲力竭",
+     "example": "Which discipline actually takes more out of the body?",
+     "match": [
+      "takes more out of"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "simulated",
+     "pos": "adj.",
+     "def": "made to look or feel like something real",
+     "zh": "模擬的",
+     "example": "Road specialists ran a simulated marathon on a treadmill.",
+     "match": [
+      "simulated"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "descent",
+     "pos": "n.",
+     "def": "a movement or path downwards",
+     "zh": "下坡、下降",
+     "example": "1,400 metres of climbing and the same amount of descent.",
+     "match": [
+      "descent"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "recruit",
+     "pos": "v.",
+     "def": "(of the nervous system) to activate muscle fibres",
+     "zh": "（神經系統）徵召、動員（肌纖維）",
+     "example": "How much of a muscle the nervous system manages to recruit.",
+     "match": [
+      "recruit"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "counter-intuitive",
+     "pos": "adj.",
+     "def": "opposite to what you would expect",
+     "zh": "違反直覺的",
+     "example": "That may seem counter-intuitive.",
+     "match": [
+      "counter-intuitive"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "in origin",
+     "pos": "phr.",
+     "def": "in terms of where something comes from",
+     "zh": "就來源而言",
+     "example": "The additional fatigue was largely nervous in origin.",
+     "match": [
+      "in origin"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "uniform",
+     "pos": "adj.",
+     "def": "the same in all cases",
+     "zh": "一致的、統一的",
+     "example": "The effects of endurance running are far from uniform.",
+     "match": [
+      "uniform"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "eccentric",
+     "pos": "adj.",
+     "def": "(of muscle action) lengthening while under load",
+     "zh": "離心的（肌肉收縮）",
+     "example": "Trail running involves a greater eccentric contribution.",
+     "match": [
+      "eccentric"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "punishing",
+     "pos": "adj.",
+     "def": "extremely tiring or demanding",
+     "zh": "累人的、嚴酷的",
+     "example": "The marathon proved the more punishing event.",
+     "match": [
+      "punishing"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "baseline",
+     "pos": "n.",
+     "def": "a starting level used for comparison",
+     "zh": "基準值",
+     "example": "Jump height returned to baseline later after the marathon.",
+     "match": [
+      "baseline"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "persist",
+     "pos": "v.",
+     "def": "to continue to exist",
+     "zh": "持續",
+     "example": "Soreness persisted for longer.",
+     "match": [
+      "persisted"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "induce",
+     "pos": "v.",
+     "def": "to cause or bring about",
+     "zh": "引起、誘發",
+     "example": "Marathon running appears to induce greater acute alterations.",
+     "match": [
+      "induce"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "attribute … to",
+     "pos": "v.",
+     "def": "to say that something is caused by",
+     "zh": "把……歸因於",
+     "example": "They attributed it partly to cautious pacing.",
+     "match": [
+      "attributed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "remedy",
+     "pos": "n.",
+     "def": "a treatment or way of dealing with a problem",
+     "zh": "療法、補救方法",
+     "example": "Popular remedies remain largely untested.",
+     "match": [
+      "remedies"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-28-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      12.06
+     ],
+     [
+      12.44,
+      13.49
+     ],
+     [
+      14.27,
+      21.85
+     ],
+     [
+      22.12,
+      28.7
+     ],
+     [
+      29.02,
+      30.46
+     ],
+     [
+      30.66,
+      38.55
+     ],
+     [
+      38.83,
+      41.82
+     ],
+     [
+      42.6,
+      44.13
+     ],
+     [
+      44.33,
+      49.06
+     ],
+     [
+      49.36,
+      52.63
+     ],
+     [
+      52.84,
+      62.14
+     ],
+     [
+      62.48,
+      67.29
+     ],
+     [
+      67.59,
+      73.68
+     ],
+     [
+      73.9,
+      81.06
+     ],
+     [
+      81.84,
+      83.3
+     ],
+     [
+      83.58,
+      91.16
+     ],
+     [
+      91.4,
+      96.14
+     ],
+     [
+      96.42,
+      102.87
+     ],
+     [
+      103.28,
+      105.21
+     ],
+     [
+      105.41,
+      110.66
+     ],
+     [
+      110.96,
+      117.11
+     ],
+     [
+      117.89,
+      120.58
+     ],
+     [
+      120.84,
+      127.04
+     ],
+     [
+      127.34,
+      129.4
+     ],
+     [
+      129.59,
+      136.89
+     ],
+     [
+      137.67,
+      143.15
+     ],
+     [
+      143.47,
+      145.87
+     ],
+     [
+      146.1,
+      154.6
+     ],
+     [
+      154.89,
+      159.53
+     ],
+     [
+      160.31,
+      161.74
+     ],
+     [
+      161.94,
+      169.5
+     ],
+     [
+      169.8,
+      175.33
+     ],
+     [
+      175.54,
+      185.26
+     ],
+     [
+      185.59,
+      187.91
+     ]
+    ],
+    "duration": 188.6,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-28-1-words/"
+   }
+  },
+  {
+   "title": "People With a 'Good Ear' Pick Up New Speech Sounds More Easily, Brain-Scan Study Finds",
+   "topic": "Language · learning sounds",
+   "source": {
+    "name": "UCL News: People with a 'good ear' for sounds make better language learners (14 Oct 2026)",
+    "url": "https://www.ucl.ac.uk/news/2026/oct/people-good-ear-sounds-make-better-language-learners",
+    "links": [
+     {
+      "name": "The Guardian: Stop making sense – focus on sounds to help learn a language, study suggests (14 Oct 2026)",
+      "url": "https://www.theguardian.com/science/2026/oct/14/focus-on-sounds-to-help-learn-a-language-study-suggests"
+     },
+     {
+      "name": "Tohoku University: Joint research by Prof. Kazuya Saito and Prof. Jeong published (20 Oct 2026)",
+      "url": "https://www.intcul.tohoku.ac.jp/en/news/article/478"
+     },
+     {
+      "name": "Journal of Experimental Psychology: General – Saito-van Poeteren et al. (2026), doi:10.1037/xge0001991",
+      "url": "https://doi.org/10.1037/xge0001991"
+     },
+     {
+      "name": "Technology in Language Teaching & Learning: AI-mediated feedback in EFL segmental pronunciation learning (19 Oct 2026)",
+      "url": "https://www.castledown.com/journals/tltl/article/view/tltl.2026.104879"
+     }
+    ]
+   },
+   "script": [
+    [
+     "From the science desk this morning: people with a sharp ear for sound may pick up the pronunciation of a new language more easily, and a brain-scanning study suggests why.",
+     "Here's the report."
+    ],
+    [
+     "The research comes from University College London and Tohoku University in Japan, and was published this month in the Journal of Experimental Psychology, General.",
+     "Normally, people try to make sense of a new language through the sounds of their own, and the more those sounds differ, the harder the new language tends to be.",
+     "The team worked with sixty-seven Japanese learners of English.",
+     "First, they measured each person's auditory precision.",
+     "That is their ability to detect tiny changes in pitch, length and tone in sounds that weren't speech at all."
+    ],
+    [
+     "Then came the brain scans.",
+     "Using functional MRI, the researchers watched the learners' brains as they tried to tell apart two English vowels, the one in the word cat and the one in the word cup.",
+     "Neither sound maps neatly onto a Japanese vowel, which is what makes the pair so tricky.",
+     "In a second task, the participants listened for similar fine differences in non-speech sounds."
+    ],
+    [
+     "So what did they find?",
+     "Learners with a good ear relied less on a part of the brain called the left sensorimotor system, which is involved in language processing.",
+     "Instead, their brain activity looked much like the pattern seen when people hear ordinary noises.",
+     "In other words, they heard the foreign vowels as raw acoustic signals rather than as words.",
+     "With less interference from the patterns of their mother tongue, handling the new sounds became simpler.",
+     "By contrast, learners with weaker hearing for detail leaned more heavily on that network and fell back on the pronunciation habits of Japanese."
+    ],
+    [
+     "The lead author is Professor Kazuya Saito-van Poeteren of the UCL Institute of Education.",
+     "He said learners with a good ear can hear a new foreign-language sound objectively, without immediately processing it as language.",
+     "He also took aim at a familiar stereotype.",
+     "In his view, British people are not biologically bad at languages.",
+     "The more likely problem, he told the Guardian newspaper, is too little meaningful exposure, combined with teaching that doesn't train the listening skills needed to make the most of it.",
+     "If you only hear a language for a few hours each week, he said, having a good ear may make a much bigger difference."
+    ],
+    [
+     "Meanwhile, other experts welcomed the work.",
+     "Padraic Monaghan, a professor of cognition at Lancaster University, said the study confirms how vital listening is to learning.",
+     "But he noted that learners vary in their sensitivity to sound, at least in the early stages of hearing a new language."
+    ],
+    [
+     "Looking ahead, the team hopes to develop a new kind of training that combines language practice with exercises in hearing fine differences in sound.",
+     "Professor Saito-van Poeteren argues that teaching should move beyond simply doing more practice.",
+     "Tohoku University puts it another way: the key to success lies not only in the amount of exposure, but also in how the brain processes sounds during each learning opportunity.",
+     "Still, this study involved only Japanese speakers learning English, so whether the same pattern holds for other learners remains to be seen.",
+     "That's the science desk for this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Auditory precision and learning new speech sounds",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Method"
+       },
+       {
+        "t": "Hearing skill tested with changes in pitch, length and [[1]]"
+       },
+       {
+        "t": "Brain activity recorded with functional [[2]]"
+       },
+       {
+        "t": "Target sounds: two English [[3]] absent from Japanese"
+       },
+       {
+        "h": "Findings"
+       },
+       {
+        "t": "Good listeners used the left [[4]] system less"
+       },
+       {
+        "t": "They perceived the vowels as raw [[5]] signals"
+       },
+       {
+        "t": "Less [[6]] from first-language patterns"
+       },
+       {
+        "t": "Weaker listeners relied on the pronunciation [[7]] of Japanese"
+       },
+       {
+        "h": "Expert views"
+       },
+       {
+        "t": "Lead author: main issue is a lack of meaningful [[8]]"
+       },
+       {
+        "t": "Lancaster professor: listening is [[9]] for learning"
+       },
+       {
+        "h": "Limitation"
+       },
+       {
+        "t": "Only Japanese [[10]] of English were studied"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "tone"
+        ],
+        "ref": "pitch, length and tone",
+        "ev": "their ability to detect tiny changes in pitch, length and tone",
+        "zh": "hearing skill = auditory precision；答案 tone（音調）。"
+       },
+       {
+        "a": [
+         "MRI"
+        ],
+        "ref": "Using functional MRI",
+        "ev": "Using functional MRI, the researchers watched the learners' brains",
+        "zh": "recorded with = using；答案 MRI（功能性磁振造影 fMRI）。"
+       },
+       {
+        "a": [
+         "vowels"
+        ],
+        "ref": "tell apart two English vowels",
+        "ev": "tried to tell apart two English vowels",
+        "zh": "答案 vowels（母音，複數）。cat 與 cup 的母音在日語中都沒有對應（Neither sound maps neatly onto a Japanese vowel）。"
+       },
+       {
+        "a": [
+         "sensorimotor"
+        ],
+        "ref": "the left sensorimotor system",
+        "ev": "relied less on a part of the brain called the left sensorimotor system",
+        "zh": "used…less = relied less on；答案 sensorimotor（感覺運動的）。"
+       },
+       {
+        "a": [
+         "acoustic"
+        ],
+        "ref": "raw acoustic signals",
+        "ev": "they heard the foreign vowels as raw acoustic signals rather than as words",
+        "zh": "perceived = heard；答案 acoustic（聲學的，形容詞）。"
+       },
+       {
+        "a": [
+         "interference"
+        ],
+        "ref": "With less interference from the patterns of their mother tongue",
+        "ev": "With less interference from the patterns of their mother tongue",
+        "zh": "first-language = mother tongue；答案 interference（干擾）。"
+       },
+       {
+        "a": [
+         "habits"
+        ],
+        "ref": "fell back on the pronunciation habits of Japanese",
+        "ev": "fell back on the pronunciation habits of Japanese",
+        "zh": "relied on = fell back on；答案 habits（習慣，複數）。"
+       },
+       {
+        "a": [
+         "exposure"
+        ],
+        "ref": "too little meaningful exposure",
+        "ev": "is too little meaningful exposure",
+        "zh": "lack of = too little；答案 exposure（接觸量）。干擾：teaching 是第二個原因，題目問 meaningful ___。"
+       },
+       {
+        "a": [
+         "vital"
+        ],
+        "ref": "how vital listening is to learning",
+        "ev": "the study confirms how vital listening is to learning",
+        "zh": "答案 vital（極重要的，形容詞）。"
+       },
+       {
+        "a": [
+         "speakers"
+        ],
+        "ref": "involved only Japanese speakers learning English",
+        "ev": "this study involved only Japanese speakers learning English",
+        "zh": "答案 speakers（說話者）。前面的 sixty-seven Japanese learners 是另一種說法，但題目的限制段落說的是 speakers。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Training the Ear: Perception, Pronunciation and Technology",
+    "intro": "Two new studies suggest that how learners hear foreign sounds may matter as much as how much they practise.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Few aspects of learning a foreign language are as stubborn as pronunciation. Adults who have mastered complex grammar and thousands of words may still be identified as non-native speakers within seconds of opening their mouths. Conventional teaching has tended to treat this as a problem to be solved by quantity: more listening, more repetition, more practice. Yet learners normally try to make sense of a new language through the sounds of their native tongue, and the more those sounds differ, the harder the new language is likely to be. Two studies published in October 2026, one using brain imaging and the other examining an artificial-intelligence app, suggest that the picture is more nuanced. Both point to the importance of how learners perceive sounds, and both happen to involve one of the more troublesome contrasts in English: the vowels in 'cat' and 'cup'."
+     },
+     {
+      "label": "B",
+      "text": "The first study, conducted by researchers at University College London and Tohoku University and published in the Journal of Experimental Psychology: General, began by measuring the auditory precision of 67 Japanese learners of English, that is, their capacity to detect slight differences in the pitch, length and tone of non-speech sounds. The participants then underwent functional magnetic resonance imaging (fMRI) while distinguishing the English vowels /æ/ and /ʌ/, neither of which maps directly onto a Japanese vowel. In a second task, they distinguished comparable differences in non-speech sounds, allowing the researchers to compare how the brain handled the two kinds of input."
+     },
+     {
+      "label": "C",
+      "text": "The results revealed a striking divergence. Learners with higher auditory precision relied less on the left sensorimotor system, a network involved in language processing, and their patterns of brain activity resembled those produced by non-speech sounds. Facing less interference from their native language, they were able to process the new vowels more accurately. Learners with lower precision, by contrast, drew more heavily on the same network and applied the pronunciation patterns of Japanese to the unfamiliar sounds. According to Tohoku University, the study demonstrates that the key to successful foreign language learning lies not only in the amount of exposure, but also in how the brain processes sounds during each learning opportunity."
+     },
+     {
+      "label": "D",
+      "text": "The lead author, Professor Kazuya Saito-van Poeteren, has drawn practical conclusions. He told The Guardian that learners with high auditory precision 'can make very effective use of relatively sparse input, whereas others may need much more exposure before unfamiliar sounds begin to become established'. He also rejected the idea that British people are biologically bad at languages, attributing weak results instead to limited meaningful exposure and to teaching methods that do not train the relevant auditory skills. In his words, foreign language education 'should move beyond an approach based on ‘more practice’ and towards one that develops learners' ear for language learning in line with their auditory characteristics'. Professor Padraic Monaghan of Lancaster University, commenting on the findings, agreed that listening is vital, but noted that learners vary in their sound sensitivity, at least in the early stages."
+     },
+     {
+      "label": "E",
+      "text": "If perception differs so much between individuals, can technology help those without a natural ear? A second study, published in Technology in Language Teaching & Learning, offers a qualified answer. Researchers in Hanoi studied 105 first-year English majors at a Vietnamese university. For three weeks, 53 of them practised with the AI pronunciation app ELSA Speak, while 52 continued with conventional classroom practice. Overall segmental error rates fell by 13.3 percentage points in the app group and by 4.1 points in the control group, a statistically significant difference with a large effect size. The gains, however, were uneven. The omission of final consonants showed the clearest reduction, whereas progress on the /ʌ/–/æ/ distinction was less consistent."
+     },
+     {
+      "label": "F",
+      "text": "Interviews shed light on why. Learners said the automated feedback helped them notice errors that had previously escaped their attention, prompted them to try the same item repeatedly, and led them to practise outside scheduled class time. Yet several found it difficult to work out what the system was identifying when a pronunciation problem was more complex. The authors therefore argue that such feedback is best understood selectively rather than as uniformly effective. Neither study, it should be said, tested whether training the ear directly improves pronunciation over the long term; the UCL team's proposed combination of language and auditory training has yet to be evaluated. Even so, the research arguably shifts attention from how much learners practise to how they listen."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison of how two groups improved over a short period",
+        "a": "E",
+        "ref": "E",
+        "ev": "Overall segmental error rates fell by 13.3 percentage points in the app group and by 4.1 points in the control group",
+        "zh": "E 段：三週內 App 組錯誤率降 13.3 個百分點、對照組 4.1。"
+       },
+       {
+        "q": "the rejection of a commonly held belief about a nationality",
+        "a": "D",
+        "ref": "D",
+        "ev": "He also rejected the idea that British people are biologically bad at languages",
+        "zh": "D 段：否定『英國人天生不擅長語言』的刻板印象。"
+       },
+       {
+        "q": "a definition of a key term used in a study",
+        "a": "B",
+        "ref": "B",
+        "ev": "that is, their capacity to detect slight differences in the pitch, length and tone of non-speech sounds",
+        "zh": "B 段：用 that is 定義 auditory precision。"
+       },
+       {
+        "q": "a description of changes in learners' study behaviour",
+        "a": "F",
+        "ref": "F",
+        "ev": "led them to practise outside scheduled class time",
+        "zh": "F 段：受訪學生說會反覆練同一題、在課外時間練習。"
+       },
+       {
+        "q": "a reference to the traditional belief that more practice is the solution",
+        "a": "A",
+        "ref": "A",
+        "ev": "Conventional teaching has tended to treat this as a problem to be solved by quantity",
+        "zh": "A 段：傳統教學把發音當成『靠量』解決的問題。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in the Reading Passage?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Both vowels examined in the UCL study have close equivalents in Japanese.",
+        "a": "False",
+        "ref": "B",
+        "zh": "B 段：兩個母音『都沒有』直接對應的日語母音 → False。",
+        "ev": "neither of which maps directly onto a Japanese vowel"
+       },
+       {
+        "q": "Learners with greater auditory precision processed the new vowels more accurately.",
+        "a": "True",
+        "ref": "C",
+        "zh": "C 段：聽覺精準度高的學習者處理新母音更準確 → True。",
+        "ev": "they were able to process the new vowels more accurately"
+       },
+       {
+        "q": "The Vietnamese students who used the app reported feeling more motivated than those in the control group.",
+        "a": "Not Given",
+        "ref": "F",
+        "zh": "F 段只說 App 讓學生注意到錯誤、反覆練習、課外也練，沒有提到『動機』，也沒有比較兩組的感受 → Not Given。陷阱：課外練習看似代表動機較高，但文章沒說。"
+       },
+       {
+        "q": "The app led to similar improvements across every type of pronunciation error.",
+        "a": "False",
+        "ref": "E",
+        "zh": "E 段：進步不平均（uneven），字尾子音最明顯、/ʌ/–/æ/ 較不一致 → False。",
+        "ev": "The gains, however, were uneven."
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Testing an AI pronunciation app",
+      "lines": [
+       {
+        "t": "In the Vietnamese study, students using the app saw a larger fall in [[1]] error rates than the control group. The greatest improvement came in the [[2]] of final consonants. However, some learners could not tell what the system was pointing out when a problem was [[3]]. The researchers conclude that the value of such feedback should be judged [[4]]."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "segmental"
+        ],
+        "ref": "E",
+        "ev": "Overall segmental error rates fell by 13.3 percentage points",
+        "zh": "E 段：答案 segmental（音段的，形容詞）。干擾：數字 13.3 / 4.1 不是單字答案。"
+       },
+       {
+        "a": [
+         "omission"
+        ],
+        "ref": "E",
+        "ev": "The omission of final consonants showed the clearest reduction",
+        "zh": "E 段：greatest improvement = clearest reduction；答案 omission（省略、漏發）。"
+       },
+       {
+        "a": [
+         "complex"
+        ],
+        "ref": "F",
+        "ev": "when a pronunciation problem was more complex",
+        "zh": "F 段：tell what…pointing out = work out what…identifying；答案 complex（複雜的）。"
+       },
+       {
+        "a": [
+         "selectively"
+        ],
+        "ref": "F",
+        "ev": "such feedback is best understood selectively rather than as uniformly effective",
+        "zh": "F 段：答案 selectively（有選擇地、分情況地，副詞）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "auditory",
+     "pos": "adj.",
+     "def": "relating to hearing",
+     "zh": "聽覺的",
+     "example": "They measured each person's auditory precision.",
+     "match": [
+      "auditory"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "tell apart",
+     "pos": "phr. v.",
+     "def": "to recognise the difference between two similar things",
+     "zh": "分辨",
+     "example": "They tried to tell apart two English vowels.",
+     "match": [
+      "tell apart"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "map onto",
+     "pos": "phr. v.",
+     "def": "to correspond to something in another system",
+     "zh": "對應到",
+     "example": "Neither sound maps neatly onto a Japanese vowel.",
+     "match": [
+      "maps neatly onto"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "fall back on",
+     "pos": "phr. v.",
+     "def": "to use something familiar when other options fail",
+     "zh": "退而依賴、求助於",
+     "example": "They fell back on the pronunciation habits of Japanese.",
+     "match": [
+      "fell back on"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "stereotype",
+     "pos": "n.",
+     "def": "a fixed, oversimplified idea about a group of people",
+     "zh": "刻板印象",
+     "example": "He took aim at a familiar stereotype.",
+     "match": [
+      "stereotype"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "objectively",
+     "pos": "adv.",
+     "def": "without being influenced by existing beliefs",
+     "zh": "客觀地",
+     "example": "They can hear a new sound objectively.",
+     "match": [
+      "objectively"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "exposure",
+     "pos": "n.",
+     "def": "the experience of being in contact with something",
+     "zh": "接觸（量）",
+     "example": "The problem is too little meaningful exposure.",
+     "match": [
+      "exposure"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "stubborn",
+     "pos": "adj.",
+     "def": "difficult to change or deal with",
+     "zh": "頑固的、難以改變的",
+     "example": "Few aspects of learning are as stubborn as pronunciation.",
+     "match": [
+      "stubborn"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "nuanced",
+     "pos": "adj.",
+     "def": "having subtle differences or complexity",
+     "zh": "細緻的、有層次的",
+     "example": "The picture is more nuanced.",
+     "match": [
+      "nuanced"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "divergence",
+     "pos": "n.",
+     "def": "a difference between two things that develop differently",
+     "zh": "分歧、差異",
+     "example": "The results revealed a striking divergence.",
+     "match": [
+      "divergence"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "resemble",
+     "pos": "v.",
+     "def": "to look or be like something",
+     "zh": "類似",
+     "example": "Their brain activity resembled that produced by non-speech sounds.",
+     "match": [
+      "resembled"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sparse",
+     "pos": "adj.",
+     "def": "small in amount and spread thinly",
+     "zh": "稀少的",
+     "example": "Some learners can make effective use of sparse input.",
+     "match": [
+      "sparse"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "qualified",
+     "pos": "adj.",
+     "def": "limited; not complete or absolute",
+     "zh": "有保留的、有條件的",
+     "example": "The study offers a qualified answer.",
+     "match": [
+      "qualified"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "omission",
+     "pos": "n.",
+     "def": "the act of leaving something out",
+     "zh": "省略、遺漏",
+     "example": "The omission of final consonants showed the clearest reduction.",
+     "match": [
+      "omission"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "shed light on",
+     "pos": "phr.",
+     "def": "to help explain something",
+     "zh": "闡明、使……清楚",
+     "example": "Interviews shed light on why.",
+     "match": [
+      "shed light on"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-28-2.mp3",
+    "times": [
+     [
+      0.36,
+      9.3
+     ],
+     [
+      9.64,
+      10.62
+     ],
+     [
+      11.4,
+      20.29
+     ],
+     [
+      20.51,
+      28.45
+     ],
+     [
+      28.8,
+      31.98
+     ],
+     [
+      32.3,
+      35.26
+     ],
+     [
+      35.49,
+      41.17
+     ],
+     [
+      41.95,
+      43.53
+     ],
+     [
+      43.82,
+      52.68
+     ],
+     [
+      53.01,
+      57.77
+     ],
+     [
+      58.06,
+      63.27
+     ],
+     [
+      64.05,
+      65.31
+     ],
+     [
+      65.69,
+      72.23
+     ],
+     [
+      72.54,
+      77.61
+     ],
+     [
+      77.95,
+      83.02
+     ],
+     [
+      83.29,
+      88.15
+     ],
+     [
+      88.47,
+      95.84
+     ],
+     [
+      96.62,
+      102.09
+     ],
+     [
+      102.37,
+      108.77
+     ],
+     [
+      109.1,
+      111.41
+     ],
+     [
+      111.65,
+      115.38
+     ],
+     [
+      115.68,
+      125.01
+     ],
+     [
+      125.3,
+      131.26
+     ],
+     [
+      132.04,
+      134.67
+     ],
+     [
+      134.93,
+      141.79
+     ],
+     [
+      142.14,
+      148.16
+     ],
+     [
+      148.94,
+      156.58
+     ],
+     [
+      156.89,
+      162.0
+     ],
+     [
+      162.24,
+      171.62
+     ],
+     [
+      171.98,
+      179.19
+     ],
+     [
+      179.52,
+      181.44
+     ]
+    ],
+    "duration": 182.1,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-10-28-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
