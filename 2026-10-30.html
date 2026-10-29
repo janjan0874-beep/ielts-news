@@ -1,0 +1,2154 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-30",
+ "date": "2026-10-30",
+ "title": "Life After the Flames: Canadian Scientists Track the Fungi, Beetles and Birds That Thrive in Burned Forests · Japan's MMX Probe Heads for Mars's Moon Phobos on a Mission to Bring Home Ten Grams of Dust",
+ "stories": [
+  {
+   "title": "Life After the Flames: Canadian Scientists Track the Fungi, Beetles and Birds That Thrive in Burned Forests",
+   "topic": "Ecology · wildfire recovery",
+   "source": {
+    "name": "Mongabay: As wildfires rage, Canadian researchers study the life that comes after (28 Oct 2026)",
+    "url": "https://news.mongabay.com/2026/10/as-wildfires-rage-canadian-researchers-study-the-life-that-comes-after/",
+    "links": [
+     {
+      "name": "Ecosphere (2022): Rapid colonization of the post-burn environment improves egg survival in pyrophilic ground beetles",
+      "url": "https://doi.org/10.1002/ecs2.4213"
+     },
+     {
+      "name": "Ecology and Evolution (2017): Canada lynx use of burned areas",
+      "url": "https://doi.org/10.1002/ece3.2824"
+     },
+     {
+      "name": "International Journal of Wildland Fire (2022): Residual forest structure influences behaviour of Pacific marten on post-fire landscapes",
+      "url": "https://doi.org/10.1071/WF21075"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning, and welcome to the environment report.",
+     "Scientists in western Canada say that burned forests are far from dead zones, and that fire-loving fungi, insects and birds move in remarkably quickly once the flames have passed.",
+     "Here's the report."
+    ],
+    [
+     "Four of the five worst years on record for global forest fires have come since twenty twenty-one.",
+     "This year has brought yet more evacuations across North America, Europe and Africa.",
+     "Yet for many living things, fire is an ancient and even necessary force.",
+     "Researchers in the interior of British Columbia are now asking who thrives after a blaze, and why.",
+     "Their study area, the Montane Cordillera, is the most biodiverse region in Canada, and at around four hundred and seventy-three thousand square kilometres, it's slightly larger than Sweden."
+    ],
+    [
+     "First, the soil.",
+     "Mycologist Monika Fischer runs a laboratory devoted to fire fungi at the University of British Columbia in Vancouver.",
+     "She didn't start out in science at all.",
+     "She trained as a chef, and it was farmers she met during a restaurant internship who first taught her about the microbes living in soil.",
+     "After a fire, so-called pyrophilous fungi push fine threads into the blackened ground.",
+     "One species, known as the charcoal-loving elf cup, can even use charcoal as a source of carbon, which surprised her team.",
+     "According to Dr Fischer, these fungi knit the soil back together and create a spongy structure that lets rainwater soak in again.",
+     "A separate study from Montana State University found that soil clumping rose by about thirty per cent where such fungi were present."
+    ],
+    [
+     "Meanwhile, some insects actually head towards the smoke.",
+     "Entomologist Aaron Bell studies a species called the campfire ground beetle.",
+     "It finds fresh burns with its antennae, although exactly how it senses the heat is still a mystery.",
+     "The benefit of arriving early is simple, he says.",
+     "Beetles that lay their eggs in a new burn escape many of their predators, as well as tiny parasites.",
+     "Around sixty insect species worldwide are known to be fire-loving in this way.",
+     "In laboratory trials, beetle pairs given freshly heated soil produced eighty per cent more offspring than pairs kept on unburned soil.",
+     "This summer, his team worked alongside the provincial wildfire service, setting traps beside logging roads as soon as it was safe to do so."
+    ],
+    [
+     "Ants tell a similar story.",
+     "Rob Higgins, a retired entomologist, once surveyed ants in the province's endangered grasslands.",
+     "Unburned sites held only two or three species, he found, but within a couple of years of a burn, there were twelve or thirteen."
+    ],
+    [
+     "Still, fire is hardly a simple gift.",
+     "Aaron Bell, who is Indigenous, saw a wildfire destroy a much-loved historic store in his hometown of La Ronge, Saskatchewan, last year.",
+     "The shop had displayed the work of Indigenous artists, and he calls the loss absolutely devastating.",
+     "There are risks on both sides, though: today's more frequent and intense fires can be catastrophic, even if forests are, as Bell puts it, adapted to bounce back.",
+     "That's the environment report. Stay with us for the rest of this morning's science news."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Life after wildfire in British Columbia",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Study area"
+       },
+       {
+        "t": "Montane Cordillera: Canada's most [[1]] region"
+       },
+       {
+        "h": "Fungi"
+       },
+       {
+        "t": "Monika Fischer's earlier career: [[2]]"
+       },
+       {
+        "t": "One fungus can obtain carbon from [[3]]"
+       },
+       {
+        "t": "Fungi give soil a [[4]] structure so water can return"
+       },
+       {
+        "h": "Insects"
+       },
+       {
+        "t": "Campfire ground beetle detects burns with its [[5]]"
+       },
+       {
+        "t": "Early egg-laying avoids predators and [[6]]"
+       },
+       {
+        "t": "Heated soil: offspring increased by [[7]] %"
+       },
+       {
+        "t": "Traps set up with help from the provincial [[8]]"
+       },
+       {
+        "h": "Ants"
+       },
+       {
+        "t": "Survey carried out in threatened [[9]]"
+       },
+       {
+        "h": "Human cost"
+       },
+       {
+        "t": "Lost store had exhibited work by Indigenous [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "biodiverse"
+        ],
+        "ref": "is the most biodiverse region in Canada",
+        "ev": "the Montane Cordillera, is the most biodiverse region in Canada",
+        "zh": "答案 biodiverse（生物多樣性高的，形容詞）。干擾：473,000 平方公里、比瑞典略大都是面積資訊，題目問的是「最 ___ 的地區」。"
+       },
+       {
+        "a": [
+         "chef",
+         "a chef"
+        ],
+        "ref": "She trained as a chef",
+        "ev": "She trained as a chef",
+        "zh": "earlier career = trained as；答案 chef（廚師）。farmers 和 restaurant internship 是干擾——她是在餐廳實習時從農夫那裡學到土壤微生物。"
+       },
+       {
+        "a": [
+         "charcoal"
+        ],
+        "ref": "can even use charcoal as a source of carbon",
+        "ev": "can even use charcoal as a source of carbon",
+        "zh": "obtain carbon from = use … as a source of carbon；答案 charcoal（木炭）。這是 charcoal-loving elf cup（嗜炭小杯菌）的特性。"
+       },
+       {
+        "a": [
+         "spongy"
+        ],
+        "ref": "create a spongy structure",
+        "ev": "create a spongy structure that lets rainwater soak in again",
+        "zh": "water can return = lets rainwater soak in again；答案 spongy（海綿狀的，形容詞）。注意 knit the soil together 是另一個動作，不是空格答案。"
+       },
+       {
+        "a": [
+         "antennae",
+         "antennas"
+        ],
+        "ref": "finds fresh burns with its antennae",
+        "ev": "It finds fresh burns with its antennae",
+        "zh": "detects = finds；答案 antennae（觸角，antenna 的複數）。錄音補充：牠「如何」感應熱仍是謎。"
+       },
+       {
+        "a": [
+         "parasites",
+         "tiny parasites"
+        ],
+        "ref": "as well as tiny parasites",
+        "ev": "escape many of their predators, as well as tiny parasites",
+        "zh": "avoids = escape；predators and ___ → as well as tiny parasites；答案 parasites（寄生蟲）。"
+       },
+       {
+        "a": [
+         "80",
+         "eighty"
+        ],
+        "ref": "produced eighty per cent more offspring",
+        "ev": "produced eighty per cent more offspring",
+        "zh": "答案 80。干擾：thirty per cent 是真菌讓土壤團聚增加的比例（另一項研究），sixty 是全球已知嗜火昆蟲的物種數。"
+       },
+       {
+        "a": [
+         "wildfire service"
+        ],
+        "ref": "worked alongside the provincial wildfire service",
+        "ev": "worked alongside the provincial wildfire service",
+        "zh": "with help from = worked alongside；答案 wildfire service（野火應變單位，即 B.C. Wildfire Service）。logging roads 是放陷阱的地點，不是合作對象。"
+       },
+       {
+        "a": [
+         "grasslands",
+         "grassland"
+        ],
+        "ref": "surveyed ants in the province's endangered grasslands",
+        "ev": "surveyed ants in the province's endangered grasslands",
+        "zh": "threatened = endangered；答案 grasslands（草原）。數字 2–3 種 vs 12–13 種是結果，不是題目所問。"
+       },
+       {
+        "a": [
+         "artists"
+        ],
+        "ref": "The shop had displayed the work of Indigenous artists",
+        "ev": "The shop had displayed the work of Indigenous artists",
+        "zh": "exhibited = displayed；store = shop；答案 artists（藝術家）。題目已給 Indigenous，只需填一字。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "After the Burn: Why Wildfire Is Not the End of a Forest",
+    "intro": "Research from British Columbia suggests that what survives a fire matters as much as what is lost.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Wildfires are now a defining feature of the climate era. Four of the five worst years recorded for global forest fires have occurred since 2021, and 2026 has once again forced hundreds of thousands of people from their homes. It is understandable, therefore, that a burned forest is widely perceived as a wasteland. Ecologists, however, increasingly argue that this view is incomplete. 'All terrestrial animals evolved in landscapes that had fire,' says Karen Hodges, a conservation biologist at the University of British Columbia Okanagan. Yet when she began preparing a book on the subject, Wildfire and Wildlife, she was struck by the dearth of practical advice for colleagues. There was, she recalls, no guide telling a wildlife biologist what they would need to know before designing a fire-related study. The book is due to be published by Springer in February 2027."
+     },
+     {
+      "label": "B",
+      "text": "The forests around Rock Creek, a community a few hundred kilometres east of Vancouver, illustrate how quickly a burned landscape can change. In 2015, a fast-moving fire swept through 4,417 hectares of tinder-dry forest there, damaging or destroying dozens of homes and businesses. Eleven years later, the charred trunks remain, but the ground between them has been transformed. Native bees and flies visit silky lupine and snowberry, grasses and fireweed crowd around scorched larches, and young saplings are growing among the tussocks. According to the mycologist Monika Fischer, much of the credit belongs to what happens underground. Plants, she argues provocatively, are 'just an expression of the microbial community in the soil', which suggests that the recovery visible above ground may depend on processes that are largely hidden from view."
+     },
+     {
+      "label": "C",
+      "text": "Birds offer a clearer picture of how varied the response to fire can be. The Canadian team of the Pacific Birds Habitat Joint Venture recently drew on 25 North American studies to build a database of how bird species react to wildfire, both immediately and over a longer period. Of the native species considered, 57 were negatively affected by fire, 84 showed no impact and 77 responded positively. Crucially, the team did not rely on a single characteristic to predict how a species would fare. Instead, they analysed a range of life-history traits together. Jenny Munoz, the project's science coordinator and a biologist with Birds Canada, says this approach is what sets the work apart from earlier research, because it allows scientists to see each bird as a 'multidimensional, multi-characteristic organism' rather than as a single variable."
+     },
+     {
+      "label": "D",
+      "text": "The winners tend to be species that favour open ground. The mountain bluebird, the olive-sided flycatcher and the Savannah sparrow all appear to benefit from the habitat that fire creates, as do two species considered at risk in the province, Lewis's woodpecker and the common nighthawk. The losers, by contrast, are typically birds of dense, mature forest. The pileated woodpecker and the sharp-shinned hawk require closed canopies for nesting, while the ruby-crowned kinglet needs living foliage from which to pick insects. As Andrew Huang of Environment and Climate Change Canada puts it, birds 'don't just behave like one single unit'. The practical implication is that conservation effort may need to be directed at the particular species whose requirements disappear when the canopy burns, rather than at forest birds as a whole."
+     },
+     {
+      "label": "E",
+      "text": "For mammals, Hodges insists that 'there is no typical' response; much depends on the food and shelter that remain. Her team found that the Pacific marten, a forest specialist often used as an indicator species, will use burned forests provided that they are regenerating and structurally complex. Standing snags, especially those that still contain holes, make a landscape far more attractive to martens than one in which most of the dead wood has fallen. Small mammals such as southern red-backed voles and deer mice recovered between two and ten years after fire. Because many of these animals act as pollinators or seed dispersers, Hodges warns that intervening in ways that make their presence more difficult, such as clearcut salvage logging after a blaze, could affect which plants are able to recolonise."
+     },
+     {
+      "label": "F",
+      "text": "Predators follow their prey. Earlier work by Hodges's laboratory showed that the Canada lynx, a species at risk, used new burns within one to two years of a fire, decades earlier than previously thought, as long as shrubs, snags and some live trees remained. Lynx, she notes, are not really using burns until snowshoe hares, their principal prey, are present. Hodges describes the surviving elements that make such recovery possible as biological legacies: roots that re-sprout, trees that were only partially burned, or burrowing rodents that reappear once the fire has passed. None of this makes wildfire benign, and researchers stress the need for both fire preparedness and deep cuts in carbon emissions. Nevertheless, as Munoz observes, 'Fire is here to stay,' and it may be more useful to treat it as a transition than as an ending."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reference to a lack of guidance for scientists planning research",
+        "a": "A",
+        "ref": "A",
+        "ev": "she was struck by the dearth of practical advice for colleagues",
+        "zh": "A 段：Hodges 寫書時發現「缺乏實用建議」（dearth of practical advice），沒有教野生動物學家如何設計火災研究的指南。lack = dearth。"
+       },
+       {
+        "q": "an explanation of what makes one research method different from previous studies",
+        "a": "C",
+        "ref": "C",
+        "ev": "this approach is what sets the work apart from earlier research",
+        "zh": "C 段：同時分析多種生活史特徵（life-history traits），而不是單一特徵 → 這就是與過去研究不同之處。"
+       },
+       {
+        "q": "an example of an animal whose return depends on a particular food source",
+        "a": "F",
+        "ref": "F",
+        "ev": "are not really using burns until snowshoe hares, their principal prey, are present",
+        "zh": "F 段：加拿大猞猁要等雪鞋兔（主要獵物）回來才會使用火燒地。food source = prey。"
+       },
+       {
+        "q": "a description of vegetation that has returned to a site many years after a fire",
+        "a": "B",
+        "ref": "B",
+        "ev": "Eleven years later, the charred trunks remain, but the ground between them has been transformed",
+        "zh": "B 段：Rock Creek 火災 11 年後，羽扇豆、雪果、火草等植物回來了。vegetation = lupine, grasses, fireweed, saplings。"
+       },
+       {
+        "q": "a warning that a human activity after a fire could influence plant recovery",
+        "a": "E",
+        "ref": "E",
+        "ev": "such as clearcut salvage logging after a blaze, could affect which plants are able to recolonise",
+        "zh": "E 段：火後的皆伐搶救性伐木（salvage logging）會讓小型哺乳動物變少，進而影響哪些植物能重新拓殖。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The bird review found that more species gained from fire than suffered from it.",
+        "a": "True",
+        "ref": "C",
+        "ev": "57 were negatively affected by fire, 84 showed no impact and 77 responded positively",
+        "zh": "C 段：正面 77 > 負面 57 → True。84 是「沒有影響」，不影響比較。"
+       },
+       {
+        "q": "Most of the studies used in the bird database were carried out in British Columbia.",
+        "a": "Not Given",
+        "ref": "C",
+        "ev": "drew on 25 North American studies",
+        "zh": "C 段只說用了 25 篇「北美」研究，沒有說其中多少在卑詩省 → Not Given（典型陷阱：看似相關，但文章沒有提供比例）。"
+       },
+       {
+        "q": "Birds that need closed canopies to nest generally do well after a fire.",
+        "a": "False",
+        "ref": "D",
+        "ev": "The losers, by contrast, are typically birds of dense, mature forest",
+        "zh": "D 段：需要郁閉樹冠築巢的鳥（啄木鳥、鷹）屬於 losers → 與原文相反 → False。"
+       },
+       {
+        "q": "Scientists once believed that lynx stayed away from burned areas for a much longer period.",
+        "a": "True",
+        "ref": "F",
+        "ev": "decades earlier than previously thought",
+        "zh": "F 段：猞猁一到兩年內就回來，比過去認為的「早了幾十年」→ 表示過去以為牠們會避開更久 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "What helps wildlife return",
+      "lines": [
+       {
+        "t": "According to Hodges, recovery after fire relies on what she calls biological [[1]], such as roots that grow again or animals that survive underground. Martens, for instance, are drawn to burned areas that contain standing dead trees, known as [[2]], particularly those with holes. Small mammals matter too, as many serve as pollinators or seed [[3]]; for this reason, clearcut salvage [[4]] after a fire may change which plants come back."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "legacies"
+        ],
+        "ref": "F",
+        "ev": "as biological legacies",
+        "zh": "F 段：biological legacies（生物遺產，指火後殘存的根、半燒的樹、地下的齧齒動物）。空格前有 biological，填 legacies（複數）。"
+       },
+       {
+        "a": [
+         "snags"
+        ],
+        "ref": "E",
+        "ev": "Standing snags, especially those that still contain holes",
+        "zh": "E 段：standing snags（直立枯木）；standing dead trees 是改述，答案 snags。"
+       },
+       {
+        "a": [
+         "dispersers"
+        ],
+        "ref": "E",
+        "ev": "act as pollinators or seed dispersers",
+        "zh": "E 段：pollinators or seed dispersers（授粉者或種子傳播者）；serve as = act as；答案 dispersers。"
+       },
+       {
+        "a": [
+         "logging"
+        ],
+        "ref": "E",
+        "ev": "such as clearcut salvage logging after a blaze",
+        "zh": "E 段：clearcut salvage logging（皆伐式搶救伐木）；答案 logging。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "remarkably",
+     "pos": "adv.",
+     "def": "to an unusual or surprising degree",
+     "zh": "非常地、驚人地",
+     "example": "Fungi and insects move in remarkably quickly after a fire.",
+     "match": [
+      "remarkably"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "devoted to",
+     "pos": "phr.",
+     "def": "used only or entirely for a particular purpose",
+     "zh": "專門用於……",
+     "example": "She runs a laboratory devoted to fire fungi.",
+     "match": [
+      "devoted to"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "knit together",
+     "pos": "phr. v.",
+     "def": "to join closely, making something firm or unified",
+     "zh": "使緊密結合",
+     "example": "The fungi knit the soil back together.",
+     "match": [
+      "knit the soil back together"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "offspring",
+     "pos": "n.",
+     "def": "the young of an animal or person",
+     "zh": "後代、子代",
+     "example": "Beetle pairs on heated soil produced more offspring.",
+     "match": [
+      "offspring"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "catastrophic",
+     "pos": "adj.",
+     "def": "causing sudden and very great damage or suffering",
+     "zh": "災難性的",
+     "example": "More frequent and intense fires can be catastrophic.",
+     "match": [
+      "catastrophic"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "bounce back",
+     "pos": "phr. v.",
+     "def": "to recover quickly after a difficulty",
+     "zh": "迅速恢復",
+     "example": "Many forests are adapted to bounce back after fire.",
+     "match": [
+      "bounce back"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "dearth",
+     "pos": "n.",
+     "def": "a scarcity or lack of something",
+     "zh": "缺乏、不足",
+     "example": "She was struck by the dearth of practical advice.",
+     "match": [
+      "dearth"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "perceive",
+     "pos": "v.",
+     "def": "to regard or understand something in a particular way",
+     "zh": "認為、看待",
+     "example": "A burned forest is widely perceived as a wasteland.",
+     "match": [
+      "perceived"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "provocatively",
+     "pos": "adv.",
+     "def": "in a way intended to cause debate or a strong reaction",
+     "zh": "挑釁地、刻意引發討論地",
+     "example": "Plants, she argues provocatively, are an expression of the soil's microbes.",
+     "match": [
+      "provocatively"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "fare",
+     "pos": "v.",
+     "def": "to perform or progress in a particular way",
+     "zh": "（某方面）表現、進展",
+     "example": "No single trait predicts how a species will fare.",
+     "match": [
+      "fare"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sets … apart",
+     "pos": "phr. v.",
+     "def": "to make something different from or better than others",
+     "zh": "使與眾不同",
+     "example": "This approach sets the work apart from earlier research.",
+     "match": [
+      "sets the work apart"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "indicator species",
+     "pos": "n.",
+     "def": "a species whose presence shows the condition of an environment",
+     "zh": "指標物種",
+     "example": "The marten is often used as an indicator species.",
+     "match": [
+      "indicator species"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "structurally complex",
+     "pos": "adj. phr.",
+     "def": "having many different physical layers or parts",
+     "zh": "結構複雜的",
+     "example": "Martens use burned forests that are structurally complex.",
+     "match": [
+      "structurally complex"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "recolonise",
+     "pos": "v.",
+     "def": "to become established again in an area",
+     "zh": "重新拓殖、重新進駐",
+     "example": "Logging could affect which plants are able to recolonise.",
+     "match": [
+      "recolonise"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "benign",
+     "pos": "adj.",
+     "def": "not harmful",
+     "zh": "無害的、良性的",
+     "example": "None of this makes wildfire benign.",
+     "match": [
+      "benign"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-30-1.mp3",
+    "times": [
+     [
+      0.36,
+      3.3
+     ],
+     [
+      3.56,
+      14.0
+     ],
+     [
+      14.38,
+      15.36
+     ],
+     [
+      16.14,
+      21.01
+     ],
+     [
+      21.28,
+      26.1
+     ],
+     [
+      26.42,
+      30.53
+     ],
+     [
+      30.77,
+      36.41
+     ],
+     [
+      36.69,
+      46.98
+     ],
+     [
+      47.76,
+      49.12
+     ],
+     [
+      49.32,
+      55.95
+     ],
+     [
+      56.25,
+      58.39
+     ],
+     [
+      58.6,
+      65.41
+     ],
+     [
+      65.67,
+      70.56
+     ],
+     [
+      70.86,
+      77.88
+     ],
+     [
+      78.1,
+      84.87
+     ],
+     [
+      85.14,
+      92.21
+     ],
+     [
+      92.99,
+      96.2
+     ],
+     [
+      96.44,
+      100.48
+     ],
+     [
+      100.76,
+      106.01
+     ],
+     [
+      106.34,
+      109.14
+     ],
+     [
+      109.39,
+      114.97
+     ],
+     [
+      115.26,
+      119.67
+     ],
+     [
+      119.88,
+      127.09
+     ],
+     [
+      127.35,
+      135.02
+     ],
+     [
+      135.8,
+      137.22
+     ],
+     [
+      137.41,
+      143.02
+     ],
+     [
+      143.29,
+      150.32
+     ],
+     [
+      151.1,
+      153.64
+     ],
+     [
+      153.87,
+      161.94
+     ],
+     [
+      162.22,
+      167.34
+     ],
+     [
+      167.67,
+      177.4
+     ],
+     [
+      177.73,
+      183.24
+     ]
+    ],
+    "duration": 183.9,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-10-30-1-words/"
+   }
+  },
+  {
+   "title": "Japan's MMX Probe Heads for Mars's Moon Phobos on a Mission to Bring Home Ten Grams of Dust",
+   "topic": "Space · Mars moons",
+   "source": {
+    "name": "BBC News: Mission blasts off for Mars to grab a piece of its moon (19 Oct 2026)",
+    "url": "https://www.bbc.com/news/articles/cmvgxvkv54w1o",
+    "links": [
+     {
+      "name": "ESA: Mars moon lander set to launch on 19 October (13 Oct 2026)",
+      "url": "https://www.esa.int/Science_Exploration/Space_Science/Mars_moon_lander_set_to_launch_on_19_October"
+     },
+     {
+      "name": "Science Japan (Kyodo): Japan successfully launches probe in Martian moon mission (23 Oct 2026)",
+      "url": "https://sj.jst.go.jp/news/202610/n1023-01n.html"
+     },
+     {
+      "name": "NASA Science: NASA to Help Unlock Mysteries of Mars' Moons in Upcoming Mission (15 Oct 2026)",
+      "url": "https://science.nasa.gov/directorates/smd/planetary-science-division/nasa-to-help-unlock-mysteries-of-mars-moons-in-upcoming-mission/"
+     },
+     {
+      "name": "AP News: Japan launches spacecraft to explore Martian moons and bring home soil",
+      "url": "https://apnews.com/article/japan-mars-moon-mission-fb51fbbf90374631e8ae658f9ca46154"
+     }
+    ]
+   },
+   "script": [
+    [
+     "This is the science desk.",
+     "A Japanese spacecraft is on its way to Mars, on a mission to bring back the first ever sample from one of the planet's two moons.",
+     "Here's the report."
+    ],
+    [
+     "The Martian Moons Exploration mission, known as MMX, lifted off on an H3 rocket from the Tanegashima Space Center at four forty-one in the morning, local time, on October twentieth.",
+     "It's led by the Japan Aerospace Exploration Agency, working with NASA and with the French, German and European space agencies.",
+     "The spacecraft weighs about four and a half tonnes, and it's built from three separate modules: one for the journey out, one for exploring the moon, and one for the trip home."
+    ],
+    [
+     "Its target is Phobos, the larger of the two Martian moons.",
+     "Phobos is only about twenty kilometers across, and its partner, Deimos, is roughly half that size.",
+     "Both are lumpy and irregular, and scientists like to call them space potatoes."
+    ],
+    [
+     "Landing there won't be easy.",
+     "First, a small rover built by French and German teams will be set down to scout a landing site for the main spacecraft.",
+     "According to Professor Sara Russell of London's Natural History Museum, nobody has ever placed a rover on such a small moon.",
+     "Phobos has very little gravity of its own, she explains, yet it sits right next to a large planet, and that makes the descent far harder.",
+     "On the surface, the rover will weigh about as much as fifteen grams would on Earth."
+    ],
+    [
+     "Then comes the sampling.",
+     "In all, the mission carries eleven science instruments, seven on the main spacecraft and four on the rover.",
+     "NASA has supplied a device that fires short bursts of high-pressure nitrogen to blow surface material into a container.",
+     "Meanwhile, a Japanese sampler will extract cores from a few inches deeper down."
+    ],
+    [
+     "The schedule is long.",
+     "The probe should enter orbit around Mars in August twenty twenty-seven, and the rover is due to be released in early twenty twenty-nine.",
+     "The main craft is expected to touch down in twenty thirty, and its return capsule should reach Earth in twenty thirty-one.",
+     "That capsule will come down in the Woomera desert in South Australia, carrying at least ten grams of moon dust."
+    ],
+    [
+     "Why go to all that trouble?",
+     "There are two competing ideas about where these moons came from.",
+     "Either they're debris thrown into orbit when a large object smashed into Mars, or they're asteroids that wandered too close and were captured by the planet's gravity.",
+     "Professor Russell says the two theories should produce very distinct results, so the answer could become clear quite quickly.",
+     "There may even be a bonus: tiny grains blasted off Mars itself could be embedded in the surface of Phobos."
+    ],
+    [
+     "By contrast, NASA's own plan to fetch rock samples from the Martian surface has been effectively cancelled, after Congress halted its funding.",
+     "China, meanwhile, hopes to launch a Mars sampling mission in twenty twenty-eight.",
+     "Still, there are plenty of hurdles ahead for MMX.",
+     "That's the space report from the science desk. We'll follow the probe as it nears Mars next year."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "The MMX mission to Phobos",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The spacecraft"
+       },
+       {
+        "t": "Consists of three [[1]] for different stages of the trip"
+       },
+       {
+        "h": "The moons"
+       },
+       {
+        "t": "Phobos and Deimos are nicknamed space [[2]]"
+       },
+       {
+        "h": "Landing"
+       },
+       {
+        "t": "Rover's first job: to find a suitable [[3]]"
+       },
+       {
+        "t": "Difficult because Phobos has weak [[4]] but is close to Mars"
+       },
+       {
+        "h": "Collecting material"
+       },
+       {
+        "t": "NASA device uses bursts of [[5]] under high pressure"
+       },
+       {
+        "t": "Japanese sampler will remove [[6]] from below the surface"
+       },
+       {
+        "h": "Timetable"
+       },
+       {
+        "t": "Capsule arrives back on Earth in [[7]]"
+       },
+       {
+        "t": "Landing area: a [[8]] in South Australia"
+       },
+       {
+        "h": "Scientific questions"
+       },
+       {
+        "t": "Theory 2: the moons are captured [[9]]"
+       },
+       {
+        "h": "Other missions"
+       },
+       {
+        "t": "NASA's Mars sample plan stopped when [[10]] cut the money"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "modules",
+         "separate modules"
+        ],
+        "ref": "built from three separate modules",
+        "ev": "it's built from three separate modules",
+        "zh": "consists of = built from；答案 modules（模組，複數）。干擾：four and a half tonnes 是重量。三個模組分別負責去程、探測、返程。"
+       },
+       {
+        "a": [
+         "potatoes"
+        ],
+        "ref": "scientists like to call them space potatoes",
+        "ev": "scientists like to call them space potatoes",
+        "zh": "nicknamed = like to call them；題目已給 space，填 potatoes（複數）。twenty kilometers、half that size 是尺寸干擾。"
+       },
+       {
+        "a": [
+         "landing site"
+        ],
+        "ref": "to scout a landing site for the main spacecraft",
+        "ev": "to scout a landing site for the main spacecraft",
+        "zh": "find a suitable ___ = scout a landing site；答案 landing site（著陸點）。"
+       },
+       {
+        "a": [
+         "gravity"
+        ],
+        "ref": "Phobos has very little gravity of its own",
+        "ev": "Phobos has very little gravity of its own",
+        "zh": "weak = very little；答案 gravity（重力）。fifteen grams 是探測車在 Phobos 上的「等效重量」，不是答案。"
+       },
+       {
+        "a": [
+         "nitrogen",
+         "nitrogen gas"
+        ],
+        "ref": "high-pressure nitrogen",
+        "ev": "fires short bursts of high-pressure nitrogen",
+        "zh": "uses bursts of ___ under high pressure = fires short bursts of high-pressure nitrogen；答案 nitrogen（氮氣）。"
+       },
+       {
+        "a": [
+         "cores"
+        ],
+        "ref": "will extract cores from a few inches deeper down",
+        "ev": "a Japanese sampler will extract cores",
+        "zh": "remove = extract；below the surface = deeper down；答案 cores（岩芯樣本，複數）。"
+       },
+       {
+        "a": [
+         "2031"
+        ],
+        "ref": "should reach Earth in twenty thirty-one",
+        "ev": "its return capsule should reach Earth in twenty thirty-one",
+        "zh": "答案 2031。干擾很多：2027 進入火星軌道、2029 年初放出探測車、2030 著陸取樣、2028 是中國任務的發射年。"
+       },
+       {
+        "a": [
+         "desert",
+         "Woomera desert"
+        ],
+        "ref": "in the Woomera desert in South Australia",
+        "ev": "will come down in the Woomera desert in South Australia",
+        "zh": "landing area = come down in；答案 desert（沙漠，Woomera desert 兩字也可）。"
+       },
+       {
+        "a": [
+         "asteroids"
+        ],
+        "ref": "or they're asteroids that wandered too close",
+        "ev": "or they're asteroids that wandered too close and were captured by the planet's gravity",
+        "zh": "Theory 2 = 第二種說法：被捕獲的小行星（captured asteroids）。第一種是撞擊火星後拋出的碎片（debris），題目問的是第二種。"
+       },
+       {
+        "a": [
+         "Congress"
+        ],
+        "ref": "after Congress halted its funding",
+        "ev": "after Congress halted its funding",
+        "zh": "cut the money = halted its funding；答案 Congress（美國國會）。China 2028 是另一個任務的干擾。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "lift off",
+     "pos": "phr. v.",
+     "def": "(of a rocket) to leave the ground",
+     "zh": "（火箭）升空",
+     "example": "The mission lifted off on an H3 rocket.",
+     "match": [
+      "lifted off"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "irregular",
+     "pos": "adj.",
+     "def": "not even or regular in shape",
+     "zh": "不規則的",
+     "example": "Both moons are lumpy and irregular.",
+     "match": [
+      "irregular"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "scout",
+     "pos": "v.",
+     "def": "to explore an area to obtain information",
+     "zh": "偵察、勘察",
+     "example": "A rover will scout a landing site.",
+     "match": [
+      "scout"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "descent",
+     "pos": "n.",
+     "def": "the act of moving downwards",
+     "zh": "下降",
+     "example": "A nearby planet makes the descent far harder.",
+     "match": [
+      "descent"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "embedded",
+     "pos": "adj.",
+     "def": "fixed firmly in a surrounding mass",
+     "zh": "嵌入的",
+     "example": "Grains from Mars could be embedded in Phobos.",
+     "match": [
+      "embedded"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "hurdle",
+     "pos": "n.",
+     "def": "a problem or difficulty that must be overcome",
+     "zh": "障礙、難關",
+     "example": "There are plenty of hurdles ahead for MMX.",
+     "match": [
+      "hurdles"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "linger",
+     "pos": "v.",
+     "def": "to stay in a place longer than necessary or expected",
+     "zh": "逗留、徘徊",
+     "example": "No probe has lingered near the moons for long.",
+     "match": [
+      "lingered"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "hypothesis",
+     "pos": "n.",
+     "def": "a proposed explanation based on limited evidence",
+     "zh": "假說",
+     "example": "One hypothesis holds that the moons are debris.",
+     "match": [
+      "hypothesis"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "markedly",
+     "pos": "adv.",
+     "def": "in a clearly noticeable way",
+     "zh": "明顯地",
+     "example": "The chemistry should differ markedly.",
+     "match": [
+      "markedly"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "contaminated",
+     "pos": "adj.",
+     "def": "made impure by contact with another substance",
+     "zh": "受污染的",
+     "example": "Meteorites become contaminated after landing.",
+     "match": [
+      "contaminated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "pristine",
+     "pos": "adj.",
+     "def": "in its original condition; unspoiled",
+     "zh": "原始的、未受污染的",
+     "example": "A sealed sample would be pristine.",
+     "match": [
+      "pristine"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "strikingly",
+     "pos": "adv.",
+     "def": "in a way that attracts attention",
+     "zh": "顯著地、驚人地",
+     "example": "The quantity involved is strikingly small.",
+     "match": [
+      "strikingly"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "formidable",
+     "pos": "adj.",
+     "def": "very difficult to deal with; inspiring respect",
+     "zh": "艱鉅的、令人生畏的",
+     "example": "The mission presents formidable engineering challenges.",
+     "match": [
+      "formidable"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "emit",
+     "pos": "v.",
+     "def": "to send out radiation, gas, light, etc.",
+     "zh": "發射、放出",
+     "example": "MEGANE measures gamma rays emitted by Phobos.",
+     "match": [
+      "emitted"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "remains to be seen",
+     "pos": "phr.",
+     "def": "is not yet known",
+     "zh": "尚待觀察",
+     "example": "Whether ten grams will be enough remains to be seen.",
+     "match": [
+      "remains to be seen"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "reading": {
+    "title": "Small Moons, Big Questions: The Case for Bringing Phobos Back to Earth",
+    "intro": "A Japanese-led mission hopes that a few grams of dust from a Martian moon will settle a long-running scientific debate.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Only three natural satellites orbit the rocky planets of the inner Solar System: Earth's Moon and the two small moons of Mars, Phobos and Deimos. Despite the large fleet of spacecraft sent to the Red Planet over the past half-century, these two bodies remain remarkably mysterious. No probe has lingered near them for long, and much of what is known has been gathered during brief flybys. On 20 October 2026, that began to change when Japan's Martian Moons eXploration mission, or MMX, was launched from the Tanegashima Space Center. Led by the Japan Aerospace Exploration Agency (JAXA), in collaboration with NASA, the French and German space agencies and the European Space Agency (ESA), it aims to become the first mission to collect material from Phobos and return it to laboratories on Earth."
+     },
+     {
+      "label": "B",
+      "text": "At the heart of the mission lies a question of origins. One hypothesis holds that the moons are the remains of debris hurled into orbit after a giant collision on the surface of Mars early in its history. The alternative is that they are asteroids from further out in the Solar System that strayed too close and were captured by the planet's gravity. Remote observations have not been able to settle the matter. According to Professor Sara Russell of the Natural History Museum in London, who is the mission's deputy for sample analysis, the chemistry and mineral composition of returned material should differ markedly depending on which explanation is correct. 'It should be pretty much immediately obvious' which origin is the right one, she has said, suggesting that the debate could be resolved soon after the sample arrives."
+     },
+     {
+      "label": "C",
+      "text": "Why, one might ask, is it necessary to travel so far for material when fragments of Mars already exist on Earth? Martian meteorites, which were blasted off the planet by asteroid impacts, are extremely rare, and like all space rocks they become contaminated almost as soon as they land, mixing with air, dust, soil and water. A sample sealed in a capsule, by contrast, would be pristine. There is also a practical argument. 'Bringing samples to our most sophisticated labs here on Earth is a multiplier for discoveries, because our most precise instruments are too large, complex or sensitive to send to space,' says Elliot Sefton-Nash, ESA's project scientist for MMX. Moreover, material kept in storage can be re-examined by future generations equipped with better tools, which is why he calls returned samples 'the gift that keeps on giving'."
+     },
+     {
+      "label": "D",
+      "text": "The quantity involved is strikingly small. The return capsule is expected to deliver at least ten grams of Phobos material, a figure that might seem disappointing for a journey of several years. Researchers, however, insist that this is sufficient. Dr Chrysa Avdellidou of the University of Leicester points out that analysis can be carried out on individual grains. 'You don't need to have kilos back from a surface in order to do science,' she says. 'So it's worth every gram.' There may even be an unexpected bonus. Because Phobos orbits so close to Mars, debris thrown up whenever an object strikes the Martian surface could have become embedded in the moon. If so, the sample might contain grains of Mars itself, offering direct information about the planet's composition and history."
+     },
+     {
+      "label": "E",
+      "text": "Achieving all this presents formidable engineering challenges. MMX is designed to be the first spacecraft to circle Phobos in what is called a quasi-satellite orbit, and the first to collect material from the surface of a moon other than our own. Landing in such weak gravity requires specially developed technology. The mission carries eleven scientific instruments, seven on the main spacecraft and four on Idefix, the rover. One of NASA's contributions, a spectrometer known as MEGANE, takes its name from the Japanese word for eyeglasses; it will measure the neutrons and gamma rays emitted by Phobos in order to determine the moon's elemental make-up. If the mission succeeds, it will also be the first to return to Earth after visiting the Mars system, demonstrating a capability that could prove valuable for future expeditions."
+     },
+     {
+      "label": "F",
+      "text": "MMX arrives at a moment of uncertainty for Mars exploration more broadly. NASA's Perseverance rover has been gathering samples on Mars and storing them in canisters since 2021, but the joint NASA–ESA project intended to collect them, Mars Sample Return, has been effectively cancelled after the US Congress halted its funding. China is planning its own sampling mission, due to launch in 2028. Against this background, the Phobos sample may acquire additional significance. Once the capsule lands in Australia, it will be transferred to Japan, where the material will be extracted and catalogued before being shared with partner agencies. Whether ten grams of dust can answer questions that decades of observation have not remains to be seen, but few scientists appear to doubt that the attempt is worthwhile."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a defence of a sample size that may appear inadequate",
+        "a": "D",
+        "ref": "D",
+        "ev": "a figure that might seem disappointing for a journey of several years",
+        "zh": "D 段：10 克看似令人失望，但研究者堅稱足夠（worth every gram）→ 為看似不足的樣本量辯護。"
+       },
+       {
+        "q": "the origin of the name given to a scientific instrument",
+        "a": "E",
+        "ref": "E",
+        "ev": "takes its name from the Japanese word for eyeglasses",
+        "zh": "E 段：MEGANE 取自日文「眼鏡」→ 儀器名稱的由來。"
+       },
+       {
+        "q": "a reason why material that has already reached Earth is of limited value",
+        "a": "C",
+        "ref": "C",
+        "ev": "they become contaminated almost as soon as they land",
+        "zh": "C 段：火星隕石一落地就被空氣、塵土、土壤和水污染 → 價值有限。"
+       },
+       {
+        "q": "a reference to another country's plans to collect samples",
+        "a": "F",
+        "ref": "F",
+        "ev": "China is planning its own sampling mission",
+        "zh": "F 段：中國計畫 2028 年發射自己的採樣任務。"
+       },
+       {
+        "q": "an indication that earlier observations of the moons were only brief",
+        "a": "A",
+        "ref": "A",
+        "ev": "much of what is known has been gathered during brief flybys",
+        "zh": "A 段：過去的資訊大多來自短暫飛掠（brief flybys），沒有探測器長時間停留。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Analysis of the returned material is expected to distinguish clearly between the two theories of origin.",
+        "a": "True",
+        "ref": "B",
+        "ev": "should differ markedly depending on which explanation is correct",
+        "zh": "B 段：兩種假說會產生明顯不同的化學與礦物組成，結果「幾乎立刻就很明顯」→ True。distinguish clearly = differ markedly。"
+       },
+       {
+        "q": "Phobos is believed to have formed earlier than Deimos.",
+        "a": "Not Given",
+        "ref": "B",
+        "ev": "At the heart of the mission lies a question of origins",
+        "zh": "文章討論兩顆衛星「如何」形成（撞擊碎片 vs 被捕獲的小行星），但完全沒比較誰比較早形成 → Not Given（陷阱：與「起源」相關但沒有這項資訊）。"
+       },
+       {
+        "q": "MMX is intended to be the first mission to take material from the surface of any moon.",
+        "a": "False",
+        "ref": "E",
+        "ev": "the first to collect material from the surface of a moon other than our own",
+        "zh": "E 段：是「除了月球以外」第一個從衛星表面採樣的任務 → 月球早就採樣過，所以「任何衛星的第一個」與原文矛盾 → False。"
+       },
+       {
+        "q": "Samples collected by Perseverance are being kept in containers on Mars.",
+        "a": "True",
+        "ref": "F",
+        "ev": "has been gathering samples on Mars and storing them in canisters since 2021",
+        "zh": "F 段：毅力號自 2021 年起在火星上採樣並存放在罐子（canisters）裡 → True。containers = canisters。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Why samples must come home",
+      "lines": [
+       {
+        "t": "Meteorites from Mars are of limited use because they quickly become [[1]] after reaching the ground, whereas material sealed in a capsule would remain [[2]]. In addition, Sefton-Nash describes laboratories on Earth as a [[3]] for discoveries, since the best instruments are too big, complicated or [[4]] to be launched into space."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "contaminated"
+        ],
+        "ref": "C",
+        "ev": "they become contaminated almost as soon as they land",
+        "zh": "C 段：become contaminated（受污染）；quickly = almost as soon as。"
+       },
+       {
+        "a": [
+         "pristine"
+        ],
+        "ref": "C",
+        "ev": "A sample sealed in a capsule, by contrast, would be pristine",
+        "zh": "C 段：pristine（原始未受污染的）；remain 後接形容詞。"
+       },
+       {
+        "a": [
+         "multiplier"
+        ],
+        "ref": "C",
+        "ev": "is a multiplier for discoveries",
+        "zh": "C 段：a multiplier for discoveries（發現的倍增器）；空格前有 a，填單數名詞 multiplier。"
+       },
+       {
+        "a": [
+         "sensitive"
+        ],
+        "ref": "C",
+        "ev": "too large, complex or sensitive to send to space",
+        "zh": "C 段：too large, complex or sensitive；big = large、complicated = complex，所以空格是 sensitive（精密敏感的）。"
+       }
+      ]
+     }
+    ]
+   },
+   "audio": {
+    "src": "audio/2026-10-30-2.mp3",
+    "times": [
+     [
+      0.36,
+      1.87
+     ],
+     [
+      2.09,
+      9.48
+     ],
+     [
+      9.78,
+      10.81
+     ],
+     [
+      11.59,
+      23.23
+     ],
+     [
+      23.58,
+      31.59
+     ],
+     [
+      31.91,
+      42.12
+     ],
+     [
+      42.9,
+      46.42
+     ],
+     [
+      46.7,
+      53.23
+     ],
+     [
+      53.56,
+      58.14
+     ],
+     [
+      58.92,
+      60.46
+     ],
+     [
+      60.72,
+      67.58
+     ],
+     [
+      67.79,
+      75.36
+     ],
+     [
+      75.62,
+      84.14
+     ],
+     [
+      84.44,
+      89.01
+     ],
+     [
+      89.79,
+      91.11
+     ],
+     [
+      91.34,
+      97.66
+     ],
+     [
+      97.98,
+      104.76
+     ],
+     [
+      105.11,
+      110.01
+     ],
+     [
+      110.79,
+      112.07
+     ],
+     [
+      112.36,
+      119.89
+     ],
+     [
+      120.14,
+      126.9
+     ],
+     [
+      127.19,
+      133.41
+     ],
+     [
+      134.19,
+      135.65
+     ],
+     [
+      136.03,
+      139.39
+     ],
+     [
+      139.7,
+      148.74
+     ],
+     [
+      149.04,
+      155.8
+     ],
+     [
+      156.07,
+      162.66
+     ],
+     [
+      163.44,
+      171.78
+     ],
+     [
+      172.01,
+      176.63
+     ],
+     [
+      176.92,
+      180.2
+     ],
+     [
+      180.53,
+      186.19
+     ]
+    ],
+    "duration": 186.8,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-10-30-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
