@@ -1,0 +1,2185 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-10-31",
+ "date": "2026-10-31",
+ "title": "The Fed Holds Rates Steady but Signals Its Inflation Fight Is Not Over · Antarctica's 'Doomsday Glacier' Could Raise Seas Twice as Much as Expected, New Model Suggests",
+ "stories": [
+  {
+   "title": "The Fed Holds Rates Steady but Signals Its Inflation Fight Is Not Over",
+   "topic": "Economics · central banks",
+   "source": {
+    "name": "Federal Reserve: FOMC statement (28 Oct 2026)",
+    "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+    "links": [
+     {
+      "name": "CNBC: Fed holds rates steady despite concerns over inflation (28 Oct 2026)",
+      "url": "https://www.cnbc.com/2026/10/28/fed-interest-rate-decision-october-2026.html"
+     },
+     {
+      "name": "Federal Reserve: Transcript of Chairman Warsh's press conference (28 Oct 2026)",
+      "url": "https://www.federalreserve.gov/mediacenter/files/FOMCpresconf20261028.pdf"
+     },
+     {
+      "name": "Reuters via Investing.com: FOMC holds rates steady, markets rise modestly (28 Oct 2026)",
+      "url": "https://au.investing.com/news/economy-news/fomc-holds-rates-steady-markets-mostly-follow-suit-4722684"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "America's central bank has left interest rates unchanged, but it has made clear that its fight against inflation is far from over.",
+     "Here's the report."
+    ],
+    [
+     "After a two-day meeting in Washington, the Federal Reserve's rate-setting committee voted to keep its benchmark rate in a range of three point seven five to four percent.",
+     "That's where it has been since September, when policymakers approved a quarter-point increase.",
+     "The decision was widely expected.",
+     "According to the CME Group's FedWatch tool, traders had put the chance of a hike at less than ten percent."
+    ],
+    [
+     "The vote, though, was not unanimous.",
+     "Ten members backed the hold, while two wanted to go further.",
+     "Governor Lisa Cook and Cleveland Fed President Beth Hammack both pushed for a quarter-point rise.",
+     "For Ms Cook, it was a first dissent since she joined the Fed in twenty twenty-two.",
+     "Ms Hammack, by contrast, had also voted against the majority in July."
+    ],
+    [
+     "The wording of the statement drew close attention.",
+     "It said economic activity was expanding at a strong pace, an upgrade from the word solid, which the Fed used in September.",
+     "It described capital investment as robust, and said domestic spending had been resilient.",
+     "But it also said, bluntly, that inflation remains elevated.",
+     "The Fed's preferred measure of prices is expected to show inflation above three percent for September, even after stripping out food and energy.",
+     "Prices have now been rising faster than the Fed's two percent target for more than five years."
+    ],
+    [
+     "At his news conference, Chairman Kevin Warsh said officials judge the economy by looking out the window, something he called interrogating reality.",
+     "So what does the window show?",
+     "Growth in the first half of the year, he said, had been revised up from an earlier estimate of one point eight percent to two point four percent.",
+     "The third quarter was probably running above three percent, led by consumer spending and business investment.",
+     "And high-tech investment, he added, is leading the acceleration."
+    ],
+    [
+     "Mr Warsh also announced a change to the calendar.",
+     "The committee will still meet eight times a year.",
+     "But in twenty twenty-seven, one of those meetings will focus only on long-term strategy, with no vote on rates and no policy statement.",
+     "He expects two such meetings in twenty twenty-eight."
+    ],
+    [
+     "Meanwhile, the market reaction was muted.",
+     "The S and P five hundred and the Nasdaq each rose about zero point two percent.",
+     "The two-year Treasury yield, the one most sensitive to Fed policy, slipped to four point seven percent, while the ten-year yield edged just above five percent.",
+     "The dollar slipped by about zero point two percent."
+    ],
+    [
+     "Looking ahead, many analysts now regard a hike in December as close to certain.",
+     "Some suspect the Fed held off because the midterm elections take place on November the third.",
+     "Others think waiting was a mistake.",
+     "Tom Graff, chief investment officer at Facet, said the Fed should have raised rates, and that by holding back, Mr Warsh risks coming across as hesitant.",
+     "There are risks on both sides, though.",
+     "Ronald Gestiehr of Luttner Financial said the Fed was walking a fine line, and did not want to go too far, too fast, and push the economy into recession.",
+     "That's the market report. We'll be watching the December meeting closely."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "The Federal Reserve's October decision",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The decision"
+       },
+       {
+        "t": "Rate unchanged since a quarter-point [[1]] in September"
+       },
+       {
+        "h": "The vote"
+       },
+       {
+        "t": "Lisa Cook: her first [[2]] since joining in 2022"
+       },
+       {
+        "h": "The statement"
+       },
+       {
+        "t": "Description of growth changed from 'solid' to '[[3]]'"
+       },
+       {
+        "t": "Business spending on equipment called [[4]]"
+       },
+       {
+        "h": "The chairman's view"
+       },
+       {
+        "t": "Warsh's name for his method: 'interrogating [[5]]'"
+       },
+       {
+        "t": "First-half growth now estimated at [[6]] %"
+       },
+       {
+        "t": "Faster growth driven mainly by [[7]] investment"
+       },
+       {
+        "h": "Meeting changes"
+       },
+       {
+        "t": "From 2027, one meeting devoted entirely to long-term [[8]]"
+       },
+       {
+        "h": "Outlook"
+       },
+       {
+        "t": "Possible reason for delay: the upcoming midterm [[9]]"
+       },
+       {
+        "t": "Critic: waiting may make Warsh appear [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "increase"
+        ],
+        "ref": "when policymakers approved a quarter-point increase",
+        "ev": "approved a quarter-point increase",
+        "zh": "unchanged since = That's where it has been since September；答案 increase（升息）。注意題目已給 quarter-point，只填 increase。後面的 hike 出現在「交易員認為升息機率」那句，時間點不對。"
+       },
+       {
+        "a": [
+         "dissent"
+        ],
+        "ref": "it was a first dissent since she joined the Fed",
+        "ev": "it was a first dissent since she joined the Fed in twenty twenty-two",
+        "zh": "dissent（投反對票、異議）。前一句說兩人 pushed for a quarter-point rise（主張升息），但題目問的是 her first ___，對應 a first dissent。"
+       },
+       {
+        "a": [
+         "strong"
+        ],
+        "ref": "expanding at a strong pace",
+        "ev": "economic activity was expanding at a strong pace, an upgrade from the word solid",
+        "zh": "changed from 'solid' to ___：聲明把經濟描述從 solid 上調為 strong。solid 是舊用語（干擾），答案 strong。"
+       },
+       {
+        "a": [
+         "robust"
+        ],
+        "ref": "It described capital investment as robust",
+        "ev": "It described capital investment as robust",
+        "zh": "business spending on equipment = capital investment（資本支出）；答案 robust（強勁的）。同句的 resilient 形容的是 domestic spending（國內消費），是干擾。"
+       },
+       {
+        "a": [
+         "reality"
+        ],
+        "ref": "something he called interrogating reality",
+        "ev": "something he called interrogating reality",
+        "zh": "Warsh's name for his method = something he called；答案 reality（interrogating reality：「審問現實」，意指直接觀察實際經濟狀況）。"
+       },
+       {
+        "a": [
+         "2.4"
+        ],
+        "ref": "from an earlier estimate of one point eight percent to two point four percent",
+        "ev": "from an earlier estimate of one point eight percent to two point four percent",
+        "zh": "now estimated = revised up to；答案 2.4。干擾：1.8% 是「先前的估計」，第三季 above three percent 是另一個時段。"
+       },
+       {
+        "a": [
+         "high-tech",
+         "high tech"
+        ],
+        "ref": "high-tech investment, he added, is leading the acceleration",
+        "ev": "high-tech investment, he added, is leading the acceleration",
+        "zh": "faster growth driven mainly by = leading the acceleration；答案 high-tech（高科技）。consumer spending、business investment 是第三季成長的來源，但題目問「帶動加速」的是 high-tech investment。"
+       },
+       {
+        "a": [
+         "strategy"
+        ],
+        "ref": "one of those meetings will focus only on long-term strategy",
+        "ev": "will focus only on long-term strategy",
+        "zh": "devoted entirely to = focus only on；答案 strategy（策略）。eight times a year 是總會議次數，不是答案。"
+       },
+       {
+        "a": [
+         "elections",
+         "election"
+        ],
+        "ref": "because the midterm elections take place on November the third",
+        "ev": "because the midterm elections take place on November the third",
+        "zh": "possible reason for delay = Some suspect the Fed held off because…；答案 elections（期中選舉）。"
+       },
+       {
+        "a": [
+         "hesitant"
+        ],
+        "ref": "Mr Warsh risks coming across as hesitant",
+        "ev": "Mr Warsh risks coming across as hesitant",
+        "zh": "appear = come across as；答案 hesitant（猶豫不決的）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Patience or Hesitation? Reading the Federal Reserve's October Pause",
+    "intro": "A widely expected decision to leave interest rates unchanged revealed more about the US central bank than its outcome suggests.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "When the Federal Reserve's rate-setting committee gathered in Washington on 27 and 28 October 2026, few observers expected a change in policy. Futures markets, as tracked by the CME Group's FedWatch tool, had assigned less than a 10% probability to an increase, and the committee duly kept the federal funds rate in a range of 3.75% to 4%. Yet the meeting was arguably more revealing than its outcome suggests. The vote was split ten to two, the official statement offered a noticeably brighter description of the economy, and the chairman used his news conference to announce an unusual reform of the committee's own calendar. Taken together, these signals point to a central bank that appears less divided about whether to tighten policy further than about when to do so."
+     },
+     {
+      "label": "B",
+      "text": "The backdrop is uncomfortable. Inflation has exceeded the Fed's 2% target for more than five years, and, according to CNBC, the pace of price increases has picked up since the committee raised rates by a quarter of a percentage point in September. The Fed's preferred inflation gauge was expected to show prices rising by more than 3% in September, even excluding volatile food and energy costs. Economists are particularly concerned that inflation has broadened beyond the energy sector, which had been disrupted by the war involving Iran. In its statement, the committee acknowledged the problem in a single blunt sentence: 'Inflation remains elevated.'"
+     },
+     {
+      "label": "C",
+      "text": "At the same time, the wider economy shows few signs of strain. The statement upgraded its description of activity from 'solid' to 'strong', observing that 'domestic spending has been resilient' and that 'productivity growth is strong'. Chairman Kevin Warsh told reporters that growth in the third quarter was likely running above 3%, and that capital expenditure accounted for a historically high share of output, with high-tech investment leading the way. The unemployment rate, meanwhile, 'has changed little'. For some economists, this combination raises an awkward question: how much restraint the current interest rate is actually exerting on an economy that continues to grow so vigorously. According to CNBC, the Atlanta Fed's GDPNow tracker was pointing to annualised growth of 3.4% in the third quarter, which would be the strongest in a year. If the current rate is exerting very little restraint, further increases may eventually be required."
+     },
+     {
+      "label": "D",
+      "text": "The two dissenters, Governor Lisa Cook and Cleveland Fed President Beth Hammack, both preferred an immediate quarter-point increase. Hammack has been a consistently hawkish voice and had also dissented in July, but Cook's vote was widely regarded as a surprise: it was her first dissent since joining the Fed in 2022. Notably, two other officials who had voted against the majority in July, Dallas Fed President Lorie Logan and Minneapolis Fed President Neel Kashkari, sided with the majority this time, even though both have spoken of the need for higher rates. One strategist, Karl Schamotta of Corpay, described the presence of two dissents rather than the three or four many had expected as 'a dovish surprise at the margin'."
+     },
+     {
+      "label": "E",
+      "text": "Why, then, did the majority choose to wait? The official explanation is that 'the accumulation of more information' will help the committee determine the appropriate policy stance, and senior figures such as Vice Chair Philip Jefferson had indicated that current conditions gave policymakers time to evaluate their next move. Some market participants suspect a less formal motive: the midterm elections on 3 November. Chris Zaccarelli of Northlight Asset Management said that if the meeting had not been so close to the elections, the committee 'probably would have raised rates today'. Critics argue that delay carries a cost. Because Warsh has chosen to avoid forward guidance, his actions, in the words of Tom Graff of Facet, 'have to do all the talking', and a pause therefore risks being read as complacency rather than patience. Not everyone shares that view. Ronald Gestiehr of Luttner Financial argued that the committee had made the right decision, since policymakers do not want to go 'too far, too fast' and tip the economy into recession."
+     },
+     {
+      "label": "F",
+      "text": "Perhaps the most enduring news, however, concerned the committee's structure. Warsh announced that, although the Fed would continue to hold eight meetings a year, one meeting in 2027 would 'focus exclusively on broad monetary policy strategy', with neither a vote on interest rates nor a policy statement. He expects two such meetings in 2028. In his view, the setting of the schedule is 'more than some administrative detail'; it is 'an institutional choice' that shapes the quality of the committee's deliberations. Whether investors will welcome fewer decision points remains to be seen. As Karen Manna of Federated Hermes put it, by holding rates steady the Fed 'has effectively deferred the debate rather than settled it'. For now, futures pricing indicates a strong possibility of a further increase in December, and perhaps one or two more in 2027."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reference to officials who had previously opposed a decision but now supported the majority",
+        "a": "D",
+        "ref": "D",
+        "ev": "sided with the majority this time",
+        "zh": "D 段：Logan 和 Kashkari 七月投反對票，這次站在多數那邊（sided with the majority）。previously opposed = had voted against the majority in July。"
+       },
+       {
+        "q": "an argument that the way meetings are organised can affect the quality of decisions",
+        "a": "F",
+        "ref": "F",
+        "ev": "it is 'an institutional choice' that shapes the quality of the committee's deliberations",
+        "zh": "F 段：Warsh 說會議時程不只是行政細節，而是會影響討論品質的「制度選擇」。affect the quality = shapes the quality。"
+       },
+       {
+        "q": "a suggestion that disagreement within the Fed is mainly about timing",
+        "a": "A",
+        "ref": "A",
+        "ev": "less divided about whether to tighten policy further than about when to do so",
+        "zh": "A 段末：分歧在「何時」升息而不是「是否」升息 → mainly about timing。"
+       },
+       {
+        "q": "a concern that rising prices have spread to more parts of the economy",
+        "a": "B",
+        "ref": "B",
+        "ev": "inflation has broadened beyond the energy sector",
+        "zh": "B 段：通膨已擴散到能源以外（broadened beyond the energy sector）。spread to more parts = broadened beyond。"
+       },
+       {
+        "q": "a doubt about how effective the present level of interest rates is",
+        "a": "C",
+        "ref": "C",
+        "ev": "how much restraint the current interest rate is actually exerting",
+        "zh": "C 段：目前利率實際上有多大的抑制作用（restraint）→ 對其效果的疑問。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Financial markets considered a rate increase in October unlikely.",
+        "a": "True",
+        "ref": "A",
+        "ev": "had assigned less than a 10% probability to an increase",
+        "zh": "A 段：期貨市場認為升息機率不到 10% → 不太可能 → True。"
+       },
+       {
+        "q": "Lisa Cook also voted against the majority at the July meeting.",
+        "a": "False",
+        "ref": "D",
+        "ev": "it was her first dissent since joining the Fed in 2022",
+        "zh": "D 段：七月也投反對票的是 Hammack；Cook 這次是 2022 年加入以來「第一次」反對 → 與題目矛盾 → False。"
+       },
+       {
+        "q": "The September rate increase was approved by every member of the committee.",
+        "a": "Not Given",
+        "ref": "B",
+        "ev": "since the committee raised rates by a quarter of a percentage point in September",
+        "zh": "B 段只說九月升息一碼，完全沒提九月的投票結果 → Not Given（陷阱：本文有很多投票細節，但都是十月和七月的）。"
+       },
+       {
+        "q": "Warsh intends to reduce the total number of committee meetings held each year.",
+        "a": "False",
+        "ref": "F",
+        "ev": "the Fed would continue to hold eight meetings a year",
+        "zh": "F 段：每年仍開八次會，只是其中一次改為策略討論、不決定利率 → 「總次數減少」與原文矛盾 → False。（減少的是「決定利率的會議」，不是總次數。）"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Why the Fed waited, and the risks of waiting",
+      "lines": [
+       {
+        "t": "Officially, the committee said that the [[1]] of more information would guide its next decision. However, critics point out that because Warsh avoids forward [[2]], his actions alone must communicate his intentions, so a pause could be interpreted as [[3]] instead of patience. Warsh also insisted that the meeting schedule is not simply an [[4]] detail."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "accumulation"
+        ],
+        "ref": "E",
+        "ev": "'the accumulation of more information'",
+        "zh": "E 段：the accumulation of more information（累積更多資訊）。空格前 the、後 of → 名詞 accumulation。"
+       },
+       {
+        "a": [
+         "guidance"
+        ],
+        "ref": "E",
+        "ev": "Warsh has chosen to avoid forward guidance",
+        "zh": "E 段：forward guidance（前瞻指引）。avoids = has chosen to avoid。"
+       },
+       {
+        "a": [
+         "complacency"
+        ],
+        "ref": "E",
+        "ev": "a pause therefore risks being read as complacency rather than patience",
+        "zh": "E 段：interpreted as = read as；instead of = rather than；答案 complacency（自滿、輕忽）。"
+       },
+       {
+        "a": [
+         "administrative"
+        ],
+        "ref": "F",
+        "ev": "'more than some administrative detail'",
+        "zh": "F 段：not simply an ___ detail = more than some administrative detail；答案 administrative（行政的）。空格前是 an，後接 detail → 形容詞。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "unanimous",
+     "pos": "adj.",
+     "def": "agreed by everyone in a group",
+     "zh": "全體一致的",
+     "example": "The vote, though, was not unanimous.",
+     "match": [
+      "unanimous"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "dissent",
+     "pos": "n./v.",
+     "def": "(to express) disagreement with an official decision",
+     "zh": "異議；投反對票",
+     "example": "For Ms Cook, it was a first dissent since she joined the Fed.",
+     "match": [
+      "dissent"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "robust",
+     "pos": "adj.",
+     "def": "strong and healthy; unlikely to fail",
+     "zh": "強勁的、穩健的",
+     "example": "It described capital investment as robust.",
+     "match": [
+      "robust"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "resilient",
+     "pos": "adj.",
+     "def": "able to stay strong or recover quickly after difficulty",
+     "zh": "有韌性的",
+     "example": "Domestic spending had been resilient.",
+     "match": [
+      "resilient"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "elevated",
+     "pos": "adj.",
+     "def": "higher than normal or than desired",
+     "zh": "偏高的",
+     "example": "Inflation remains elevated.",
+     "match": [
+      "elevated"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "interrogate",
+     "pos": "v.",
+     "def": "to examine something closely by asking questions",
+     "zh": "審問；仔細檢視",
+     "example": "He called it interrogating reality.",
+     "match": [
+      "interrogating"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "muted",
+     "pos": "adj.",
+     "def": "weaker or quieter than expected",
+     "zh": "（反應）平淡的、溫和的",
+     "example": "The market reaction was muted.",
+     "match": [
+      "muted"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "come across as",
+     "pos": "phr. v.",
+     "def": "to seem to have a particular quality to others",
+     "zh": "給人……的印象",
+     "example": "He risks coming across as hesitant.",
+     "match": [
+      "coming across as"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "walk a fine line",
+     "pos": "idiom",
+     "def": "to have to act very carefully between two dangers",
+     "zh": "在兩者之間小心拿捏",
+     "example": "The Fed was walking a fine line.",
+     "match": [
+      "walking a fine line"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "hawkish",
+     "pos": "adj.",
+     "def": "(of a central banker) favouring higher interest rates to control inflation",
+     "zh": "鷹派的（傾向升息）",
+     "example": "Hammack has been a consistently hawkish voice.",
+     "match": [
+      "hawkish"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "dovish",
+     "pos": "adj.",
+     "def": "favouring lower interest rates or a gentler policy",
+     "zh": "鴿派的（傾向寬鬆）",
+     "example": "Two dissents were a dovish surprise at the margin.",
+     "match": [
+      "dovish"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "broaden",
+     "pos": "v.",
+     "def": "to spread over a wider area or range",
+     "zh": "擴大、擴散",
+     "example": "Inflation has broadened beyond the energy sector.",
+     "match": [
+      "broadened"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "exert",
+     "pos": "v.",
+     "def": "to use influence or pressure to produce an effect",
+     "zh": "施加（影響、壓力）",
+     "example": "How much restraint is the interest rate exerting?",
+     "match": [
+      "exerting"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "complacency",
+     "pos": "n.",
+     "def": "a feeling of satisfaction that stops you from dealing with a problem",
+     "zh": "自滿、掉以輕心",
+     "example": "A pause risks being read as complacency.",
+     "match": [
+      "complacency"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "deliberation",
+     "pos": "n.",
+     "def": "careful discussion before making a decision",
+     "zh": "審議、深思熟慮的討論",
+     "example": "The schedule shapes the quality of deliberations.",
+     "match": [
+      "deliberations"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-31-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.1
+     ],
+     [
+      1.32,
+      8.74
+     ],
+     [
+      9.04,
+      10.08
+     ],
+     [
+      10.86,
+      20.06
+     ],
+     [
+      20.41,
+      25.74
+     ],
+     [
+      26.06,
+      28.09
+     ],
+     [
+      28.29,
+      34.35
+     ],
+     [
+      35.13,
+      37.22
+     ],
+     [
+      37.51,
+      40.96
+     ],
+     [
+      41.2,
+      46.57
+     ],
+     [
+      46.87,
+      51.18
+     ],
+     [
+      51.39,
+      55.96
+     ],
+     [
+      56.74,
+      59.38
+     ],
+     [
+      59.68,
+      67.46
+     ],
+     [
+      67.68,
+      73.14
+     ],
+     [
+      73.53,
+      77.42
+     ],
+     [
+      77.74,
+      85.86
+     ],
+     [
+      86.1,
+      91.29
+     ],
+     [
+      92.07,
+      100.54
+     ],
+     [
+      100.87,
+      102.36
+     ],
+     [
+      102.72,
+      110.23
+     ],
+     [
+      110.61,
+      116.74
+     ],
+     [
+      116.95,
+      120.57
+     ],
+     [
+      121.35,
+      124.35
+     ],
+     [
+      124.65,
+      127.01
+     ],
+     [
+      127.35,
+      135.24
+     ],
+     [
+      135.51,
+      138.35
+     ],
+     [
+      139.13,
+      141.86
+     ],
+     [
+      142.06,
+      146.67
+     ],
+     [
+      146.95,
+      156.3
+     ],
+     [
+      156.63,
+      159.5
+     ],
+     [
+      160.28,
+      165.07
+     ],
+     [
+      165.36,
+      170.4
+     ],
+     [
+      170.61,
+      172.61
+     ],
+     [
+      172.83,
+      182.24
+     ],
+     [
+      182.55,
+      184.43
+     ],
+     [
+      184.65,
+      193.78
+     ],
+     [
+      194.13,
+      198.46
+     ]
+    ],
+    "duration": 199.1,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-10-31-1-words/"
+   }
+  },
+  {
+   "title": "Antarctica's 'Doomsday Glacier' Could Raise Seas Twice as Much as Expected, New Model Suggests",
+   "topic": "Climate · Antarctic ice",
+   "source": {
+    "name": "UC Irvine: Melting of Antarctica's Thwaites Glacier worse than thought (12 Oct 2026)",
+    "url": "https://ps.uci.edu/news/uc-irvine-nasa-jpl-melting-of-antarcticas-thwaites-glacier-worse-than-thought/",
+    "links": [
+     {
+      "name": "Nature Communications: Sea-level contribution from Thwaites Glacier doubles in an observation-constrained ice-sheet model (Poinelli et al., 2026)",
+      "url": "https://www.nature.com/articles/s41467-026-77976-1"
+     },
+     {
+      "name": "NASA Science: NASA Study Refines Projections for Thwaites Glacier (20 Oct 2026)",
+      "url": "https://science.nasa.gov/blogs/science-news/2026/10/20/nasa-refines-thwaites-glacier-projections/"
+     },
+     {
+      "name": "ScienceDaily: Antarctica's 'Doomsday Glacier' could raise sea levels twice as much as predicted (28 Oct 2026)",
+      "url": "https://www.sciencedaily.com/releases/2026/10/261027063701.htm"
+     }
+    ]
+   },
+   "script": [
+    [
+     "This is the environment desk.",
+     "A new computer model suggests that Antarctica's Thwaites Glacier, often called the Doomsday Glacier, could add twice as much to sea levels this century as scientists had expected.",
+     "Here's the report."
+    ],
+    [
+     "The study comes from researchers at the University of California, Irvine, and NASA's Jet Propulsion Laboratory, and it was published this month in the journal Nature Communications.",
+     "According to NASA, scientists from Dartmouth College were also involved.",
+     "Thwaites sits in West Antarctica's Amundsen Sea Embayment.",
+     "That region alone accounts for roughly a third of the ice sheet's total mass loss.",
+     "Over recent decades, the glacier has thinned, pulled back and sped up."
+    ],
+    [
+     "The trouble, until now, has been the models.",
+     "Conventional simulations struggled to reproduce the acceleration that satellites had picked up.",
+     "They treated the boundary between ice resting on the seabed and ice floating on the sea as a narrow, mostly stable line.",
+     "The new model replaces that line with a much broader grounding zone."
+    ],
+    [
+     "According to the lead author, Mattia Poinelli, satellite observations show this zone can be kilometres wide.",
+     "Warm ocean water reaches deep underneath the ice there, causing what he describes as vigorous melting.",
+     "Radar measurements from Finland's ICEYE satellite constellation revealed movement across several kilometres of the glacier's main trunk.",
+     "As the tides rise and fall, seawater lifts the ice and repeatedly exposes its underside to warm, pressurised water.",
+     "That warm water reaches the coast on ocean currents which, the researchers say, have been altered by climate change."
+    ],
+    [
+     "Once that process was built in, the results changed.",
+     "The model reproduced changes in Thwaites since the nineteen nineties that were four times more pronounced than in conventional models.",
+     "Looking ahead, it projects that the glacier could add as much as thirty millimetres to global sea levels by twenty one hundred.",
+     "That's roughly double earlier estimates, and it assumes no further warming of the climate.",
+     "By comparison, a version of the model with no grounding zone at all produced a figure of only about eight millimetres."
+    ],
+    [
+     "There's also a threat to the glacier's natural anchor.",
+     "At present, its main trunk is held in place by an underwater ridge known as the Mouginot Ridge.",
+     "With a grounding zone four to six kilometres wide, the simulations give a sixty percent chance that the glacier comes loose from that ridge before the end of the century.",
+     "In the most extreme runs, it could happen as early as twenty thirty-eight.",
+     "After that, Mr Poinelli says, the ice would keep retreating towards its next high point on the seafloor, the South Ridge."
+    ],
+    [
+     "Co-author Eric Rignot, a professor of Earth system science at UC Irvine, says most earlier projections simply could not keep up with how fast the ice was being lost, because of missing physics.",
+     "In his view, the new results point to a greater risk of coastal flooding in the coming decades than anyone had anticipated.",
+     "Meanwhile, Mr Poinelli argues that checking a model against the historical record offers a reliable way of narrowing the uncertainty in forecasts."
+    ],
+    [
+     "Still, this is one model, and other research teams will want to test its assumptions.",
+     "It also relies on a deliberately cautious climate scenario, based on average conditions between nineteen ninety-six and twenty twenty-three.",
+     "That's the environment report. We'll keep following the science from the far south."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "A new model of Thwaites Glacier",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Background"
+       },
+       {
+        "t": "Popular name: the '[[1]] Glacier'"
+       },
+       {
+        "t": "Its region produces about one third of Antarctica's ice [[2]]"
+       },
+       {
+        "h": "Weakness of older models"
+       },
+       {
+        "t": "Could not match the [[3]] detected from space"
+       },
+       {
+        "t": "New model uses a wide grounding [[4]] instead of a line"
+       },
+       {
+        "h": "What happens under the ice"
+       },
+       {
+        "t": "Warm water causes melting described as [[5]]"
+       },
+       {
+        "t": "Evidence from radar on a Finnish satellite [[6]]"
+       },
+       {
+        "t": "The [[7]] cause seawater to raise the ice repeatedly"
+       },
+       {
+        "h": "Future risks"
+       },
+       {
+        "t": "Glacier currently held by an underwater [[8]]"
+       },
+       {
+        "t": "Earliest possible loss of this support: [[9]]"
+       },
+       {
+        "t": "Rignot: older forecasts lacked important [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "Doomsday"
+        ],
+        "ref": "often called the Doomsday Glacier",
+        "ev": "often called the Doomsday Glacier",
+        "zh": "popular name = often called；答案 Doomsday（末日）。題目已給 Glacier，只填 Doomsday。"
+       },
+       {
+        "a": [
+         "loss",
+         "mass loss"
+        ],
+        "ref": "roughly a third of the ice sheet's total mass loss",
+        "ev": "accounts for roughly a third of the ice sheet's total mass loss",
+        "zh": "produces about one third = accounts for roughly a third；答案 loss（或 mass loss，流失量）。"
+       },
+       {
+        "a": [
+         "acceleration"
+        ],
+        "ref": "struggled to reproduce the acceleration that satellites had picked up",
+        "ev": "struggled to reproduce the acceleration that satellites had picked up",
+        "zh": "could not match = struggled to reproduce；detected from space = satellites had picked up；答案 acceleration（加速）。前一句的 thinned、pulled back 是干擾。"
+       },
+       {
+        "a": [
+         "zone"
+        ],
+        "ref": "a much broader grounding zone",
+        "ev": "replaces that line with a much broader grounding zone",
+        "zh": "instead of a line = replaces that line with；答案 zone（grounding zone：接地帶）。line 是舊模型的做法（干擾）。"
+       },
+       {
+        "a": [
+         "vigorous"
+        ],
+        "ref": "causing what he describes as vigorous melting",
+        "ev": "causing what he describes as vigorous melting",
+        "zh": "described as = what he describes as；答案 vigorous（劇烈的）。"
+       },
+       {
+        "a": [
+         "constellation"
+        ],
+        "ref": "Finland's ICEYE satellite constellation",
+        "ev": "Radar measurements from Finland's ICEYE satellite constellation",
+        "zh": "Finnish satellite ___ = Finland's ICEYE satellite constellation（衛星星系）；答案 constellation。"
+       },
+       {
+        "a": [
+         "tides"
+        ],
+        "ref": "As the tides rise and fall",
+        "ev": "As the tides rise and fall, seawater lifts the ice",
+        "zh": "raise the ice = lifts the ice；造成的原因是潮汐漲落，答案 tides（複數，因為後面動詞 cause 沒加 s）。"
+       },
+       {
+        "a": [
+         "ridge"
+        ],
+        "ref": "held in place by an underwater ridge",
+        "ev": "its main trunk is held in place by an underwater ridge",
+        "zh": "held = held in place；答案 ridge（海脊），題目已給 underwater。名稱 Mouginot Ridge 也算對時填 ridge 即可。"
+       },
+       {
+        "a": [
+         "2038"
+        ],
+        "ref": "as early as twenty thirty-eight",
+        "ev": "it could happen as early as twenty thirty-eight",
+        "zh": "earliest possible = as early as；答案 2038。干擾：2100（本世紀末）、1990s（歷史資料起點）、60% chance（機率）。"
+       },
+       {
+        "a": [
+         "physics"
+        ],
+        "ref": "because of missing physics",
+        "ev": "because of missing physics",
+        "zh": "lacked important ___ = missing physics；答案 physics（物理機制）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Line or Zone? How a Change of Boundary Doubled a Glacier's Forecast",
+    "intro": "A new modelling study suggests that the way scientists draw one invisible boundary beneath Thwaites Glacier transforms projections of sea-level rise.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Few glaciers attract as much attention as Thwaites. Nicknamed the 'Doomsday Glacier', it lies in West Antarctica's Amundsen Sea Embayment, a region responsible for approximately one third of the Antarctic Ice Sheet's total mass loss. Over recent decades the glacier has thinned, retreated and flowed increasingly quickly. Yet traditional computer models have struggled to reproduce the acceleration detected by satellites, which has made its future contribution to sea levels a key source of uncertainty. A study published on 12 October 2026 in Nature Communications, led by researchers at the University of California, Irvine, and NASA's Jet Propulsion Laboratory, argues that much of this shortfall stems from the way models represent a single boundary beneath the ice."
+     },
+     {
+      "label": "B",
+      "text": "That boundary separates ice resting on the seabed from ice floating on the ocean. Glaciologists have long described it as a 'grounding line', a narrow and mostly stable demarcation. However, satellite observations reveal a different arrangement: a 'grounding zone', sometimes kilometres wide, in which warm seawater penetrates beneath ice that remains grounded. In the words of the lead author, Mattia Poinelli, warm ocean water is 'reaching deep underneath the ice sheets and causing vigorous melting'. Radar data from Finland's ICEYE satellite constellation showed fluctuations across several kilometres of the glacier's main trunk. As tides rise and fall, the water lifts the ice and repeatedly exposes its underside to warm, pressurised seawater, which reaches the coast through ocean currents that have been altered by climate change. Most models, the authors note, neglect these kilometre-scale seawater intrusions altogether."
+     },
+     {
+      "label": "C",
+      "text": "To test whether such processes matter, the team, which according to NASA also included scientists from Dartmouth College, compared its simulations with nearly three decades of observed retreat, thinning and acceleration. The model was calibrated against this record using a range of grounding-zone widths and melt rates. Successful reconstruction occurred only when grounding zones were represented as regions between 2 and 5 kilometres wide. A melt rate of 110 metres per year produced the smallest misfit with observations, and this figure was consistent with satellite-based estimates and with numerical models of the ocean. By contrast, simulations that omitted a grounding zone, or used a narrow one, were around four times less likely to reproduce the glacier's historical retreat."
+     },
+     {
+      "label": "D",
+      "text": "The researchers then extended the model to the end of the century. Crucially, they used a deliberately cautious scenario based on climate conditions averaged over 1996 to 2023, so their projections do not rely on any additional warming. Even so, the results were striking. Simulations without a grounding zone produced a sea-level contribution of 8.3 millimetres by 2100, lower than the average of ISMIP6, an international ensemble of ice-sheet models. A narrow zone of about one kilometre gave 14.3 millimetres, comparable to that average. A three-kilometre zone produced 19.4 millimetres, an increase of 130% relative to the ensemble mean, while wider zones consistent with recent observations yielded up to 30 millimetres, approximately double previous projections. That upper figure carries an uncertainty of about six millimetres in either direction."
+     },
+     {
+      "label": "E",
+      "text": "Much of the difference depends on what happens at a feature called Mouginot Ridge, which temporarily stabilises the glacier's main trunk. Once the ice is unpinned from this ridge, the model suggests, it will continue to retreat across a predominantly retrograde seafloor towards the next topographic high, South Ridge. Simulations with no grounding zone, or a one-kilometre zone, did not retreat beyond Mouginot Ridge by 2100. With a two- to three-kilometre zone, the probability of unpinning by the end of the century was around 45%, and crossing occurred on average in 2088 for two kilometres and 2065 for three. With the four to six kilometres suggested by recent satellite data, that probability rose to about 60%, and at the widest settings unpinning could occur as early as 2038."
+     },
+     {
+      "label": "F",
+      "text": "The authors present their findings as both a warning and a methodological advance. 'Most projections up to the present have struggled to match the rapidity of the mass loss because of missing physics,' said co-author Eric Rignot, adding that the results 'predict greater risk of and exposure for coastal flooding than anticipated'. Poinelli argued that factoring in key physical processes and calibrating against history offers 'a reliable pathway for narrowing uncertainty in projections'. Nevertheless, the study rests on a single modelling framework, and its conclusions will presumably need to be tested by other groups. What it does establish is that a seemingly technical choice, between a line and a zone, can make a considerable difference to how much the sea is expected to rise."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison between a modelling result and the average of a group of other models",
+        "a": "D",
+        "ref": "D",
+        "ev": "lower than the average of ISMIP6, an international ensemble of ice-sheet models",
+        "zh": "D 段：沒有接地帶的模擬結果 8.3 mm 低於 ISMIP6（國際冰蓋模型集合）的平均值。group of other models = ensemble。"
+       },
+       {
+        "q": "a description of how the rise and fall of the sea affects the ice",
+        "a": "B",
+        "ref": "B",
+        "ev": "As tides rise and fall, the water lifts the ice",
+        "zh": "B 段：潮汐漲落讓海水抬升冰層、讓冰的底部反覆接觸溫暖海水。rise and fall of the sea = tides。"
+       },
+       {
+        "q": "the identification of a value that best matched past measurements",
+        "a": "C",
+        "ref": "C",
+        "ev": "A melt rate of 110 metres per year produced the smallest misfit with observations",
+        "zh": "C 段：每年 110 公尺的融化速率與觀測值誤差最小（smallest misfit）。best matched = smallest misfit。"
+       },
+       {
+        "q": "estimates of when the glacier might pass a stabilising feature under different assumptions",
+        "a": "E",
+        "ref": "E",
+        "ev": "crossing occurred on average in 2088 for two kilometres and 2065 for three",
+        "zh": "E 段：不同接地帶寬度下越過 Mouginot Ridge 的年份（2088、2065、最早 2038）。"
+       },
+       {
+        "q": "an admission that the research is based on only one approach",
+        "a": "F",
+        "ref": "F",
+        "ev": "the study rests on a single modelling framework",
+        "zh": "F 段：本研究只建立在單一模型架構上，需要其他團隊檢驗。only one approach = a single modelling framework。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The Amundsen Sea Embayment is responsible for most of Antarctica's ice loss.",
+        "a": "False",
+        "ref": "A",
+        "ev": "approximately one third of the Antarctic Ice Sheet's total mass loss",
+        "zh": "A 段：約三分之一，不是「大部分」（most = 過半）→ 與原文矛盾 → False。"
+       },
+       {
+        "q": "The ICEYE satellites were launched mainly to study Antarctic glaciers.",
+        "a": "Not Given",
+        "ref": "B",
+        "ev": "Radar data from Finland's ICEYE satellite constellation showed fluctuations",
+        "zh": "B 段只說用了 ICEYE 的雷達資料，沒說這些衛星「為什麼發射」→ Not Given（陷阱：看到 satellite 就以為有提到用途）。"
+       },
+       {
+        "q": "The study's projections assume that the climate will not become any warmer.",
+        "a": "True",
+        "ref": "D",
+        "ev": "so their projections do not rely on any additional warming",
+        "zh": "D 段：用 1996–2023 平均氣候條件的保守情境，不依賴額外暖化 → True。"
+       },
+       {
+        "q": "In simulations with a one-kilometre grounding zone, the glacier moved beyond Mouginot Ridge before 2100.",
+        "a": "False",
+        "ref": "E",
+        "ev": "did not retreat beyond Mouginot Ridge by 2100",
+        "zh": "E 段：沒有接地帶或只有一公里接地帶的模擬，2100 年前都「沒有」越過 Mouginot Ridge → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "A better-informed model",
+      "lines": [
+       {
+        "t": "The authors argue that seawater [[1]], which can extend for kilometres beneath grounded ice, must be included in models. After being [[2]] against almost thirty years of observations, their model suggests that once Thwaites loses its grip on Mouginot Ridge, it will retreat over a largely [[3]] seafloor. According to the lead author, this method offers a dependable [[4]] for reducing uncertainty in forecasts."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "intrusions"
+        ],
+        "ref": "B",
+        "ev": "these kilometre-scale seawater intrusions",
+        "zh": "B 段：seawater intrusions（海水入侵）。空格前是 seawater，答案 intrusions（複數）。"
+       },
+       {
+        "a": [
+         "calibrated"
+        ],
+        "ref": "C",
+        "ev": "The model was calibrated against this record",
+        "zh": "C 段：calibrated against（以……校準）。After being ___ against → 過去分詞 calibrated。"
+       },
+       {
+        "a": [
+         "retrograde"
+        ],
+        "ref": "E",
+        "ev": "a predominantly retrograde seafloor",
+        "zh": "E 段：largely = predominantly；答案 retrograde（逆坡的，指海床往內陸愈來愈深）。"
+       },
+       {
+        "a": [
+         "pathway"
+        ],
+        "ref": "F",
+        "ev": "'a reliable pathway for narrowing uncertainty in projections'",
+        "zh": "F 段：dependable = reliable；reducing = narrowing；答案 pathway（途徑）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "embayment",
+     "pos": "n.",
+     "def": "a large bay or area where the coast curves inwards",
+     "zh": "海灣、灣區",
+     "example": "Thwaites sits in the Amundsen Sea Embayment.",
+     "match": [
+      "Embayment"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "account for",
+     "pos": "phr. v.",
+     "def": "to form a particular amount or part of something",
+     "zh": "佔（比例）",
+     "example": "That region accounts for roughly a third of the mass loss.",
+     "match": [
+      "accounts for"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "conventional",
+     "pos": "adj.",
+     "def": "of the usual or traditional type",
+     "zh": "傳統的、慣用的",
+     "example": "Conventional simulations struggled to reproduce the acceleration.",
+     "match": [
+      "Conventional",
+      "conventional"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "vigorous",
+     "pos": "adj.",
+     "def": "strong, energetic and intense",
+     "zh": "劇烈的、強勁的",
+     "example": "Warm water causes vigorous melting.",
+     "match": [
+      "vigorous"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "pressurised",
+     "pos": "adj.",
+     "def": "kept at a higher pressure than normal",
+     "zh": "加壓的",
+     "example": "Its underside is exposed to warm, pressurised water.",
+     "match": [
+      "pressurised"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "pronounced",
+     "pos": "adj.",
+     "def": "very noticeable or marked",
+     "zh": "明顯的、顯著的",
+     "example": "The changes were four times more pronounced.",
+     "match": [
+      "pronounced"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "come loose",
+     "pos": "phr. v.",
+     "def": "to become detached from something that held it",
+     "zh": "鬆脫",
+     "example": "The glacier could come loose from the ridge.",
+     "match": [
+      "comes loose"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "anticipate",
+     "pos": "v.",
+     "def": "to expect or predict something",
+     "zh": "預期、預料",
+     "example": "The risk is greater than anyone had anticipated.",
+     "match": [
+      "anticipated"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "demarcation",
+     "pos": "n.",
+     "def": "a line or boundary that separates two areas",
+     "zh": "分界（線）",
+     "example": "The grounding line was seen as a narrow demarcation.",
+     "match": [
+      "demarcation"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "intrusion",
+     "pos": "n.",
+     "def": "the movement of something into a place where it does not usually go",
+     "zh": "侵入、入侵",
+     "example": "Models neglect kilometre-scale seawater intrusions.",
+     "match": [
+      "intrusions"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "calibrate",
+     "pos": "v.",
+     "def": "to adjust a model or instrument so that it matches a standard",
+     "zh": "校準",
+     "example": "The model was calibrated against the observed record.",
+     "match": [
+      "calibrated",
+      "calibrating"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "misfit",
+     "pos": "n.",
+     "def": "(in modelling) the difference between predicted and observed values",
+     "zh": "（模型與觀測的）誤差、不吻合",
+     "example": "That melt rate produced the smallest misfit.",
+     "match": [
+      "misfit"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "ensemble",
+     "pos": "n.",
+     "def": "a group of things, such as models, considered together",
+     "zh": "（模型）集合",
+     "example": "ISMIP6 is an international ensemble of ice-sheet models.",
+     "match": [
+      "ensemble"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "retrograde",
+     "pos": "adj.",
+     "def": "(of a seabed) sloping downwards towards the land, making retreat easier",
+     "zh": "逆坡的（往內陸變深）",
+     "example": "The ice would retreat across a retrograde seafloor.",
+     "match": [
+      "retrograde"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "presumably",
+     "pos": "adv.",
+     "def": "used to say that something is very likely",
+     "zh": "大概、想必",
+     "example": "The conclusions will presumably need to be tested.",
+     "match": [
+      "presumably"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-10-31-2.mp3",
+    "times": [
+     [
+      0.36,
+      2.02
+     ],
+     [
+      2.24,
+      11.36
+     ],
+     [
+      11.74,
+      12.79
+     ],
+     [
+      13.57,
+      22.91
+     ],
+     [
+      23.26,
+      27.39
+     ],
+     [
+      27.71,
+      31.07
+     ],
+     [
+      31.31,
+      35.43
+     ],
+     [
+      35.71,
+      39.86
+     ],
+     [
+      40.64,
+      43.41
+     ],
+     [
+      43.65,
+      48.41
+     ],
+     [
+      48.71,
+      55.21
+     ],
+     [
+      55.42,
+      58.9
+     ],
+     [
+      59.68,
+      65.62
+     ],
+     [
+      65.92,
+      71.34
+     ],
+     [
+      71.57,
+      78.21
+     ],
+     [
+      78.48,
+      85.5
+     ],
+     [
+      85.81,
+      92.0
+     ],
+     [
+      92.78,
+      95.9
+     ],
+     [
+      96.19,
+      102.21
+     ],
+     [
+      102.54,
+      108.76
+     ],
+     [
+      109.0,
+      113.6
+     ],
+     [
+      113.9,
+      120.07
+     ],
+     [
+      120.85,
+      123.42
+     ],
+     [
+      123.67,
+      128.8
+     ],
+     [
+      129.11,
+      137.27
+     ],
+     [
+      137.57,
+      141.52
+     ],
+     [
+      141.79,
+      148.64
+     ],
+     [
+      149.42,
+      159.59
+     ],
+     [
+      159.91,
+      166.15
+     ],
+     [
+      166.55,
+      174.49
+     ],
+     [
+      175.27,
+      180.02
+     ],
+     [
+      180.26,
+      187.61
+     ],
+     [
+      187.91,
+      192.32
+     ]
+    ],
+    "duration": 193.0,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-10-31-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
