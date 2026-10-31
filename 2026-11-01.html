@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-01",
+ "date": "2026-11-01",
+ "title": "Atom-Thin Transistors Beat Silicon's Switching Limit at Under Five Nanometres, Carnegie Mellon Team Reports · A Bronze Age Copper Mine in Spain Points to Iberian Metal in Scandinavian Bronzes",
+ "stories": [
+  {
+   "title": "Atom-Thin Transistors Beat Silicon's Switching Limit at Under Five Nanometres, Carnegie Mellon Team Reports",
+   "topic": "Semiconductors · 2D transistors",
+   "source": {
+    "name": "Carnegie Mellon University College of Engineering: Beyond silicon: Atomically thin transistors could transform computing (8 Oct 2026)",
+    "url": "https://engineering.cmu.edu/news-events/news/2026/10/08-beyond-silicon.html",
+    "links": [
+     {
+      "name": "Nature Communications: Wafer-scale 2D MoS₂ transistors with sub-5 nm channel length and subthreshold performance beyond the silicon limit (21 Sep 2026)",
+      "url": "https://www.nature.com/articles/s41467-026-77186-9"
+     },
+     {
+      "name": "Carnegie Mellon ECE: Atomically Thin Transistors Could Transform Computing (15 Oct 2026)",
+      "url": "https://www.ece.cmu.edu/news-and-events/story/2026/10/beyond-silicon.html"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Engineers in the United States say they have built transistors so small, and so efficient, that they beat a limit long thought to hold back silicon.",
+     "Here's the report."
+    ],
+    [
+     "For more than fifty years, the chip industry has moved forward by shrinking transistors, the tiny switches that turn electric current on and off.",
+     "Smaller switches mean more of them on every chip, and more computing power.",
+     "But silicon is running out of room.",
+     "An industry roadmap known as the IRDS expects the channel inside a silicon transistor to reach a plateau at around twelve nanometres by twenty thirty-seven.",
+     "Today's leading chips, from TSMC and Samsung, already use channels of roughly fifteen nanometres."
+    ],
+    [
+     "Now a team at Carnegie Mellon University in Pittsburgh says it has gone well past that point.",
+     "Writing in the journal Nature Communications, the researchers describe transistors made from molybdenum disulfide, a material just one layer of atoms thick.",
+     "The channel, the tiny gap the current has to cross, measured just four point eight nanometres on average.",
+     "That's well under half the length the roadmap expects silicon to reach."
+    ],
+    [
+     "Why does size matter so much?",
+     "Because of leakage.",
+     "As a silicon transistor gets extremely small, the gate that controls it starts to lose its grip, and electrons slip through even when the switch is supposed to be off.",
+     "That wastes energy, and across billions of transistors, it adds up.",
+     "Engineers judge how sharply a transistor switches using a figure called the subthreshold swing, and the lower it is, the better.",
+     "The team's best device scored eighty-eight millivolts per decade.",
+     "Their own computer modelling suggests a silicon device of similar size could do no better than about one hundred and fifty."
+    ],
+    [
+     "So what made the difference?",
+     "The researchers say it was not the material alone, but the design built around it.",
+     "Directly beneath the channel, they left a tiny air gap.",
+     "That gap cuts unwanted electrical interference from the contacts, helping the gate stay in control.",
+     "Professor Sheng Shen, a corresponding author of the study, said a material can't automatically translate its properties into performance, and that it needs the right device structure."
+    ],
+    [
+     "Meanwhile, the team tackled a question that hangs over many laboratory breakthroughs: can it be made at scale?",
+     "Instead of building a single device, they produced whole arrays of transistors across a four-inch wafer.",
+     "They patterned them using photolithography, the same basic technique used in today's chip factories.",
+     "Across one hundred and thirty-eight devices, the typical result was ninety-two millivolts per decade, only slightly worse than the best."
+    ],
+    [
+     "There are caveats, though.",
+     "When the transistors are switched on, the current they carry still falls short of industry targets.",
+     "And they conduct slightly even with no voltage applied to the gate, which the authors say will need further engineering to fix.",
+     "Carnegie Mellon itself says the device is not yet ready for commercial use."
+    ],
+    [
+     "Still, the other corresponding author, associate professor Xu Zhang, said the work shows that the limits of silicon do not necessarily have to be the limits of transistor technology.",
+     "Especially in the era of artificial intelligence, he said, the industry needs to rethink semiconductor materials.",
+     "That's the science and technology report. More from our newsroom after the break."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Atom-thin transistors: going beyond silicon",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Background"
+       },
+       {
+        "t": "Industry roadmap: silicon channel length will stop shrinking and hit a [[1]] by 2037"
+       },
+       {
+        "h": "The new transistors"
+       },
+       {
+        "t": "Material (molybdenum disulfide) is only one [[2]] of atoms thick"
+       },
+       {
+        "t": "Average channel length: [[3]] nm"
+       },
+       {
+        "h": "Why size matters"
+       },
+       {
+        "t": "Key difficulty with very small silicon switches: [[4]]"
+       },
+       {
+        "t": "Sharpness of switching is measured by the subthreshold [[5]]"
+       },
+       {
+        "h": "What made the difference"
+       },
+       {
+        "t": "A small [[6]] placed under the channel"
+       },
+       {
+        "t": "Shen: a good material still needs the right device [[7]]"
+       },
+       {
+        "h": "Manufacturing"
+       },
+       {
+        "t": "Transistor arrays patterned with [[8]], as in chip factories"
+       },
+       {
+        "h": "Remaining problems"
+       },
+       {
+        "t": "On-state [[9]] is below industry targets"
+       },
+       {
+        "t": "Not yet suitable for [[10]] use"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "plateau"
+        ],
+        "ref": "to reach a plateau at around twelve nanometres",
+        "ev": "expects the channel inside a silicon transistor to reach a plateau at around twelve nanometres by twenty thirty-seven",
+        "zh": "stop shrinking and hit a ___ = reach a plateau（到達停滯期、平台期）。題目已給 2037；12 nm 是平台期的長度，不是答案。注意 plateau 是名詞，空格前有 a。"
+       },
+       {
+        "a": [
+         "layer"
+        ],
+        "ref": "a material just one layer of atoms thick",
+        "ev": "a material just one layer of atoms thick",
+        "zh": "only one ___ of atoms thick = just one layer of atoms thick（只有一層原子厚，即「二維材料」）。答案 layer。"
+       },
+       {
+        "a": [
+         "4.8"
+        ],
+        "ref": "measured just four point eight nanometres on average",
+        "ev": "measured just four point eight nanometres on average",
+        "zh": "average = on average；答案 4.8。干擾：twelve（IRDS 預測的矽極限）、fifteen（台積電、三星現有晶片的通道長度）都在前面出現，但都不是這個新電晶體的長度。"
+       },
+       {
+        "a": [
+         "leakage"
+        ],
+        "ref": "Because of leakage.",
+        "ev": "Why does size matter so much? Because of leakage.",
+        "zh": "key difficulty = Why does size matter… Because of leakage（漏電）。後一句 electrons slip through even when the switch is supposed to be off 正是在解釋 leakage。energy（浪費能源）是結果，不是問題本身。"
+       },
+       {
+        "a": [
+         "swing"
+        ],
+        "ref": "a figure called the subthreshold swing",
+        "ev": "using a figure called the subthreshold swing",
+        "zh": "sharpness of switching is measured by = judge how sharply a transistor switches using a figure called…；答案 swing（subthreshold swing 次臨界擺幅，越低越好）。"
+       },
+       {
+        "a": [
+         "air gap",
+         "air-gap"
+        ],
+        "ref": "they left a tiny air gap",
+        "ev": "Directly beneath the channel, they left a tiny air gap.",
+        "zh": "placed under the channel = directly beneath the channel；答案 air gap（空氣間隙）。題目已有 small，所以只填 air gap（tiny 不用重複）。"
+       },
+       {
+        "a": [
+         "structure"
+        ],
+        "ref": "it needs the right device structure",
+        "ev": "it needs the right device structure",
+        "zh": "Shen 說材料無法自動把特性轉成效能（can't automatically translate its properties into performance），需要正確的元件結構 → structure。performance、properties 是同句的干擾字。"
+       },
+       {
+        "a": [
+         "photolithography"
+        ],
+        "ref": "They patterned them using photolithography",
+        "ev": "They patterned them using photolithography, the same basic technique used in today's chip factories.",
+        "zh": "patterned with = patterned them using；答案 photolithography（光微影）。四吋晶圓（four-inch wafer）是前一句的資訊，不是「方法」。"
+       },
+       {
+        "a": [
+         "current"
+        ],
+        "ref": "the current they carry still falls short of industry targets",
+        "ev": "When the transistors are switched on, the current they carry still falls short of industry targets.",
+        "zh": "on-state = when the transistors are switched on；below = falls short of；答案 current（電流）。注意後一句 no voltage applied 講的是另一個問題（零電壓時仍導通），voltage 不是答案。"
+       },
+       {
+        "a": [
+         "commercial"
+        ],
+        "ref": "the device is not yet ready for commercial use",
+        "ev": "the device is not yet ready for commercial use",
+        "zh": "not yet suitable for = not yet ready for；答案 commercial（商業的、量產的）。空格後是 use，填形容詞。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Beyond the Silicon Floor: Can Atom-Thin Transistors Keep Computing Shrinking?",
+    "intro": "A wafer-scale experiment with a two-dimensional semiconductor challenges the assumption that the end of silicon scaling must mean the end of smaller transistors.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "For more than half a century, the steady miniaturisation of silicon transistors has underpinned the exponential growth in computing power associated with Moore's law. Each reduction in size allowed manufacturers to place more switches on a single chip, and with them came faster and more capable devices. That progress, however, is increasingly constrained by the physical properties of silicon itself. The International Roadmap for Devices and Systems (IRDS), an industry planning document, anticipates that the channel length of silicon transistors will reach a plateau of about 12 nanometres by 2037. Today's most advanced processes, such as TSMC's N2 and Samsung's SF3, already employ gate-all-around transistors with channels of roughly 15 nanometres, so the remaining room for manoeuvre is arguably modest."
+     },
+     {
+      "label": "B",
+      "text": "The difficulty is not simply one of fabrication. As a silicon channel becomes thinner than about three nanometres, the mobility of its charge carriers falls sharply, which places a practical lower bound of around eight nanometres on channel length. At such dimensions, the drain begins to exert an electrostatic influence that competes with the gate, and electrons can tunnel directly from source to drain. These so-called short channel effects weaken the gate's ability to switch the device off. Their impact is captured by the subthreshold swing, a measure of how much gate voltage is required to change the current tenfold. Because a chip's standby power depends exponentially on this value, even a modest deterioration becomes a serious obstacle when hundreds of billions of transistors must operate within a fixed power budget."
+     },
+     {
+      "label": "C",
+      "text": "Researchers have explored several alternatives to silicon, including metal oxides, carbon nanotubes and two-dimensional materials only a few atoms thick. Some have produced encouraging results when transistors are switched on: ballistic indium selenide devices, for instance, have shown better current drive than silicon. Yet, according to the authors of the new study, no experiment had convincingly surpassed silicon's switching performance in the off state at deeply scaled dimensions. Other approaches have their own limitations. Tunnelling transistors rely on abrupt doping profiles that are hard to scale below 10 nanometres, while ferroelectric devices that exploit negative capacitance remain under debate because of difficulties with hysteresis and stability. Several fabrication techniques have achieved extremely short gates, but often with low throughput that hinders production on full wafers."
+     },
+     {
+      "label": "D",
+      "text": "It is against this background that a team led by Carnegie Mellon University, working with collaborators at the Massachusetts Institute of Technology, the University of Florida, Texas A&M, the University of Southern California and the Universidad Politécnica de Madrid, reported its results in Nature Communications in September 2026. The group built transistors from a single layer of molybdenum disulfide (MoS₂) with a mean physical channel length of 4.8 nanometres, the shortest measured point being below 3 nanometres. Its best device achieved a subthreshold swing of 88 millivolts per decade, and across 138 devices the median was 92. By comparison, the team's quantum transport modelling suggests that a silicon transistor with a 5-nanometre channel could not do better than about 150 millivolts per decade. 'This new material can experimentally break silicon's limit,' said Xu Zhang, an associate professor of electrical and computer engineering. 'This is the first time that's ever been done.'"
+     },
+     {
+      "label": "E",
+      "text": "Crucially, the advance owed as much to architecture as to chemistry. The researchers adopted what is known as design-technology co-optimisation, developing the material, device structure and manufacturing process together. The channel length was defined by the thickness of a sacrificial spacer of about four nanometres, deposited one atomic layer at a time, and its removal left a low-dielectric air gap beneath the channel. Simulations indicate why this matters: when the region beneath the channel was given a progressively higher dielectric constant, the subthreshold swing deteriorated to more than 300 millivolts per decade. 'A material can't automatically translate its properties into performance,' said Sheng Shen, a professor of mechanical engineering. Equally important for industry, the devices were patterned using photolithography across a four-inch wafer. Because one removal step relied on adhesive tape, which is not compatible with standard chip manufacturing, the team also developed an alternative wet-etching process that is."
+     },
+     {
+      "label": "F",
+      "text": "Nevertheless, significant obstacles remain before such devices could appear in commercial products. Their on-state conductance still falls short of IRDS targets, and the transistors have a negative threshold voltage, meaning that they remain partially conducting when no gate voltage is applied, which could increase standby power. The authors suggest that this might eventually be corrected by healing defects in the material, such as sulphur vacancies. The university itself acknowledges that the device is not yet ready for commercialisation. Even so, the work suggests that silicon's physical limits need not mark the end of smaller and more efficient transistors. As Shen put it, 'Today, a majority of electronics for computation are based on silicon. In the future, it's going to be very different.'"
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "an explanation of why a small loss in switching quality can have large consequences for energy use",
+        "a": "B",
+        "ref": "B",
+        "ev": "Because a chip's standby power depends exponentially on this value, even a modest deterioration becomes a serious obstacle",
+        "zh": "B 段：待機功耗與 subthreshold swing 呈「指數」關係，所以即使小小的退化也是嚴重障礙。small loss in switching quality = modest deterioration；large consequences for energy use = standby power depends exponentially。"
+       },
+       {
+        "q": "a list of the organisations that took part in the research",
+        "a": "D",
+        "ref": "D",
+        "ev": "working with collaborators at the Massachusetts Institute of Technology, the University of Florida",
+        "zh": "D 段列出合作單位：MIT、佛羅里達大學、Texas A&M、南加大、馬德里理工大學。"
+       },
+       {
+        "q": "a mention of a production step that would not suit conventional chip factories",
+        "a": "E",
+        "ref": "E",
+        "ev": "one removal step relied on adhesive tape, which is not compatible with standard chip manufacturing",
+        "zh": "E 段末：有一個移除步驟用膠帶，不相容於標準晶片製造，所以另外開發濕蝕刻製程。conventional chip factories = standard chip manufacturing。"
+       },
+       {
+        "q": "a possible way of correcting a weakness in the new devices",
+        "a": "F",
+        "ref": "F",
+        "ev": "this might eventually be corrected by healing defects in the material, such as sulphur vacancies",
+        "zh": "F 段：負的臨界電壓（weakness）可能藉由修補材料缺陷（如硫空缺）來改善 → possible way of correcting。"
+       },
+       {
+        "q": "an example of an alternative material that performs well when a transistor is on",
+        "a": "C",
+        "ref": "C",
+        "ev": "ballistic indium selenide devices, for instance, have shown better current drive than silicon",
+        "zh": "C 段：彈道式硒化銦（InSe）元件在「導通時」電流驅動力優於矽。performs well when on = encouraging results when transistors are switched on。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The channels in today's most advanced commercial transistors are already shorter than the length the IRDS expects silicon to reach by 2037.",
+        "a": "False",
+        "ref": "A",
+        "ev": "already employ gate-all-around transistors with channels of roughly 15 nanometres",
+        "zh": "A 段：IRDS 預估 2037 年會停在約 12 nm，而現在最先進的製程通道約 15 nm——15 比 12 長，不是更短 → 與原文矛盾 → False。"
+       },
+       {
+        "q": "Every one of the 138 devices tested performed better than the theoretical limit calculated for a 5-nanometre silicon transistor.",
+        "a": "Not Given",
+        "ref": "D",
+        "ev": "across 138 devices the median was 92",
+        "zh": "D 段只給了 138 個元件的「中位數」92 mV/dec，以及最好的 88；沒有說「每一個」都低於矽的理論極限 150 → Not Given。陷阱：中位數遠低於 150，很容易推論成「全部都比較好」，但文章沒有這樣說。"
+       },
+       {
+        "q": "Computer simulations showed that a material with a higher dielectric constant beneath the channel would worsen switching performance.",
+        "a": "True",
+        "ref": "E",
+        "ev": "when the region beneath the channel was given a progressively higher dielectric constant, the subthreshold swing deteriorated",
+        "zh": "E 段：模擬顯示通道下方的介電常數越高，subthreshold swing 越差（升到 300 以上）→ worsen switching performance → True。這也說明為什麼「空氣間隙」（介電常數低）有用。"
+       },
+       {
+        "q": "Carbon nanotubes are among the materials that have been investigated as possible replacements for silicon.",
+        "a": "True",
+        "ref": "C",
+        "ev": "including metal oxides, carbon nanotubes and two-dimensional materials",
+        "zh": "C 段：研究人員探索過的矽替代品包括金屬氧化物、奈米碳管與二維材料 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Silicon's limits and the new approach",
+      "lines": [
+       {
+        "t": "When a silicon channel becomes extremely thin, the [[1]] of the charge carriers drops dramatically. Some earlier methods produced very short gates, but their low [[2]] made it hard to manufacture them on whole wafers. In the Carnegie Mellon design, channel length was set by the thickness of a temporary, [[3]] spacer. One remaining concern is that the transistors conduct slightly at zero gate voltage, which might raise [[4]] power."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "mobility"
+        ],
+        "ref": "B",
+        "ev": "the mobility of its charge carriers falls sharply",
+        "zh": "B 段：the mobility of its charge carriers falls sharply；drops dramatically = falls sharply；空格前 the、後 of → 名詞 mobility（遷移率）。"
+       },
+       {
+        "a": [
+         "throughput"
+        ],
+        "ref": "C",
+        "ev": "but often with low throughput that hinders production on full wafers",
+        "zh": "C 段：low throughput（產能、產出量低）hinders production on full wafers。made it hard to manufacture = hinders production。"
+       },
+       {
+        "a": [
+         "sacrificial"
+        ],
+        "ref": "E",
+        "ev": "defined by the thickness of a sacrificial spacer of about four nanometres",
+        "zh": "E 段：a sacrificial spacer（犧牲層間隔物，之後會被移除，所以題目說 temporary）。空格在 spacer 前 → 形容詞 sacrificial。"
+       },
+       {
+        "a": [
+         "standby"
+        ],
+        "ref": "F",
+        "ev": "which could increase standby power",
+        "zh": "F 段：仍會部分導通 → could increase standby power（待機功耗）。might raise = could increase；答案 standby。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "run out of room",
+     "pos": "idiom",
+     "def": "to have no more space or scope left to develop",
+     "zh": "沒有空間了；已到極限",
+     "example": "But silicon is running out of room.",
+     "match": [
+      "running out of room"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "plateau",
+     "pos": "n./v.",
+     "def": "a period or state in which there is little or no further change or progress",
+     "zh": "停滯期、平台期",
+     "example": "The channel length will reach a plateau.",
+     "match": [
+      "plateau"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "lose one's grip",
+     "pos": "idiom",
+     "def": "to lose control over something",
+     "zh": "失去控制力",
+     "example": "The gate starts to lose its grip.",
+     "match": [
+      "lose its grip"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "add up",
+     "pos": "phr. v.",
+     "def": "to increase gradually until it becomes significant",
+     "zh": "累積起來（變得可觀）",
+     "example": "Across billions of transistors, it adds up.",
+     "match": [
+      "adds up"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "caveat",
+     "pos": "n.",
+     "def": "a warning or condition that limits a claim",
+     "zh": "但書、需注意的限制",
+     "example": "There are caveats, though.",
+     "match": [
+      "caveats"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "fall short of",
+     "pos": "phr. v.",
+     "def": "to fail to reach a required standard or amount",
+     "zh": "未達到（標準、目標）",
+     "example": "The current still falls short of industry targets.",
+     "match": [
+      "falls short of"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "miniaturisation",
+     "pos": "n.",
+     "def": "the process of making something much smaller",
+     "zh": "微型化",
+     "example": "The steady miniaturisation of silicon transistors drove computing power.",
+     "match": [
+      "miniaturisation"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "underpin",
+     "pos": "v.",
+     "def": "to support or form the basis of something",
+     "zh": "支撐、構成……的基礎",
+     "example": "Shrinking transistors has underpinned growth in computing.",
+     "match": [
+      "underpinned"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "constrain",
+     "pos": "v.",
+     "def": "to limit or restrict",
+     "zh": "限制、約束",
+     "example": "Progress is increasingly constrained by silicon itself.",
+     "match": [
+      "constrained"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "lower bound",
+     "pos": "n.",
+     "def": "the smallest value something can realistically have",
+     "zh": "下限",
+     "example": "There is a practical lower bound on channel length.",
+     "match": [
+      "lower bound"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "exert",
+     "pos": "v.",
+     "def": "to use or apply force or influence",
+     "zh": "施加（影響、力量）",
+     "example": "The drain begins to exert an electrostatic influence.",
+     "match": [
+      "exert"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "deterioration",
+     "pos": "n.",
+     "def": "the process of becoming worse",
+     "zh": "惡化、退化",
+     "example": "Even a modest deterioration becomes a serious obstacle.",
+     "match": [
+      "deterioration"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "convincingly",
+     "pos": "adv.",
+     "def": "in a way that makes people believe something is true",
+     "zh": "令人信服地",
+     "example": "No experiment had convincingly surpassed silicon.",
+     "match": [
+      "convincingly"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "throughput",
+     "pos": "n.",
+     "def": "the amount of work or product handled in a given time",
+     "zh": "產能、處理量",
+     "example": "Low throughput hinders production on full wafers.",
+     "match": [
+      "throughput"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "hinder",
+     "pos": "v.",
+     "def": "to make it difficult for something to happen or progress",
+     "zh": "阻礙",
+     "example": "Low throughput hinders production.",
+     "match": [
+      "hinders"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-01-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      8.84
+     ],
+     [
+      9.14,
+      10.2
+     ],
+     [
+      10.98,
+      18.35
+     ],
+     [
+      18.62,
+      22.7
+     ],
+     [
+      23.14,
+      25.06
+     ],
+     [
+      25.3,
+      33.74
+     ],
+     [
+      34.02,
+      40.21
+     ],
+     [
+      40.99,
+      45.63
+     ],
+     [
+      45.87,
+      54.48
+     ],
+     [
+      54.78,
+      60.21
+     ],
+     [
+      60.42,
+      63.88
+     ],
+     [
+      64.66,
+      66.5
+     ],
+     [
+      66.92,
+      68.0
+     ],
+     [
+      68.19,
+      76.63
+     ],
+     [
+      76.98,
+      81.27
+     ],
+     [
+      81.59,
+      88.32
+     ],
+     [
+      88.56,
+      91.71
+     ],
+     [
+      91.99,
+      97.87
+     ],
+     [
+      98.65,
+      100.16
+     ],
+     [
+      100.52,
+      104.87
+     ],
+     [
+      105.17,
+      108.21
+     ],
+     [
+      108.42,
+      113.78
+     ],
+     [
+      114.04,
+      123.36
+     ],
+     [
+      124.14,
+      129.83
+     ],
+     [
+      130.29,
+      135.68
+     ],
+     [
+      135.95,
+      141.28
+     ],
+     [
+      141.6,
+      148.65
+     ],
+     [
+      149.43,
+      150.94
+     ],
+     [
+      151.18,
+      156.06
+     ],
+     [
+      156.39,
+      162.77
+     ],
+     [
+      163.01,
+      167.0
+     ],
+     [
+      167.78,
+      177.18
+     ],
+     [
+      177.47,
+      184.01
+     ],
+     [
+      184.27,
+      188.9
+     ]
+    ],
+    "duration": 189.6,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-01-1-words/"
+   }
+  },
+  {
+   "title": "A Bronze Age Copper Mine in Spain Points to Iberian Metal in Scandinavian Bronzes",
+   "topic": "Archaeology · Bronze Age mining",
+   "source": {
+    "name": "Antiquity (Cambridge University Press): Iberian copper and Bronze Age Europe: Late Bronze Age mining and supply at Las Minillas (Badajoz, Spain) (26 Oct 2026)",
+    "url": "https://www.cambridge.org/core/journals/antiquity/article/iberian-copper-and-bronze-age-europe-late-bronze-age-mining-and-supply-at-las-minillas-badajoz-spain/BF90FE97FD2986A71F1B7040BF76CAFA",
+    "links": [
+     {
+      "name": "Archaeology News Online Magazine: 3,000-year-old Spanish copper mine hints at an Iberian hub in Bronze Age Europe (29 Oct 2026)",
+      "url": "https://archaeologymag.com/2026/10/bronze-age-spanish-copper-mine-an-iberian-hub/"
+     },
+     {
+      "name": "La Brújula Verde: A 3,000-year-old Spanish mine rivaled the Alps for Europe's Bronze Age copper (Oct 2026)",
+      "url": "https://www.labrujulaverde.com/en/2026/10/a-3000-year-old-spanish-mine-rivaled-the-alps-for-europes-bronze-age-coppermetal-may-have-reached-scandinavia/"
+     },
+     {
+      "name": "Earth.com: Spain discovery explains how metal reached Scandinavia 3,000 years ago",
+      "url": "https://www.earth.com/earth-science/spain-discovery-explains-how-metal-reached-scandinavia-3000-years-ago/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "In archaeology news, a copper mine in south-western Spain may help explain where some of northern Europe's Bronze Age metal came from.",
+     "Here's our report."
+    ],
+    [
+     "The mine, known as Las Minillas, lies near the town of Granja de Torrehermosa, in the province of Badajoz.",
+     "Spain has some of the richest copper deposits in Europe.",
+     "Yet, according to the researchers, its prehistoric mining has been studied far less than sites in Wales, Austria or the Italian Alps.",
+     "Until now, only eleven radiocarbon dates from five mines across the Iberian Peninsula pointed to mining in the Late Bronze Age."
+    ],
+    [
+     "The new study, published in the journal Antiquity, adds seventeen more.",
+     "The researchers, from universities in Durham, Seville, Gothenburg and Lund, carried out their main field seasons in twenty twenty, twenty twenty-one and twenty twenty-three.",
+     "They found that ancient miners had followed a copper vein about three hundred metres long, cutting trenches two to four metres wide and more than eight metres deep.",
+     "Charcoal at the bottom of one trench suggests a method called fire-setting, in which wood is burned against the rock to crack it.",
+     "The dates point to mining from roughly thirteen fifty to seven fifty BC."
+    ],
+    [
+     "The finds are striking.",
+     "Nearly nine hundred stone tools were recovered, and most of them, seven hundred and thirty-five in all, were grooved hammers.",
+     "Nearby, the archaeologists uncovered a round hut with postholes and fireplaces.",
+     "They believe it was a seasonal camp for the miners."
+    ],
+    [
+     "There was a twist, though.",
+     "A third area held around three hundred kilograms of slag, the waste left over from smelting, along with what may have been a furnace.",
+     "But charcoal from that zone gave far later dates: four from the Roman period, and one from the Islamic period.",
+     "So the team has not linked that structure to the Bronze Age."
+    ],
+    [
+     "Meanwhile, chemistry is hinting at long-distance trade.",
+     "The researchers measured lead isotopes, a kind of chemical fingerprint, in ore, slag and tiny droplets of copper from the site.",
+     "They then compared the results with more than three hundred Late Bronze Age bronze objects from Scandinavia.",
+     "Eleven were a match, both in their isotopes and in their levels of silver and antimony.",
+     "Seven of those eleven date from between nine hundred and seven hundred BC, which lines up with the last phase of mining at Las Minillas."
+    ],
+    [
+     "So how big was the operation?",
+     "The authors' cautious estimate is about one hundred and ninety-seven tonnes of copper, far below Austria's Mitterberg district, at around twenty-three thousand tonnes.",
+     "But Las Minillas is one of more than a hundred prehistoric mines in southern Iberia.",
+     "If many were worked at the same time, the researchers argue, their combined output may have rivalled other major European mining districts.",
+     "And the timing is telling: production at Great Orme in Wales declined around fourteen hundred BC, and the Mitterberg followed around thirteen or twelve hundred BC."
+    ],
+    [
+     "Looking ahead, the authors suggest that Iberian copper travelled mainly by sea, along Atlantic routes, offering an alternative to supply lines through Central Europe.",
+     "They are careful to call this a hypothetical model rather than a proven fact.",
+     "More dates and chemical tests are needed, they say, because many Iberian mines still have no clear age.",
+     "That's our report from the world of archaeology. Thanks for listening."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Las Minillas: a Bronze Age copper mine in Spain",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The mine"
+       },
+       {
+        "t": "Miners followed a copper [[1]] roughly 300 m long"
+       },
+       {
+        "t": "Burning wood to break the rock, known as [[2]]"
+       },
+       {
+        "h": "Finds"
+       },
+       {
+        "t": "Most of the stone tools were grooved [[3]]"
+       },
+       {
+        "t": "Round hut probably used as a [[4]] camp"
+       },
+       {
+        "h": "A puzzle"
+       },
+       {
+        "t": "Slag found with a possible [[5]]"
+       },
+       {
+        "t": "Most charcoal from this area dates from the [[6]] period"
+       },
+       {
+        "h": "Evidence of trade"
+       },
+       {
+        "t": "Lead isotopes work like a chemical [[7]]"
+       },
+       {
+        "t": "Scandinavian objects matching the mine: [[8]]"
+       },
+       {
+        "h": "Interpretation"
+       },
+       {
+        "t": "Copper probably carried by sea along [[9]] routes"
+       },
+       {
+        "t": "Authors call their idea a [[10]] model"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "vein"
+        ],
+        "ref": "had followed a copper vein about three hundred metres long",
+        "ev": "ancient miners had followed a copper vein about three hundred metres long",
+        "zh": "followed a copper ___ roughly 300 m long = followed a copper vein about three hundred metres long；答案 vein（礦脈）。trenches（壕溝）是挖掘的結果，不是長 300 公尺的那個東西。"
+       },
+       {
+        "a": [
+         "fire-setting",
+         "fire setting",
+         "firesetting"
+        ],
+        "ref": "suggests a method called fire-setting",
+        "ev": "a method called fire-setting, in which wood is burned against the rock to crack it",
+        "zh": "burning wood to break the rock = wood is burned against the rock to crack it；答案 fire-setting（火燒採礦法）。charcoal（木炭）是證據，不是方法名稱。"
+       },
+       {
+        "a": [
+         "hammers",
+         "hammer"
+        ],
+        "ref": "were grooved hammers",
+        "ev": "most of them, seven hundred and thirty-five in all, were grooved hammers",
+        "zh": "most of the stone tools = most of them；答案 hammers（有溝槽的石錘）。數字 nine hundred / 735 是干擾，題目問的是工具種類。"
+       },
+       {
+        "a": [
+         "seasonal"
+        ],
+        "ref": "it was a seasonal camp for the miners",
+        "ev": "They believe it was a seasonal camp for the miners.",
+        "zh": "probably used as = They believe it was；答案 seasonal（季節性的）。空格在 camp 前 → 形容詞。"
+       },
+       {
+        "a": [
+         "furnace"
+        ],
+        "ref": "along with what may have been a furnace",
+        "ev": "along with what may have been a furnace",
+        "zh": "possible = what may have been；答案 furnace（熔爐）。slag 已在題幹中，不用填。"
+       },
+       {
+        "a": [
+         "Roman"
+        ],
+        "ref": "four from the Roman period, and one from the Islamic period",
+        "ev": "four from the Roman period, and one from the Islamic period",
+        "zh": "most charcoal = four of the five dates；答案 Roman（羅馬時期）。Islamic 只有一個樣本，是干擾項；Bronze Age 則是研究團隊「沒有」把它連結上的時期。"
+       },
+       {
+        "a": [
+         "fingerprint"
+        ],
+        "ref": "a kind of chemical fingerprint",
+        "ev": "lead isotopes, a kind of chemical fingerprint",
+        "zh": "work like = a kind of；答案 fingerprint（指紋，比喻可以辨認來源的特徵）。"
+       },
+       {
+        "a": [
+         "11",
+         "eleven"
+        ],
+        "ref": "Eleven were a match",
+        "ev": "Eleven were a match, both in their isotopes and in their levels of silver and antimony.",
+        "zh": "matching = were a match；答案 11。干擾：more than three hundred 是「比對過的物件總數」，seven 是 11 件中年代落在西元前 900–700 年的件數。"
+       },
+       {
+        "a": [
+         "Atlantic"
+        ],
+        "ref": "along Atlantic routes",
+        "ev": "Iberian copper travelled mainly by sea, along Atlantic routes",
+        "zh": "carried by sea along ___ routes = travelled mainly by sea, along Atlantic routes；答案 Atlantic（大西洋的）。Central Europe 是「另一條」陸路供應線（alternative），不是答案。"
+       },
+       {
+        "a": [
+         "hypothetical"
+        ],
+        "ref": "call this a hypothetical model",
+        "ev": "They are careful to call this a hypothetical model rather than a proven fact.",
+        "zh": "authors call their idea = They are careful to call this；答案 hypothetical（假設性的）。proven 是相反的說法（rather than a proven fact），是干擾。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Following the Metal: A Spanish Mine and the Copper Trade of Bronze Age Europe",
+    "intro": "New excavations in south-western Spain suggest that Iberia played a larger part in supplying Europe's Late Bronze Age metalworkers than has long been assumed.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Copper was the indispensable ingredient of the Bronze Age, yet deposits that could be worked with prehistoric technology were unevenly distributed across Western Europe and the Mediterranean. According to a new study in the journal Antiquity, mining activity declined in Iberia, southern France and southern Ireland after the Chalcolithic, or Copper Age, while new sites emerged in Wales and the Austrian Alps in the Early Bronze Age. During the Middle Bronze Age, the Mitterberg district in Austria became the principal source for Central Europe, whereas Great Orme in Wales and the Italian Alps appear to have supplied the North Atlantic and Scandinavian regions. Cyprus and Sardinia also emerged as producers. Where northern Europe obtained its copper after these older sources faded is a question that archaeologists are still trying to answer."
+     },
+     {
+      "label": "B",
+      "text": "Southern Iberia is an obvious candidate. The region contains one of the largest concentrations of copper-bearing deposits in Europe; the Iberian Pyrite Belt alone is estimated to hold around 400 million tonnes of sulphide ores. Surprisingly, however, the systematic study of Iberian mining history began only in the 1970s. Chinflón, the first prehistoric mine to be investigated, was initially regarded as a Copper Age site, but pottery styles and radiocarbon dating later indicated a Late Bronze Age date. More than 100 potential prehistoric mines have been identified in southern Iberia, yet few have been excavated, and until recently only 11 radiocarbon dates from five sites supported Late Bronze Age mining. Lead isotope studies had hinted at Iberian copper in artefacts from Scandinavia, Poland and Ireland, but direct evidence from the mines themselves remained scarce."
+     },
+     {
+      "label": "C",
+      "text": "The excavations at Las Minillas, near Granja de Torrehermosa in the province of Badajoz, were designed to fill that gap. Fieldwork began in 2020, with major campaigns in 2020, 2021 and 2023, and has produced 17 new Late Bronze Age radiocarbon dates. The prehistoric miners dug trenches two to four metres wide along a 300-metre outcrop of copper ore, reaching depths of 8.2 metres, and concentrations of charcoal suggest that they used fire to fracture the rock. The team documented 892 stone tools, including 735 grooved hammers. On this evidence, the authors describe Las Minillas as the largest securely dated Late Bronze Age copper mine excavated in Iberia to date. The ore vein at Mocissos in Portugal is longer, but its exploitation appears to have spanned several millennia rather than being concentrated in the Late Bronze Age."
+     },
+     {
+      "label": "D",
+      "text": "Not every part of the site told a straightforward story. Dates from the mining trench and from a habitation area, where a circular hut is interpreted as a short-lived seasonal encampment, fall between about 1350 and 750 BC. In the metallurgical zone, by contrast, the archaeologists recovered roughly 300 kilograms of slag and a circular structure that may have been a furnace, initially attributed to the Bronze Age. Yet all five charcoal samples from this area produced much later dates: four Roman and one Islamic. The authors point out that the layers here had been disturbed by burrowing rodents, by the removal of mining debris for use as ballast, and by ploughing. As a result, they decline to link the structure to Bronze Age smelting, a reminder that scientific dating can overturn even plausible first impressions."
+     },
+     {
+      "label": "E",
+      "text": "The most far-reaching evidence is chemical. Lead isotope analysis, used for about four decades to trace the origin of ancient metals, revealed that the Las Minillas samples fall outside the known overlap between Spanish ores and those of the Italian Alps, and that they are also distinct from Sardinian copper. When the researchers compared their results with data on more than 300 Late Bronze Age bronzes from Scandinavia, 11 objects of various types proved consistent with the mine in both isotopes and chemistry, sharing a similarly wide range of silver and antimony. On average, the Scandinavian bronzes contained less nickel than the Las Minillas samples, though still within the range of some ores. Seven of the eleven belong to the Nordic period of 900 to 700 BC, which closely corresponds with the final documented phase of mining."
+     },
+     {
+      "label": "F",
+      "text": "Las Minillas itself was not a giant. Its output is estimated at between 49 and 738 tonnes of copper, with a cautious figure of 197 tonnes, compared with roughly 23,000 tonnes for the Mitterberg. However, the mine belongs to what the authors call the Southern Iberian Copper Mining Complex, and if many of its sites operated contemporaneously, their combined output may have rivalled that of other major districts. The timing is suggestive: Great Orme declined around 1400 BC and the Mitterberg around 1300 or 1200 BC, after which the Italian Alps became the primary source, with Iberia contributing modestly at first. The authors therefore propose a hypothetical, polycentric exchange system in which Iberian copper reached Atlantic, Nordic and western Mediterranean communities primarily via maritime routes. Testing that model will be difficult, they concede, while so many Iberian mines have poorly defined chronologies."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "reasons why some of the evidence from one part of the site may be unreliable",
+        "a": "D",
+        "ref": "D",
+        "ev": "the layers here had been disturbed by burrowing rodents, by the removal of mining debris for use as ballast, and by ploughing",
+        "zh": "D 段：冶煉區的地層被囓齒動物挖洞、移除礦渣當壓艙物、耕作所擾動 → 證據可能不可靠。"
+       },
+       {
+        "q": "a comparison with a mine that was worked over a much longer period",
+        "a": "C",
+        "ref": "C",
+        "ev": "its exploitation appears to have spanned several millennia",
+        "zh": "C 段末：葡萄牙的 Mocissos 礦脈較長，但開採橫跨數千年，而不是集中在晚期青銅時代。"
+       },
+       {
+        "q": "an indication of how recently organised research into Iberian mining began",
+        "a": "B",
+        "ref": "B",
+        "ev": "the systematic study of Iberian mining history began only in the 1970s",
+        "zh": "B 段：伊比利亞採礦史的系統性研究直到 1970 年代才開始。organised research = systematic study。"
+       },
+       {
+        "q": "a description of which regions supplied copper before Iberia's possible rise",
+        "a": "A",
+        "ref": "A",
+        "ev": "Great Orme in Wales and the Italian Alps appear to have supplied the North Atlantic and Scandinavian regions",
+        "zh": "A 段：介紹早期與中期青銅時代的主要銅來源（威爾斯、奧地利阿爾卑斯、義大利阿爾卑斯、賽普勒斯、薩丁尼亞）。"
+       },
+       {
+        "q": "a chemical difference between some distant objects and material from the mine",
+        "a": "E",
+        "ref": "E",
+        "ev": "the Scandinavian bronzes contained less nickel than the Las Minillas samples",
+        "zh": "E 段：斯堪地那維亞青銅器的鎳含量平均低於 Las Minillas 的樣本（但仍在部分礦石範圍內）→ chemical difference。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The estimated age of the Chinflón mine was changed after further study.",
+        "a": "True",
+        "ref": "B",
+        "ev": "was initially regarded as a Copper Age site, but pottery styles and radiocarbon dating later indicated a Late Bronze Age date",
+        "zh": "B 段：Chinflón 原先被認為是紅銅時代，後來依陶器風格與碳定年改判為晚期青銅時代 → True。"
+       },
+       {
+        "q": "The hut found at Las Minillas was probably lived in throughout the year.",
+        "a": "False",
+        "ref": "D",
+        "ev": "a circular hut is interpreted as a short-lived seasonal encampment",
+        "zh": "D 段：圓形小屋被解讀為短期、季節性的營地 → 與「全年居住」矛盾 → False。"
+       },
+       {
+        "q": "Some of the Scandinavian objects linked to Las Minillas were weapons.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "11 objects of various types proved consistent with the mine",
+        "zh": "E 段只說 11 件「各種類型」（of various types）的物件，完全沒說是不是武器 → Not Given。陷阱：青銅時代常讓人聯想到武器，但文章沒提。"
+       },
+       {
+        "q": "According to the authors, the Italian Alps stopped producing copper at about the same time as Great Orme.",
+        "a": "False",
+        "ref": "F",
+        "ev": "after which the Italian Alps became the primary source",
+        "zh": "F 段：Great Orme 和 Mitterberg 衰退之後，義大利阿爾卑斯反而成為「主要來源」→ 並沒有同時停產 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Iberia's place in Bronze Age copper supply",
+      "lines": [
+       {
+        "t": "Although Las Minillas produced far less copper than the Mitterberg, it formed part of a wider group of sites that the authors name the Southern Iberian Copper Mining [[1]]. They suggest that Iberia belonged to a [[2]] system of exchange with several centres, sending copper to other communities mostly by [[3]] routes. However, they admit that their model is hard to test because the [[4]] of many Iberian mines are still unclear."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "Complex"
+        ],
+        "ref": "F",
+        "ev": "what the authors call the Southern Iberian Copper Mining Complex",
+        "zh": "F 段：the Southern Iberian Copper Mining Complex（南伊比利亞銅礦開採群）。name = call；答案 Complex。"
+       },
+       {
+        "a": [
+         "polycentric"
+        ],
+        "ref": "F",
+        "ev": "a hypothetical, polycentric exchange system",
+        "zh": "F 段：polycentric（多中心的）exchange system；with several centres 正是 polycentric 的意思。hypothetical 也在同一處，但它不是「有多個中心」的意思。"
+       },
+       {
+        "a": [
+         "maritime"
+        ],
+        "ref": "F",
+        "ev": "primarily via maritime routes",
+        "zh": "F 段：primarily via maritime routes（主要經由海路）。mostly = primarily；答案 maritime。"
+       },
+       {
+        "a": [
+         "chronologies"
+        ],
+        "ref": "F",
+        "ev": "so many Iberian mines have poorly defined chronologies",
+        "zh": "F 段末：許多伊比利亞礦場的年代（chronologies）仍不明確。still unclear = poorly defined；空格前 the、後接 are → 複數名詞 chronologies。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "deposit",
+     "pos": "n.",
+     "def": "a layer or amount of a mineral that has built up naturally in the ground",
+     "zh": "礦床、蘊藏",
+     "example": "Spain has some of the richest copper deposits in Europe.",
+     "match": [
+      "deposits"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "vein",
+     "pos": "n.",
+     "def": "a narrow layer of mineral running through rock",
+     "zh": "礦脈",
+     "example": "Miners had followed a copper vein.",
+     "match": [
+      "vein"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "striking",
+     "pos": "adj.",
+     "def": "very noticeable or impressive",
+     "zh": "引人注目的、驚人的",
+     "example": "The finds are striking.",
+     "match": [
+      "striking"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "twist",
+     "pos": "n.",
+     "def": "an unexpected change or development",
+     "zh": "意外的轉折",
+     "example": "There was a twist, though.",
+     "match": [
+      "twist"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "line up with",
+     "pos": "phr. v.",
+     "def": "to match or correspond with something",
+     "zh": "與……吻合",
+     "example": "The dates line up with the last phase of mining.",
+     "match": [
+      "lines up with"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "telling",
+     "pos": "adj.",
+     "def": "revealing something important",
+     "zh": "很能說明問題的",
+     "example": "The timing is telling.",
+     "match": [
+      "telling"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "hypothetical",
+     "pos": "adj.",
+     "def": "based on a suggested idea rather than proven fact",
+     "zh": "假設性的",
+     "example": "They call this a hypothetical model.",
+     "match": [
+      "hypothetical"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "indispensable",
+     "pos": "adj.",
+     "def": "absolutely necessary",
+     "zh": "不可或缺的",
+     "example": "Copper was the indispensable ingredient of the Bronze Age.",
+     "match": [
+      "indispensable"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "unevenly",
+     "pos": "adv.",
+     "def": "not equally or regularly",
+     "zh": "不均勻地",
+     "example": "Deposits were unevenly distributed across Europe.",
+     "match": [
+      "unevenly"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "scarce",
+     "pos": "adj.",
+     "def": "not available in large amounts",
+     "zh": "稀少的、缺乏的",
+     "example": "Direct evidence from the mines remained scarce.",
+     "match": [
+      "scarce"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "attribute",
+     "pos": "v.",
+     "def": "to say that something belongs to a particular time, place or cause",
+     "zh": "把……歸於（某時期／原因）",
+     "example": "The structure was initially attributed to the Bronze Age.",
+     "match": [
+      "attributed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "overturn",
+     "pos": "v.",
+     "def": "to show that a previous belief or decision was wrong",
+     "zh": "推翻",
+     "example": "Scientific dating can overturn first impressions.",
+     "match": [
+      "overturn"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "far-reaching",
+     "pos": "adj.",
+     "def": "having a wide influence or many effects",
+     "zh": "影響深遠的",
+     "example": "The most far-reaching evidence is chemical.",
+     "match": [
+      "far-reaching"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "contemporaneously",
+     "pos": "adv.",
+     "def": "at the same time as something else",
+     "zh": "同時期地",
+     "example": "If many sites operated contemporaneously, output would be large.",
+     "match": [
+      "contemporaneously"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "concede",
+     "pos": "v.",
+     "def": "to admit, often unwillingly, that something is true",
+     "zh": "（勉強）承認",
+     "example": "Testing the model will be difficult, they concede.",
+     "match": [
+      "concede"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-01-2.mp3",
+    "times": [
+     [
+      0.36,
+      7.51
+     ],
+     [
+      7.77,
+      8.87
+     ],
+     [
+      9.65,
+      15.71
+     ],
+     [
+      15.93,
+      18.75
+     ],
+     [
+      19.02,
+      26.76
+     ],
+     [
+      27.08,
+      34.17
+     ],
+     [
+      34.95,
+      39.09
+     ],
+     [
+      39.37,
+      49.37
+     ],
+     [
+      49.7,
+      57.37
+     ],
+     [
+      57.7,
+      63.96
+     ],
+     [
+      64.25,
+      68.34
+     ],
+     [
+      69.12,
+      70.37
+     ],
+     [
+      70.59,
+      77.02
+     ],
+     [
+      77.32,
+      81.97
+     ],
+     [
+      82.2,
+      84.56
+     ],
+     [
+      85.34,
+      86.77
+     ],
+     [
+      87.04,
+      94.22
+     ],
+     [
+      94.58,
+      100.6
+     ],
+     [
+      100.96,
+      103.86
+     ],
+     [
+      104.64,
+      107.97
+     ],
+     [
+      108.22,
+      115.54
+     ],
+     [
+      115.83,
+      120.91
+     ],
+     [
+      121.12,
+      125.61
+     ],
+     [
+      125.87,
+      132.73
+     ],
+     [
+      133.51,
+      135.12
+     ],
+     [
+      135.46,
+      143.82
+     ],
+     [
+      144.21,
+      148.54
+     ],
+     [
+      148.86,
+      156.3
+     ],
+     [
+      156.53,
+      165.8
+     ],
+     [
+      166.58,
+      175.82
+     ],
+     [
+      176.15,
+      180.0
+     ],
+     [
+      180.25,
+      186.34
+     ],
+     [
+      186.63,
+      190.77
+     ]
+    ],
+    "duration": 191.4,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-11-01-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
