@@ -1,0 +1,2184 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-02",
+ "date": "2026-11-02",
+ "title": "Runners Go Further in the Forest Without Working Harder, Loughborough Study Finds · Locking Phones Away in Lectures Lifts Grades, Especially for Struggling Students, Giant Indian Trial Finds",
+ "stories": [
+  {
+   "title": "Runners Go Further in the Forest Without Working Harder, Loughborough Study Finds",
+   "topic": "Sport science · green exercise",
+   "source": {
+    "name": "Loughborough University: Want to run further, feel better and stay motivated? Exercise in nature – new study (5 Oct 2026)",
+    "url": "https://www.lboro.ac.uk/media-centre/press-releases/2026/october/exercise-in-nature-study/",
+    "links": [
+     {
+      "name": "Evolution, Medicine, and Public Health: Running wild: Forest running enhances performance, enjoyment, mood, and future exercise intentions (Putland et al., 2026)",
+      "url": "https://doi.org/10.1093/emph/eoag018"
+     },
+     {
+      "name": "Full text (open access, Europe PMC)",
+      "url": "https://europepmc.org/article/PMC/PMC13623525"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "If you've ever felt that a run in the woods is easier than a run along a busy road, British scientists say you may well be right.",
+     "Here's the report."
+    ],
+    [
+     "Researchers at Loughborough University in England asked forty-seven young adults to run for thirty minutes on two separate occasions.",
+     "One session took place on a loop through an ancient woodland.",
+     "The other was on a loop around an industrial estate, made up of roads and concrete pavements.",
+     "The two routes were almost exactly the same length, at around six hundred and thirty metres.",
+     "And the sessions were held four weeks apart, so that the first run wouldn't affect the second."
+    ],
+    [
+     "Crucially, the runners weren't told how fast to go.",
+     "Instead, they were asked to keep their effort at four on a ten-point scale, a level the researchers describe as somewhat hard.",
+     "Nor did they know that the team was quietly measuring how far they ran."
+    ],
+    [
+     "So what happened?",
+     "In the forest, participants covered an average of four thousand, one hundred and eighteen metres.",
+     "On the urban loop, the figure was three thousand, nine hundred and thirty-six.",
+     "That's a difference of one hundred and eighty-two metres, or about four point six per cent.",
+     "Yet their heart rates were almost identical, at around one hundred and fifty-eight beats per minute, and the runners said the effort felt no different."
+    ],
+    [
+     "What's more, the forest route was actually the tougher course.",
+     "It climbed and dropped more on every lap, its surface was uneven, and for some runners it was slippery with mud.",
+     "The authors argue that, if anything, their results are conservative."
+    ],
+    [
+     "Meanwhile, the bigger differences were psychological.",
+     "Participants enjoyed the woodland run far more, and their mood improved afterwards, while after the urban run it tended to get slightly worse.",
+     "Asked how likely they were to repeat the same run the following week, volunteers gave an average of around seventy-seven per cent after the forest, compared with just thirty-one after the city."
+    ],
+    [
+     "Lead researcher Matthew Putland says that matters, because low exercise adherence, in other words people giving up, is a major public health challenge.",
+     "In his view, the easiest and cheapest way to improve exercise habits and enjoyment is to do it in nature."
+    ],
+    [
+     "Why might nature help?",
+     "Dr Danny Longman, who leads the research group, points to what the team calls the Environmental Mismatch Hypothesis.",
+     "The idea is that human biology was shaped by natural surroundings, and that industrial environments, with their noise, artificial light and pollution, place extra demands on the body.",
+     "One possible factor is air quality.",
+     "Official emissions data suggest that fine-particle pollution around the urban site was roughly thirty times higher than around the forest.",
+     "But the team didn't measure the air along the routes themselves, so that explanation remains speculative."
+    ],
+    [
+     "There are limits, though.",
+     "The volunteers were young, mostly male and generally fit, and most of them came from East Asia.",
+     "And the study recorded people's intentions, not whether they actually went on to exercise more.",
+     "The researchers now want to test older and less active groups.",
+     "That's the health and fitness report. Stay with us for the rest of the morning's science news."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Running in nature versus the city",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The experiment"
+       },
+       {
+        "t": "Natural route: a circuit through very old [[1]]"
+       },
+       {
+        "t": "Urban route: a circuit around an industrial [[2]]"
+       },
+       {
+        "t": "Target effort: 4 out of 10, described as 'somewhat [[3]]'"
+       },
+       {
+        "h": "Performance"
+       },
+       {
+        "t": "Extra distance in the forest: approximately [[4]] %"
+       },
+       {
+        "t": "Forest route was harder: uneven and sometimes slippery because of [[5]]"
+       },
+       {
+        "h": "Psychological effects"
+       },
+       {
+        "t": "After the city run, participants' [[6]] became a little worse"
+       },
+       {
+        "t": "Putland: poor exercise [[7]] is a serious problem for public health"
+       },
+       {
+        "h": "Possible explanations"
+       },
+       {
+        "t": "Longman: the Environmental [[8]] Hypothesis"
+       },
+       {
+        "t": "Air [[9]] may play a role, but it was not measured on the routes"
+       },
+       {
+        "h": "Limitations"
+       },
+       {
+        "t": "Researchers measured participants' [[10]] rather than their actual behaviour"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "woodland",
+         "ancient woodland"
+        ],
+        "ref": "a loop through an ancient woodland",
+        "ev": "One session took place on a loop through an ancient woodland.",
+        "zh": "very old = ancient；circuit = loop。答案 woodland（林地）。題目已有 very old，所以只要填 woodland（寫 ancient woodland 也算兩個字內）。"
+       },
+       {
+        "a": [
+         "estate"
+        ],
+        "ref": "a loop around an industrial estate",
+        "ev": "The other was on a loop around an industrial estate",
+        "zh": "industrial estate（工業區）。空格前已有 industrial，所以只填 estate。後面的 roads and concrete pavements 是描述，不是答案。"
+       },
+       {
+        "a": [
+         "hard"
+        ],
+        "ref": "a level the researchers describe as somewhat hard",
+        "ev": "a level the researchers describe as somewhat hard",
+        "zh": "Borg 量表 4/10 = somewhat hard（有點吃力）。注意 four 和 ten-point scale 題目已給。後面的 tougher course 是講路線，不是這題。"
+       },
+       {
+        "a": [
+         "4.6"
+        ],
+        "ref": "or about four point six per cent",
+        "ev": "That's a difference of one hundred and eighty-two metres, or about four point six per cent.",
+        "zh": "題目單位是 %，所以答 4.6。干擾：4,118 m 與 3,936 m 是兩邊的距離，182 是「公尺」差距，都不是百分比。"
+       },
+       {
+        "a": [
+         "mud"
+        ],
+        "ref": "it was slippery with mud",
+        "ev": "for some runners it was slippery with mud",
+        "zh": "because of = slippery with；答案 mud（泥巴）。uneven 已在題目裡。論文中 47 人裡有 15 人遇到森林路面泥濘濕滑。"
+       },
+       {
+        "a": [
+         "mood"
+        ],
+        "ref": "while after the urban run it tended to get slightly worse",
+        "ev": "their mood improved afterwards, while after the urban run it tended to get slightly worse",
+        "zh": "a little worse = slightly worse；it 指的是前面的 mood（心情）。森林組心情變好，城市組略變差。enjoyed 是動詞，不是答案。"
+       },
+       {
+        "a": [
+         "adherence"
+        ],
+        "ref": "because low exercise adherence",
+        "ev": "low exercise adherence, in other words people giving up, is a major public health challenge",
+        "zh": "poor = low；serious problem = major challenge；答案 adherence（持續遵循、堅持度）。講者自己解釋 = people giving up（半途而廢）。"
+       },
+       {
+        "a": [
+         "mismatch"
+        ],
+        "ref": "the Environmental Mismatch Hypothesis",
+        "ev": "points to what the team calls the Environmental Mismatch Hypothesis",
+        "zh": "Environmental Mismatch Hypothesis（環境錯配假說）：人類生理是在自然環境中演化的，工業化環境與之「不匹配」。答案 mismatch。"
+       },
+       {
+        "a": [
+         "quality"
+        ],
+        "ref": "One possible factor is air quality.",
+        "ev": "One possible factor is air quality.",
+        "zh": "may play a role = one possible factor；答案 quality（air quality 空氣品質）。後面 thirty times higher 是排放數據，而且講者說研究團隊沒有在路線上實測，所以只是 speculative（推測）。"
+       },
+       {
+        "a": [
+         "intentions",
+         "intention"
+        ],
+        "ref": "the study recorded people's intentions",
+        "ev": "the study recorded people's intentions, not whether they actually went on to exercise more",
+        "zh": "measured = recorded；rather than their actual behaviour = not whether they actually went on to exercise more。答案 intentions（意圖、打算）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Running Wild: Can Natural Settings Make Exercise Easier?",
+    "intro": "A carefully controlled field experiment suggests that where people exercise may shape not only how they feel, but how far they are able to go.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Physical inactivity is now recognised as one of the most pervasive public health problems of the modern era. Despite the well-documented benefits of regular exercise, around one-third of adults worldwide, approximately 1.8 billion people, fail to meet the World Health Organization's recommendation of 150 minutes of moderate-intensity or 75 minutes of vigorous-intensity activity per week. Even those who begin a programme frequently abandon it: one widely cited estimate suggests that 63% of new fitness club members stop within three months, and that fewer than 4% are still exercising consistently after a year. Numerous initiatives have attempted to make activity more appealing through technology, gamification and social interaction. The physical setting in which people exercise, however, has often been overlooked."
+     },
+     {
+      "label": "B",
+      "text": "A body of research known as the green exercise literature has examined whether physical activity in natural surroundings offers additional benefits, and several studies have reported greater enjoyment and more positive changes in mood than activity indoors or in towns. Yet systematic reviews have described this literature as underdeveloped and inconclusive, citing inconsistent study designs, inadequate sample sizes and insufficient control of variables such as the weather. Earlier claims that people perform better outdoors have also been hard to interpret. One study reported more vigorous dancing in parks than in indoor studios, but did not describe how natural the parks actually were; another found that people ran faster outdoors than on treadmills, a comparison complicated by the biomechanical differences between the two forms of running."
+     },
+     {
+      "label": "C",
+      "text": "A team led by researchers at Loughborough University approached the question from an evolutionary angle. Their Environmental Mismatch Hypothesis posits that human biology, shaped over millennia by natural surroundings, may be impaired by the industrialised world that has emerged in the 200 to 300 years since the Industrial Revolution. Modern environments, they argue, impose novel stressors, including noise, artificial light and chemical pollution, while reducing contact with features such as birdsong and natural light-dark cycles. Because endurance was critical to the survival of early humans, who depended on prolonged effort for hunting and travel, physical capacity is regarded as a meaningful test of the idea. The group had previously reported that brief exposure to industrial surroundings reduced subsequent cycling endurance in a laboratory by around 7.5% compared with exposure to a forest."
+     },
+     {
+      "label": "D",
+      "text": "In the new study, 47 healthy adults aged between 18 and 31 completed a 30-minute self-paced run in two locations near Loughborough: an industrial estate and an area of ancient woodland. The circuits were chosen to be as similar as possible, measuring 633 and 630 metres respectively, and the order of the sessions was counterbalanced, with the second taking place four weeks after the first. Participants ran in groups of four, but were spaced around the circuit so that they did not begin within sight of one another, and their phones were stored away throughout. They were instructed to maintain a moderate effort of four on a ten-point scale. Distance was recorded with a lap counter and a measuring wheel without the runners' knowledge, while heart rate was monitored continuously using a chest strap. Weather was also logged, and the number of rainy sessions did not differ significantly between the two sites."
+     },
+     {
+      "label": "E",
+      "text": "On average, participants covered 4,118 metres in the forest and 3,936 metres on the urban circuit, an increase of 182 metres, or 4.6%. Although the effect was statistically small, it was achieved with no difference in heart rate or perceived exertion. Notably, the woodland course was the more demanding of the two: it rose and fell by 17.7 metres on each lap, compared with less than a metre in the city, and its ground was slippery with mud for 15 of the 47 participants, against just one in the urban setting. All else being equal, the authors note, the woodland course should have produced a slower pace. The psychological contrasts were far larger. Enjoyment was considerably higher after the forest run, and when asked whether they would repeat the session the following week, participants gave an average likelihood of 77.4%, compared with 30.6% after the urban run."
+     },
+     {
+      "label": "F",
+      "text": "The reasons for the difference remain uncertain. Emissions inventories suggest that fine particulate pollution around the urban site may have been roughly thirty times greater than near the forest, yet air quality was not measured along the routes, so its role is speculative. Psychological restoration and reduced mental fatigue could equally have contributed. Moreover, heart rate is only a proxy for physiological strain, so the team cannot state definitively that energy expenditure was comparable. The sample was also narrow: participants were young, predominantly male, 81% East Asian and generally active, which limits the generalisability of the findings to older or sedentary people. Finally, the study measured intended rather than actual future activity. If the results are replicated, however, the authors suggest that natural environments could offer a low-cost, scalable means of encouraging people to remain active."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reason why one route might have been expected to produce worse performance",
+        "a": "E",
+        "ref": "E",
+        "ev": "All else being equal, the authors note, the woodland course should have produced a slower pace.",
+        "zh": "E 段：森林路線每圈爬升 17.7 公尺、路面泥濘，照理說應該跑得比較慢（should have produced a slower pace）。worse performance = slower pace。"
+       },
+       {
+        "q": "a reference to earlier attempts to make exercise more attractive using digital approaches",
+        "a": "A",
+        "ref": "A",
+        "ev": "Numerous initiatives have attempted to make activity more appealing through technology, gamification and social interaction.",
+        "zh": "A 段：用科技、遊戲化（gamification）與社交互動讓運動更吸引人。more attractive = more appealing；digital approaches = technology, gamification。"
+       },
+       {
+        "q": "details of a measure taken to stop participants influencing each other",
+        "a": "D",
+        "ref": "D",
+        "ev": "were spaced around the circuit so that they did not begin within sight of one another",
+        "zh": "D 段：四人一組，但在跑道上分散起跑、彼此看不到，避免互相影響（論文稱 minimize peer influence）。"
+       },
+       {
+        "q": "an explanation of why previous findings in this area have been considered unreliable",
+        "a": "B",
+        "ref": "B",
+        "ev": "citing inconsistent study designs, inadequate sample sizes and insufficient control of variables such as the weather",
+        "zh": "B 段：系統性回顧指出綠色運動文獻研究設計不一致、樣本數不足、天氣等變因控制不夠 → unreliable。"
+       },
+       {
+        "q": "a mention of a factor that the researchers did not directly record",
+        "a": "F",
+        "ref": "F",
+        "ev": "yet air quality was not measured along the routes, so its role is speculative",
+        "zh": "F 段：空氣品質沒有在路線上實測（not measured），所以只能推測。did not directly record = was not measured。陷阱：D 段的天氣 was logged（有記錄）。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Most people who join a fitness club are still training regularly a year later.",
+        "a": "False",
+        "ref": "A",
+        "ev": "fewer than 4% are still exercising consistently after a year",
+        "zh": "A 段：一年後仍規律運動的不到 4%，與「大多數人」相反 → False。"
+       },
+       {
+        "q": "The research group's earlier experiment measured endurance indoors rather than outdoors.",
+        "a": "True",
+        "ref": "C",
+        "ev": "reduced subsequent cycling endurance in a laboratory by around 7.5%",
+        "zh": "C 段：先前的研究是在實驗室（in a laboratory）測自行車耐力 → 室內 → True。"
+       },
+       {
+        "q": "Rain reduced the distance that participants covered on the urban circuit.",
+        "a": "Not Given",
+        "ref": "D",
+        "ev": "the number of rainy sessions did not differ significantly between the two sites",
+        "zh": "D 段只說兩地下雨的次數差不多，沒有比較「下雨對距離的影響」→ Not Given。陷阱：文章確實提到 rain 和 distance，但沒有把兩者連在一起。"
+       },
+       {
+        "q": "Slippery conditions were more common in the forest than in the city.",
+        "a": "True",
+        "ref": "E",
+        "ev": "its ground was slippery with mud for 15 of the 47 participants, against just one in the urban setting",
+        "zh": "E 段：森林 15/47 人遇到泥濘濕滑，城市只有 1 人 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Explaining the forest effect",
+      "lines": [
+       {
+        "t": "According to the researchers' hypothesis, modern surroundings expose people to unfamiliar [[1]], such as noise and artificial light. The study cannot confirm that runners used the same amount of energy in both places, since heart rate serves only as a [[2]] for physical strain. Because most volunteers were young and active, the [[3]] of the results to other groups is limited. Nevertheless, if the findings are [[4]] by other studies, exercising in nature could become a cheap way to help people stay active."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "stressors"
+        ],
+        "ref": "C",
+        "ev": "Modern environments, they argue, impose novel stressors, including noise, artificial light and chemical pollution",
+        "zh": "C 段：impose novel stressors（帶來新的壓力源）。unfamiliar = novel；空格前是形容詞 unfamiliar，後接 such as → 複數名詞 stressors。"
+       },
+       {
+        "a": [
+         "proxy"
+        ],
+        "ref": "F",
+        "ev": "heart rate is only a proxy for physiological strain",
+        "zh": "F 段：heart rate is only a proxy for physiological strain（心率只是生理負荷的替代指標）。serves only as a = is only a；physical strain = physiological strain。"
+       },
+       {
+        "a": [
+         "generalisability",
+         "generalizability"
+        ],
+        "ref": "F",
+        "ev": "which limits the generalisability of the findings to older or sedentary people",
+        "zh": "F 段：limits the generalisability of the findings（限制了研究結果的可推廣性）。the ___ of the results → 名詞；英美拼法都算。"
+       },
+       {
+        "a": [
+         "replicated"
+        ],
+        "ref": "F",
+        "ev": "If the results are replicated, however",
+        "zh": "F 段：If the results are replicated（若結果能被重現）。if the findings are ___ by other studies → 過去分詞 replicated。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "if anything",
+     "pos": "phrase",
+     "def": "used to suggest that the opposite of what was said may be true, or that something is even more so",
+     "zh": "若要說有什麼不同的話；甚至可說",
+     "example": "If anything, their results are conservative.",
+     "match": [
+      "if anything"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "conservative",
+     "pos": "adj.",
+     "def": "(of an estimate) deliberately cautious and likely to be lower than the real figure",
+     "zh": "保守的（估計）",
+     "example": "The authors argue that their results are conservative.",
+     "match": [
+      "conservative"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "adherence",
+     "pos": "n.",
+     "def": "the act of continuing to follow a plan, rule or treatment",
+     "zh": "堅持、遵循（如持續運動）",
+     "example": "Low exercise adherence is a major public health challenge.",
+     "match": [
+      "adherence"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "speculative",
+     "pos": "adj.",
+     "def": "based on guesses or ideas rather than firm evidence",
+     "zh": "推測性的",
+     "example": "That explanation remains speculative.",
+     "match": [
+      "speculative"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "pervasive",
+     "pos": "adj.",
+     "def": "spreading widely through a group or area",
+     "zh": "普遍的、無所不在的",
+     "example": "Inactivity is one of the most pervasive health problems.",
+     "match": [
+      "pervasive"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "overlook",
+     "pos": "v.",
+     "def": "to fail to notice or consider something",
+     "zh": "忽略、忽視",
+     "example": "The physical setting has often been overlooked.",
+     "match": [
+      "overlooked"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "inconclusive",
+     "pos": "adj.",
+     "def": "not leading to a firm result or decision",
+     "zh": "無定論的",
+     "example": "Reviews described the literature as inconclusive.",
+     "match": [
+      "inconclusive"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "posit",
+     "pos": "v.",
+     "def": "to put forward an idea as a basis for argument",
+     "zh": "假定、提出（論點）",
+     "example": "The hypothesis posits that biology may be impaired.",
+     "match": [
+      "posits"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "impair",
+     "pos": "v.",
+     "def": "to weaken or damage a function or ability",
+     "zh": "損害、削弱",
+     "example": "Human biology may be impaired by industrial surroundings.",
+     "match": [
+      "impaired"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "counterbalanced",
+     "pos": "adj.",
+     "def": "(in experiments) arranged so that the order of conditions is varied evenly across participants",
+     "zh": "（實驗順序）對抗平衡的",
+     "example": "The order of the sessions was counterbalanced.",
+     "match": [
+      "counterbalanced"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "perceived exertion",
+     "pos": "n. phr.",
+     "def": "how hard a person feels they are working during exercise",
+     "zh": "自覺用力程度",
+     "example": "There was no difference in perceived exertion.",
+     "match": [
+      "perceived exertion"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "proxy",
+     "pos": "n.",
+     "def": "something used to represent or measure something else indirectly",
+     "zh": "替代指標",
+     "example": "Heart rate is only a proxy for strain.",
+     "match": [
+      "proxy"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "generalisability",
+     "pos": "n.",
+     "def": "the extent to which results apply to other people or situations",
+     "zh": "可推廣性",
+     "example": "The narrow sample limits the generalisability of the findings.",
+     "match": [
+      "generalisability"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sedentary",
+     "pos": "adj.",
+     "def": "involving or tending to spend much time sitting and little exercise",
+     "zh": "久坐不動的",
+     "example": "The results may not apply to sedentary people.",
+     "match": [
+      "sedentary"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "scalable",
+     "pos": "adj.",
+     "def": "able to be expanded easily to reach many more people",
+     "zh": "可擴大規模的",
+     "example": "Nature could offer a scalable way to keep people active.",
+     "match": [
+      "scalable"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-02-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.1
+     ],
+     [
+      1.32,
+      8.06
+     ],
+     [
+      8.44,
+      9.48
+     ],
+     [
+      10.26,
+      17.62
+     ],
+     [
+      17.89,
+      21.09
+     ],
+     [
+      21.41,
+      26.84
+     ],
+     [
+      27.08,
+      32.33
+     ],
+     [
+      32.61,
+      37.65
+     ],
+     [
+      38.43,
+      41.46
+     ],
+     [
+      41.7,
+      49.11
+     ],
+     [
+      49.41,
+      52.98
+     ],
+     [
+      53.76,
+      54.72
+     ],
+     [
+      55.1,
+      60.6
+     ],
+     [
+      60.9,
+      65.47
+     ],
+     [
+      65.69,
+      70.62
+     ],
+     [
+      70.89,
+      78.98
+     ],
+     [
+      79.76,
+      82.92
+     ],
+     [
+      83.16,
+      89.75
+     ],
+     [
+      90.03,
+      94.0
+     ],
+     [
+      94.78,
+      97.7
+     ],
+     [
+      97.91,
+      106.11
+     ],
+     [
+      106.4,
+      117.2
+     ],
+     [
+      117.98,
+      127.02
+     ],
+     [
+      127.28,
+      133.41
+     ],
+     [
+      134.19,
+      135.45
+     ],
+     [
+      135.79,
+      142.78
+     ],
+     [
+      143.05,
+      153.81
+     ],
+     [
+      154.21,
+      156.47
+     ],
+     [
+      156.66,
+      164.16
+     ],
+     [
+      164.56,
+      170.41
+     ],
+     [
+      171.19,
+      172.32
+     ],
+     [
+      172.53,
+      178.24
+     ],
+     [
+      178.53,
+      184.16
+     ],
+     [
+      184.37,
+      188.03
+     ],
+     [
+      188.29,
+      193.61
+     ]
+    ],
+    "duration": 194.3,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-11-02-1-words/"
+   }
+  },
+  {
+   "title": "Locking Phones Away in Lectures Lifts Grades, Especially for Struggling Students, Giant Indian Trial Finds",
+   "topic": "Education · phone bans",
+   "source": {
+    "name": "Science: Phones impede learning: Evidence from a massive phone-free classroom experiment (Sungu, Choudhury & Bjerre-Nielsen, 8 Oct 2026)",
+    "url": "https://www.science.org/doi/10.1126/science.aef7249",
+    "links": [
+     {
+      "name": "The Educator K/12: Box the phones, lift the strugglers: giant trial adds fresh weight to classroom bans",
+      "url": "https://www.theeducatoronline.com/k12/news/box-the-phones-lift-the-strugglers-giant-trial-adds-fresh-weight-to-classroom-bans/289278"
+     },
+     {
+      "name": "Andreas Bjerre-Nielsen: Phone ban study published in Science (8 Oct 2026)",
+      "url": "https://bjerre-nielsen.me/news/phone-ban-science/"
+     },
+     {
+      "name": "University of Copenhagen: Phone-free lessons boost marks, major experiment shows",
+      "url": "https://news.ku.dk/all_news/2026/10/phone-free-lessons-boost-marks-major-experiment-shows/"
+     },
+     {
+      "name": "NBER: The Effects of School Phone Bans: National Evidence from Lockable Pouches",
+      "url": "https://www.nber.org/papers/w35132"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Our lead story in education this morning.",
+     "One of the largest experiments ever carried out on classroom phone bans has found that taking phones away raises grades, and that the biggest winners are the students who struggle most.",
+     "Here's the report."
+    ],
+    [
+     "The trial took place at ten colleges and universities in Odisha, a state in eastern India.",
+     "Over one semester, more than sixteen thousand students took part.",
+     "Researchers from the Wharton School in the United States, Jawaharlal Nehru University in India and the University of Copenhagen ran the study, which has now been published in the journal Science."
+    ],
+    [
+     "The method was simple.",
+     "Around a thousand wooden boxes, made from recycled materials, were installed in classrooms.",
+     "In randomly selected groups, every student had to drop their phone into the box at the start of each lecture.",
+     "Exceptions were allowed only for documented emergencies or caring responsibilities, and only if the teacher was told in advance."
+    ],
+    [
+     "So, did it work?",
+     "By the end of the semester, students in phone-free classes had grade averages about point zero seven three standard deviations higher than their peers.",
+     "That may sound tiny.",
+     "But the authors point out that large education trials typically produce effects of around point zero five.",
+     "By comparison, the difference between an average teacher and a very good one over a whole year is roughly point two."
+    ],
+    [
+     "Meanwhile, the gains weren't shared equally.",
+     "They were concentrated among first-year students and those with weaker previous results.",
+     "For high achievers, postgraduates and science and engineering students, the effect was close to nothing.",
+     "In other words, the policy appears to have narrowed gaps between students rather than widened them."
+    ],
+    [
+     "Could teachers simply have marked phone-free classes more generously?",
+     "The researchers say that's unlikely.",
+     "Most of each grade came from externally set exams, marked off-site by examiners who didn't know which group the students were in."
+    ],
+    [
+     "There were other changes too.",
+     "During surprise checks through classroom windows, observers saw fewer disruptions and less off-topic chatter.",
+     "Teachers even used their own phones less, although the rule didn't apply to them.",
+     "And students who'd lived with the ban became more supportive of it.",
+     "The main downside, according to the study, was a small rise in the fear of missing out, mostly among male students."
+    ],
+    [
+     "Still, not everyone is convinced about what the results mean.",
+     "Pedro Bem-Haja, a researcher at the University of Aveiro in Portugal, wrote in a published response that he does not question the main estimate.",
+     "But he argues that the trial tested a whole policy, enforced by teachers, so it cannot show that reduced distraction was the reason grades went up."
+    ],
+    [
+     "Evidence elsewhere is mixed, too.",
+     "A large American study of schools using lockable phone pouches found that phone use fell sharply, but average effects on test scores were close to zero in the first three years.",
+     "And the Indian participants were college students averaging nineteen years old, not schoolchildren.",
+     "The authors suggest the effects could be larger for younger pupils, but that hasn't been tested.",
+     "That's the education report. Coming up after the break, a look at the weather."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "A classroom phone-ban experiment in India",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "How the ban worked"
+       },
+       {
+        "t": "Phones went into wooden boxes built from [[1]] materials"
+       },
+       {
+        "t": "Students could keep phones only for documented [[2]] or caring duties"
+       },
+       {
+        "h": "Results"
+       },
+       {
+        "t": "Usual effect size in big education studies: about [[3]] standard deviations"
+       },
+       {
+        "t": "Biggest improvement: [[4]] students and those with weaker earlier results"
+       },
+       {
+        "t": "Overall, the ban reduced the [[5]] between students"
+       },
+       {
+        "t": "Exams were marked by [[6]] who did not know students' groups"
+       },
+       {
+        "h": "Other effects"
+       },
+       {
+        "t": "Spot checks: fewer [[7]] and less off-topic talk"
+       },
+       {
+        "t": "Drawback: more fear of missing out, particularly among [[8]] students"
+       },
+       {
+        "h": "Doubts and other evidence"
+       },
+       {
+        "t": "Critic: the trial cannot prove that less [[9]] caused the improvement"
+       },
+       {
+        "t": "US schools used lockable [[10]]; little average change in test scores"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "recycled"
+        ],
+        "ref": "made from recycled materials",
+        "ev": "Around a thousand wooden boxes, made from recycled materials, were installed in classrooms.",
+        "zh": "built from = made from；答案 recycled（回收的）。空格在 materials 前 → 形容詞。a thousand 是箱子數量，不是答案。"
+       },
+       {
+        "a": [
+         "emergencies",
+         "emergency"
+        ],
+        "ref": "only for documented emergencies or caring responsibilities",
+        "ev": "Exceptions were allowed only for documented emergencies or caring responsibilities",
+        "zh": "could keep phones only for = exceptions were allowed only for；caring duties = caring responsibilities。答案 emergencies（緊急狀況）。"
+       },
+       {
+        "a": [
+         "0.05",
+         ".05"
+        ],
+        "ref": "typically produce effects of around point zero five",
+        "ev": "large education trials typically produce effects of around point zero five",
+        "zh": "usual = typically；big education studies = large education trials；答案 0.05。干擾：0.073 是這次手機禁令的效果，0.2 是一般老師與很好的老師一年的差距。"
+       },
+       {
+        "a": [
+         "first-year",
+         "first year"
+        ],
+        "ref": "They were concentrated among first-year students",
+        "ev": "They were concentrated among first-year students and those with weaker previous results.",
+        "zh": "biggest improvement = gains were concentrated among；答案 first-year（一年級）。high achievers、postgraduates 是效果接近零的族群（干擾）。"
+       },
+       {
+        "a": [
+         "gaps",
+         "gap"
+        ],
+        "ref": "the policy appears to have narrowed gaps between students",
+        "ev": "the policy appears to have narrowed gaps between students rather than widened them",
+        "zh": "reduced = narrowed；答案 gaps（差距）。注意前一段 the difference between an average teacher… 講的是老師，不是學生之間。"
+       },
+       {
+        "a": [
+         "examiners"
+        ],
+        "ref": "marked off-site by examiners",
+        "ev": "marked off-site by examiners who didn't know which group the students were in",
+        "zh": "答案 examiners（閱卷人員）。這是在排除「老師給分比較寬鬆」的可能。teachers 是干擾——題目說的是不知道學生組別的人，不是老師。"
+       },
+       {
+        "a": [
+         "disruptions"
+        ],
+        "ref": "observers saw fewer disruptions",
+        "ev": "observers saw fewer disruptions and less off-topic chatter",
+        "zh": "spot checks = surprise checks；off-topic talk = off-topic chatter；答案 disruptions（干擾、擾亂秩序的行為）。observers 是看的人，不是答案。"
+       },
+       {
+        "a": [
+         "male"
+        ],
+        "ref": "mostly among male students",
+        "ev": "a small rise in the fear of missing out, mostly among male students",
+        "zh": "drawback = the main downside；particularly = mostly；答案 male（男性的）。fear of missing out = FOMO（錯失恐懼）。"
+       },
+       {
+        "a": [
+         "distraction"
+        ],
+        "ref": "it cannot show that reduced distraction was the reason",
+        "ev": "so it cannot show that reduced distraction was the reason grades went up",
+        "zh": "批評者 Bem-Haja：試驗測的是整套政策（含老師執行），無法證明成績進步是因為「分心減少」。less = reduced；答案 distraction。他並不質疑主要估計值（does not question the main estimate）。"
+       },
+       {
+        "a": [
+         "pouches",
+         "phone pouches"
+        ],
+        "ref": "schools using lockable phone pouches",
+        "ev": "A large American study of schools using lockable phone pouches",
+        "zh": "答案 pouches（可上鎖的手機袋，如 Yondr）。寫 phone pouches 也算兩個字內。美國研究：手機使用大減，但前三年平均考試成績效果接近零。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Phones in the Lecture Hall: What a Giant Trial Can and Cannot Tell Us",
+    "intro": "A randomised experiment involving more than 16,000 students offers some of the strongest evidence yet on classroom phone bans, but its lessons may not travel as far as policymakers hope.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Restrictions on smartphones in schools have spread rapidly in recent years. Many of the world's education systems have adopted nationwide bans in primary and secondary schools, typically justified as a means of reducing distraction, digital addiction and cyberbullying. Yet the case for such measures has largely rested on intuition, surveys of staff and comparisons of results before and after a ban was introduced. As the authors of a new study published in Science observe, despite the surge in policy measures there has been a marked scarcity of large-scale experimental evidence on how phone restrictions affect learning, well-being and students' wider experience of education."
+     },
+     {
+      "label": "B",
+      "text": "To address this gap, Alp Sungu of the Wharton School, Pradeep Kumar Choudhury of Jawaharlal Nehru University and Andreas Bjerre-Nielsen of the University of Copenhagen ran a semester-long randomised trial in Odisha, an eastern Indian state of more than 40 million people, where smartphone ownership among those aged 15 to 29 exceeds 70%. The experiment involved 16,683 students, 742 teachers and more than 2,300 courses at ten higher education institutions. Around 1,000 wooden deposit boxes made from recycled materials were installed in classrooms, and cohorts defined by department and year of study were randomly assigned either to the ban or to a control group. From February to May 2024, students in the ban group placed their phones in the box at the start of every lecture, while those in the control group continued as normal."
+     },
+     {
+      "label": "C",
+      "text": "By the end of the semester, students in phone-free classes had grade point averages about 0.073 standard deviations higher than their peers, after prior results were taken into account. The figure may appear modest, but the authors note that large education trials typically produce effects of around 0.05 standard deviations, while the gap between an average teacher and a very good one over a full year is roughly 0.20. The benefits, moreover, were unevenly distributed. They were concentrated among students whose previous results were below the median and among first-year students, whereas for high achievers, postgraduates and students of science and engineering the effect was negligible. Grades in the ban group also became less dispersed, suggesting that the policy narrowed rather than widened differences in attainment."
+     },
+     {
+      "label": "D",
+      "text": "The researchers took several steps to rule out alternative explanations. Attendance did not change, implying that the improvement arose from what happened inside the classroom rather than from more students turning up. To address the possibility of leniency by teachers, they pointed out that between 60% and 80% of each course grade came from externally set examinations, marked off-site by examiners who did not know which group students belonged to. Unannounced checks through classroom windows revealed fewer disruptions and less off-topic conversation in phone-free rooms. One finding, however, was counterintuitive: observers rated students in the ban group as more distracted. The authors suggest that once the principal distraction is removed, attention drifts towards minor ones, such as noise in the corridor, which are easier for an outsider to detect than a student discreetly scrolling beneath a desk."
+     },
+     {
+      "label": "E",
+      "text": "Concerns that confiscating phones would breed resentment also appear to have been misplaced. Among the 2,557 students surveyed, those who had experienced the ban became noticeably more supportive of restrictions, while their self-reported well-being and motivation did not change. Teachers, too, appear to have changed their behaviour: although the rule did not apply to them, observers found that they used their own phones less during lectures. The principal drawback was a small increase in the fear of missing out, mostly among male students. 'Once they felt the benefits, support for \"no restrictions\" dropped markedly,' Bjerre-Nielsen wrote after the study's publication, arguing that such policies can build their own support over time."
+     },
+     {
+      "label": "F",
+      "text": "Nevertheless, the findings should not be over-extended. In a published response, Pedro Bem-Haja of the University of Aveiro stated that he did not question the experimental estimate, but contended that the trial evaluated a policy bundle enforced by teachers rather than a pure removal of phones, and therefore could not establish that reduced distraction was the mechanism. Evidence from elsewhere is also mixed: a national study of American schools using lockable pouches found that phone use fell sharply, yet average effects on test scores were close to zero during the first three years. The Indian participants, moreover, were tertiary students averaging 19 years old, the ban applied only during lectures, and it is unclear whether the results would hold in wealthier countries, where students often carry laptops as well. The authors speculate that the effects could be larger for younger pupils, although this remains untested."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "benchmarks that help to judge the size of the improvement",
+        "a": "C",
+        "ref": "C",
+        "ev": "large education trials typically produce effects of around 0.05 standard deviations, while the gap between an average teacher and a very good one over a full year is roughly 0.20",
+        "zh": "C 段：把 0.073 拿來和 0.05（一般大型教育實驗）與 0.20（好老師 vs 一般老師一年）比較 → benchmarks（比較基準）。"
+       },
+       {
+        "q": "a description of how the researchers responded to the suggestion that grading might have been unfair",
+        "a": "D",
+        "ref": "D",
+        "ev": "To address the possibility of leniency by teachers, they pointed out that between 60% and 80% of each course grade came from externally set examinations",
+        "zh": "D 段：為了排除老師給分寬鬆（leniency）的可能，說明 60–80% 成績來自校外命題、匿名閱卷。grading might have been unfair = possibility of leniency。"
+       },
+       {
+        "q": "a reference to research in another country that found little average academic benefit",
+        "a": "F",
+        "ref": "F",
+        "ev": "yet average effects on test scores were close to zero during the first three years",
+        "zh": "F 段：美國可上鎖手機袋研究——前三年平均考試成績效果接近零 → little average academic benefit。"
+       },
+       {
+        "q": "information about how common phone ownership is in the area where the trial took place",
+        "a": "B",
+        "ref": "B",
+        "ev": "where smartphone ownership among those aged 15 to 29 exceeds 70%",
+        "zh": "B 段：Odisha 15–29 歲的智慧型手機持有率超過 70% → how common phone ownership is。"
+       },
+       {
+        "q": "a mention of an unwelcome emotional effect of the policy",
+        "a": "E",
+        "ref": "E",
+        "ev": "The principal drawback was a small increase in the fear of missing out, mostly among male students.",
+        "zh": "E 段：主要缺點是錯失恐懼（FOMO）略為上升 → unwelcome emotional effect。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Students in the ban group attended lectures more often than those in the control group.",
+        "a": "False",
+        "ref": "D",
+        "ev": "Attendance did not change",
+        "zh": "D 段：出席率沒有改變 → 與「出席更多」矛盾 → False。"
+       },
+       {
+        "q": "The ban had a greater effect on the grades of female students than on those of male students.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "mostly among male students",
+        "zh": "文章只提到 FOMO 主要出現在男生，從未比較男女的「成績」效果 → Not Given。陷阱：看到 male 就以為有性別比較。"
+       },
+       {
+        "q": "Students who experienced the ban reported lower levels of motivation afterwards.",
+        "a": "False",
+        "ref": "E",
+        "ev": "their self-reported well-being and motivation did not change",
+        "zh": "E 段：自評的幸福感與動機沒有改變 → 與「動機降低」矛盾 → False。"
+       },
+       {
+        "q": "Bem-Haja accepted the trial's estimate of the policy's overall effect.",
+        "a": "True",
+        "ref": "F",
+        "ev": "stated that he did not question the experimental estimate",
+        "zh": "F 段：他不質疑實驗的估計值（did not question the experimental estimate），質疑的是「機制」的解讀 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Interpreting the phone-ban trial",
+      "lines": [
+       {
+        "t": "After one semester, grades in phone-free classes were not only higher but also less [[1]], indicating that weaker students caught up. Some critics might suspect [[2]] on the part of teachers, but most marks came from external examinations. One observer argued that what was tested was a policy [[3]] rather than simply the absence of phones. The authors believe younger pupils might benefit even more, though this idea is so far [[4]]."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "dispersed"
+        ],
+        "ref": "C",
+        "ev": "Grades in the ban group also became less dispersed",
+        "zh": "C 段：grades became less dispersed（成績分布較不分散）→ 差距縮小。空格前 less → 形容詞/分詞 dispersed。"
+       },
+       {
+        "a": [
+         "leniency"
+        ],
+        "ref": "D",
+        "ev": "To address the possibility of leniency by teachers",
+        "zh": "D 段：leniency by teachers（老師給分寬鬆）。suspect ___ on the part of teachers → 名詞 leniency。"
+       },
+       {
+        "a": [
+         "bundle"
+        ],
+        "ref": "F",
+        "ev": "the trial evaluated a policy bundle enforced by teachers rather than a pure removal of phones",
+        "zh": "F 段：a policy bundle（一整套政策組合，包含老師的執行與課堂互動改變）。rather than simply the absence of phones = rather than a pure removal of phones。"
+       },
+       {
+        "a": [
+         "untested"
+        ],
+        "ref": "F",
+        "ev": "although this remains untested",
+        "zh": "F 段：this remains untested（尚未經過驗證）。so far = remains；答案 untested。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "carry out",
+     "pos": "phr. v.",
+     "def": "to perform or conduct a task, study or experiment",
+     "zh": "進行、執行",
+     "example": "One of the largest experiments ever carried out on phone bans.",
+     "match": [
+      "carried out"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "be concentrated among",
+     "pos": "phrase",
+     "def": "to be found mainly in one particular group",
+     "zh": "集中在……之中",
+     "example": "The gains were concentrated among first-year students.",
+     "match": [
+      "concentrated among"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "generously",
+     "pos": "adv.",
+     "def": "in a kinder or more favourable way than is strictly deserved",
+     "zh": "寬厚地、大方地（給分）",
+     "example": "Could teachers have marked phone-free classes more generously?",
+     "match": [
+      "generously"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "downside",
+     "pos": "n.",
+     "def": "the negative aspect of something that is otherwise good",
+     "zh": "缺點、壞處",
+     "example": "The main downside was a rise in the fear of missing out.",
+     "match": [
+      "downside"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "enforce",
+     "pos": "v.",
+     "def": "to make sure a rule or law is obeyed",
+     "zh": "執行、強制實施",
+     "example": "The policy was enforced by teachers.",
+     "match": [
+      "enforced"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "scarcity",
+     "pos": "n.",
+     "def": "a situation in which something is hard to find or not available in sufficient amounts",
+     "zh": "缺乏、稀少",
+     "example": "There has been a marked scarcity of experimental evidence.",
+     "match": [
+      "scarcity"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "cohort",
+     "pos": "n.",
+     "def": "a group of people who share a characteristic, such as year of study",
+     "zh": "（研究中的）同期群組",
+     "example": "Cohorts were randomly assigned to the ban.",
+     "match": [
+      "cohorts"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "negligible",
+     "pos": "adj.",
+     "def": "so small that it is not worth considering",
+     "zh": "可忽略的、微不足道的",
+     "example": "For high achievers the effect was negligible.",
+     "match": [
+      "negligible"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "dispersed",
+     "pos": "adj.",
+     "def": "spread over a wide range",
+     "zh": "分散的",
+     "example": "Grades became less dispersed.",
+     "match": [
+      "dispersed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "attainment",
+     "pos": "n.",
+     "def": "the level of success a student reaches in learning",
+     "zh": "（學業）成就",
+     "example": "The policy narrowed differences in attainment.",
+     "match": [
+      "attainment"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "leniency",
+     "pos": "n.",
+     "def": "the quality of being less strict than expected",
+     "zh": "寬鬆、寬大",
+     "example": "They addressed the possibility of leniency by teachers.",
+     "match": [
+      "leniency"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "counterintuitive",
+     "pos": "adj.",
+     "def": "different from what one would naturally expect",
+     "zh": "違反直覺的",
+     "example": "One finding was counterintuitive.",
+     "match": [
+      "counterintuitive"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "breed",
+     "pos": "v.",
+     "def": "to cause a feeling or situation to develop",
+     "zh": "引起、滋生（情緒等）",
+     "example": "Confiscating phones might breed resentment.",
+     "match": [
+      "breed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "misplaced",
+     "pos": "adj.",
+     "def": "(of a feeling or belief) not justified or directed at the wrong thing",
+     "zh": "（擔憂等）不恰當的、多餘的",
+     "example": "Those concerns appear to have been misplaced.",
+     "match": [
+      "misplaced"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "contend",
+     "pos": "v.",
+     "def": "to state something firmly as an argument",
+     "zh": "主張、聲稱",
+     "example": "He contended that the trial evaluated a policy bundle.",
+     "match": [
+      "contended"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-02-2.mp3",
+    "times": [
+     [
+      0.36,
+      2.62
+     ],
+     [
+      2.88,
+      11.54
+     ],
+     [
+      11.92,
+      12.97
+     ],
+     [
+      13.75,
+      18.94
+     ],
+     [
+      19.21,
+      22.96
+     ],
+     [
+      23.28,
+      33.18
+     ],
+     [
+      33.96,
+      35.15
+     ],
+     [
+      35.39,
+      40.94
+     ],
+     [
+      41.27,
+      46.85
+     ],
+     [
+      47.1,
+      54.08
+     ],
+     [
+      54.86,
+      56.19
+     ],
+     [
+      56.52,
+      64.12
+     ],
+     [
+      64.38,
+      65.7
+     ],
+     [
+      66.08,
+      71.48
+     ],
+     [
+      71.71,
+      77.7
+     ],
+     [
+      78.48,
+      80.97
+     ],
+     [
+      81.24,
+      85.52
+     ],
+     [
+      85.76,
+      91.5
+     ],
+     [
+      91.9,
+      96.79
+     ],
+     [
+      97.57,
+      100.94
+     ],
+     [
+      101.35,
+      103.29
+     ],
+     [
+      103.54,
+      110.26
+     ],
+     [
+      111.04,
+      112.58
+     ],
+     [
+      112.8,
+      118.45
+     ],
+     [
+      118.75,
+      123.02
+     ],
+     [
+      123.25,
+      126.41
+     ],
+     [
+      126.68,
+      133.19
+     ],
+     [
+      133.97,
+      137.57
+     ],
+     [
+      137.8,
+      145.45
+     ],
+     [
+      145.85,
+      153.51
+     ],
+     [
+      154.29,
+      156.67
+     ],
+     [
+      156.88,
+      165.49
+     ],
+     [
+      165.86,
+      170.91
+     ],
+     [
+      171.12,
+      175.97
+     ],
+     [
+      176.23,
+      180.87
+     ]
+    ],
+    "duration": 181.5,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-02-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
