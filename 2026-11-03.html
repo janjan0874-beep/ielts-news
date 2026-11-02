@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-03",
+ "date": "2026-11-03",
+ "title": "Drought and Disease Turn Spain's Lynx Against a Rival Bird of Prey · Electric Car Owners Drive Further, but Not More Often, Swedish Study Finds",
+ "stories": [
+  {
+   "title": "Drought and Disease Turn Spain's Lynx Against a Rival Bird of Prey",
+   "topic": "Ecology · predators & drought",
+   "source": {
+    "name": "Nature: Drought and disease trigger novel interactions among top predators (Sergio et al., 21 Oct 2026)",
+    "url": "https://www.nature.com/articles/s41586-026-11194-z",
+    "links": [
+     {
+      "name": "Estación Biológica de Doñana – CSIC: Droughts and shortage of preys pushes lynx to prey on black kite chicks in Doñana National Park",
+      "url": "https://www.ebd.csic.es/en/outreach/news/droughts-and-shortage-preys-pushes-lynx-prey-black-kite-chicks-donana-national-park"
+     },
+     {
+      "name": "SeekingSapiens: After a rabbit crash, lynx raided kite nests in Doñana, but only in drought years (21 Oct 2026)",
+      "url": "https://seekingsapiens.com/posts/after-a-rabbit-crash-lynx-raided-black-kite-nests-in-donana-but-only-in-drought-/"
+     },
+     {
+      "name": "El País: Linces contra milanos (21 Oct 2026)",
+      "url": "https://elpais.com/clima-y-medio-ambiente/2026-10-21/linces-contra-milanos-el-felino-caza-al-otro-depredador-con-el-que-compite-por-los-conejos-en-donana.html"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead story from the natural world: in one of Europe's most famous wetlands, a rare wild cat has started raiding the nests of a bird of prey, and scientists say drought and disease are to blame.",
+     "Here's the report."
+    ],
+    [
+     "The setting is Doñana National Park, a vast wetland in southwestern Spain that floods most winters but is periodically hit by severe drought.",
+     "Two top predators live side by side there: the Iberian lynx, which hunts mainly at night, and the black kite, a raptor that hunts by day.",
+     "And both of them depend on the same main prey, the European rabbit."
+    ],
+    [
+     "The new study, published in the journal Nature, comes from researchers at the Doñana Biological Station, part of Spain's national research council.",
+     "They checked more than one thousand six hundred kite nests over three decades, from nineteen ninety-three to twenty twenty-three.",
+     "For most of that time, the two species largely ignored each other.",
+     "Between nineteen ninety-three and twenty twelve, lynx destroyed just thirteen of more than nine hundred nests, roughly one per cent."
+    ],
+    [
+     "Then, in twenty thirteen, things changed.",
+     "A new variant of a rabbit disease swept through the region, and local rabbit numbers fell by more than seventy per cent.",
+     "The virus has been traced back to a breeding farm in France.",
+     "Still, the lynx didn't turn on the kites straight away."
+    ],
+    [
+     "In wet years, a hungry lynx can switch to other food, mainly waterbirds such as ducks from the flooded marshes.",
+     "But in drought years, when more than eighty per cent of the marshes are dry, that alternative largely disappears as well.",
+     "According to the paper, the attacks took off only in those dry years, and only once rabbit density fell below one animal per hectare, roughly the minimum a lynx needs to survive.",
+     "At its worst, lynx predation wiped out up to forty-six per cent of kite chicks that were close to leaving the nest.",
+     "That's a heavy blow, because once kite chicks have grown their feathers, they almost never die: more than ninety-seven per cent of those fitted with GPS tags survived.",
+     "Lead author Fabrizio Sergio says the cats were even climbing twelve metres up trees to reach them.",
+     "And the kites couldn't hide: the height of a nest, its distance from the marshes and the age of the parents made no difference."
+    ],
+    [
+     "Meanwhile, the researchers noticed something curious.",
+     "Nests that were raided had more than three times as many rabbit remains lying on the ground beneath them.",
+     "In other words, the lynx may have been targeting kites that were eating its rabbits, and deliberately removing a competitor.",
+     "In human terms, Dr Sergio said, black kites that dared to take food away from lynxes ended up paying a very high price."
+    ],
+    [
+     "The kites haven't simply accepted their fate.",
+     "Parents that lost a brood were four times more likely to move to a new territory the following year.",
+     "And the territories they left behind were three times more likely to stay empty.",
+     "There may even be knock-on effects further down the food chain: as kite numbers fell, a small owl that kites sometimes prey on became more common."
+    ],
+    [
+     "There are caveats, though.",
+     "This is a single study plot of about ten square kilometres, and the team says experiments would be needed to confirm the idea that lynx are removing competitors.",
+     "Looking ahead, climate models forecast more frequent droughts in the region.",
+     "One option the authors suggest is extra feeding for lynx in dry years, to take the pressure off the birds.",
+     "That's our nature report for this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Lynx and black kites in Doñana",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Background"
+       },
+       {
+        "t": "Location: a huge [[1]] in the south-west of Spain"
+       },
+       {
+        "h": "What changed"
+       },
+       {
+        "t": "2013: rabbit numbers crashed; the virus came from a breeding [[2]] in France"
+       },
+       {
+        "t": "In wet years, lynx can eat [[3]] and other waterbirds instead"
+       },
+       {
+        "t": "Attacks began only when there was less than one rabbit per [[4]]"
+       },
+       {
+        "t": "Worst case: up to [[5]] % of nearly fledged kite chicks were killed"
+       },
+       {
+        "h": "Why target kites?"
+       },
+       {
+        "t": "Raided nests had far more rabbit [[6]] on the ground below"
+       },
+       {
+        "t": "Lynx may be getting rid of a [[7]]"
+       },
+       {
+        "h": "Effects"
+       },
+       {
+        "t": "Adult kites that lost chicks often moved to another [[8]]"
+       },
+       {
+        "t": "Fewer kites → more of a small [[9]]"
+       },
+       {
+        "h": "Possible management"
+       },
+       {
+        "t": "Supplementary [[10]] for lynx during droughts"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "wetland",
+         "wetlands"
+        ],
+        "ref": "a vast wetland in southwestern Spain",
+        "ev": "Doñana National Park, a vast wetland in southwestern Spain",
+        "zh": "huge = vast；south-west of Spain = southwestern Spain。答案 wetland（濕地）。後面的 drought 是描述當地會乾旱，不是地點類型。"
+       },
+       {
+        "a": [
+         "farm"
+        ],
+        "ref": "traced back to a breeding farm in France",
+        "ev": "The virus has been traced back to a breeding farm in France.",
+        "zh": "came from = has been traced back to；答案 farm（養殖場）。題目已給 breeding 和 France，只填 farm。干擾：seventy per cent 是兔子減少的比例。"
+       },
+       {
+        "a": [
+         "ducks",
+         "duck"
+        ],
+        "ref": "mainly waterbirds such as ducks",
+        "ev": "a hungry lynx can switch to other food, mainly waterbirds such as ducks from the flooded marshes",
+        "zh": "eat … instead = switch to other food；題目已有 and other waterbirds，所以填 ducks（鴨子）。"
+       },
+       {
+        "a": [
+         "hectare"
+        ],
+        "ref": "below one animal per hectare",
+        "ev": "only once rabbit density fell below one animal per hectare",
+        "zh": "less than one rabbit per ___ = fell below one animal per hectare（每公頃不到一隻兔子）。干擾：同段的 eighty per cent 是沼澤乾涸的比例。"
+       },
+       {
+        "a": [
+         "46",
+         "forty-six"
+        ],
+        "ref": "up to forty-six per cent of kite chicks",
+        "ev": "lynx predation wiped out up to forty-six per cent of kite chicks that were close to leaving the nest",
+        "zh": "nearly fledged = close to leaving the nest；答案 46。干擾：eighty per cent（乾涸沼澤比例）、seventy per cent（兔子減少）、twelve metres（爬樹高度）。"
+       },
+       {
+        "a": [
+         "remains"
+        ],
+        "ref": "as many rabbit remains lying on the ground",
+        "ev": "Nests that were raided had more than three times as many rabbit remains lying on the ground beneath them.",
+        "zh": "on the ground below = lying on the ground beneath them；答案 remains（殘骸、剩餘部分）。three times 已用 far more 改述。"
+       },
+       {
+        "a": [
+         "competitor",
+         "rival"
+        ],
+        "ref": "deliberately removing a competitor",
+        "ev": "deliberately removing a competitor",
+        "zh": "getting rid of = removing；答案 competitor（競爭者）。山貓可能是在除掉「搶牠兔子吃」的對手。"
+       },
+       {
+        "a": [
+         "territory"
+        ],
+        "ref": "move to a new territory the following year",
+        "ev": "Parents that lost a brood were four times more likely to move to a new territory the following year.",
+        "zh": "lost chicks = lost a brood；moved to another ___ = move to a new territory。答案 territory（領域）。干擾：three times 是講被遺棄的領域保持空置的機率。"
+       },
+       {
+        "a": [
+         "owl",
+         "little owl"
+        ],
+        "ref": "a small owl that kites sometimes prey on",
+        "ev": "as kite numbers fell, a small owl that kites sometimes prey on became more common",
+        "zh": "fewer kites = kite numbers fell；more of = became more common。答案 owl（貓頭鷹；論文中為 little owl 縱紋腹小鴞）。"
+       },
+       {
+        "a": [
+         "feeding",
+         "food"
+        ],
+        "ref": "extra feeding for lynx in dry years",
+        "ev": "One option the authors suggest is extra feeding for lynx in dry years",
+        "zh": "supplementary = extra；during droughts = in dry years。答案 feeding（餵食）。目的是減輕對鳥類的壓力（take the pressure off the birds）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Rivals at the Nest: How Drought and Disease Rewired a Predator Community",
+    "intro": "A three-decade field study in southern Spain suggests that climate extremes can transform the relationships between top predators, with consequences that ripple through an entire ecosystem.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Ecologists have long recognised that predators do not only eat prey; they also kill one another. This behaviour, known as intraguild predation, occurs when one species kills and consumes another that competes with it for the same food, and it is thought to be widespread among large vertebrate predators. Yet one form of it remains poorly understood: killings between predators from very different animal groups, such as a mammalian carnivore and a bird of prey. Such events are rare and difficult to detect, and the two kinds of animal are usually studied by separate specialists, so most published accounts describe individual incidents rather than measuring how often they occur or what impact they have. Moreover, much of what is known about how climate affects these interactions comes from warming experiments on invertebrates, leaving a conspicuous gap for the very animals that arguably shape food webs most strongly."
+     },
+     {
+      "label": "B",
+      "text": "A study published in Nature in October 2026 helps to fill that gap. Researchers from the Doñana Biological Station, part of Spain's national research council, examined the relationship between the Iberian lynx and the black kite in a ten-square-kilometre section of Doñana National Park. The lynx is a solitary cat weighing nine to thirteen kilograms that hunts chiefly at night and is regarded as a rabbit specialist; the kite is a diurnal, opportunistic raptor with a wingspan of around one and a half metres and a lifespan of up to 30 years. Both rely heavily on the European rabbit, a keystone prey for more than 30 Mediterranean predators. Kite chicks in the area have been fitted since the 1980s with plastic rings engraved with a three-character code, which can be read through a telescope without disturbing the birds. This has allowed the team to follow individual kites throughout their lives."
+     },
+     {
+      "label": "C",
+      "text": "For roughly two decades, the relationship appeared largely neutral: between 1993 and 2012, lynx destroyed only about one per cent of the kite nests monitored. The turning point came in 2013, when a new variant of rabbit haemorrhagic disease reduced the local rabbit population by more than 70%. Even then, attacks on kites surged only in years of drought, which the researchers defined, using satellite images, as years in which more than 80% of the marshes were dry. In wetter years, lynx apparently compensated with alternative prey, and during food shortages they are also known to raid the tree nests of other large birds, including storks. Notably, nothing about a kite nest seemed to protect it. Raided and untouched nests did not differ in their height, their distance from the marshes, the number of chicks they contained or the age of the parents. Since lynx can climb to nests twelve metres above the ground, the authors concluded that every nest was effectively at risk."
+     },
+     {
+      "label": "D",
+      "text": "The consequences for the kites were considerable. Parents whose broods were taken lived as long as comparable birds of the same age, but over their lifetimes they produced 27.7% fewer fledglings, and they did not compensate in later years. This loss is all the more striking because well-feathered kite nestlings rarely die: more than 97% of 70 chicks fitted with GPS tags survived. Affected adults tended to move elsewhere, and the sites they vacated were seldom reoccupied, probably because the remains of killed chicks stayed visible for weeks and young kites choose where to settle by inspecting territories the year before. Kite numbers in the plot declined after years of heavy predation, while a small insect-eating owl, itself hunted by kites, became more abundant. The authors suggest that, precisely because such slow-breeding birds are so fragile, they may serve as useful sentinels of pressures on the wider ecosystem."
+     },
+     {
+      "label": "E",
+      "text": "Perhaps the most significant lesson concerns the way in which multiple pressures combine. The rabbit disease, which originated on a breeding farm, weakened the system for years in what the authors call a cryptic manner, becoming visible only when drought arrived; by that stage, they warn, management may be ineffective. The study also challenges familiar labels. The lynx, traditionally portrayed as a vulnerable specialist dependent on rabbits, persisted through extremely low rabbit densities by broadening its diet, whereas the kite, a mobile generalist usually expected to cope well with environmental change, was rapidly limited. In the researchers' view, flexibility in diet and the ability to move are key traits that allow species to withstand stress, and relationships between species should be regarded as dynamic rather than fixed."
+     },
+     {
+      "label": "F",
+      "text": "The authors acknowledge the limits of their evidence. The work is observational and confined to a single plot, and the idea that lynx deliberately target competitors, inferred from the rabbit remains found beneath raided nests, would require manipulative experiments to confirm. Nevertheless, the findings have practical implications. Spring temperatures in Doñana have been rising by more than half a degree Celsius per decade, and climate models forecast more frequent droughts in the region. A manager who wished to maintain healthy kite populations could, the authors suggest, provide supplementary food for lynx in drought years. More broadly, they argue that forecasting global change may depend on understanding how keystone species respond to several simultaneous shocks."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "an explanation of why attacks by one kind of predator on a very different kind are seldom documented",
+        "a": "A",
+        "ref": "A",
+        "ev": "Such events are rare and difficult to detect, and the two kinds of animal are usually studied by separate specialists",
+        "zh": "A 段：哺乳類與猛禽之間的捕殺很少見、難偵測，且兩類動物通常由不同專家研究 → seldom documented（很少被記錄）的原因。"
+       },
+       {
+        "q": "a description of a method that allows individual birds to be recognised from a distance",
+        "a": "B",
+        "ref": "B",
+        "ev": "which can be read through a telescope without disturbing the birds",
+        "zh": "B 段：雛鳥戴上刻有三字元代碼的塑膠腳環，可用望遠鏡遠距離辨讀 → recognised from a distance。"
+       },
+       {
+        "q": "evidence that the physical characteristics of a nest did not affect its chances of being attacked",
+        "a": "C",
+        "ref": "C",
+        "ev": "Raided and untouched nests did not differ in their height, their distance from the marshes, the number of chicks they contained or the age of the parents.",
+        "zh": "C 段：被襲擊與未被襲擊的巢在高度、與沼澤距離等方面沒有差異 → physical characteristics did not affect。"
+       },
+       {
+        "q": "a reason why breeding sites abandoned by kites were rarely taken over by others",
+        "a": "D",
+        "ref": "D",
+        "ev": "the sites they vacated were seldom reoccupied, probably because the remains of killed chicks stayed visible for weeks",
+        "zh": "D 段：被遺棄的巢位很少有新鳥進駐，可能因為被殺雛鳥的殘骸數週可見，而年輕的鳶會提前一年考察領域 → rarely taken over 的理由。"
+       },
+       {
+        "q": "a claim that a species considered vulnerable proved more adaptable than expected",
+        "a": "E",
+        "ref": "E",
+        "ev": "The lynx, traditionally portrayed as a vulnerable specialist dependent on rabbits, persisted through extremely low rabbit densities by broadening its diet",
+        "zh": "E 段：山貓一向被視為依賴兔子的脆弱專食者，卻靠擴大食性撐過兔子極少的時期 → more adaptable than expected。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Before 2013, lynx seldom attacked kite nests in the study area.",
+        "a": "True",
+        "ref": "C",
+        "ev": "between 1993 and 2012, lynx destroyed only about one per cent of the kite nests monitored",
+        "zh": "C 段：1993–2012 年山貓只摧毀約 1% 的鳶巢 → seldom attacked → True。"
+       },
+       {
+        "q": "Lynx raided the nests of storks more often than those of kites.",
+        "a": "Not Given",
+        "ref": "C",
+        "ev": "they are also known to raid the tree nests of other large birds, including storks",
+        "zh": "陷阱：文章只說食物短缺時山貓也會襲擊鸛（storks）等大型鳥的巢，但完全沒有比較襲擊鸛巢與鳶巢的頻率 → Not Given。"
+       },
+       {
+        "q": "Kite parents that lost their chicks to lynx had shorter lives than other kites.",
+        "a": "False",
+        "ref": "D",
+        "ev": "Parents whose broods were taken lived as long as comparable birds of the same age",
+        "zh": "D 段：失去雛鳥的親鳥壽命與同齡個體一樣長（lived as long as），只是一生繁殖的幼鳥少 27.7% → 與「壽命較短」矛盾 → False。"
+       },
+       {
+        "q": "The black kite is generally expected to adapt poorly to environmental change.",
+        "a": "False",
+        "ref": "E",
+        "ev": "a mobile generalist usually expected to cope well with environmental change",
+        "zh": "E 段：黑鳶一般被預期能「良好適應」環境變化（cope well），與 adapt poorly 相反 → False。它只是這次意外地被山貓限制住。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Lessons from Doñana",
+      "lines": [
+       {
+        "t": "Because kites breed slowly and are easily harmed, the researchers believe they could act as [[1]] that warn of wider ecological pressures. The rabbit disease weakened the ecosystem in a [[2]] way that only became obvious once drought struck. According to the authors, interactions between species are [[3]] rather than permanent, and the theory that lynx kill kites to remove rivals will need to be tested through [[4]] in which conditions are manipulated."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "sentinels"
+        ],
+        "ref": "D",
+        "ev": "they may serve as useful sentinels of pressures on the wider ecosystem",
+        "zh": "D 段：繁殖慢、脆弱的鳥類可作為生態壓力的 sentinels（哨兵、預警指標）。act as = serve as。"
+       },
+       {
+        "a": [
+         "cryptic"
+        ],
+        "ref": "E",
+        "ev": "weakened the system for years in what the authors call a cryptic manner, becoming visible only when drought arrived",
+        "zh": "E 段：兔病以 cryptic（隱匿的、不易察覺的）方式削弱系統，乾旱來臨才顯現。a ___ way = a cryptic manner，空格需形容詞。"
+       },
+       {
+        "a": [
+         "dynamic"
+        ],
+        "ref": "E",
+        "ev": "relationships between species should be regarded as dynamic rather than fixed",
+        "zh": "E 段：物種間關係應視為 dynamic（動態的）而非固定。rather than permanent = rather than fixed。"
+       },
+       {
+        "a": [
+         "experiments"
+        ],
+        "ref": "F",
+        "ev": "would require manipulative experiments to confirm",
+        "zh": "F 段：「山貓為除掉競爭者而獵殺」這個推論需要 manipulative experiments（操控式實驗）來證實。題目已用 conditions are manipulated 改述 manipulative，只填 experiments。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "periodically",
+     "pos": "adv.",
+     "def": "happening from time to time, at intervals",
+     "zh": "週期性地、不時地",
+     "example": "A vast wetland that floods most winters but is periodically hit by severe drought.",
+     "match": [
+      "periodically"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "raptor",
+     "pos": "n.",
+     "def": "a bird of prey, such as an eagle, hawk or kite",
+     "zh": "猛禽",
+     "example": "The black kite, a raptor that hunts by day.",
+     "match": [
+      "raptor"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "sweep through",
+     "pos": "phr. v.",
+     "def": "to spread quickly across an area",
+     "zh": "迅速蔓延、席捲",
+     "example": "A new variant of a rabbit disease swept through the region.",
+     "match": [
+      "swept through"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "trace back to",
+     "pos": "phr. v.",
+     "def": "to find the origin or cause of something",
+     "zh": "追溯到……",
+     "example": "The virus has been traced back to a breeding farm in France.",
+     "match": [
+      "traced back to"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "predation",
+     "pos": "n.",
+     "def": "the killing and eating of animals by other animals",
+     "zh": "捕食（行為）",
+     "example": "Lynx predation wiped out up to forty-six per cent of kite chicks.",
+     "match": [
+      "predation"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "knock-on effect",
+     "pos": "n.",
+     "def": "an indirect result of an action or event that causes further changes",
+     "zh": "連鎖效應、骨牌效應",
+     "example": "There may even be knock-on effects further down the food chain.",
+     "match": [
+      "knock-on effects"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "caveat",
+     "pos": "n.",
+     "def": "a warning or condition that limits how a statement should be understood",
+     "zh": "附帶說明、保留意見",
+     "example": "There are caveats, though.",
+     "match": [
+      "caveats"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "conspicuous",
+     "pos": "adj.",
+     "def": "very noticeable; easy to see",
+     "zh": "明顯的、引人注目的",
+     "example": "This leaves a conspicuous gap for the very animals that arguably shape food webs most strongly.",
+     "match": [
+      "conspicuous"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "opportunistic",
+     "pos": "adj.",
+     "def": "(of an animal) taking advantage of whatever food is available",
+     "zh": "（動物）機會主義的、有什麼吃什麼的",
+     "example": "The kite is a diurnal, opportunistic raptor.",
+     "match": [
+      "opportunistic"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "keystone",
+     "pos": "adj. / n.",
+     "def": "(of a species) having a central role on which many other species depend",
+     "zh": "關鍵（物種）的、基石",
+     "example": "The European rabbit, a keystone prey for more than 30 Mediterranean predators.",
+     "match": [
+      "keystone"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "compensate",
+     "pos": "v.",
+     "def": "to make up for a loss or lack of something",
+     "zh": "彌補、補償",
+     "example": "In wetter years, lynx apparently compensated with alternative prey.",
+     "match": [
+      "compensated",
+      "compensate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "vacate",
+     "pos": "v.",
+     "def": "to leave a place so that it becomes empty",
+     "zh": "空出、搬離",
+     "example": "The sites they vacated were seldom reoccupied.",
+     "match": [
+      "vacated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "persist",
+     "pos": "v.",
+     "def": "to continue to exist despite difficulties",
+     "zh": "存續、持續存在",
+     "example": "The lynx persisted through extremely low rabbit densities by broadening its diet.",
+     "match": [
+      "persisted"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "withstand",
+     "pos": "v.",
+     "def": "to resist or survive something harmful",
+     "zh": "承受、抵擋",
+     "example": "Key traits that allow species to withstand stress.",
+     "match": [
+      "withstand"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "infer",
+     "pos": "v.",
+     "def": "to reach a conclusion from evidence rather than direct statements",
+     "zh": "推斷",
+     "example": "The idea, inferred from the rabbit remains found beneath raided nests, would require experiments to confirm.",
+     "match": [
+      "inferred"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-03-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      11.36
+     ],
+     [
+      11.74,
+      12.79
+     ],
+     [
+      13.57,
+      21.1
+     ],
+     [
+      21.37,
+      29.13
+     ],
+     [
+      29.53,
+      33.34
+     ],
+     [
+      34.12,
+      41.97
+     ],
+     [
+      42.25,
+      48.5
+     ],
+     [
+      48.83,
+      52.38
+     ],
+     [
+      52.63,
+      59.49
+     ],
+     [
+      60.27,
+      63.08
+     ],
+     [
+      63.27,
+      69.16
+     ],
+     [
+      69.42,
+      72.46
+     ],
+     [
+      72.76,
+      75.71
+     ],
+     [
+      76.49,
+      82.57
+     ],
+     [
+      82.96,
+      89.11
+     ],
+     [
+      89.43,
+      98.9
+     ],
+     [
+      99.22,
+      104.95
+     ],
+     [
+      105.23,
+      113.93
+     ],
+     [
+      114.34,
+      119.49
+     ],
+     [
+      119.73,
+      125.89
+     ],
+     [
+      126.67,
+      129.67
+     ],
+     [
+      129.86,
+      134.77
+     ],
+     [
+      135.15,
+      141.23
+     ],
+     [
+      141.54,
+      148.24
+     ],
+     [
+      149.02,
+      151.29
+     ],
+     [
+      151.56,
+      156.19
+     ],
+     [
+      156.51,
+      160.34
+     ],
+     [
+      160.57,
+      168.03
+     ],
+     [
+      168.81,
+      170.32
+     ],
+     [
+      170.61,
+      178.68
+     ],
+     [
+      179.01,
+      183.01
+     ],
+     [
+      183.3,
+      188.89
+     ],
+     [
+      189.1,
+      191.09
+     ]
+    ],
+    "duration": 191.7,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-03-1-words/"
+   }
+  },
+  {
+   "title": "Electric Car Owners Drive Further, but Not More Often, Swedish Study Finds",
+   "topic": "Transport · electric cars",
+   "source": {
+    "name": "Transportation Research Part D: Electric vehicles and driving behavior: evidence from Swedish register and GPS data (Lång, Adell & Winslott Hiselius, published 21 Oct 2026)",
+    "url": "https://doi.org/10.1016/j.trd.2026.105695",
+    "links": [
+     {
+      "name": "VTI final report: Reser elbilister annorlunda? (RESA project)",
+      "url": "https://doi.org/10.65151/vti240576"
+     },
+     {
+      "name": "VTI Working Paper 2026:2: Do Electric Vehicle Users Travel Differently?",
+      "url": "https://www.transportportal.se/VTISWoPEc/VTI%202026%202.pdf"
+     },
+     {
+      "name": "Linköping University: Elbilar körs längre sträckor (interview with Elisabeth Lång)",
+      "url": "https://liu.se/nyhet/elbilar-kors-langre-strackor"
+     },
+     {
+      "name": "Corren (Östgöta Correspondenten): Appstrul får bilister att välja fossilbilen",
+      "url": "https://www.corren.se/nyheter/linkoping/artikel/forskning-appar-gor-att-fossilbil-valjs-vid-langresor/jn12458l"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Now to transport.",
+     "Swedish researchers say people who switch to electric cars end up driving further, but not more often.",
+     "Here's the report."
+    ],
+    [
+     "The study, published last month in the journal Transportation Research Part D, looked at Sweden, one of Europe's more mature markets for electric cars.",
+     "It was led by economist Elisabeth Lång of the Swedish National Road and Transport Research Institute and Linköping University.",
+     "The team used two very different kinds of evidence.",
+     "The first was national register data, showing how far each privately owned car travelled in a year.",
+     "Company cars were left out, since they reflect what employers provide rather than private travel needs.",
+     "Earlier research had produced mixed results, partly because, until recently, electric cars were too rare to study on a large scale."
+    ],
+    [
+     "The headline result?",
+     "Fully electric cars were driven between thirteen and seventeen per cent further each year than comparable petrol and diesel cars.",
+     "The researchers' preferred estimate is the lower figure, thirteen per cent.",
+     "Plug-in hybrids were also driven further, though the gap was smaller."
+    ],
+    [
+     "The second source was far more detailed.",
+     "Volunteers allowed a smartphone app called TravelVu to log their journeys by GPS, for up to six months.",
+     "In all, seven hundred and sixty-two people took part, recording more than eighty thousand days of travel.",
+     "Here, electric car drivers covered roughly four to six kilometres more a day.",
+     "But, crucially, they didn't make any more trips.",
+     "Instead, each journey tended to be a little longer."
+    ],
+    [
+     "So why the difference?",
+     "There are two main explanations.",
+     "One is what researchers call selection: people who already drive a lot may be the most likely to buy an electric car, because it's cheaper to run.",
+     "Indeed, many of the new owners had been covering long distances before they switched.",
+     "The other is a change in behaviour: once you own an electric car, the perceived cost of each extra kilometre is lower, so more distant destinations become tempting.",
+     "Ms Lång has stressed that the data reveal a different travel pattern, but can't show what causes it."
+    ],
+    [
+     "Meanwhile, the picture is different in households that own both kinds of car.",
+     "There, the electric car is more often used for short local trips, while the petrol or diesel car is kept for long journeys.",
+     "One explanation, Ms Lång told the local newspaper Corren, may be range anxiety, the worry that the battery won't last the whole way.",
+     "She has also pointed to lingering doubts about charging infrastructure."
+    ],
+    [
+     "Is the extra driving a problem?",
+     "From a climate point of view, it's good news if the heaviest drivers are the ones switching to electric.",
+     "That's because each switch then cuts more emissions than it would for someone who rarely drives.",
+     "But more kilometres still mean more road wear, more traffic, and harmful particles from wearing tyres.",
+     "Ms Lång says the study isn't about taxation, but she notes that other studies have proposed a single road tax or congestion charges."
+    ],
+    [
+     "There are limits, though.",
+     "The researchers say they can't yet separate selection from behaviour without following the same drivers before and after they switch.",
+     "And the volunteers came from seven counties in the south and centre of the country, so the sparsely populated north wasn't covered.",
+     "That's all from the transport desk this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Do electric car owners drive more?",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Evidence"
+       },
+       {
+        "t": "Source 1: national [[1]] data on each private car's yearly distance"
+       },
+       {
+        "t": "Best estimate: battery cars driven [[2]] % further per year"
+       },
+       {
+        "t": "Source 2: GPS records collected through a smartphone [[3]]"
+       },
+       {
+        "t": "EV drivers: 4–6 km more per day, but no increase in the number of [[4]]"
+       },
+       {
+        "h": "Explanations"
+       },
+       {
+        "t": "[[5]]: people who already drive a lot choose EVs"
+       },
+       {
+        "t": "Behaviour: lower perceived [[6]] of every additional kilometre"
+       },
+       {
+        "h": "Two-car households"
+       },
+       {
+        "t": "EV mostly used for [[7]] local trips"
+       },
+       {
+        "t": "Possible reason: range [[8]]"
+       },
+       {
+        "h": "Concerns and policy"
+       },
+       {
+        "t": "More driving → road wear, traffic and particles from [[9]]"
+       },
+       {
+        "t": "Other studies suggest one road tax or [[10]] charges"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "register"
+        ],
+        "ref": "The first was national register data",
+        "ev": "The first was national register data, showing how far each privately owned car travelled in a year.",
+        "zh": "Source 1 = The first；yearly distance = how far … travelled in a year。答案 register（登記資料、官方紀錄）。"
+       },
+       {
+        "a": [
+         "13",
+         "thirteen"
+        ],
+        "ref": "The researchers' preferred estimate is the lower figure",
+        "ev": "The researchers' preferred estimate is the lower figure, thirteen per cent.",
+        "zh": "Best estimate = preferred estimate；答案 13。干擾：先說 thirteen and seventeen（範圍 13–17%），再說偏好較低的數字 13。17 是陷阱。"
+       },
+       {
+        "a": [
+         "app"
+        ],
+        "ref": "a smartphone app called TravelVu",
+        "ev": "Volunteers allowed a smartphone app called TravelVu to log their journeys by GPS",
+        "zh": "collected through = log … by GPS；答案 app（應用程式），題目已有 smartphone。"
+       },
+       {
+        "a": [
+         "trips",
+         "journeys"
+        ],
+        "ref": "they didn't make any more trips",
+        "ev": "But, crucially, they didn't make any more trips.",
+        "zh": "no increase in the number of ___ = didn't make any more trips。答案 trips（行程次數）。重點：多開的距離來自每趟較長（each journey … longer），不是次數變多。"
+       },
+       {
+        "a": [
+         "selection"
+        ],
+        "ref": "One is what researchers call selection",
+        "ev": "One is what researchers call selection: people who already drive a lot may be the most likely to buy an electric car",
+        "zh": "解釋一：selection（自我選擇效應）——本來就常開車的人更可能買電動車。題目把定義直接寫出來，空格是術語名稱。"
+       },
+       {
+        "a": [
+         "cost"
+        ],
+        "ref": "the perceived cost of each extra kilometre is lower",
+        "ev": "the perceived cost of each extra kilometre is lower",
+        "zh": "every additional kilometre = each extra kilometre；答案 cost（感知成本）。電動車每公里較便宜 → 較遠的目的地變得有吸引力。"
+       },
+       {
+        "a": [
+         "short"
+        ],
+        "ref": "more often used for short local trips",
+        "ev": "the electric car is more often used for short local trips",
+        "zh": "mostly used = more often used；答案 short（短程的，形容詞）。長途則用汽油或柴油車。"
+       },
+       {
+        "a": [
+         "anxiety"
+        ],
+        "ref": "may be range anxiety",
+        "ev": "may be range anxiety, the worry that the battery won't last the whole way",
+        "zh": "Possible reason = One explanation … may be；答案 anxiety（range anxiety 里程焦慮）。另一個原因是對充電設施的疑慮（lingering doubts about charging infrastructure）。"
+       },
+       {
+        "a": [
+         "tyres",
+         "tires",
+         "wearing tyres"
+        ],
+        "ref": "harmful particles from wearing tyres",
+        "ev": "more road wear, more traffic, and harmful particles from wearing tyres",
+        "zh": "particles from ___ = harmful particles from wearing tyres（輪胎磨損產生的微粒）。答案 tyres（美式 tires 也可）。road wear、traffic 題目已給。"
+       },
+       {
+        "a": [
+         "congestion"
+        ],
+        "ref": "a single road tax or congestion charges",
+        "ev": "other studies have proposed a single road tax or congestion charges",
+        "zh": "suggest = have proposed；one road tax = a single road tax；答案 congestion（congestion charges 擁擠稅）。注意她說本研究本身不涉及稅制。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Further, Not More Often: What Swedish Data Reveal About Electric Car Use",
+    "intro": "As electric vehicles spread, researchers are asking whether cheaper running costs simply replace old journeys or quietly encourage more driving.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Governments promote electric vehicles chiefly as a means of cutting greenhouse gas emissions, but the switch could also alter how much people drive. On the one hand, an electric car is cheaper to run per kilometre than a petrol or diesel model, which economists expect to produce a 'rebound' in driving. On the other hand, limited range and the need to recharge may restrict flexibility and discourage long journeys. The net effect is therefore genuinely ambiguous, and earlier research has not settled the matter. Some studies have reported higher average mileage among electric car users, whereas others, particularly those examining early-generation battery cars with short ranges, have found little difference or even lower mileage."
+     },
+     {
+      "label": "B",
+      "text": "Part of the difficulty lies in the data. Many studies rely on drivers' own estimates of how far they travel, or on travel diaries covering just one or two days, which cannot distinguish lasting patterns from short-term variation. Official odometer readings would be more reliable, but until recently electric cars made up such a small share of vehicles that register-based studies were scarce. Sweden, a mature market for electric cars, offers a rare opportunity. In a study published in Transportation Research Part D in October 2026, Elisabeth Lång of the Swedish National Road and Transport Research Institute (VTI) and Linköping University, together with colleagues from the consultancy Trivector and Lund University, drew on national register data on the annual distances driven by cars. Company and benefit cars were excluded from this part of the analysis, since they tend to reflect employer-provided mobility rather than private travel needs."
+     },
+     {
+      "label": "C",
+      "text": "The register data were complemented by a far more detailed source. The team drew a random sample from the national vehicle register of people who had acquired a car between 2021 and 2023, sending equal numbers of invitations to users of battery, plug-in hybrid and conventional cars in seven counties, including those containing Sweden's largest cities. Of the 40,002 people invited, only about 7.4% agreed to install TravelVu, a smartphone app that records journeys by GPS and asks users to confirm them. After quality checks, the final sample comprised 762 people, who between them contributed more than 80,000 days of travel. The researchers acknowledge, however, that the northern and sparsely populated parts of the country were not represented."
+     },
+     {
+      "label": "D",
+      "text": "The register analysis found that fully electric cars were driven 13–17% further each year than comparable petrol and diesel cars, even after accounting for the characteristics of their users, households and vehicles; the authors' preferred estimate is 13%. Plug-in hybrids also covered greater distances, although the differences were smaller and more sensitive to controls for the type of car. The GPS data told a similar but more modest story. Battery car users drove further on a typical day, yet they made no more trips than other drivers, which implies that the extra distance came from longer journeys rather than additional ones. According to the project's final report, a considerable part of the gap could be explained by observable factors such as income, household composition and geography, but a residual difference remained."
+     },
+     {
+      "label": "E",
+      "text": "How should this residual be interpreted? Economists describe several mechanisms that might lead electric car owners to drive more. Lower running costs reduce the perceived price of each kilometre; fuel savings free up money that may be spent on further travel; and owners may feel that their driving is environmentally benign, a phenomenon known as moral licensing. An alternative explanation is selection: people who already drive long distances may be more inclined to buy an electric car precisely because it is cheap to run. The study cannot fully disentangle these possibilities, and the authors state that doing so would require longitudinal data tracking the same individuals before and after they change vehicles. In households owning both types of car, meanwhile, the electric vehicle was preferred for short local trips, whereas the conventional car was more often chosen for long journeys, suggesting that concerns about range and charging persist."
+     },
+     {
+      "label": "F",
+      "text": "The findings carry a mixed message for policymakers. If high-mileage drivers are the ones switching, the climate benefits of electrification are larger, since each conversion removes more emissions than it would among occasional drivers. Yet additional driving brings costs that electrification does not remove, including congestion, road wear and non-exhaust emissions such as particles from tyres. In an earlier working version of the paper, the authors therefore argued that complementary measures, such as congestion pricing, parking regulation and incentives favouring smaller cars, may be needed alongside the shift to electric power. Lång has emphasised that the study itself does not address taxation, but she has observed that roads must still be paid for, and that any new tax would need to be assessed for its effects on different groups."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reason for leaving one category of vehicle out of part of the research",
+        "a": "B",
+        "ref": "B",
+        "ev": "Company and benefit cars were excluded from this part of the analysis, since they tend to reflect employer-provided mobility rather than private travel needs.",
+        "zh": "B 段：公司車與員工福利車被排除，因為反映的是雇主提供的移動需求而非私人需求 → leaving one category of vehicle out 的理由。"
+       },
+       {
+        "q": "a reference to earlier findings that electric cars were not driven more than conventional ones",
+        "a": "A",
+        "ref": "A",
+        "ev": "have found little difference or even lower mileage",
+        "zh": "A 段：部分早期研究（尤其是續航短的早期電動車）發現差異很小甚至里程更低 → not driven more。"
+       },
+       {
+        "q": "a description of how participants in the detailed study were selected",
+        "a": "C",
+        "ref": "C",
+        "ev": "The team drew a random sample from the national vehicle register",
+        "zh": "C 段：從全國車輛登記資料隨機抽樣、三種動力各寄出等量邀請 → how participants were selected。"
+       },
+       {
+        "q": "an explanation of why it matters which drivers switch to electric cars",
+        "a": "F",
+        "ref": "F",
+        "ev": "If high-mileage drivers are the ones switching, the climate benefits of electrification are larger",
+        "zh": "F 段：如果是高里程駕駛人換電動車，減排效益更大 → why it matters which drivers switch。"
+       },
+       {
+        "q": "a mention of an attitude that might make drivers feel less guilty about using their cars",
+        "a": "E",
+        "ref": "E",
+        "ev": "owners may feel that their driving is environmentally benign, a phenomenon known as moral licensing",
+        "zh": "E 段：moral licensing（道德許可效應）——覺得自己開電動車很環保，於是開更多也不內疚 → feel less guilty。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The increase in annual distance was greater for plug-in hybrids than for fully electric cars.",
+        "a": "False",
+        "ref": "D",
+        "ev": "Plug-in hybrids also covered greater distances, although the differences were smaller",
+        "zh": "D 段：插電混合車也開得較遠，但差距「較小」→ 與「插電混合車增幅較大」相反 → False。"
+       },
+       {
+        "q": "Fewer than one in ten of the people invited agreed to use the travel app.",
+        "a": "True",
+        "ref": "C",
+        "ev": "Of the 40,002 people invited, only about 7.4% agreed to install TravelVu",
+        "zh": "C 段：受邀者只有約 7.4% 安裝 app，少於十分之一 → True。"
+       },
+       {
+        "q": "Electric car owners living in cities drove further than those living in the countryside.",
+        "a": "Not Given",
+        "ref": "C",
+        "ev": "including those containing Sweden's largest cities",
+        "zh": "陷阱：C 段提到抽樣的郡包含大城市，也提到北部人口稀少地區沒有涵蓋，但文章從未比較城市與鄉村電動車車主的里程 → Not Given。"
+       },
+       {
+        "q": "The study proved that owning an electric car causes people to drive further.",
+        "a": "False",
+        "ref": "E",
+        "ev": "The study cannot fully disentangle these possibilities",
+        "zh": "E 段：研究無法完全區分「自我選擇」與「行為改變」，需要追蹤同一批人的長期資料 → 並未證明因果 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Measuring electric car use",
+      "lines": [
+       {
+        "t": "Many past studies used drivers' own estimates or very short travel diaries, although [[1]] readings taken from vehicles are more dependable. In Sweden, observable factors such as income explained much of the extra distance driven by electric cars, but a [[2]] gap could not be accounted for. One possible reason is a psychological effect called moral [[3]]. To separate this kind of behavioural response from selection, researchers would need [[4]] data that follow the same people over time."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "odometer"
+        ],
+        "ref": "B",
+        "ev": "Official odometer readings would be more reliable",
+        "zh": "B 段：官方里程表讀數（odometer readings）比自行估計更可靠。more dependable = more reliable。"
+       },
+       {
+        "a": [
+         "residual"
+        ],
+        "ref": "D",
+        "ev": "but a residual difference remained",
+        "zh": "D 段：可觀察因素解釋了相當部分差距，但仍有 residual（殘餘的、剩下的）差異。could not be accounted for = remained。"
+       },
+       {
+        "a": [
+         "licensing"
+        ],
+        "ref": "E",
+        "ev": "a phenomenon known as moral licensing",
+        "zh": "E 段：moral licensing（道德許可效應），題目已給 moral，填 licensing。"
+       },
+       {
+        "a": [
+         "longitudinal"
+        ],
+        "ref": "E",
+        "ev": "would require longitudinal data tracking the same individuals before and after they change vehicles",
+        "zh": "E 段：需要 longitudinal（縱向、長期追蹤的）資料。follow the same people over time = tracking the same individuals before and after。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "mature market",
+     "pos": "n. phr.",
+     "def": "a market where a product is well established and widely used",
+     "zh": "成熟市場",
+     "example": "Sweden, one of Europe's more mature markets for electric cars.",
+     "match": [
+      "mature markets",
+      "mature market"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "comparable",
+     "pos": "adj.",
+     "def": "similar enough to be fairly compared",
+     "zh": "可比較的、相當的",
+     "example": "Fully electric cars were driven further than comparable petrol and diesel cars.",
+     "match": [
+      "comparable"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "headline",
+     "pos": "adj.",
+     "def": "most important or most widely reported",
+     "zh": "最主要的、頭條的",
+     "example": "The headline result?",
+     "match": [
+      "headline"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "perceived",
+     "pos": "adj.",
+     "def": "seen or understood in a particular way, whether or not it is true",
+     "zh": "感知到的、自認為的",
+     "example": "The perceived cost of each extra kilometre is lower.",
+     "match": [
+      "perceived"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "tempting",
+     "pos": "adj.",
+     "def": "attractive and making you want to do something",
+     "zh": "誘人的",
+     "example": "More distant destinations become tempting.",
+     "match": [
+      "tempting"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "stress",
+     "pos": "v.",
+     "def": "to emphasise a point because it is important",
+     "zh": "強調",
+     "example": "Ms Lång has stressed that the data reveal a different travel pattern.",
+     "match": [
+      "stressed"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "lingering",
+     "pos": "adj.",
+     "def": "continuing to exist for longer than expected",
+     "zh": "揮之不去的、遲遲未消的",
+     "example": "She has also pointed to lingering doubts about charging infrastructure.",
+     "match": [
+      "lingering"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "infrastructure",
+     "pos": "n.",
+     "def": "the basic physical systems a society needs, such as roads and power supplies",
+     "zh": "基礎設施",
+     "example": "Lingering doubts about charging infrastructure.",
+     "match": [
+      "infrastructure"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "rebound",
+     "pos": "n.",
+     "def": "(economics) an increase in use that partly cancels out an efficiency gain",
+     "zh": "反彈（效應）",
+     "example": "Economists expect cheaper running costs to produce a 'rebound' in driving.",
+     "match": [
+      "rebound"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "ambiguous",
+     "pos": "adj.",
+     "def": "able to be understood in more than one way; unclear",
+     "zh": "模稜兩可的、不明確的",
+     "example": "The net effect is therefore genuinely ambiguous.",
+     "match": [
+      "ambiguous"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "complement",
+     "pos": "v.",
+     "def": "to add to something in a way that improves it",
+     "zh": "補充、使完善",
+     "example": "The register data were complemented by a far more detailed source.",
+     "match": [
+      "complemented"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sparsely populated",
+     "pos": "adj. phr.",
+     "def": "having very few people living in an area",
+     "zh": "人口稀少的",
+     "example": "The northern and sparsely populated parts of the country were not represented.",
+     "match": [
+      "sparsely populated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "benign",
+     "pos": "adj.",
+     "def": "not harmful",
+     "zh": "無害的、良性的",
+     "example": "Owners may feel that their driving is environmentally benign.",
+     "match": [
+      "benign"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "disentangle",
+     "pos": "v.",
+     "def": "to separate ideas or factors that are mixed together",
+     "zh": "釐清、分開",
+     "example": "The study cannot fully disentangle these possibilities.",
+     "match": [
+      "disentangle"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "complementary",
+     "pos": "adj.",
+     "def": "working together with something else so that each improves the other",
+     "zh": "互補的、配套的",
+     "example": "Complementary measures, such as congestion pricing, may be needed alongside the shift to electric power.",
+     "match": [
+      "complementary"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-03-2.mp3",
+    "times": [
+     [
+      0.36,
+      1.52
+     ],
+     [
+      1.74,
+      7.25
+     ],
+     [
+      7.55,
+      8.53
+     ],
+     [
+      9.31,
+      17.84
+     ],
+     [
+      18.11,
+      24.67
+     ],
+     [
+      24.99,
+      27.63
+     ],
+     [
+      27.87,
+      33.2
+     ],
+     [
+      33.48,
+      38.87
+     ],
+     [
+      39.2,
+      46.99
+     ],
+     [
+      47.77,
+      48.89
+     ],
+     [
+      49.3,
+      55.94
+     ],
+     [
+      56.15,
+      59.61
+     ],
+     [
+      59.75,
+      63.37
+     ],
+     [
+      64.15,
+      66.3
+     ],
+     [
+      66.52,
+      72.65
+     ],
+     [
+      72.92,
+      78.29
+     ],
+     [
+      78.61,
+      82.87
+     ],
+     [
+      83.1,
+      85.78
+     ],
+     [
+      86.07,
+      88.88
+     ],
+     [
+      89.66,
+      90.91
+     ],
+     [
+      91.27,
+      93.09
+     ],
+     [
+      93.35,
+      101.05
+     ],
+     [
+      101.34,
+      105.72
+     ],
+     [
+      105.97,
+      114.8
+     ],
+     [
+      115.19,
+      120.06
+     ],
+     [
+      120.84,
+      125.18
+     ],
+     [
+      125.45,
+      132.44
+     ],
+     [
+      132.76,
+      140.33
+     ],
+     [
+      140.56,
+      144.08
+     ],
+     [
+      144.86,
+      146.44
+     ],
+     [
+      146.89,
+      151.96
+     ],
+     [
+      152.21,
+      156.5
+     ],
+     [
+      156.91,
+      162.67
+     ],
+     [
+      162.88,
+      170.11
+     ],
+     [
+      170.89,
+      172.13
+     ],
+     [
+      172.4,
+      178.48
+     ],
+     [
+      178.7,
+      185.04
+     ],
+     [
+      185.31,
+      187.56
+     ]
+    ],
+    "duration": 188.2,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-11-03-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
