@@ -1,0 +1,2173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-04",
+ "date": "2026-11-04",
+ "title": "AMD Posts Record Quarter as AI 'Agents' Revive Demand for Server Processors · Britain Launches First Study of 'Forever Chemicals' in People's Bodies",
+ "stories": [
+  {
+   "title": "AMD Posts Record Quarter as AI 'Agents' Revive Demand for Server Processors",
+   "topic": "Investing · AI chips",
+   "source": {
+    "name": "AMD press release: AMD Reports Third Quarter 2026 Financial Results (3 Nov 2026)",
+    "url": "https://ir.amd.com/news-events/press-releases/detail/1303/amd-reports-third-quarter-2026-financial-results",
+    "links": [
+     {
+      "name": "Reuters (via Investing.com): AMD forecasts quarterly revenue above estimates as data-center revenue hits record (3 Nov 2026)",
+      "url": "https://www.investing.com/news/stock-market-news/amd-forecasts-quarterly-revenue-above-estimates-as-datacenter-growth-accelerates-4996502"
+     },
+     {
+      "name": "CNBC: AMD stock jumps 8% on earnings as data center revenue nearly doubles (3 Nov 2026)",
+      "url": "https://www.cnbc.com/2026/11/03/amd-amd-q3-earnings-report-2026-.html"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our top business story: the chipmaker AMD has just reported the biggest quarter in its history, as demand for artificial intelligence hardware pushed its data centre sales to a record.",
+     "Here's the report."
+    ],
+    [
+     "AMD released its third-quarter results after the closing bell in New York on Tuesday.",
+     "Revenue rose forty-five per cent from a year earlier, to thirteen point three eight billion dollars.",
+     "Analysts surveyed by LSEG had been expecting about thirteen point one billion.",
+     "Adjusted earnings came in at two dollars and nine cents a share, comfortably ahead of forecasts.",
+     "Chief executive Lisa Su told analysts it was the largest and most profitable quarter the company has ever had."
+    ],
+    [
+     "The engine of that growth is the data centre.",
+     "Sales in that division nearly doubled, to a record eight and a half billion dollars.",
+     "A year ago, the data centre brought in forty-seven per cent of AMD's revenue; it now accounts for sixty-four per cent.",
+     "Two product lines are doing the heavy lifting: the Instinct graphics processors that train and run AI models, and the EPYC server processors.",
+     "And it's the second of those that has surprised some observers."
+    ],
+    [
+     "For years, AMD's story in AI was about chasing Nvidia in graphics chips.",
+     "Now its ordinary central processors are enjoying a revival, thanks to what's known as agentic AI: software agents that can carry out tasks on their own for hours at a time.",
+     "Those agents run inside virtual machines, and virtual machines run on server chips.",
+     "Ms Su said adoption was just starting, and she expected demand to grow sharply as agents take on more complex work."
+    ],
+    [
+     "Meanwhile, AMD is no longer simply selling individual chips.",
+     "Its Helios system is an entire rack of hardware, designed to compete head-on with Nvidia's own systems.",
+     "According to the company, Anthropic, Meta, Microsoft, OpenAI and Oracle are already running workloads on the first Helios machines, and production is due to step up in the fourth quarter."
+    ],
+    [
+     "Looking ahead, the forecast was even stronger.",
+     "Analysts had pencilled in fourth-quarter revenue of around sixteen point two billion dollars.",
+     "AMD is guiding to about seventeen billion.",
+     "And for twenty twenty-seven, Ms Su told analysts she expects total revenue to rise by more than eighty per cent, a little above the seventy-seven per cent analysts had expected, according to LSEG.",
+     "To get there, she said, the company has worked across its supply chain to secure the wafers, substrates, advanced packaging and memory it needs."
+    ],
+    [
+     "Not every part of the business is booming, though.",
+     "Sales in the unit that makes chips for PCs and games consoles fell eight per cent, and gaming revenue on its own dropped forty per cent.",
+     "Soaring prices for memory have pushed up the cost of building computers, and global PC shipments are shrinking, according to the research firm Counterpoint.",
+     "There's a broader worry, too.",
+     "Before the results, the shares had fallen for three days in a row, in an industry-wide sell-off driven by fears that companies are overspending on AI."
+    ],
+    [
+     "Still, investors liked what they heard.",
+     "AMD's shares jumped more than eight per cent in after-hours trading, extending a rally that has seen the stock more than double this year.",
+     "Hendi Susanto, a portfolio manager at Gabelli Funds, said investors appeared to see the results as confirming AMD's technology leadership and its ability to keep gaining market share.",
+     "There are risks, though: the industry is still grappling with a global memory shortage, and the high-bandwidth memory used in AI processors remains scarce.",
+     "That's the business report for this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "AMD's third-quarter results",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Headline figures"
+       },
+       {
+        "t": "Lisa Su: the biggest and most [[1]] quarter in AMD's history"
+       },
+       {
+        "h": "Data centre"
+       },
+       {
+        "t": "Now provides [[2]] % of total revenue"
+       },
+       {
+        "t": "Main products: Instinct graphics processors and EPYC [[3]] processors"
+       },
+       {
+        "t": "CPU sales boosted by [[4]] AI (software that completes tasks independently)"
+       },
+       {
+        "t": "These programs operate within [[5]]"
+       },
+       {
+        "t": "Helios: a complete [[6]] of hardware rivalling Nvidia"
+       },
+       {
+        "h": "Outlook"
+       },
+       {
+        "t": "Fourth-quarter revenue forecast: about $[[7]] billion"
+       },
+       {
+        "t": "Supplies obtained include wafers, [[8]], packaging and memory"
+       },
+       {
+        "h": "Weak spots"
+       },
+       {
+        "t": "Lower sales of chips for PCs and games [[9]]"
+       },
+       {
+        "t": "Recent share-price fall linked to fears of [[10]] on AI"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "profitable"
+        ],
+        "ref": "the largest and most profitable quarter",
+        "ev": "it was the largest and most profitable quarter the company has ever had",
+        "zh": "biggest = largest；in AMD's history = the company has ever had。空格在 most 後面，要形容詞 → profitable（獲利最高的）。"
+       },
+       {
+        "a": [
+         "64",
+         "sixty-four"
+        ],
+        "ref": "it now accounts for sixty-four per cent",
+        "ev": "A year ago, the data centre brought in forty-seven per cent of AMD's revenue; it now accounts for sixty-four per cent.",
+        "zh": "Now provides = now accounts for。答案 64。干擾：forty-seven 是「一年前」的比例；forty-five 是營收年增率。注意聽 A year ago 與 now 的對比。"
+       },
+       {
+        "a": [
+         "server"
+        ],
+        "ref": "and the EPYC server processors",
+        "ev": "the Instinct graphics processors that train and run AI models, and the EPYC server processors",
+        "zh": "題目已給 EPYC 和 processors，只缺中間的 server（伺服器）。Instinct 對應 graphics processors（GPU），EPYC 對應 server processors（伺服器 CPU）。"
+       },
+       {
+        "a": [
+         "agentic"
+        ],
+        "ref": "what's known as agentic AI",
+        "ev": "thanks to what's known as agentic AI: software agents that can carry out tasks on their own for hours at a time",
+        "zh": "boosted by = thanks to；completes tasks independently = carry out tasks on their own。答案 agentic（代理式的）。"
+       },
+       {
+        "a": [
+         "virtual machines",
+         "virtual machine"
+        ],
+        "ref": "Those agents run inside virtual machines",
+        "ev": "Those agents run inside virtual machines, and virtual machines run on server chips.",
+        "zh": "operate within = run inside；答案 virtual machines（虛擬機器）。兩個字，符合 TWO WORDS 限制。"
+       },
+       {
+        "a": [
+         "rack"
+        ],
+        "ref": "Its Helios system is an entire rack of hardware",
+        "ev": "Its Helios system is an entire rack of hardware, designed to compete head-on with Nvidia's own systems.",
+        "zh": "complete = entire；rivalling Nvidia = compete head-on with Nvidia。答案 rack（機架）。AMD 從賣單顆晶片轉向賣整櫃系統。"
+       },
+       {
+        "a": [
+         "17",
+         "seventeen"
+        ],
+        "ref": "AMD is guiding to about seventeen billion",
+        "ev": "Analysts had pencilled in fourth-quarter revenue of around sixteen point two billion dollars. … AMD is guiding to about seventeen billion.",
+        "zh": "預測 vs 實際的典型干擾：sixteen point two 是「分析師預估」，seventeen 才是 AMD 自己的指引（is guiding to）。答案 17。"
+       },
+       {
+        "a": [
+         "substrates",
+         "substrate"
+        ],
+        "ref": "to secure the wafers, substrates, advanced packaging",
+        "ev": "to secure the wafers, substrates, advanced packaging and memory it needs",
+        "zh": "Supplies obtained = secure；題目列出 wafers、packaging、memory，缺的是 substrates（基板）。"
+       },
+       {
+        "a": [
+         "consoles",
+         "console"
+        ],
+        "ref": "chips for PCs and games consoles",
+        "ev": "Sales in the unit that makes chips for PCs and games consoles fell eight per cent",
+        "zh": "Lower sales = fell eight per cent；答案 consoles（遊戲主機）。eight / forty per cent 是干擾數字，題目沒有問。"
+       },
+       {
+        "a": [
+         "overspending"
+        ],
+        "ref": "fears that companies are overspending on AI",
+        "ev": "in an industry-wide sell-off driven by fears that companies are overspending on AI",
+        "zh": "share-price fall = sell-off；linked to = driven by。答案 overspending（過度支出）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "The Return of the Server Processor",
+    "intro": "A record quarter at AMD suggests that the next phase of the artificial intelligence boom may reward a broader range of chips than the graphics processors that dominated its early years.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "For much of the artificial intelligence boom, investor attention has focused on a single kind of chip: the graphics processing unit, or GPU, which is used to train and run large AI models and in which Nvidia has long been dominant. The third-quarter results published by Advanced Micro Devices (AMD) on 3 November 2026 suggest that this picture is becoming more complicated. The company reported revenue of $13.4 billion, up 45% on the same period a year earlier and above the $13.09 billion that analysts had forecast, according to LSEG. Its data centre segment, which sells both GPUs and the central processing units (CPUs) that act as the general-purpose 'brains' of servers, achieved record revenue of $8.5 billion, an increase of 97%. That segment now accounts for 64% of the company's sales, compared with 47% a year earlier."
+     },
+     {
+      "label": "B",
+      "text": "Part of the explanation lies in a change in the way AI is being used. Reuters reported that AMD was benefiting from a shift in AI workloads towards running models in real-world applications, rather than simply building them. One fast-growing example is so-called agentic AI, in which software agents carry out multi-step tasks with limited human supervision. According to CNBC, server CPUs are central to such applications because they power the virtual machines in which agents operate and can run for hours on their own. The chief executive, Lisa Su, told analysts that adoption was just starting and that demand should grow sharply as agents took on more complex work. She also said she expected AMD's server revenue to double year on year in 2027."
+     },
+     {
+      "label": "C",
+      "text": "AMD is, at the same time, attempting to move beyond selling components. Its Helios product is a complete rack-scale system that combines Instinct MI450 Series GPUs with sixth-generation EPYC processors, designed to compete directly with Nvidia's own rack-scale machines. The company says Anthropic, Meta, Microsoft, OpenAI and Oracle are already running workloads on the first Helios systems. Some of these relationships extend well beyond an ordinary purchase. In February, AMD agreed to sell up to $60 billion worth of AI chips to Meta over five years, in a deal that allows Meta to buy as much as 10% of the chipmaker; AMD has also agreed to invest $1 billion in Meta's equity offering and has committed to investing up to $5 billion in Anthropic. Arrangements of this kind arguably bind supplier and customer more closely together than a conventional sale would."
+     },
+     {
+      "label": "D",
+      "text": "The figures also illustrate how quickly profits can rise once a business reaches scale. While revenue grew by 45%, adjusted earnings per share climbed 74%, to $2.09, comfortably ahead of the $1.95 that analysts had expected. Jean Hu, the chief financial officer, attributed this to what she described as the significant operating leverage in AMD's business model as its data centre business drives scale. In other words, because many costs do not increase in step with sales, each additional dollar of revenue can contribute disproportionately to profit. There are, however, limits to this effect: AMD expects its adjusted gross margin to slip to about 55% in the fourth quarter, from 56% in the third, a figure broadly in line with analysts' estimates."
+     },
+     {
+      "label": "E",
+      "text": "Not every division shared in the expansion. Revenue from the client and gaming segment, which includes processors for personal computers and games consoles, fell 8% to $3.7 billion. Within it, sales of Ryzen chips for laptops helped client revenue rise 7%, but gaming revenue dropped 40% because of lower semi-custom and graphics sales. The wider PC market is under pressure: Counterpoint Research found that global shipments fell 4% in the second quarter, which it attributed to soaring costs for memory and other components. The contrast with a key rival is instructive. Intel reported that its own data centre revenue had risen 78% in the third quarter, yet its shares fell 29% in a single day amid concerns about weak guidance and its ability to meet demand."
+     },
+     {
+      "label": "F",
+      "text": "Looking ahead, AMD forecast fourth-quarter revenue of about $17 billion, which would represent growth of roughly 66% on a year earlier, and Ms Su told analysts she expected total revenue to rise by more than 80% in 2027. Meeting that demand depends on suppliers: she said the company had worked to secure the wafers, substrates, advanced packaging and memory it needed, at a time when high-bandwidth memory for AI processors remains scarce. Investor sentiment is also fragile; AMD's shares had fallen for three consecutive days amid fears of excessive AI spending before rallying on the day the results were released. Bob O'Donnell of TECHnalysis Research said the numbers provided a greatly needed boost both for AI infrastructure and, to a smaller degree, the PC market. Meanwhile, AMD is buying its way into new areas, including World Labs, a start-up developing a world model that simulates 3D environments, which it agreed to acquire for $8.2 billion in stock."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "an agreement that gives a customer the right to acquire a stake in its supplier",
+        "a": "C",
+        "ref": "C",
+        "ev": "in a deal that allows Meta to buy as much as 10% of the chipmaker",
+        "zh": "C 段：Meta 的 600 億美元採購協議允許 Meta 買下 AMD 最多 10% 股份 → acquire a stake（取得股權）in its supplier。"
+       },
+       {
+        "q": "an explanation of why earnings rose faster than sales",
+        "a": "D",
+        "ref": "D",
+        "ev": "because many costs do not increase in step with sales, each additional dollar of revenue can contribute disproportionately to profit",
+        "zh": "D 段：營收 +45%、EPS +74%，原因是營運槓桿——很多成本不會隨營收等比例增加。"
+       },
+       {
+        "q": "a comparison with a competitor whose share price fell sharply",
+        "a": "E",
+        "ref": "E",
+        "ev": "Intel reported that its own data centre revenue had risen 78% in the third quarter, yet its shares fell 29% in a single day",
+        "zh": "E 段：對手 Intel 資料中心也成長 78%，股價卻單日跌 29% → competitor whose share price fell sharply。"
+       },
+       {
+        "q": "a list of the inputs a company has tried to obtain from its suppliers",
+        "a": "F",
+        "ref": "F",
+        "ev": "she said the company had worked to secure the wafers, substrates, advanced packaging and memory it needed",
+        "zh": "F 段：晶圓、基板、先進封裝、記憶體 → inputs（投入的原料/零組件）。注意：聽力也有這句，但這裡考的是段落位置。"
+       },
+       {
+        "q": "a description of a change in the purposes for which AI is being used",
+        "a": "B",
+        "ref": "B",
+        "ev": "a shift in AI workloads towards running models in real-world applications, rather than simply building them",
+        "zh": "B 段：AI 工作負載從「建模型」轉向「在實際應用中運行模型」→ a change in the purposes for which AI is being used。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "AMD's data centre business now generates more than half of the company's revenue.",
+        "a": "True",
+        "ref": "A",
+        "ev": "That segment now accounts for 64% of the company's sales",
+        "zh": "A 段：資料中心占營收 64% → 超過一半 → True。"
+       },
+       {
+        "q": "Meta is the largest single user of AMD's Helios systems.",
+        "a": "Not Given",
+        "ref": "C",
+        "ev": "The company says Anthropic, Meta, Microsoft, OpenAI and Oracle are already running workloads on the first Helios systems.",
+        "zh": "陷阱：C 段列出五家使用 Helios 的公司，也提到 Meta 的大額協議，但沒有說哪一家「用量最大」→ Not Given。別把「協議金額大」自行推論成「最大用戶」。"
+       },
+       {
+        "q": "AMD expects its adjusted gross margin to improve in the fourth quarter.",
+        "a": "False",
+        "ref": "D",
+        "ev": "AMD expects its adjusted gross margin to slip to about 55% in the fourth quarter, from 56% in the third",
+        "zh": "D 段：毛利率預計從 56% 「下滑」（slip）到 55%，與 improve 相反 → False。"
+       },
+       {
+        "q": "Counterpoint Research linked the decline in PC shipments to rising component costs.",
+        "a": "True",
+        "ref": "E",
+        "ev": "which it attributed to soaring costs for memory and other components",
+        "zh": "E 段：Counterpoint 把 PC 出貨下滑歸因於記憶體與其他零組件成本飆升 → linked … to rising component costs → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Strengths and pressures at AMD",
+      "lines": [
+       {
+        "t": "AMD's finance chief explained the rapid rise in profits by pointing to the operating [[1]] in the company's business model. By contrast, Intel's shares collapsed after investors became worried about its weak [[2]]. Commenting on AMD's results, one analyst said they gave a much-needed [[3]] to AI infrastructure and, to a lesser extent, to the PC market. The company is also expanding through acquisitions, such as a start-up whose world model can [[4]] three-dimensional environments."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "leverage"
+        ],
+        "ref": "D",
+        "ev": "the significant operating leverage in AMD's business model",
+        "zh": "D 段：CFO 把獲利快速成長歸功於 operating leverage（營運槓桿）。題目已給 operating，只填 leverage。"
+       },
+       {
+        "a": [
+         "guidance"
+        ],
+        "ref": "E",
+        "ev": "amid concerns about weak guidance and its ability to meet demand",
+        "zh": "E 段：Intel 股價暴跌是因為市場擔心其 weak guidance（疲弱的財測指引）。shares collapsed = shares fell 29%。"
+       },
+       {
+        "a": [
+         "boost"
+        ],
+        "ref": "F",
+        "ev": "the numbers provided a greatly needed boost both for AI infrastructure and, to a smaller degree, the PC market",
+        "zh": "F 段：much-needed = greatly needed；to a lesser extent = to a smaller degree。答案 boost（提振）。"
+       },
+       {
+        "a": [
+         "simulate",
+         "simulates"
+        ],
+        "ref": "F",
+        "ev": "a world model that simulates 3D environments",
+        "zh": "F 段：World Labs 的 world model 能 simulate（模擬）3D 環境。can 後面接原形動詞 → simulate。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "comfortably",
+     "pos": "adv.",
+     "def": "by a clear margin; easily",
+     "zh": "輕鬆地、大幅地（超過）",
+     "example": "Adjusted earnings came in at two dollars and nine cents a share, comfortably ahead of forecasts.",
+     "match": [
+      "comfortably"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "do the heavy lifting",
+     "pos": "idiom",
+     "def": "to do the hardest or most important part of the work",
+     "zh": "扛起主要工作、貢獻最大",
+     "example": "Two product lines are doing the heavy lifting.",
+     "match": [
+      "doing the heavy lifting"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "revival",
+     "pos": "n.",
+     "def": "an improvement in the condition or popularity of something",
+     "zh": "復甦、重新流行",
+     "example": "Its ordinary central processors are enjoying a revival.",
+     "match": [
+      "revival"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "head-on",
+     "pos": "adv.",
+     "def": "directly and without avoiding confrontation",
+     "zh": "正面地、直接地（對抗）",
+     "example": "Designed to compete head-on with Nvidia's own systems.",
+     "match": [
+      "head-on"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "pencil in",
+     "pos": "phr. v.",
+     "def": "to make a provisional estimate or arrangement",
+     "zh": "暫定、初步預估",
+     "example": "Analysts had pencilled in fourth-quarter revenue of around sixteen point two billion dollars.",
+     "match": [
+      "pencilled in"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "sell-off",
+     "pos": "n.",
+     "def": "a period in which many investors sell shares, causing prices to fall",
+     "zh": "拋售潮",
+     "example": "An industry-wide sell-off driven by fears that companies are overspending on AI.",
+     "match": [
+      "sell-off"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "grapple with",
+     "pos": "phr. v.",
+     "def": "to try hard to deal with a difficult problem",
+     "zh": "努力應付、設法解決",
+     "example": "The industry is still grappling with a global memory shortage.",
+     "match": [
+      "grappling with"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "workload",
+     "pos": "n.",
+     "def": "(computing) the tasks a computer system is required to process",
+     "zh": "（運算）工作負載",
+     "example": "A shift in AI workloads towards running models in real-world applications.",
+     "match": [
+      "workloads"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "supervision",
+     "pos": "n.",
+     "def": "the act of watching over and directing a task or person",
+     "zh": "監督、管理",
+     "example": "Software agents carry out multi-step tasks with limited human supervision.",
+     "match": [
+      "supervision"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "conventional",
+     "pos": "adj.",
+     "def": "ordinary and traditional; of the usual kind",
+     "zh": "傳統的、一般的",
+     "example": "Arrangements of this kind arguably bind supplier and customer more closely together than a conventional sale would.",
+     "match": [
+      "conventional"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "disproportionately",
+     "pos": "adv.",
+     "def": "to a degree that is larger or smaller than expected in relation to something else",
+     "zh": "不成比例地",
+     "example": "Each additional dollar of revenue can contribute disproportionately to profit.",
+     "match": [
+      "disproportionately"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "in step with",
+     "pos": "phr.",
+     "def": "changing at the same rate as something else",
+     "zh": "與……同步",
+     "example": "Many costs do not increase in step with sales.",
+     "match": [
+      "in step with"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "instructive",
+     "pos": "adj.",
+     "def": "useful because it teaches you something",
+     "zh": "有啟發性的、有教育意義的",
+     "example": "The contrast with a key rival is instructive.",
+     "match": [
+      "instructive"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sentiment",
+     "pos": "n.",
+     "def": "(finance) the general attitude of investors towards a market",
+     "zh": "（市場）情緒",
+     "example": "Investor sentiment is also fragile.",
+     "match": [
+      "sentiment"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "consecutive",
+     "pos": "adj.",
+     "def": "following one after another without interruption",
+     "zh": "連續的",
+     "example": "AMD's shares had fallen for three consecutive days.",
+     "match": [
+      "consecutive"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-04-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.09
+     ],
+     [
+      1.31,
+      12.46
+     ],
+     [
+      12.84,
+      13.87
+     ],
+     [
+      14.65,
+      19.5
+     ],
+     [
+      19.77,
+      25.59
+     ],
+     [
+      25.91,
+      30.54
+     ],
+     [
+      30.78,
+      36.5
+     ],
+     [
+      36.78,
+      43.22
+     ],
+     [
+      44.0,
+      46.43
+     ],
+     [
+      46.67,
+      51.49
+     ],
+     [
+      51.79,
+      59.41
+     ],
+     [
+      59.62,
+      68.38
+     ],
+     [
+      68.72,
+      72.02
+     ],
+     [
+      72.8,
+      77.7
+     ],
+     [
+      77.92,
+      88.36
+     ],
+     [
+      88.71,
+      93.84
+     ],
+     [
+      94.16,
+      101.07
+     ],
+     [
+      101.85,
+      106.23
+     ],
+     [
+      106.51,
+      112.9
+     ],
+     [
+      113.23,
+      124.29
+     ],
+     [
+      125.07,
+      128.08
+     ],
+     [
+      128.37,
+      133.47
+     ],
+     [
+      133.68,
+      136.45
+     ],
+     [
+      136.71,
+      148.95
+     ],
+     [
+      149.34,
+      157.5
+     ],
+     [
+      158.28,
+      160.76
+     ],
+     [
+      161.03,
+      168.74
+     ],
+     [
+      168.93,
+      177.92
+     ],
+     [
+      178.15,
+      179.6
+     ],
+     [
+      179.84,
+      188.84
+     ],
+     [
+      189.62,
+      192.07
+     ],
+     [
+      192.28,
+      199.78
+     ],
+     [
+      200.07,
+      211.73
+     ],
+     [
+      212.02,
+      221.11
+     ],
+     [
+      221.45,
+      223.77
+     ]
+    ],
+    "duration": 224.4,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-11-04-1-words/"
+   }
+  },
+  {
+   "title": "Britain Launches First Study of 'Forever Chemicals' in People's Bodies",
+   "topic": "Health · forever chemicals",
+   "source": {
+    "name": "BBC News: Major study into 'forever chemicals' in people's bodies launched in UK (Laura Foster, 3 Nov 2026)",
+    "url": "https://www.bbc.com/news/articles/cwly4ejrr72mo",
+    "links": [
+     {
+      "name": "GOV.UK – UK Health Security Agency: UKHSA launches human biomonitoring study (3 Nov 2026)",
+      "url": "https://www.gov.uk/government/news/ukhsa-launches-human-biomonitoring-study"
+     },
+     {
+      "name": "The BMJ: PFAS: UK population exposure to be examined in new study (Gareth Iacobucci, 3 Nov 2026)",
+      "url": "https://www.bmj.com/content/395/bmj-2026-101324"
+     },
+     {
+      "name": "GOV.UK – UKHSA: PFAS general information (22 Sep 2026)",
+      "url": "https://www.gov.uk/government/publications/pfas-general-information/per-and-polyfluoroalkyl-substances-pfas-general-information"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead health story: for the first time, Britain is going to measure how much of the so-called forever chemicals its people are carrying in their bodies.",
+     "Here's the report."
+    ],
+    [
+     "The chemicals in question are a large family of man-made substances known as PFAS.",
+     "They've been used since the nineteen-fifties because they resist water, oil and heat.",
+     "That's why they turn up in non-stick pans, waterproof clothing, food packaging and the foams used to fight fires.",
+     "The trouble is, they don't break down easily, which is how they earned their nickname.",
+     "After decades of use, they can now be found in food, drinking water, air, dust and soil."
+    ],
+    [
+     "The new study is being run by the UK Health Security Agency.",
+     "Rather than recruiting volunteers, it will analyse blood and urine samples that have already been collected through an existing programme, the Health Survey for England.",
+     "The aim is to establish a baseline, in other words a picture of the typical background level of PFAS across the population.",
+     "And PFAS aren't the only target.",
+     "The samples will also be tested for lead, arsenic and flame retardants, as well as bisphenols and phthalates.",
+     "The first results are expected next year."
+    ],
+    [
+     "So how worried should people be?",
+     "Dr Edward Wynne-Evans, who leads the agency's work on chemical and environmental hazards, says the evidence so far suggests that any health effects are likely to be limited.",
+     "The strongest evidence from around the world, he said, points to possible links with raised cholesterol and potentially lower birth weight.",
+     "But he acknowledged that there are still important gaps in what different levels of exposure mean for an individual's long-term health."
+    ],
+    [
+     "Two of the best-known compounds, PFOA and PFOS, are already banned or restricted in the UK.",
+     "The World Health Organization's cancer agency classifies PFOA as carcinogenic to humans.",
+     "But only a small number of PFAS have been well studied.",
+     "Meanwhile, concern is running high in some communities.",
+     "In September, blood tests found high levels of PFOA in residents of Thornton-Cleveleys, in Lancashire, who live near a chemical factory."
+    ],
+    [
+     "Even so, the agency is not recommending routine blood tests for individuals.",
+     "Dr Wynne-Evans explained that there is no established clinical intervention linked to a particular PFAS level.",
+     "Put simply, a test could show that the chemicals are present, but doctors wouldn't know what action should follow.",
+     "Official guidance also warns that such tests can sometimes create unnecessary worry."
+    ],
+    [
+     "Professor Tony Fletcher, of the London School of Hygiene and Tropical Medicine, believes there is a low level of PFAS in everyone's blood.",
+     "He told the BBC that people living near contaminated sites are angry, but that for any one person, the chance of a serious health effect is quite low.",
+     "The important thing, he said, is to stop ongoing exposure.",
+     "That, he argued, is the way to avoid any long-term effects."
+    ],
+    [
+     "There are limits to what testing can tell us, though.",
+     "Because PFAS come from so many sources, a result can't show where a person's exposure came from.",
+     "Alongside the new study, an independent panel of experts, the Committee on Toxicity, is reviewing the evidence on PFAS and health.",
+     "That's our health desk for this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "The UK's first study of PFAS in the population",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "About PFAS"
+       },
+       {
+        "t": "Popular because they repel water and oil and can tolerate [[1]]"
+       },
+       {
+        "t": "Used in firefighting [[2]] and many household products"
+       },
+       {
+        "h": "The study"
+       },
+       {
+        "t": "Uses existing samples from the Health [[3]] for England"
+       },
+       {
+        "t": "Goal: to set a [[4]] showing typical exposure levels"
+       },
+       {
+        "t": "Other substances tested: lead, [[5]] and flame retardants"
+       },
+       {
+        "h": "Health evidence"
+       },
+       {
+        "t": "Best evidence: possible connection with higher [[6]]"
+       },
+       {
+        "t": "High PFOA levels found in people living close to a chemical [[7]]"
+       },
+       {
+        "h": "Testing individuals"
+       },
+       {
+        "t": "Not advised: no recognised clinical [[8]] for a given level"
+       },
+       {
+        "t": "Tests may cause needless [[9]]"
+       },
+       {
+        "t": "Prof Fletcher: the key is to end continuing [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "heat"
+        ],
+        "ref": "they resist water, oil and heat",
+        "ev": "They've been used since the nineteen-fifties because they resist water, oil and heat.",
+        "zh": "repel water and oil = resist water, oil；can tolerate = resist。答案 heat（高溫）。nineteen-fifties 是年代干擾，題目沒問。"
+       },
+       {
+        "a": [
+         "foams",
+         "foam"
+        ],
+        "ref": "the foams used to fight fires",
+        "ev": "food packaging and the foams used to fight fires",
+        "zh": "firefighting = used to fight fires；答案 foams（泡沫，消防泡沫）。non-stick pans、waterproof clothing、food packaging 屬於 household products。"
+       },
+       {
+        "a": [
+         "Survey"
+        ],
+        "ref": "the Health Survey for England",
+        "ev": "an existing programme, the Health Survey for England",
+        "zh": "existing samples = samples that have already been collected；答案 Survey（調查）。注意不是招募志願者（Rather than recruiting volunteers）。"
+       },
+       {
+        "a": [
+         "baseline"
+        ],
+        "ref": "The aim is to establish a baseline",
+        "ev": "The aim is to establish a baseline, in other words a picture of the typical background level of PFAS across the population.",
+        "zh": "Goal = aim；set = establish。答案 baseline（基準線）。後面的 in other words 是解釋 baseline 的意思。"
+       },
+       {
+        "a": [
+         "arsenic"
+        ],
+        "ref": "tested for lead, arsenic and flame retardants",
+        "ev": "The samples will also be tested for lead, arsenic and flame retardants, as well as bisphenols and phthalates.",
+        "zh": "Other substances = PFAS aren't the only target；題目給 lead 和 flame retardants，中間缺 arsenic（砷）。bisphenols、phthalates 是另外兩類，不在這個空格。"
+       },
+       {
+        "a": [
+         "cholesterol"
+        ],
+        "ref": "possible links with raised cholesterol",
+        "ev": "points to possible links with raised cholesterol and potentially lower birth weight",
+        "zh": "Best evidence = strongest evidence；connection = links；higher = raised。答案 cholesterol（膽固醇）。干擾：lower birth weight 是「較低」，與題目的 higher 不符。"
+       },
+       {
+        "a": [
+         "factory"
+        ],
+        "ref": "who live near a chemical factory",
+        "ev": "blood tests found high levels of PFOA in residents of Thornton-Cleveleys, in Lancashire, who live near a chemical factory",
+        "zh": "living close to = live near；答案 factory（工廠）。地名 Thornton-Cleveleys / Lancashire 不是答案。"
+       },
+       {
+        "a": [
+         "intervention"
+        ],
+        "ref": "no established clinical intervention",
+        "ev": "there is no established clinical intervention linked to a particular PFAS level",
+        "zh": "recognised = established；for a given level = linked to a particular PFAS level。答案 intervention（醫療介入/處置）。"
+       },
+       {
+        "a": [
+         "worry"
+        ],
+        "ref": "create unnecessary worry",
+        "ev": "such tests can sometimes create unnecessary worry",
+        "zh": "needless = unnecessary；cause = create。答案 worry（擔憂）。"
+       },
+       {
+        "a": [
+         "exposure"
+        ],
+        "ref": "stop ongoing exposure",
+        "ev": "The important thing, he said, is to stop ongoing exposure.",
+        "zh": "the key = the important thing；end = stop；continuing = ongoing。答案 exposure（暴露、接觸）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Forever Chemicals: Measuring an Invisible Legacy",
+    "intro": "As Britain begins its first population-wide survey of PFAS in human blood and urine, scientists and officials are grappling with how to interpret exposure to a vast and varied family of substances.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Per- and polyfluoroalkyl substances, usually abbreviated to PFAS, are a group of man-made chemicals that have been used widely since the 1950s. Estimates of how many exist vary from source to source: the BMJ puts the figure at more than 10,000, while the BBC refers to more than 15,000 types. Their appeal lies in their resistance to water, oil and stains, and in their ability to withstand high temperatures. As a result, they have been incorporated into an extraordinary range of goods, from carpets, non-stick cookware and food packaging to cosmetics, electronics, medical devices and fire-fighting foams. The same quality that makes them useful also makes them troublesome. Because the carbon-fluorine bonds in their structure do not break down easily, PFAS persist in the environment for a very long time, which is why they are popularly known as forever chemicals."
+     },
+     {
+      "label": "B",
+      "text": "According to the UK Health Security Agency (UKHSA), diet and drinking water are thought to be the main routes by which PFAS enter the body for most people, although indoor dust and skin contact with treated products may also contribute. Persistence in the environment does not, however, mean permanent residence in the body. Long-chain PFAS, which have longer carbon chains, can remain in the body for years, whereas many short-chain varieties are usually cleared within days to months. Some long-chain compounds have been restricted because they can build up in people and animals, and they have mostly been replaced by short-chain alternatives. Among the substances detected in people, two older compounds, PFOA and PFOS, are often found at the highest levels, reflecting their widespread use over many years before they were phased out."
+     },
+     {
+      "label": "C",
+      "text": "The evidence on health effects is, in the UKHSA's own word, inconsistent. Exposure to PFOA and PFOS has been linked to increases in cholesterol, decreases in birth weight, a reduced immune response to some vaccines and changes in liver enzymes, but it is unclear whether these changes directly lead to specific health problems in individuals. The International Agency for Research on Cancer, part of the World Health Organization, has classified PFOA as carcinogenic to humans and PFOS as possibly carcinogenic, yet expert organisations do not all reach the same conclusions. For most other PFAS, long-term effects are poorly understood. Even for vulnerable groups, official advice is cautious rather than alarmist: although small amounts of PFAS can pass into breast milk, the agency states that the benefits of breastfeeding outweigh any potential risks."
+     },
+     {
+      "label": "D",
+      "text": "Regulators have nonetheless acted against the compounds of greatest concern. The UK has banned or restricted PFOS, PFOA and a related substance, PFHxS, by putting the requirements of the Stockholm Convention, an international agreement committing countries to phase out such chemicals, into UK law. The government's PFAS plan, which it describes as taking a precautionary approach to managing exposure, includes actions to understand sources of exposure, tackle the ways PFAS move through the environment and reduce ongoing exposure. In parallel, the independent Committee on Toxicity is reviewing the scientific evidence on both current and past exposure, and the UKHSA says it is working with international partners, including organisations across Europe, to monitor emerging findings."
+     },
+     {
+      "label": "E",
+      "text": "It is against this background that the UKHSA announced, on 3 November 2026, its first human biomonitoring study. Rather than collecting new material, the agency will analyse blood and urine samples gathered through the existing Health Survey for England in order to establish typical background levels of PFAS. The same samples will be tested for lead, arsenic, bisphenols, phthalates and flame retardants, and initial findings are expected in 2027. Such population-level monitoring is intended to inform public health advice and chemical regulation, but it does not provide information that is useful for managing an individual's health. Dr Edward Wynne-Evans, the agency's director of radiation, chemicals, climate and environmental hazards, acknowledged that important evidence gaps remain around what different levels of exposure mean for a person's long-term health."
+     },
+     {
+      "label": "F",
+      "text": "That distinction between the population and the individual lies at the heart of a sensitive debate. In September, blood tests revealed high concentrations of PFOA among residents of Thornton-Cleveleys in Lancashire, who live near a chemical factory, and some people near contaminated sites have chosen to obtain private tests. Professor Tony Fletcher of the London School of Hygiene and Tropical Medicine has said that such residents are angry, while stressing that causal associations found in large populations do not mean that any one person is likely to fall ill. Official guidance, meanwhile, notes that because PFAS come from so many sources, a test result cannot tell people where their exposure came from; nor can it be used to predict future health problems. There is also no evidence, the guidance adds, that reducing PFAS in the body on an individual basis improves health outcomes."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a chemical explanation for why these substances last so long in nature",
+        "a": "A",
+        "ref": "A",
+        "ev": "Because the carbon-fluorine bonds in their structure do not break down easily, PFAS persist in the environment for a very long time",
+        "zh": "A 段：碳-氟鍵不易分解 → 在環境中存留很久。chemical explanation = carbon-fluorine bonds。"
+       },
+       {
+        "q": "a comparison of how long different types remain in the human body",
+        "a": "B",
+        "ref": "B",
+        "ev": "Long-chain PFAS, which have longer carbon chains, can remain in the body for years, whereas many short-chain varieties are usually cleared within days to months.",
+        "zh": "B 段：長鏈 PFAS 可在體內停留數年，短鏈通常幾天到幾個月就排出 → 比較停留時間。"
+       },
+       {
+        "q": "advice that a particular feeding practice should continue despite possible exposure",
+        "a": "C",
+        "ref": "C",
+        "ev": "the agency states that the benefits of breastfeeding outweigh any potential risks",
+        "zh": "C 段：母乳可能含少量 PFAS，但哺乳的好處大於潛在風險 → 建議繼續哺乳。"
+       },
+       {
+        "q": "reference to an agreement between nations",
+        "a": "D",
+        "ref": "D",
+        "ev": "the Stockholm Convention, an international agreement committing countries to phase out such chemicals",
+        "zh": "D 段：斯德哥爾摩公約是國際協議 → agreement between nations。"
+       },
+       {
+        "q": "a reason why a blood test cannot identify the source of someone's exposure",
+        "a": "F",
+        "ref": "F",
+        "ev": "because PFAS come from so many sources, a test result cannot tell people where their exposure came from",
+        "zh": "F 段：PFAS 來源太多，所以檢驗結果無法告訴人暴露來自哪裡。注意 E 段講的是「對個人健康管理沒用」，不是「找不出來源」。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Most people are believed to absorb PFAS chiefly through what they eat and drink.",
+        "a": "True",
+        "ref": "B",
+        "ev": "diet and drinking water are thought to be the main routes by which PFAS enter the body for most people",
+        "zh": "B 段：對大多數人來說，飲食和飲用水被認為是主要途徑 → chiefly through what they eat and drink → True。"
+       },
+       {
+        "q": "Short-chain PFAS were adopted because they are cheaper to produce than long-chain types.",
+        "a": "Not Given",
+        "ref": "B",
+        "ev": "they have mostly been replaced by short-chain alternatives",
+        "zh": "陷阱：B 段只說長鏈 PFAS 被限制後「大多被短鏈取代」，完全沒提成本或價格 → Not Given。別用常識替文章補理由。"
+       },
+       {
+        "q": "All expert bodies agree that PFOS causes cancer in humans.",
+        "a": "False",
+        "ref": "C",
+        "ev": "has classified PFOA as carcinogenic to humans and PFOS as possibly carcinogenic, yet expert organisations do not all reach the same conclusions",
+        "zh": "C 段：PFOS 只被列為「可能」致癌，且專家機構結論並不一致 → 與 All expert bodies agree 矛盾 → False。"
+       },
+       {
+        "q": "The UKHSA expects to publish its first biomonitoring results in 2027.",
+        "a": "True",
+        "ref": "E",
+        "ev": "initial findings are expected in 2027",
+        "zh": "E 段：初步結果預計 2027 年 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Regulating and testing PFAS in the UK",
+      "lines": [
+       {
+        "t": "The UK has restricted the most worrying PFAS by turning the terms of the Stockholm [[1]] into national law, and its PFAS plan follows what it calls a [[2]] approach to limiting exposure. However, testing individuals remains controversial. One expert reports that people living near polluted sites are [[3]], yet official guidance points out that a blood test cannot be used to [[4]] whether a person will develop health problems in the future."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "Convention"
+        ],
+        "ref": "D",
+        "ev": "by putting the requirements of the Stockholm Convention",
+        "zh": "D 段：把 Stockholm Convention（斯德哥爾摩公約）的要求納入英國法律。turning the terms … into national law = putting the requirements … into UK law。"
+       },
+       {
+        "a": [
+         "precautionary"
+        ],
+        "ref": "D",
+        "ev": "which it describes as taking a precautionary approach to managing exposure",
+        "zh": "D 段：政府的 PFAS 計畫採取 precautionary（預防性的）做法。a ___ approach 需要形容詞。"
+       },
+       {
+        "a": [
+         "angry"
+        ],
+        "ref": "F",
+        "ev": "such residents are angry",
+        "zh": "F 段：Fletcher 教授說受污染地區附近的居民很 angry（憤怒）。polluted sites = contaminated sites。"
+       },
+       {
+        "a": [
+         "predict"
+        ],
+        "ref": "F",
+        "ev": "nor can it be used to predict future health problems",
+        "zh": "F 段：檢驗不能用來 predict（預測）未來的健康問題。cannot be used to + 原形動詞。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "earn a nickname",
+     "pos": "phr.",
+     "def": "to become known by an informal name because of a particular quality",
+     "zh": "因而得到綽號",
+     "example": "They don't break down easily, which is how they earned their nickname.",
+     "match": [
+      "earned their nickname"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "baseline",
+     "pos": "n.",
+     "def": "a starting measurement used for comparison later",
+     "zh": "基準線、基準值",
+     "example": "The aim is to establish a baseline.",
+     "match": [
+      "baseline"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "acknowledge",
+     "pos": "v.",
+     "def": "to accept or admit that something is true",
+     "zh": "承認",
+     "example": "He acknowledged that there are still important gaps.",
+     "match": [
+      "acknowledged"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "carcinogenic",
+     "pos": "adj.",
+     "def": "capable of causing cancer",
+     "zh": "致癌的",
+     "example": "The World Health Organization's cancer agency classifies PFOA as carcinogenic to humans.",
+     "match": [
+      "carcinogenic"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "routine",
+     "pos": "adj.",
+     "def": "done regularly as a normal procedure, not for a special reason",
+     "zh": "例行的、常規的",
+     "example": "The agency is not recommending routine blood tests for individuals.",
+     "match": [
+      "routine"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "clinical",
+     "pos": "adj.",
+     "def": "relating to the examination and treatment of patients",
+     "zh": "臨床的",
+     "example": "There is no established clinical intervention linked to a particular PFAS level.",
+     "match": [
+      "clinical"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "contaminated",
+     "pos": "adj.",
+     "def": "made dirty or harmful by the addition of a dangerous substance",
+     "zh": "受污染的",
+     "example": "People living near contaminated sites are angry.",
+     "match": [
+      "contaminated"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "persist",
+     "pos": "v.",
+     "def": "to continue to exist for a long time",
+     "zh": "持續存在、殘留",
+     "example": "PFAS persist in the environment for a very long time.",
+     "match": [
+      "persist"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "incorporate",
+     "pos": "v.",
+     "def": "to include something as part of a larger whole",
+     "zh": "納入、融入",
+     "example": "They have been incorporated into an extraordinary range of goods.",
+     "match": [
+      "incorporated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "phase out",
+     "pos": "phr. v.",
+     "def": "to stop using something gradually, in stages",
+     "zh": "逐步淘汰",
+     "example": "Reflecting their widespread use over many years before they were phased out.",
+     "match": [
+      "phased out",
+      "phase out"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "inconsistent",
+     "pos": "adj.",
+     "def": "not always giving the same results; containing contradictions",
+     "zh": "不一致的、前後矛盾的",
+     "example": "The evidence on health effects is, in the UKHSA's own word, inconsistent.",
+     "match": [
+      "inconsistent"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "alarmist",
+     "pos": "adj.",
+     "def": "causing unnecessary fear by exaggerating a danger",
+     "zh": "危言聳聽的",
+     "example": "Official advice is cautious rather than alarmist.",
+     "match": [
+      "alarmist"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "outweigh",
+     "pos": "v.",
+     "def": "to be greater or more important than something else",
+     "zh": "勝過、比……更重要",
+     "example": "The benefits of breastfeeding outweigh any potential risks.",
+     "match": [
+      "outweigh"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "precautionary",
+     "pos": "adj.",
+     "def": "done in advance to prevent possible harm",
+     "zh": "預防性的",
+     "example": "Taking a precautionary approach to managing exposure.",
+     "match": [
+      "precautionary"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "causal",
+     "pos": "adj.",
+     "def": "showing that one thing directly causes another",
+     "zh": "因果的",
+     "example": "Causal associations found in large populations do not mean that any one person is likely to fall ill.",
+     "match": [
+      "causal"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-04-2.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      8.54
+     ],
+     [
+      8.92,
+      9.97
+     ],
+     [
+      10.75,
+      15.22
+     ],
+     [
+      15.49,
+      20.04
+     ],
+     [
+      20.36,
+      26.5
+     ],
+     [
+      26.74,
+      31.13
+     ],
+     [
+      31.41,
+      37.4
+     ],
+     [
+      38.18,
+      41.62
+     ],
+     [
+      41.86,
+      50.18
+     ],
+     [
+      50.48,
+      57.05
+     ],
+     [
+      57.26,
+      59.25
+     ],
+     [
+      59.47,
+      65.72
+     ],
+     [
+      66.02,
+      68.19
+     ],
+     [
+      68.97,
+      70.79
+     ],
+     [
+      71.18,
+      80.34
+     ],
+     [
+      80.74,
+      87.4
+     ],
+     [
+      87.75,
+      93.95
+     ],
+     [
+      94.73,
+      101.19
+     ],
+     [
+      101.52,
+      106.82
+     ],
+     [
+      107.19,
+      109.99
+     ],
+     [
+      110.4,
+      113.67
+     ],
+     [
+      113.88,
+      121.73
+     ],
+     [
+      122.51,
+      127.25
+     ],
+     [
+      127.56,
+      133.17
+     ],
+     [
+      133.39,
+      138.99
+     ],
+     [
+      139.26,
+      144.02
+     ],
+     [
+      144.8,
+      152.13
+     ],
+     [
+      152.37,
+      160.38
+     ],
+     [
+      160.74,
+      164.4
+     ],
+     [
+      164.73,
+      168.52
+     ],
+     [
+      169.3,
+      171.93
+     ],
+     [
+      172.22,
+      177.63
+     ],
+     [
+      177.84,
+      185.43
+     ],
+     [
+      185.69,
+      187.42
+     ]
+    ],
+    "duration": 188.1,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-04-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
