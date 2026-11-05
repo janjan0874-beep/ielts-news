@@ -1,0 +1,2165 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-06",
+ "date": "2026-11-06",
+ "title": "Foot-Stiffening Socks Cut Walking Energy Cost by Two Percent, UT Austin Study Finds · HKU Study Sets Weekly 'Dose-of-Nature' Benchmarks for Mental Health",
+ "stories": [
+  {
+   "title": "Foot-Stiffening Socks Cut Walking Energy Cost by Two Percent, UT Austin Study Finds",
+   "topic": "Sport science · foot biomechanics",
+   "source": {
+    "name": "New Scientist: Feet-stiffening socks could help you run further for longer (James Woodford, 4 Nov 2026)",
+    "url": "https://www.newscientist.com/article/2597125-feet-stiffening-socks-could-help-you-run-further-for-longer/",
+    "links": [
+     {
+      "name": "Tang & Beck, Proceedings of the Royal Society B: Foot-stiffening socks reduce the metabolic cost of walking (2026)",
+      "url": "https://royalsocietypublishing.org/rspb/article/293/2082/20261467/484043/Foot-stiffening-socks-reduce-the-metabolic-cost-of"
+     },
+     {
+      "name": "Phys.org: Foot-stiffening socks could make walking less tiring (4 Nov 2026)",
+      "url": "https://phys.org/news/2026-11-foot-stiffening-socks.html"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead sport science story: a pair of specially knitted socks that stiffen the foot can cut the energy cost of walking by about two percent, according to researchers in Texas.",
+     "If the finding holds up, it could matter for everyday walkers and for elite marathon runners alike.",
+     "Here's the report."
+    ],
+    [
+     "Owen Beck and Hui Tang at the University of Texas at Austin designed the socks after earlier attempts with stiff midsoles and shoe inserts had failed.",
+     "Those shoes blocked the natural movement the foot needs at push-off.",
+     "The new design uses three one-millimetre-wide bands knitted tightly across a thirty-millimetre region around the ball of the foot.",
+     "According to the team, that applies roughly twenty-four times more pressure than ordinary control socks.",
+     "The yarn itself is a common synthetic blend used in everyday athletic socks.",
+     "In other words, the innovation is in the knitting pattern, not in exotic materials."
+    ],
+    [
+     "To test the idea, the researchers recruited twelve healthy adults of both sexes.",
+     "Each person walked on a treadmill wearing the foot-stiffening socks, and again in flexible control socks without the bands.",
+     "Oxygen uptake and carbon dioxide output were measured to calculate net metabolic power.",
+     "Motion cameras and treadmill sensors tracked how the stride changed.",
+     "Sessions lasted five minutes at ordinary walking speeds, so the comparison was fair and repeatable."
+    ],
+    [
+     "The result was clear.",
+     "Net metabolic expenditure fell by around two percent with the stiffening socks compared with the controls.",
+     "Ten of the twelve participants improved.",
+     "The researchers say that saving is roughly equivalent to the energy benefit of losing about two kilograms of body mass.",
+     "In other words, a small change in the sock can feel like shedding a couple of kilos at the waist.",
+     "Beck notes that lower whole-body metabolic rate should mean better walking endurance and less sweating on hot days."
+    ],
+    [
+     "So how do the socks work?",
+     "Writing in the Proceedings of the Royal Society B, Beck and Tang argue that the bands stiffen the medial longitudinal arch through what they call cross-axis coupling.",
+     "That raises the ankle gear ratio and slows ankle angular velocity.",
+     "As a result, fascicle shortening velocities in the soleus and medial gastrocnemius dropped by fifteen to twenty percent.",
+     "The calf muscles therefore contract more economically, without reducing the mechanical work they do.",
+     "Unlike stiff midsole shoes, the socks still let the toes flex and the arch recoil.",
+     "That freedom, they say, is why earlier shoe-based designs fell short."
+    ],
+    [
+     "Looking ahead, Beck hopes elite runners will wear a commercial version at the Los Angeles twenty twenty-eight Olympics.",
+     "His back-of-the-envelope estimate suggests wrapping the foot could improve marathon time by one to two minutes.",
+     "The team already has a sponsored research agreement with New Balance to develop the idea further.",
+     "Beck also believes the result supports an evolutionary claim: that greater foot stiffness was favoured because it made upright walking cheaper."
+    ],
+    [
+     "Still, not everyone is convinced the socks will change daily life.",
+     "Thomas Püschel at the University of Oxford called the study a promising first demonstration.",
+     "He cautioned that volunteers might have altered their gait simply because they knew they were wearing the special socks.",
+     "A placebo effect, in other words, cannot yet be ruled out.",
+     "Applications for older adults whose feet have lost some of their shape also remain untested.",
+     "That's our sport science report for this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Foot-stiffening socks and walking economy",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Background"
+       },
+       {
+        "t": "Earlier stiff [[1]] and shoe inserts had failed"
+       },
+       {
+        "t": "Those designs blocked natural movement at [[2]]"
+       },
+       {
+        "h": "Sock design"
+       },
+       {
+        "t": "Three tight bands around the [[3]] of the foot"
+       },
+       {
+        "t": "About 24× more [[4]] than control socks"
+       },
+       {
+        "h": "Experiment"
+       },
+       {
+        "t": "Twelve adults walked on a [[5]]"
+       },
+       {
+        "t": "Metabolic cost fell by about [[6]] percent"
+       },
+       {
+        "h": "Mechanism"
+       },
+       {
+        "t": "Bands stiffen the medial longitudinal [[7]]"
+       },
+       {
+        "t": "Calf muscles contract more [[8]]"
+       },
+       {
+        "t": "Unlike stiff shoes, the [[9]] can still flex"
+       },
+       {
+        "h": "Outlook"
+       },
+       {
+        "t": "Sponsored research agreement with [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "midsoles",
+         "midsole"
+        ],
+        "ref": "earlier attempts with stiff midsoles and shoe inserts",
+        "ev": "Owen Beck and Hui Tang at the University of Texas at Austin designed the socks after earlier attempts with stiff midsoles and shoe inserts had failed.",
+        "zh": "Earlier stiff ___ and shoe inserts → midsoles（鞋中底）。題幹已有 shoe inserts，空格是 midsoles。"
+       },
+       {
+        "a": [
+         "push-off",
+         "pushoff"
+        ],
+        "ref": "the natural movement the foot needs at push-off",
+        "ev": "Those shoes blocked the natural movement the foot needs at push-off.",
+        "zh": "blocked natural movement at = the natural movement the foot needs at。答案 push-off（蹬地離地階段）。"
+       },
+       {
+        "a": [
+         "ball"
+        ],
+        "ref": "around the ball of the foot",
+        "ev": "three one-millimetre-wide bands knitted tightly across a thirty-millimetre region around the ball of the foot",
+        "zh": "around the ___ of the foot → ball（前掌／腳球部位）。"
+       },
+       {
+        "a": [
+         "pressure"
+        ],
+        "ref": "twenty-four times more pressure than ordinary control socks",
+        "ev": "that applies roughly twenty-four times more pressure than ordinary control socks",
+        "zh": "24× more ___ → pressure（壓力）。干擾：three bands、thirty-millimetre region 是設計細節，不是比較對象。"
+       },
+       {
+        "a": [
+         "treadmill"
+        ],
+        "ref": "walked on a treadmill wearing the foot-stiffening socks",
+        "ev": "Each person walked on a treadmill wearing the foot-stiffening socks, and again in flexible control socks without the bands.",
+        "zh": "walked on a ___ → treadmill（跑步機）。"
+       },
+       {
+        "a": [
+         "two",
+         "2"
+        ],
+        "ref": "fell by around two percent with the stiffening socks",
+        "ev": "Net metabolic expenditure fell by around two percent with the stiffening socks compared with the controls.",
+        "zh": "約 2%。干擾：twenty-four times（壓力倍數）、fifteen to twenty percent（肌束縮短速度下降）、one to two minutes（馬拉松預估）都不是代謝成本降幅。"
+       },
+       {
+        "a": [
+         "arch"
+        ],
+        "ref": "stiffen the medial longitudinal arch",
+        "ev": "Beck and Tang argue that the bands stiffen the medial longitudinal arch through what they call cross-axis coupling.",
+        "zh": "medial longitudinal ___ → arch（足弓）。"
+       },
+       {
+        "a": [
+         "economically"
+        ],
+        "ref": "The calf muscles therefore contract more economically",
+        "ev": "The calf muscles therefore contract more economically, without reducing the mechanical work they do.",
+        "zh": "contract more ___ → economically（更省力地收縮）。"
+       },
+       {
+        "a": [
+         "toes"
+        ],
+        "ref": "the socks still let the toes flex",
+        "ev": "Unlike stiff midsole shoes, the socks still let the toes flex and the arch recoil.",
+        "zh": "the ___ can still flex → toes（腳趾）。干擾：arch recoil 是另一個動作，題目問 flex。"
+       },
+       {
+        "a": [
+         "New Balance"
+        ],
+        "ref": "sponsored research agreement with New Balance",
+        "ev": "The team already has a sponsored research agreement with New Balance to develop the idea further.",
+        "zh": "sponsored research agreement with ___ → New Balance（運動鞋品牌）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Stiffening the Foot: Can a Sock Make Walking Cheaper?",
+    "intro": "A University of Texas study reports that tightly banded socks reduce the metabolic cost of walking by roughly two percent — and may tip elite marathon times by a minute or two.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Human feet are strikingly stiff compared with those of other living apes. That stiffness limits how much the midfoot bends during stance, and one long-standing evolutionary hypothesis is that the features responsible for it were favoured because they made upright walking less costly. Testing the idea directly has proved difficult, because anatomy cannot easily be stiffened in living people without also changing how the foot interacts with the ground. A 2026 paper in Proceedings of the Royal Society B takes a different route: instead of modifying the shoe, Owen Beck and Hui Tang of the University of Texas at Austin stiffened the foot itself with a specially knitted sock, and then measured whether walking became cheaper. Their approach offers a rare chance to isolate stiffness while leaving push-off mechanics largely intact."
+     },
+     {
+      "label": "B",
+      "text": "Earlier attempts to cut the energy cost of walking and running by stiffening footwear had largely failed. Shoes with rigid midsoles or inserts often reduced the natural flexion the foot needs at the end of stance, so any theoretical gain from a stiffer lever was cancelled by disrupted push-off mechanics. Beck and Tang therefore turned to socks. Their prototype is made from a synthetic yarn blend typical of athletic socks, but with three one-millimetre-wide bands knitted tightly across a thirty-millimetre-wide zone around the ball of the foot. Instrumented measurements showed that this design applied roughly twenty-four times more pressure than ordinary control socks lacking the bands, restricting foot splay — the tendency of the forefoot to widen under load — and thereby increasing stiffness of the medial longitudinal arch. The materials are ordinary; the geometry of the knit is what matters."
+     },
+     {
+      "label": "C",
+      "text": "Twelve healthy young adults of both sexes walked on a treadmill at ordinary walking speeds while wearing either the foot-stiffening socks or flexible control socks, both inside the same shoes. Oxygen consumption and carbon dioxide production were recorded to estimate net metabolic power, while force plates in the treadmill and motion-capture cameras documented changes in stride. Relative to the control condition, net metabolic expenditure fell by about two percent when the stiffening socks were worn, a difference that reached statistical significance. Ten of the twelve participants showed an improvement. The authors note that a saving of this size is comparable to the energy benefit of removing around two kilograms of mass from the waist — a change that runners and walkers would notice on a long outing. Beck adds that a lower metabolic rate should also improve endurance and reduce heat stress on warm days."
+     },
+     {
+      "label": "D",
+      "text": "The biomechanical analysis points to a specific pathway rather than a generic reduction in muscle work. By stiffening the arch through cross-axis coupling, the bands raised the ankle gear ratio and slowed ankle angular velocity. Fascicle shortening velocities in two key plantarflexors, the soleus and the medial gastrocnemius, dropped by fifteen to twenty percent. Because muscle fibres that shorten more slowly operate in a more economical region of their force–velocity relationship, whole-body metabolic rate fell even though the mechanical work performed by the ankle muscles did not decline. Critically, the toes could still flex and the arch could still recoil — freedoms that stiff midsole designs had previously removed. In short, the socks make the calf work more efficiently without stripping away the final phase of the step."
+     },
+     {
+      "label": "E",
+      "text": "Beck has been frank about sporting ambitions. He hopes a commercial version of the socks will appear on the start line of the Los Angeles 2028 Olympic marathon, and his informal calculation suggests that wrapping the foot could improve marathon performance by one to two minutes. The research group already holds a sponsored research agreement with the footwear company New Balance aimed at developing the concept further. Beck also argues that the finding has evolutionary weight: if a modest increase in foot stiffness reliably lowers walking cost in modern humans, that strengthens the claim that greater stiffness was selected for during the evolution of bipedalism. Whether the same garment helps older adults whose feet have lost some natural shape is, for now, an open question."
+     },
+     {
+      "label": "F",
+      "text": "Independent commentary has been cautiously positive. Thomas Püschel of the University of Oxford described the work as a promising first demonstration that stiffening the foot can reduce metabolic cost during actual walking — something earlier shoe-based attempts had never clearly shown. He noted, however, that alternative explanations remain open. Volunteers who knew they were wearing the experimental socks might have altered their gait, so a placebo or expectancy effect cannot yet be excluded. Applications beyond sport — for example among older adults whose feet have lost some of their natural shape — have also not been tested in controlled trials. For now, the socks are evidence that a low-cost garment can shift walking economy, not proof that they will remake everyday life. Larger studies, and blinded designs, will be needed before coaches or clinicians can prescribe them with confidence."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison between the energy saving from the socks and the effect of losing body weight",
+        "a": "C",
+        "ref": "C",
+        "ev": "a saving of this size is comparable to the energy benefit of removing around two kilograms of mass from the waist",
+        "zh": "C 段：約 2% 的節省相當於腰間少兩公斤體重的能量效益。"
+       },
+       {
+        "q": "why previous attempts that stiffened shoes did not succeed",
+        "a": "B",
+        "ref": "B",
+        "ev": "Shoes with rigid midsoles or inserts often reduced the natural flexion the foot needs at the end of stance",
+        "zh": "B 段：硬中底／鞋墊限制了離地前所需的自然彎曲，所以失敗。"
+       },
+       {
+        "q": "a possible influence of participants knowing which socks they had on",
+        "a": "F",
+        "ref": "F",
+        "ev": "Volunteers who knew they were wearing the experimental socks might have altered their gait",
+        "zh": "F 段：受試者知道自己穿實驗襪，可能改變步態 → placebo／expectancy。"
+       },
+       {
+        "q": "an evolutionary reason proposed for why human feet became stiff",
+        "a": "A",
+        "ref": "A",
+        "ev": "one long-standing evolutionary hypothesis is that the features responsible for it were favoured because they made upright walking less costly",
+        "zh": "A 段：長期演化假說認為足部變硬是因為讓直立行走更省力。"
+       },
+       {
+        "q": "details of how calf-muscle fibre speed changed during the trials",
+        "a": "D",
+        "ref": "D",
+        "ev": "Fascicle shortening velocities in two key plantarflexors, the soleus and the medial gastrocnemius, dropped by fifteen to twenty percent",
+        "zh": "D 段：比目魚肌與內側腓腸肌肌束縮短速度下降 15–20%。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Every participant in the treadmill study used less energy when wearing the stiffening socks.",
+        "a": "False",
+        "ref": "C",
+        "ev": "Ten of the twelve participants showed an improvement.",
+        "zh": "C 段：12 人中只有 10 人改善，不是全部 → False。"
+       },
+       {
+        "q": "The socks reduced ankle muscle mechanical work as well as metabolic rate.",
+        "a": "False",
+        "ref": "D",
+        "ev": "whole-body metabolic rate fell even though the mechanical work performed by the ankle muscles did not decline",
+        "zh": "D 段：代謝率下降，但踝關節肌肉機械功並未減少 → 與題目相反 → False。"
+       },
+       {
+        "q": "New Balance has already begun selling the socks to the public.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "The research group already holds a sponsored research agreement with the footwear company New Balance aimed at developing the concept further.",
+        "zh": "陷阱：E 段只說有 sponsored research agreement 以進一步開發，完全沒提是否已上市販售 → Not Given。"
+       },
+       {
+        "q": "Beck believes the finding supports an evolutionary explanation for human foot stiffness.",
+        "a": "True",
+        "ref": "E",
+        "ev": "that strengthens the claim that greater stiffness was selected for during the evolution of bipedalism",
+        "zh": "E 段：Beck 認為這強化了「足部變硬因雙足行走演化而被選擇」的說法 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "How the socks alter foot mechanics",
+      "lines": [
+       {
+        "t": "The knitted bands limit forefoot [[1]], which increases arch stiffness. That change raises the ankle gear [[2]] and slows ankle motion. Key calf muscles then shorten more slowly, so fibres work in a more economical part of their force–velocity [[3]]. Unlike rigid shoes, the design still allows the toes to [[4]] during push-off."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "splay"
+        ],
+        "ref": "B",
+        "ev": "restricting foot splay — the tendency of the forefoot to widen under load",
+        "zh": "B 段：限制 foot splay（前掌外擴）。forefoot ___ → splay。"
+       },
+       {
+        "a": [
+         "ratio"
+        ],
+        "ref": "D",
+        "ev": "the bands raised the ankle gear ratio and slowed ankle angular velocity",
+        "zh": "D 段：raised the ankle gear ratio → ratio（齒輪比）。"
+       },
+       {
+        "a": [
+         "relationship"
+        ],
+        "ref": "D",
+        "ev": "operate in a more economical region of their force–velocity relationship",
+        "zh": "D 段：force–velocity relationship（力－速度關係）。"
+       },
+       {
+        "a": [
+         "flex"
+        ],
+        "ref": "D",
+        "ev": "the toes could still flex and the arch could still recoil",
+        "zh": "D 段：toes could still flex → flex（彎曲）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "metabolic cost",
+     "pos": "n.",
+     "def": "the amount of energy the body uses to perform an activity",
+     "zh": "代謝成本、能量消耗",
+     "example": "The socks cut the metabolic cost of walking by about two percent.",
+     "match": [
+      "metabolic cost",
+      "metabolic expenditure",
+      "metabolic power",
+      "metabolic rate"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "midsole",
+     "pos": "n.",
+     "def": "the cushioning layer of a shoe between the insole and the outsole",
+     "zh": "鞋中底",
+     "example": "Earlier attempts with stiff midsoles had failed.",
+     "match": [
+      "midsoles",
+      "midsole"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "push-off",
+     "pos": "n.",
+     "def": "the phase of walking or running when the foot drives the body forward",
+     "zh": "蹬地、離地階段",
+     "example": "Stiff shoes blocked the movement needed at push-off.",
+     "match": [
+      "push-off"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "ball of the foot",
+     "pos": "n.",
+     "def": "the padded area on the underside of the foot behind the toes",
+     "zh": "前掌、腳球部位",
+     "example": "Bands were knitted around the ball of the foot.",
+     "match": [
+      "ball of the foot"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "longitudinal arch",
+     "pos": "n.",
+     "def": "the curved structure running along the length of the foot",
+     "zh": "縱向足弓",
+     "example": "The bands stiffen the medial longitudinal arch.",
+     "match": [
+      "longitudinal arch",
+      "arch"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "fascicle",
+     "pos": "n.",
+     "def": "a bundle of muscle fibres",
+     "zh": "肌束",
+     "example": "Fascicle shortening velocities dropped by fifteen to twenty percent.",
+     "match": [
+      "fascicle",
+      "Fascicle"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "economically",
+     "pos": "adv.",
+     "def": "in a way that uses as little energy as possible",
+     "zh": "省力地、經濟地",
+     "example": "The calf muscles contract more economically.",
+     "match": [
+      "economically",
+      "economical"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "back-of-the-envelope",
+     "pos": "adj.",
+     "def": "rough and informal, done with a quick calculation",
+     "zh": "粗估的、隨手計算的",
+     "example": "His back-of-the-envelope estimate suggests a one-to-two-minute gain.",
+     "match": [
+      "back-of-the-envelope"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "placebo effect",
+     "pos": "n.",
+     "def": "an improvement caused by belief in a treatment rather than the treatment itself",
+     "zh": "安慰劑效應",
+     "example": "A placebo effect cannot yet be ruled out.",
+     "match": [
+      "placebo"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "splay",
+     "pos": "n.",
+     "def": "the widening of the forefoot under body weight",
+     "zh": "前掌外擴",
+     "example": "The bands restrict foot splay under load.",
+     "match": [
+      "splay"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "gear ratio",
+     "pos": "n.",
+     "def": "the relationship between rotation at one joint and force or speed at another",
+     "zh": "齒輪比（生物力學用語）",
+     "example": "Stiffening the arch raised the ankle gear ratio.",
+     "match": [
+      "gear ratio"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "plantarflexor",
+     "pos": "n.",
+     "def": "a muscle that points the foot downward",
+     "zh": "足底屈肌",
+     "example": "The soleus is a key plantarflexor.",
+     "match": [
+      "plantarflexors",
+      "plantarflexor"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "recoil",
+     "pos": "v.",
+     "def": "to spring back to an original shape after being stretched",
+     "zh": "回彈、回縮",
+     "example": "The arch could still recoil freely.",
+     "match": [
+      "recoil"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "bipedalism",
+     "pos": "n.",
+     "def": "the ability to walk upright on two legs",
+     "zh": "雙足行走",
+     "example": "Greater stiffness may have been selected during the evolution of bipedalism.",
+     "match": [
+      "bipedalism"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "expectancy effect",
+     "pos": "n.",
+     "def": "a change in behaviour caused by what someone expects will happen",
+     "zh": "預期效應",
+     "example": "An expectancy effect cannot yet be excluded.",
+     "match": [
+      "expectancy"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-06-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.11
+     ],
+     [
+      1.33,
+      11.71
+     ],
+     [
+      12.09,
+      17.75
+     ],
+     [
+      17.98,
+      19.01
+     ],
+     [
+      19.79,
+      27.94
+     ],
+     [
+      28.25,
+      31.78
+     ],
+     [
+      32.02,
+      39.06
+     ],
+     [
+      39.34,
+      45.25
+     ],
+     [
+      45.58,
+      50.08
+     ],
+     [
+      50.45,
+      55.37
+     ],
+     [
+      56.15,
+      61.15
+     ],
+     [
+      61.36,
+      68.41
+     ],
+     [
+      68.66,
+      74.02
+     ],
+     [
+      74.33,
+      78.16
+     ],
+     [
+      78.38,
+      84.46
+     ],
+     [
+      85.24,
+      86.49
+     ],
+     [
+      86.77,
+      92.82
+     ],
+     [
+      93.05,
+      95.33
+     ],
+     [
+      95.58,
+      102.41
+     ],
+     [
+      102.86,
+      108.18
+     ],
+     [
+      108.42,
+      114.88
+     ],
+     [
+      115.66,
+      117.13
+     ],
+     [
+      117.46,
+      126.26
+     ],
+     [
+      126.6,
+      130.73
+     ],
+     [
+      131.04,
+      138.51
+     ],
+     [
+      138.73,
+      144.5
+     ],
+     [
+      144.77,
+      149.77
+     ],
+     [
+      150.09,
+      154.13
+     ],
+     [
+      154.91,
+      161.45
+     ],
+     [
+      161.73,
+      167.61
+     ],
+     [
+      167.94,
+      173.18
+     ],
+     [
+      173.42,
+      181.39
+     ],
+     [
+      182.17,
+      186.21
+     ],
+     [
+      186.42,
+      191.65
+     ],
+     [
+      191.91,
+      197.91
+     ],
+     [
+      198.22,
+      202.17
+     ],
+     [
+      202.39,
+      207.59
+     ],
+     [
+      207.86,
+      210.49
+     ]
+    ],
+    "duration": 211.1,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-11-06-1-words/"
+   }
+  },
+  {
+   "title": "HKU Study Sets Weekly 'Dose-of-Nature' Benchmarks for Mental Health",
+   "topic": "Psychology · nature dose",
+   "source": {
+    "name": "HKU Lead: HKU study establishes weekly 'dose-of-nature' benchmarks for mental health benefits (4 Nov 2026)",
+    "url": "https://lead.hku.hk/en/article/2026/11/hku-study-establishes-weekly-dose-of-nature-benchmarks-for-mental-health-benefits/",
+    "links": [
+     {
+      "name": "Li, Gong, Schumann, Webster & Jiang, Journal of Environmental Psychology 115, 103211 (2026)",
+      "url": "https://doi.org/10.1016/j.jenvp.2026.103211"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Our top psychology story this morning: researchers at the University of Hong Kong have put numbers on a familiar piece of advice — spend time in nature — by setting weekly benchmarks for how often and how long people need to visit green space for mental health gains.",
+     "The study turns a vague slogan into something closer to a practical guide.",
+     "Here's our report."
+    ],
+    [
+     "The work was led by Professor Bin Jiang of the Urban Environments and Human Health Lab in Hong Kong University's Faculty of Architecture.",
+     "The first author is Doctor Jiali Li, a senior member of that lab.",
+     "Co-authors include Professor Peng Gong, a vice-president of the university, Professor Chris Webster, who specialises in urban planning, and Professor Gunter Schumann of Fudan University, Charité Berlin and the University of Cambridge.",
+     "Together they bring expertise from architecture, public health and psychiatry."
+    ],
+    [
+     "The team carried out a meta-analysis of evidence published between nineteen-eighty and twenty twenty-five — roughly forty-five years of research.",
+     "They focused on two behaviours: how often people visit green space each week, and how much cumulative time they spend there.",
+     "The outcomes they tracked were stress, anxiety, depression and mood.",
+     "By pooling many studies, they hoped to see whether a consistent dose–response pattern would emerge."
+    ],
+    [
+     "What they found was a non-linear pattern, with diminishing returns as exposure rises.",
+     "According to the models, about half of the maximum potential benefit arrives with just one visit, or one hour, per week.",
+     "Around ninety percent of that modelled maximum comes with roughly four visits, or four hours, a week.",
+     "Nearly the full modelled response — about ninety-nine percent — needs around six visits, or eight hours, weekly.",
+     "The researchers stress that these are rounded reference points from separate models, not a single combined timetable, and that the percentages describe the share of modelled maximum benefit, not a clinical symptom score.",
+     "In other words, one hour is already a meaningful start."
+    ],
+    [
+     "Meanwhile, the findings refine what the team calls the Dose-of-Nature Framework.",
+     "That framework looks at four dimensions: intensity, frequency, duration and accessibility.",
+     "Earlier work in the journal Nature Cities had examined greenness intensity — how dense the greenery is.",
+     "This new paper adds clearer numbers for frequency and duration.",
+     "Evidence on accessibility, they note, is still thinner and needs more research."
+    ],
+    [
+     "Professor Schumann said the steepest gains occur at low doses, which makes the one-hour or one-visit threshold realistic for people with low mood.",
+     "He added that the benchmarks complement clinical treatment rather than replace it, and that green space access is a lever that urban planning can pull.",
+     "For clinicians, that offers an achievable first step they can discuss with patients."
+    ],
+    [
+     "Looking ahead, Doctor Li's advice is practical.",
+     "Start with a routine you can keep, such as a weekly park walk or a greener route to work, and adjust it to your circumstances.",
+     "For city planners, the message is to value accessibility and active use — shaded seating, continuous paths, maintained vegetation — not only total vegetation cover.",
+     "Municipal greening that people never visit, she implies, misses the point.",
+     "That's this morning's psychology report."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Weekly dose-of-nature benchmarks",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The research team"
+       },
+       {
+        "t": "Led by a lab in HKU's Faculty of [[1]]"
+       },
+       {
+        "t": "Co-author Webster specialises in urban [[2]]"
+       },
+       {
+        "h": "Methods"
+       },
+       {
+        "t": "Meta-analysis of evidence from about [[3]] years"
+       },
+       {
+        "t": "Outcomes tracked: stress, anxiety, depression and [[4]]"
+       },
+       {
+        "h": "Dose–response pattern"
+       },
+       {
+        "t": "Relationship is [[5]], with diminishing returns"
+       },
+       {
+        "t": "~50% of max benefit: one visit or one [[6]] per week"
+       },
+       {
+        "t": "~90%: about four visits or four hours weekly"
+       },
+       {
+        "h": "Framework and advice"
+       },
+       {
+        "t": "Dose-of-Nature Framework includes intensity, frequency, duration and [[7]]"
+       },
+       {
+        "t": "Steepest gains occur at [[8]] doses"
+       },
+       {
+        "t": "Benchmarks [[9]] clinical treatment, not replace it"
+       },
+       {
+        "t": "Planners should value accessibility and active [[10]], not only vegetation cover"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "Architecture"
+        ],
+        "ref": "Faculty of Architecture",
+        "ev": "The work was led by Professor Bin Jiang of the Urban Environments and Human Health Lab in Hong Kong University's Faculty of Architecture.",
+        "zh": "Faculty of ___ → Architecture（建築學院）。"
+       },
+       {
+        "a": [
+         "planning"
+        ],
+        "ref": "who specialises in urban planning",
+        "ev": "Professor Chris Webster, who specialises in urban planning",
+        "zh": "urban ___ → planning（城市規劃）。"
+       },
+       {
+        "a": [
+         "forty-five",
+         "45",
+         "45 years"
+        ],
+        "ref": "roughly forty-five years of research",
+        "ev": "a meta-analysis of evidence published between nineteen-eighty and twenty twenty-five — roughly forty-five years of research",
+        "zh": "約 forty-five years（1980–2025）。干擾：one / four / six visits、one / four / eight hours 是劑量基準，不是研究跨度。"
+       },
+       {
+        "a": [
+         "mood"
+        ],
+        "ref": "stress, anxiety, depression and mood",
+        "ev": "The outcomes they tracked were stress, anxiety, depression and mood.",
+        "zh": "題幹已列 stress, anxiety, depression，空格是 mood（情緒）。"
+       },
+       {
+        "a": [
+         "non-linear",
+         "nonlinear"
+        ],
+        "ref": "a non-linear pattern, with diminishing returns",
+        "ev": "What they found was a non-linear pattern, with diminishing returns as exposure rises.",
+        "zh": "Relationship is ___ → non-linear（非線性）。"
+       },
+       {
+        "a": [
+         "hour"
+        ],
+        "ref": "one visit, or one hour, per week",
+        "ev": "about half of the maximum potential benefit arrives with just one visit, or one hour, per week",
+        "zh": "one visit or one ___ → hour。干擾：four hours、eight hours 是更高劑量。"
+       },
+       {
+        "a": [
+         "accessibility"
+        ],
+        "ref": "intensity, frequency, duration and accessibility",
+        "ev": "That framework looks at four dimensions: intensity, frequency, duration and accessibility.",
+        "zh": "四維度最後一項 accessibility（可及性）。"
+       },
+       {
+        "a": [
+         "low"
+        ],
+        "ref": "the steepest gains occur at low doses",
+        "ev": "Professor Schumann said the steepest gains occur at low doses",
+        "zh": "steepest gains at ___ doses → low（低劑量收益最陡）。"
+       },
+       {
+        "a": [
+         "complement"
+        ],
+        "ref": "complement clinical treatment rather than replace it",
+        "ev": "the benchmarks complement clinical treatment rather than replace it",
+        "zh": "Benchmarks ___ clinical treatment → complement（補充，而非取代）。"
+       },
+       {
+        "a": [
+         "use"
+        ],
+        "ref": "value accessibility and active use",
+        "ev": "the message is to value accessibility and active use — shaded seating, continuous paths, maintained vegetation — not only total vegetation cover",
+        "zh": "accessibility and active ___ → use（實際使用）。干擾：vegetation cover 是被對照的另一指標。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "How Much Nature Is Enough? Weekly Benchmarks for Mental Health",
+    "intro": "A Hong Kong meta-analysis spanning forty-five years of research proposes practical weekly targets for green-space visits — and shows that the biggest gains come early.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Public-health advice to spend more time outdoors is widespread, yet it has long lacked precise, evidence-based targets for how often and how long people should seek green space. A 2026 meta-analysis led by researchers at the University of Hong Kong aims to fill that gap. Drawing on studies published between 1980 and 2025, the team translated decades of findings on green-space exposure and mental health into rounded weekly benchmarks. The paper appears in the Journal of Environmental Psychology and was led by Professor Bin Jiang of the Urban Environments and Human Health Lab in HKU's Faculty of Architecture, with first author Dr Jiali Li and co-authors including Professors Peng Gong, Chris Webster and Gunter Schumann. Their shared aim was to turn a familiar slogan into guidance that individuals and city planners can actually use."
+     },
+     {
+      "label": "B",
+      "text": "The analysis focused on two measurable behaviours: the frequency of green-space visits in a typical week, and the cumulative duration of time spent in such settings across the week. Outcomes of interest included stress, anxiety, depression and mood. Across the assembled evidence, the relationship between exposure and benefit was consistently non-linear. Gains rose steeply at low levels of contact and then flattened, a classic pattern of diminishing returns. The authors converted that curve into three reference points expressed as proportions of the modelled maximum potential benefit — not as percentage improvements in clinical symptom scores. That distinction matters, because readers might otherwise treat the percentages as medical cure rates rather than shares of a statistical maximum."
+     },
+     {
+      "label": "C",
+      "text": "The rounded benchmarks are deliberately simple. Roughly fifty percent of the modelled maximum benefit was associated with a single weekly visit or with one cumulative hour in green space. Around ninety percent corresponded to approximately four visits or four hours per week. Near-complete modelled response, at about ninety-nine percent, required roughly six visits or eight hours weekly. Frequency and duration came from separate statistical models rather than a combined schedule, so the figures are reference points, not a prescription that everyone must visit six times for eight hours. Duration refers to total time across the week, not the length of any one outing. The authors also caution that the overall trend describes population averages; individual responses will vary with health status, preference and opportunity."
+     },
+     {
+      "label": "D",
+      "text": "The study builds on the team's earlier work on greenness intensity — how dense the vegetation people encounter is — published in Nature Cities. Together, the two strands refine what Jiang and colleagues call the Dose-of-Nature Framework, which evaluates exposure along four dimensions: intensity, frequency, duration and accessibility. The new results suggest that frequency and duration follow a different dose–response shape from intensity. Evidence on accessibility remains thinner, the authors note, and future work will need to examine how green-space quality, the activities people pursue there, and personal circumstances modify the health return. Without that research, cities risk planting trees that look good on maps but do little for residents who cannot reach or enjoy them."
+     },
+     {
+      "label": "E",
+      "text": "Clinical and planning implications are drawn carefully. Professor Schumann, commenting from a psychiatric perspective, emphasised that the steepest gains occur at low doses: one hour or one visit per week already reaches half of the modelled maximum. That threshold is realistic for people experiencing low mood or reduced energy, and the benchmarks are framed as population averages that complement rather than replace clinical treatment. For urban planners and landscape architects, the message is that municipal greening should be judged not only by total vegetation cover but by whether residents can and do use parks and paths regularly. Features such as shaded seating, continuous pedestrian routes and well-maintained planting encourage the kind of repeated contact the models reward. Accessible design, in this view, is part of the dose."
+     },
+     {
+      "label": "F",
+      "text": "Dr Li summarised the practical takeaway in everyday language. The goal, she said, was to turn the vague instruction to spend more time in nature into something people can act on. Modest weekly contact is associated with meaningful mental-health benefits, while additional gains shrink at higher levels of exposure. Her advice is to begin with a sustainable habit — a weekly park walk, or a greener commute to work or campus — and then adjust it to individual needs and circumstances. The benchmarks are an achievable starting point, not a fixed prescription. Whether identical responses appear for every person remains an open question; the curves describe broad relationships across studies rather than guaranteed individual outcomes. Even so, the study offers a clearer answer than before to a question many people ask: how much nature is enough to make a difference?"
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a clarification that the percentages do not measure clinical symptom change",
+        "a": "B",
+        "ref": "B",
+        "ev": "proportions of the modelled maximum potential benefit — not as percentage improvements in clinical symptom scores",
+        "zh": "B 段：百分比是模型最大潛在效益的比例，不是臨床症狀改善百分比。"
+       },
+       {
+        "q": "examples of park design features that encourage regular visits",
+        "a": "E",
+        "ref": "E",
+        "ev": "Features such as shaded seating, continuous pedestrian routes and well-maintained planting encourage the kind of repeated contact the models reward",
+        "zh": "E 段：遮蔭座椅、連續步道、妥善維護的植栽等設計鼓勵重複接觸。"
+       },
+       {
+        "q": "mention of an earlier paper that examined how dense greenery is",
+        "a": "D",
+        "ref": "D",
+        "ev": "The study builds on the team's earlier work on greenness intensity — how dense the vegetation people encounter is — published in Nature Cities",
+        "zh": "D 段：先前 Nature Cities 論文探討 greenness intensity（綠意密度）。"
+       },
+       {
+        "q": "a warning that the curves do not guarantee the same result for every individual",
+        "a": "F",
+        "ref": "F",
+        "ev": "the curves describe broad relationships across studies rather than guaranteed individual outcomes",
+        "zh": "F 段：曲線描述跨研究的大致關係，不保證每個人結果相同。"
+       },
+       {
+        "q": "the explanation that weekly duration means total time, not one visit's length",
+        "a": "C",
+        "ref": "C",
+        "ev": "Duration refers to total time across the week, not the length of any one outing",
+        "zh": "C 段：duration 指整週累計時間，不是單次停留長度。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The meta-analysis covered research published over a period of about forty-five years.",
+        "a": "True",
+        "ref": "A",
+        "ev": "Drawing on studies published between 1980 and 2025",
+        "zh": "A 段：1980–2025 → 約四十五年 → True。"
+       },
+       {
+        "q": "Frequency and duration benchmarks were produced from a single combined statistical model.",
+        "a": "False",
+        "ref": "C",
+        "ev": "Frequency and duration came from separate statistical models rather than a combined schedule",
+        "zh": "C 段：frequency 與 duration 來自「分開的」模型，不是單一合併模型 → False。"
+       },
+       {
+        "q": "The authors rank accessibility as the strongest of the four Dose-of-Nature dimensions.",
+        "a": "Not Given",
+        "ref": "D",
+        "ev": "Evidence on accessibility remains thinner, the authors note",
+        "zh": "陷阱：D 段只說 accessibility 的證據較薄，完全沒有比較四維度哪個最強 → Not Given。"
+       },
+       {
+        "q": "Schumann argues that the low-dose threshold is unrealistic for people with low mood.",
+        "a": "False",
+        "ref": "E",
+        "ev": "That threshold is realistic for people experiencing low mood or reduced energy",
+        "zh": "E 段：該門檻對低情緒者是 realistic（實際可行），與題目 unrealistic 相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Practical messages from the study",
+      "lines": [
+       {
+        "t": "Schumann says the benchmarks should [[1]] clinical care rather than take its place. Planners are urged to look beyond vegetation [[2]] and ask whether residents actually use green spaces. Li recommends starting with a [[3]] habit such as a weekly park walk. The figures are an achievable starting point, not a fixed [[4]] for everyone."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "complement"
+        ],
+        "ref": "E",
+        "ev": "the benchmarks are framed as population averages that complement rather than replace clinical treatment",
+        "zh": "E 段：complement rather than replace → complement（補充）。"
+       },
+       {
+        "a": [
+         "cover"
+        ],
+        "ref": "E",
+        "ev": "judged not only by total vegetation cover but by whether residents can and do use parks and paths regularly",
+        "zh": "E 段：vegetation cover（植被覆蓋）。"
+       },
+       {
+        "a": [
+         "sustainable"
+        ],
+        "ref": "F",
+        "ev": "begin with a sustainable habit — a weekly park walk",
+        "zh": "F 段：sustainable habit（可長期維持的習慣）。"
+       },
+       {
+        "a": [
+         "prescription"
+        ],
+        "ref": "F",
+        "ev": "The benchmarks are an achievable starting point, not a fixed prescription",
+        "zh": "F 段：not a fixed prescription（不是固定處方）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "benchmark",
+     "pos": "n.",
+     "def": "a standard or reference point used for comparison",
+     "zh": "基準、標竿",
+     "example": "The study sets weekly benchmarks for green-space exposure.",
+     "match": [
+      "benchmarks",
+      "benchmark"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "meta-analysis",
+     "pos": "n.",
+     "def": "a study that statistically combines results from many earlier studies",
+     "zh": "統合分析、後設分析",
+     "example": "They carried out a meta-analysis of evidence from 1980 to 2025.",
+     "match": [
+      "meta-analysis"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "cumulative",
+     "pos": "adj.",
+     "def": "increasing by successive additions; total over a period",
+     "zh": "累積的",
+     "example": "Duration means cumulative weekly time in green space.",
+     "match": [
+      "cumulative"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "non-linear",
+     "pos": "adj.",
+     "def": "not forming a straight line; changing at varying rates",
+     "zh": "非線性的",
+     "example": "The dose–response relationship was non-linear.",
+     "match": [
+      "non-linear"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "diminishing returns",
+     "pos": "n.",
+     "def": "a pattern where extra input brings smaller and smaller extra benefit",
+     "zh": "報酬遞減",
+     "example": "Gains flatten with diminishing returns as exposure rises.",
+     "match": [
+      "diminishing returns"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "dose–response",
+     "pos": "n.",
+     "def": "the relationship between the amount of exposure and the size of the effect",
+     "zh": "劑量－反應關係",
+     "example": "Frequency and duration follow a different dose–response shape.",
+     "match": [
+      "dose–response",
+      "dose-response"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "accessibility",
+     "pos": "n.",
+     "def": "how easy it is for people to reach or use something",
+     "zh": "可及性、無障礙程度",
+     "example": "The framework includes intensity, frequency, duration and accessibility.",
+     "match": [
+      "accessibility"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "complement",
+     "pos": "v.",
+     "def": "to add to something in a way that improves it, without replacing it",
+     "zh": "補充、相輔",
+     "example": "The benchmarks complement clinical treatment rather than replace it.",
+     "match": [
+      "complement"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "lever",
+     "pos": "n.",
+     "def": "a means of influencing a situation to achieve a result",
+     "zh": "槓桿、可用手段",
+     "example": "Green space access is a lever that urban planning can pull.",
+     "match": [
+      "lever"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "vegetation cover",
+     "pos": "n.",
+     "def": "the amount of plant life covering an area",
+     "zh": "植被覆蓋",
+     "example": "Planners should look beyond total vegetation cover.",
+     "match": [
+      "vegetation cover"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "greenness intensity",
+     "pos": "n.",
+     "def": "how dense or abundant the greenery people encounter is",
+     "zh": "綠意強度／密度",
+     "example": "Earlier work examined greenness intensity.",
+     "match": [
+      "greenness intensity"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "steepest",
+     "pos": "adj.",
+     "def": "rising or falling most sharply",
+     "zh": "最陡的、增幅最大的",
+     "example": "The steepest gains occur at low doses.",
+     "match": [
+      "steepest"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "sustainable",
+     "pos": "adj.",
+     "def": "able to be maintained over a long period",
+     "zh": "可長期維持的",
+     "example": "Start with a sustainable habit such as a weekly park walk.",
+     "match": [
+      "sustainable"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "prescription",
+     "pos": "n.",
+     "def": "a fixed instruction telling someone exactly what to do",
+     "zh": "處方、固定指示",
+     "example": "The benchmarks are not a fixed prescription for everyone.",
+     "match": [
+      "prescription"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "municipal",
+     "pos": "adj.",
+     "def": "relating to a town or city and its local government",
+     "zh": "市政的、地方政府的",
+     "example": "Municipal greening should be judged by actual use as well as cover.",
+     "match": [
+      "municipal"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-06-2.mp3",
+    "times": [
+     [
+      0.36,
+      13.66
+     ],
+     [
+      14.0,
+      17.85
+     ],
+     [
+      18.15,
+      19.24
+     ],
+     [
+      20.02,
+      26.88
+     ],
+     [
+      27.15,
+      31.0
+     ],
+     [
+      31.32,
+      44.31
+     ],
+     [
+      44.63,
+      49.17
+     ],
+     [
+      49.95,
+      57.24
+     ],
+     [
+      57.57,
+      64.18
+     ],
+     [
+      64.5,
+      68.74
+     ],
+     [
+      69.04,
+      74.07
+     ],
+     [
+      74.85,
+      79.75
+     ],
+     [
+      80.0,
+      86.8
+     ],
+     [
+      87.11,
+      92.64
+     ],
+     [
+      92.86,
+      99.58
+     ],
+     [
+      99.85,
+      110.53
+     ],
+     [
+      111.05,
+      114.41
+     ],
+     [
+      115.19,
+      119.42
+     ],
+     [
+      119.7,
+      125.83
+     ],
+     [
+      126.24,
+      131.75
+     ],
+     [
+      132.0,
+      135.47
+     ],
+     [
+      135.76,
+      140.24
+     ],
+     [
+      141.02,
+      148.48
+     ],
+     [
+      148.74,
+      156.17
+     ],
+     [
+      156.48,
+      160.93
+     ],
+     [
+      161.71,
+      164.56
+     ],
+     [
+      164.83,
+      171.38
+     ],
+     [
+      171.69,
+      181.92
+     ],
+     [
+      182.16,
+      186.55
+     ],
+     [
+      186.83,
+      188.93
+     ]
+    ],
+    "duration": 189.6,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-06-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
