@@ -1,0 +1,2140 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-07",
+ "date": "2026-11-07",
+ "title": "AI Boom Turns Advanced Chip Packaging into the Next Bottleneck · Global Study Finds Green Roofs Could Cool Cities by Up to 1.5°C by Day",
+ "stories": [
+  {
+   "title": "AI Boom Turns Advanced Chip Packaging into the Next Bottleneck",
+   "topic": "Semiconductors · advanced packaging",
+   "source": {
+    "name": "Reuters: AI boom turns chip packaging into the next battleground for semiconductors (Wen-Yee Lee, 6 Nov 2026)",
+    "url": "https://www.reuters.com/5f374b32b07b/world/asia-pacific/ai-boom-turns-chip-packaging-into-next-battleground-semiconductors-2026-11-06/",
+    "links": [
+     {
+      "name": "Yole Group: advanced packaging market outlook (cited in Reuters)",
+      "url": "https://www.yolegroup.com/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead technology story: the race to build artificial intelligence infrastructure is pouring billions of dollars into advanced chip packaging, a once overlooked step that has become a critical bottleneck for the world's most powerful processors.",
+     "Here's the report."
+    ],
+    [
+     "For years, packaging sat in the background of semiconductor manufacturing.",
+     "Former Intel chief executive Pat Gelsinger, now a partner at Playground Global, told reporters in Taipei that packaging was always that thing that you just didn't worry about.",
+     "That attitude is changing fast.",
+     "Gelsinger estimates that advanced packaging could eventually account for as much as half the value of a chip product.",
+     "Some of today's graphics and central processing units already integrate ten or more chips, and sometimes as many as twenty."
+    ],
+    [
+     "Research firm Yole Group forecasts that revenue from advanced packaging will overtake traditional packaging for the first time in twenty twenty-six.",
+     "Capital spending on the technology is expected to near twenty-eight billion dollars.",
+     "The technique links separate pieces of silicon, such as processors and memory chips, on a shared base so they can work together at high speed.",
+     "It is widely used by Nvidia, AMD and Broadcom, as well as cloud companies developing their own artificial intelligence chips."
+    ],
+    [
+     "But Taiwan Semiconductor Manufacturing Company's capacity limits have spurred some chip designers to seek additional supply.",
+     "According to an industry executive familiar with the matter, Nvidia is providing billions of dollars in financing to expand CoWoS packaging capacity at Siliconware Precision Industries, or SPIL, a unit of Taiwan's ASE Technology.",
+     "The funding will support new factory space and equipment.",
+     "Nvidia did not respond to a request for comment.",
+     "ASE said it does not comment on market rumours involving its customers."
+    ],
+    [
+     "That scramble opens a door for smaller suppliers.",
+     "Powertech Technology chairman D K Tsai told reporters in August that everyone is looking for a solution outside TSMC.",
+     "They don't want to rely entirely on the foundry giant.",
+     "Powertech, also known as PTI, is betting on panel-level packaging, which uses larger rectangular panels instead of round wafers.",
+     "That approach can accommodate more chips in each production run and waste less material as artificial intelligence processors grow larger.",
+     "PTI plans a four-hundred-million-dollar advanced packaging joint venture with Broadcom in Singapore, with production that could begin in twenty twenty-eight.",
+     "Senior vice president Jim Lin put it bluntly: the most important thing right now is capacity."
+    ],
+    [
+     "TSMC itself is developing a panel-based technology called chip-on-panel-on-substrate, or CoPoS.",
+     "In April the company said it had built a pilot line and expected production to begin within a couple of years.",
+     "Even so, CoWoS remains TSMC's main artificial intelligence packaging technology for now."
+    ],
+    [
+     "Meanwhile, AMD has unveiled investments of more than ten billion dollars across Taiwan's semiconductor industry, including partnerships with ASE, SPIL and Powertech.",
+     "Chief executive Lisa Su told Reuters in Taipei in October that CoWoS and advanced packaging are super important for high-performance computing going forward.",
+     "She called TSMC an incredible partner, and added that the industry does need more capacity overall.",
+     "Microsoft Azure hardware chief Rani Borkar said panel-level packaging would reduce material waste for larger artificial intelligence chips, though the company has not decided whether or when to adopt it."
+    ],
+    [
+     "Equipment makers are joining the rush too.",
+     "Seiji Nakama, president of Tokyo Electron Taiwan, said advanced packaging was growing much faster than the market for chip-making gear, though it remained smaller.",
+     "At Applied Materials, vice president Sree Kesapragada argued that panel-level market growth is near-term, not ten or fifteen years off.",
+     "There are risks on both sides, though, including how quickly new capacity can actually come online.",
+     "That's the technology report. Next, we'll look at how cities are redesigning their rooftops to fight heat."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Advanced chip packaging and the AI boom",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Why packaging matters now"
+       },
+       {
+        "t": "Once overlooked, advanced packaging is now a critical [[1]]"
+       },
+       {
+        "t": "Gelsinger: may eventually equal as much as [[2]] of a chip product's value"
+       },
+       {
+        "h": "How the technology works"
+       },
+       {
+        "t": "Links processors and memory on a [[3]]"
+       },
+       {
+        "t": "TSMC limits push designers to seek additional [[4]]"
+       },
+       {
+        "h": "Nvidia and SPIL"
+       },
+       {
+        "t": "Nvidia reportedly providing billions in [[5]] to expand CoWoS at SPIL"
+       },
+       {
+        "h": "Alternatives to TSMC"
+       },
+       {
+        "t": "PTI chairman: everyone wants a [[6]] outside TSMC"
+       },
+       {
+        "t": "PTI betting on packaging that uses rectangular [[7]]"
+       },
+       {
+        "t": "Jim Lin: the most important thing right now is [[8]]"
+       },
+       {
+        "h": "TSMC's next step"
+       },
+       {
+        "t": "Company said it had built a [[9]] for CoPoS"
+       },
+       {
+        "h": "Equipment makers"
+       },
+       {
+        "t": "Applied Materials VP: panel-level growth is [[10]], not decades away"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "bottleneck"
+        ],
+        "ref": "has become a critical bottleneck for the world's most powerful processors",
+        "ev": "a once overlooked step that has become a critical bottleneck for the world's most powerful processors",
+        "zh": "critical ___ → bottleneck（瓶頸）。題幹改述 once overlooked → 現在成為關鍵瓶頸。"
+       },
+       {
+        "a": [
+         "half"
+        ],
+        "ref": "as much as half the value of a chip product",
+        "ev": "advanced packaging could eventually account for as much as half the value of a chip product",
+        "zh": "as much as ___ of a chip product's value → half。干擾：ten or more / twenty（整合晶片數）不是產品價值占比。"
+       },
+       {
+        "a": [
+         "shared base"
+        ],
+        "ref": "on a shared base so they can work together at high speed",
+        "ev": "links separate pieces of silicon, such as processors and memory chips, on a shared base so they can work together at high speed",
+        "zh": "on a ___ → shared base（共用基板）。"
+       },
+       {
+        "a": [
+         "supply"
+        ],
+        "ref": "spurred some chip designers to seek additional supply",
+        "ev": "Taiwan Semiconductor Manufacturing Company's capacity limits have spurred some chip designers to seek additional supply",
+        "zh": "seek additional ___ → supply（供應）。干擾：capacity 是 TSMC 的限制，題目問設計師在尋找什麼。"
+       },
+       {
+        "a": [
+         "financing"
+        ],
+        "ref": "providing billions of dollars in financing to expand CoWoS",
+        "ev": "Nvidia is providing billions of dollars in financing to expand CoWoS packaging capacity at Siliconware Precision Industries",
+        "zh": "billions in ___ → financing（融資）。干擾：factory space and equipment 是資金用途，不是 Nvidia 提供的東西本身。"
+       },
+       {
+        "a": [
+         "solution"
+        ],
+        "ref": "everyone is looking for a solution outside TSMC",
+        "ev": "everyone is looking for a solution outside TSMC",
+        "zh": "looking for a ___ outside TSMC → solution（解方）。"
+       },
+       {
+        "a": [
+         "panels"
+        ],
+        "ref": "uses larger rectangular panels instead of round wafers",
+        "ev": "panel-level packaging, which uses larger rectangular panels instead of round wafers",
+        "zh": "rectangular ___ → panels（面板）。干擾：wafers 是被取代的圓形晶圓，不是答案。"
+       },
+       {
+        "a": [
+         "capacity"
+        ],
+        "ref": "the most important thing right now is capacity",
+        "ev": "the most important thing right now is capacity",
+        "zh": "most important thing right now is ___ → capacity（產能）。"
+       },
+       {
+        "a": [
+         "pilot line"
+        ],
+        "ref": "it had built a pilot line and expected production",
+        "ev": "In April the company said it had built a pilot line and expected production to begin within a couple of years",
+        "zh": "built a ___ for CoPoS → pilot line（試產線）。干擾：couple of years 是量產時程，不是建置物。"
+       },
+       {
+        "a": [
+         "near-term",
+         "near term"
+        ],
+        "ref": "panel-level market growth is near-term, not ten or fifteen years off",
+        "ev": "panel-level market growth is near-term, not ten or fifteen years off",
+        "zh": "growth is ___ → near-term（近期的）。對比干擾：ten or fifteen years off 是被否定的說法。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "When Packaging Became the Bottleneck",
+    "intro": "Once treated as an afterthought, advanced chip packaging is absorbing billions of dollars as AI demand outruns the capacity to assemble the industry's most powerful processors.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "For most of the semiconductor industry's history, packaging was the unglamorous final step: protecting a finished chip and providing the electrical connections that attach it to a circuit board. That perception has collapsed under the weight of artificial intelligence demand. As chip designers pack more compute and memory into single systems, the ability to assemble multiple pieces of silicon into one high-speed package has become a binding constraint — more binding, in some cases, than the ability to fabricate the chips themselves. Interviews with more than a dozen executives and analysts, reported by Reuters in November 2026, portray a global scramble to expand advanced packaging capacity — and a recognition that the companies controlling it now sit at a strategic chokepoint in the AI supply chain."
+     },
+     {
+      "label": "B",
+      "text": "Former Intel chief executive Pat Gelsinger, now a partner at the venture firm Playground Global, captured the shift bluntly when he told reporters in Taipei that packaging was always 'that thing that you just didn't worry about.' He now estimates that advanced packaging could eventually account for as much as half the value of a chip product. The arithmetic is not hard to see: some of today's graphics and central processing units already integrate ten or more chips — and sometimes as many as twenty — into a single package. Research firm Yole Group forecasts that revenue from advanced packaging will overtake traditional packaging for the first time in 2026, with capital spending on the technology expected to near twenty-eight billion dollars. What was once a cost centre is turning into a profit and power centre."
+     },
+     {
+      "label": "C",
+      "text": "Technically, advanced packaging links separate pieces of silicon — processors and high-bandwidth memory, for example — on a shared base so that they can exchange data at high speed. The approach is widely used by Nvidia, AMD and Broadcom, as well as by cloud companies designing their own AI accelerators. The industry's dominant high-end process is known as CoWoS, short for chip-on-wafer-on-substrate, and Taiwan Semiconductor Manufacturing Company remains the leading supplier. But TSMC's capacity limits have already pushed some chip designers to look elsewhere. According to an industry executive familiar with the matter, Nvidia is providing billions of dollars in financing to expand CoWoS capacity at Siliconware Precision Industries, or SPIL, a unit of ASE Technology. Nvidia did not comment; ASE said it does not comment on market rumours involving its customers."
+     },
+     {
+      "label": "D",
+      "text": "That tightness creates openings for smaller Taiwanese specialists. Powertech Technology chairman D K Tsai told reporters in August that everyone is looking for a solution outside TSMC, because customers do not want to rely entirely on one foundry. Powertech, also known as PTI, is betting on panel-level packaging, which places chips on larger rectangular panels rather than round wafers. The geometry can fit more devices into each production run and waste less material — an advantage as AI processors grow physically larger and more complex. PTI is working with AMD and Broadcom to prove the approach for high-performance packages, and plans a four-hundred-million-dollar joint venture with Broadcom in Singapore that could begin production in 2028. Senior vice president Jim Lin summarised the priority in one word: capacity."
+     },
+     {
+      "label": "E",
+      "text": "TSMC is not standing still. To support larger and more complex packages, it is developing its own panel-based technology, chip-on-panel-on-substrate or CoPoS. In April 2026 the company said it had built a pilot line and expected production within a couple of years, while stressing that CoWoS remains its main AI packaging technology for now. AMD, for its part, has unveiled investments of more than ten billion dollars across Taiwan's semiconductor industry, including partnerships with ASE, SPIL and Powertech on advanced packaging. Asked whether Powertech's panel-level approach could serve as an alternative to TSMC, AMD chief executive Lisa Su did not answer directly. She did tell Reuters in Taipei that CoWoS and advanced packaging are 'super important' for high-performance computing, that TSMC has been an incredible partner, and that the industry needs more capacity overall."
+     },
+     {
+      "label": "F",
+      "text": "Cloud operators and equipment makers are watching closely. Microsoft Azure hardware chief Rani Borkar observed that panel-level packaging would reduce material waste when assembling larger AI chips, though Microsoft has not decided whether or when to adopt the technology. On the tool side, Seiji Nakama, president of Tokyo Electron Taiwan, said advanced packaging was growing much faster than the conventional chip-making equipment market, even if it was still smaller in absolute terms. Sree Kesapragada, a vice president at Applied Materials, put the timeline bluntly: panel-level market growth is 'near-term,' not ten or fifteen years away. The packaging boom, in other words, is already reshaping investment plans across Asia and beyond — but how quickly new lines can be staffed, qualified and filled with customer wafers will determine whether today's bottleneck eases or simply moves downstream to the next scarce step in the chain."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a forecast that advanced packaging revenue will surpass traditional packaging",
+        "a": "B",
+        "ref": "B",
+        "ev": "revenue from advanced packaging will overtake traditional packaging for the first time in 2026",
+        "zh": "B 段：Yole 預測 2026 年先進封裝營收首次超越傳統封裝。"
+       },
+       {
+        "q": "an anonymous claim that Nvidia is funding expansion of packaging capacity at a Taiwanese plant",
+        "a": "C",
+        "ref": "C",
+        "ev": "Nvidia is providing billions of dollars in financing to expand CoWoS capacity at Siliconware Precision Industries, or SPIL",
+        "zh": "C 段：匿名業內人士稱 Nvidia 提供數十億融資擴產 SPIL 的 CoWoS。"
+       },
+       {
+        "q": "a planned Singapore joint venture whose production might start in 2028",
+        "a": "D",
+        "ref": "D",
+        "ev": "plans a four-hundred-million-dollar joint venture with Broadcom in Singapore that could begin production in 2028",
+        "zh": "D 段：PTI 與 Broadcom 在新加坡的 4 億美元合資，量產可能 2028 年開始。"
+       },
+       {
+        "q": "an equipment executive's view that panel-level growth will arrive soon rather than in a decade",
+        "a": "F",
+        "ref": "F",
+        "ev": "panel-level market growth is 'near-term,' not ten or fifteen years away",
+        "zh": "F 段：Applied Materials 副總裁稱面板級成長是 near-term，不是 10–15 年後。"
+       },
+       {
+        "q": "TSMC's statement that it has already constructed a trial production line for a panel-based process",
+        "a": "E",
+        "ref": "E",
+        "ev": "the company said it had built a pilot line and expected production within a couple of years",
+        "zh": "E 段：TSMC 表示已建 CoPoS 試產線，幾年內量產。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Gelsinger believes advanced packaging could eventually represent up to half of a chip product's value.",
+        "a": "True",
+        "ref": "B",
+        "ev": "advanced packaging could eventually account for as much as half the value of a chip product",
+        "zh": "B 段：Gelsinger 估計先進封裝最終可佔晶片產品價值的一半 → True。"
+       },
+       {
+        "q": "ASE confirmed the details of Nvidia's financing arrangement with SPIL.",
+        "a": "False",
+        "ref": "C",
+        "ev": "ASE said it does not comment on market rumours involving its customers",
+        "zh": "C 段：ASE 表示不對涉及客戶的市場傳聞置評，並未確認細節 → False。"
+       },
+       {
+        "q": "Lisa Su said Powertech's panel-level packaging is already superior to TSMC's CoWoS.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "Asked whether Powertech's panel-level approach could serve as an alternative to TSMC, AMD chief executive Lisa Su did not answer directly",
+        "zh": "陷阱：E 段寫 Su 沒有直接回答能否替代 TSMC，也完全沒有說 PTI 技術「已經優於」CoWoS → Not Given。"
+       },
+       {
+        "q": "Microsoft has already committed to adopting panel-level packaging for its Azure chips.",
+        "a": "False",
+        "ref": "F",
+        "ev": "Microsoft has not decided whether or when to adopt the technology",
+        "zh": "F 段：Microsoft 尚未決定是否／何時採用 → 與「already committed」相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Why panel-level packaging attracts interest",
+      "lines": [
+       {
+        "t": "Panel-level packaging places chips on larger rectangular [[1]] rather than round wafers, so each run can hold more devices and waste less [[2]]. PTI is working with major chip firms to prove the method for high-performance packages, while TSMC is developing its own panel-based process called [[3]]. Cloud hardware leaders note the material savings, but have not decided whether or when to adopt the [[4]]."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "panels"
+        ],
+        "ref": "D",
+        "ev": "places chips on larger rectangular panels rather than round wafers",
+        "zh": "D 段：rectangular panels（矩形面板）。"
+       },
+       {
+        "a": [
+         "material"
+        ],
+        "ref": "D",
+        "ev": "waste less material",
+        "zh": "D 段：waste less material → material（材料）。"
+       },
+       {
+        "a": [
+         "CoPoS"
+        ],
+        "ref": "E",
+        "ev": "chip-on-panel-on-substrate or CoPoS",
+        "zh": "E 段：CoPoS（chip-on-panel-on-substrate）。"
+       },
+       {
+        "a": [
+         "technology"
+        ],
+        "ref": "F",
+        "ev": "has not decided whether or when to adopt the technology",
+        "zh": "F 段：adopt the technology → technology。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "bottleneck",
+     "pos": "n.",
+     "def": "a point of congestion that limits overall progress or output",
+     "zh": "瓶頸",
+     "example": "Advanced packaging has become a critical bottleneck for powerful processors.",
+     "match": [
+      "bottleneck"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "unglamorous",
+     "pos": "adj.",
+     "def": "not exciting or attractive in appearance or status",
+     "zh": "不起眼的、不華麗的",
+     "example": "Packaging was long treated as an unglamorous final step.",
+     "match": [
+      "unglamorous"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "chokepoint",
+     "pos": "n.",
+     "def": "a narrow point that controls passage or supply",
+     "zh": "咽喉要道、卡點",
+     "example": "Firms controlling packaging sit at a strategic chokepoint.",
+     "match": [
+      "chokepoint"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "overtake",
+     "pos": "v.",
+     "def": "to become greater than something else in amount or importance",
+     "zh": "超越、趕上",
+     "example": "Advanced packaging revenue is forecast to overtake traditional packaging.",
+     "match": [
+      "overtake"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "financing",
+     "pos": "n.",
+     "def": "money provided for a project, often as investment or loans",
+     "zh": "融資、資金支持",
+     "example": "Nvidia is reportedly providing billions in financing to expand capacity.",
+     "match": [
+      "financing"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "panel-level",
+     "pos": "adj.",
+     "def": "carried out on large rectangular panels rather than round wafers",
+     "zh": "面板級的",
+     "example": "PTI is betting on panel-level packaging.",
+     "match": [
+      "panel-level",
+      "panel-based"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "pilot line",
+     "pos": "n.",
+     "def": "a small-scale production line used to test a new process",
+     "zh": "試產線",
+     "example": "TSMC said it had built a pilot line for CoPoS.",
+     "match": [
+      "pilot line"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "near-term",
+     "pos": "adj.",
+     "def": "happening or expected in the fairly near future",
+     "zh": "近期的、短期內的",
+     "example": "Panel-level market growth is near-term, not decades away.",
+     "match": [
+      "near-term"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "scramble",
+     "pos": "n.",
+     "def": "a hurried struggle to obtain something scarce",
+     "zh": "爭搶、搶奪",
+     "example": "The scramble to expand packaging capacity is global.",
+     "match": [
+      "scramble"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "capacity",
+     "pos": "n.",
+     "def": "the maximum amount that can be produced or handled",
+     "zh": "產能",
+     "example": "Jim Lin said the most important thing right now is capacity.",
+     "match": [
+      "capacity"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "foundry",
+     "pos": "n.",
+     "def": "a company that manufactures chips designed by others",
+     "zh": "晶圓代工廠",
+     "example": "Customers do not want to rely entirely on one foundry.",
+     "match": [
+      "foundry"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "substrate",
+     "pos": "n.",
+     "def": "the base layer on which chips or circuits are mounted",
+     "zh": "基板",
+     "example": "CoWoS stands for chip-on-wafer-on-substrate.",
+     "match": [
+      "substrate"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "outstrip",
+     "pos": "v.",
+     "def": "to exceed or run ahead of something in demand or speed",
+     "zh": "超過、供不應求於",
+     "example": "AI demand has outstripped available packaging capacity.",
+     "match": [
+      "outstrips",
+      "outruns"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "joint venture",
+     "pos": "n.",
+     "def": "a business project owned and run by two or more companies together",
+     "zh": "合資企業",
+     "example": "PTI plans a joint venture with Broadcom in Singapore.",
+     "match": [
+      "joint venture"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "qualify",
+     "pos": "v.",
+     "def": "to prove that a process or product meets required standards",
+     "zh": "通過認證、驗證合格",
+     "example": "New lines must be staffed, qualified and filled with customer wafers.",
+     "match": [
+      "qualified"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-07-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      13.23
+     ],
+     [
+      13.61,
+      14.66
+     ],
+     [
+      15.44,
+      19.5
+     ],
+     [
+      19.77,
+      28.73
+     ],
+     [
+      29.13,
+      31.21
+     ],
+     [
+      31.41,
+      36.87
+     ],
+     [
+      37.15,
+      43.59
+     ],
+     [
+      44.37,
+      51.55
+     ],
+     [
+      51.79,
+      55.89
+     ],
+     [
+      56.19,
+      63.59
+     ],
+     [
+      63.8,
+      71.26
+     ],
+     [
+      72.04,
+      78.65
+     ],
+     [
+      78.95,
+      92.56
+     ],
+     [
+      92.87,
+      95.76
+     ],
+     [
+      96.03,
+      98.76
+     ],
+     [
+      99.07,
+      102.99
+     ],
+     [
+      103.77,
+      106.62
+     ],
+     [
+      106.91,
+      113.63
+     ],
+     [
+      113.96,
+      116.83
+     ],
+     [
+      117.07,
+      124.89
+     ],
+     [
+      125.19,
+      131.98
+     ],
+     [
+      132.19,
+      139.99
+     ],
+     [
+      140.24,
+      145.53
+     ],
+     [
+      146.31,
+      152.46
+     ],
+     [
+      152.69,
+      157.99
+     ],
+     [
+      158.26,
+      164.21
+     ],
+     [
+      164.99,
+      175.33
+     ],
+     [
+      175.56,
+      184.13
+     ],
+     [
+      184.41,
+      190.54
+     ],
+     [
+      190.87,
+      201.15
+     ],
+     [
+      201.93,
+      204.15
+     ],
+     [
+      204.45,
+      213.3
+     ],
+     [
+      213.51,
+      221.19
+     ],
+     [
+      221.44,
+      226.93
+     ],
+     [
+      227.24,
+      233.29
+     ]
+    ],
+    "duration": 233.9,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-07-1-words/"
+   }
+  },
+  {
+   "title": "Global Study Finds Green Roofs Could Cool Cities by Up to 1.5°C by Day",
+   "topic": "Urban planning · green roofs",
+   "source": {
+    "name": "Bai et al., npj Urban Sustainability: Cooling potential of global urban roof greening (11 Feb 2026)",
+    "url": "https://www.nature.com/articles/s42949-026-00354-9",
+    "links": [
+     {
+      "name": "DOI: 10.1038/s42949-026-00354-9",
+      "url": "https://doi.org/10.1038/s42949-026-00354-9"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Our top environment story this morning: a global study published in npj Urban Sustainability finds that greening city rooftops could cut daytime land surface temperatures by as much as about one point five degrees Celsius, depending on how widely the plants are installed.",
+     "It is the first assessment of its kind to combine ultra-high-resolution building footprints with models linking vegetation to surface heat.",
+     "Here's our report."
+    ],
+    [
+     "Hao Bai, Shengli Tao of Peking University and colleagues simulated three roof-greening scenarios for thousands of cities worldwide.",
+     "The scenarios mirror real policies already used in places such as Toronto, San Francisco and Basel, where roughly forty percent of flat roofs have been greened.",
+     "Under a low scenario, twenty percent of each roof carries vegetation; the medium scenario uses forty percent; the high scenario uses sixty percent.",
+     "Rooftops themselves make up about twenty to twenty-five percent of urban surface area, so the potential pool of space is large."
+    ],
+    [
+     "The cooling results were clear, and they were stronger by day than by night.",
+     "Average daytime land surface temperature fell by zero point five seven degrees under the low scenario, one point one two degrees under the medium scenario, and one point five eight degrees under the high scenario.",
+     "Nighttime cooling was smaller: zero point one four, zero point two seven and zero point three nine degrees respectively.",
+     "Because daytime cooling consistently exceeded nighttime cooling, the diurnal temperature range also shrank, by roughly zero point four to one point one degrees across the three scenarios."
+    ],
+    [
+     "For cities already showing a significant surface urban heat island — defined as at least one degree warmer than surrounding rural land — green roofs could cut that intensity by about sixteen to forty-five percent during the day and six to eighteen percent at night, on average.",
+     "Cities nearer the equator tended to see stronger daytime cooling, helped by higher rates of evaporative cooling where moisture is available."
+    ],
+    [
+     "Still, the map of who benefits most is not the same as the map of strongest cooling.",
+     "Oceania and South America showed higher average cooling potential.",
+     "But Africa, Asia and Europe recorded higher cooling benefit to people, because so many urban residents live there.",
+     "Asia, in particular, showed the greatest cooling benefit to the urban population even though it did not have the highest cooling potential.",
+     "In other words, where people live matters as much as how much a roof can cool."
+    ],
+    [
+     "The authors are careful about limits.",
+     "They stress that the numbers describe potential under defined scenarios, not a guarantee for every skyline.",
+     "The study used MODIS satellite land surface temperature at a one-kilometre resolution, which reflects surface heat rather than air temperature that people feel.",
+     "Not every roof is suitable: load-bearing capacity, steep slopes and heritage buildings can rule sites out.",
+     "In arid regions, irrigation constraints may limit how much vegetation roofs can support.",
+     "And the scenarios assume relatively uniform greening, which is more idealised than real city politics allow."
+    ],
+    [
+     "Even so, the team argues that rooftop greening is a practical nature-based option where ground-level land for parks is scarce.",
+     "With supportive policy, they suggest, green roofs could become a widespread tool against intensifying urban heat.",
+     "That's the environment report for this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Global cooling potential of green roofs",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Study design"
+       },
+       {
+        "t": "First global assessment using ultra-high-resolution building [[1]]"
+       },
+       {
+        "t": "Scenarios based on real [[2]] in Toronto, San Francisco and Basel"
+       },
+       {
+        "t": "Rooftops = about 20–25% of urban [[3]]"
+       },
+       {
+        "h": "Main findings"
+       },
+       {
+        "t": "Cooling stronger by day than by [[4]]"
+       },
+       {
+        "t": "High scenario: daytime LST down by about [[5]] °C"
+       },
+       {
+        "t": "Also shrinks the diurnal temperature [[6]]"
+       },
+       {
+        "h": "Who benefits"
+       },
+       {
+        "t": "Stronger daytime cooling near the [[7]]"
+       },
+       {
+        "t": "Asia: greatest cooling [[8]] to urban population"
+       },
+       {
+        "h": "Limitations"
+       },
+       {
+        "t": "MODIS data show [[9]] heat, not air temperature"
+       },
+       {
+        "t": "Arid regions face [[10]] constraints"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "footprints"
+        ],
+        "ref": "ultra-high-resolution building footprints with models",
+        "ev": "the first assessment of its kind to combine ultra-high-resolution building footprints with models linking vegetation to surface heat",
+        "zh": "building ___ → footprints（建築輪廓／足跡圖）。"
+       },
+       {
+        "a": [
+         "policies"
+        ],
+        "ref": "mirror real policies already used in places such as Toronto",
+        "ev": "The scenarios mirror real policies already used in places such as Toronto, San Francisco and Basel",
+        "zh": "based on real ___ → policies（政策）。"
+       },
+       {
+        "a": [
+         "surface area"
+        ],
+        "ref": "twenty to twenty-five percent of urban surface area",
+        "ev": "Rooftops themselves make up about twenty to twenty-five percent of urban surface area",
+        "zh": "urban ___ → surface area（地表面積）。"
+       },
+       {
+        "a": [
+         "night"
+        ],
+        "ref": "stronger by day than by night",
+        "ev": "they were stronger by day than by night",
+        "zh": "Cooling stronger by day than by ___ → night。錄音：stronger by day than by night。干擾：Nighttime cooling was smaller 出現在後面數字之後。"
+       },
+       {
+        "a": [
+         "1.58",
+         "1.5"
+        ],
+        "ref": "one point five eight degrees under the high scenario",
+        "ev": "one point five eight degrees under the high scenario",
+        "zh": "high scenario 日間約 1.58°C（錄音念 one point five eight）。干擾：0.57 / 1.12（低／中情境）、夜間 0.39。"
+       },
+       {
+        "a": [
+         "range"
+        ],
+        "ref": "the diurnal temperature range also shrank",
+        "ev": "the diurnal temperature range also shrank, by roughly zero point four to one point one degrees",
+        "zh": "diurnal temperature ___ → range（日溫差）。"
+       },
+       {
+        "a": [
+         "equator"
+        ],
+        "ref": "Cities nearer the equator tended to see stronger daytime cooling",
+        "ev": "Cities nearer the equator tended to see stronger daytime cooling",
+        "zh": "near the ___ → equator（赤道）。"
+       },
+       {
+        "a": [
+         "benefit"
+        ],
+        "ref": "the greatest cooling benefit to the urban population",
+        "ev": "Asia, in particular, showed the greatest cooling benefit to the urban population even though it did not have the highest cooling potential",
+        "zh": "cooling ___ to urban population → benefit。干擾：cooling potential 是另一概念，亞洲不是最高。"
+       },
+       {
+        "a": [
+         "surface"
+        ],
+        "ref": "which reflects surface heat rather than air temperature",
+        "ev": "which reflects surface heat rather than air temperature that people feel",
+        "zh": "___ heat, not air temperature → surface（地表熱）。"
+       },
+       {
+        "a": [
+         "irrigation"
+        ],
+        "ref": "irrigation constraints may limit how much vegetation roofs can support",
+        "ev": "In arid regions, irrigation constraints may limit how much vegetation roofs can support",
+        "zh": "___ constraints → irrigation（灌溉）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Greening the Roof: How Much Could Cities Cool?",
+    "intro": "A Peking University-led global assessment estimates that planting vegetation on urban rooftops could lower daytime land surface temperatures by roughly 0.6 to 1.6°C — and shrink the gap between day and night heat.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Urban heat is no longer a niche planning problem. More than half the world's people already live in cities, and exposure to extreme heat in urban areas has risen sharply since the 1980s. The surface urban heat island — the tendency for built-up areas to run hotter than nearby countryside — compounds the risk, as does a widening diurnal temperature range that stresses human health when day-to-night swings become abrupt. Nature-based options such as parks, street trees and wetlands cool through shade and evaporation, but dense districts often lack spare ground for new green space. Rooftops, which account for an estimated twenty to twenty-five percent of urban surface area, offer a different canvas: space that already exists above the street and need not compete with housing or roads for scarce land."
+     },
+     {
+      "label": "B",
+      "text": "Until recently, however, nobody had quantified what roof greening could achieve for cities worldwide. Local field experiments and city-scale climate models suggested cooling of up to a few degrees Celsius, yet those methods are hard to extend across thousands of urban areas because they are labour-intensive or demand dense local data. In a 2026 paper in npj Urban Sustainability, Hao Bai, corresponding author Shengli Tao of Peking University and a large international team present what they describe as the first global-scale assessment. They combined ultra-high-resolution building footprint maps — drawn from sub-metre satellite imagery and deep-learning detection — with city-specific statistical models that relate land surface temperature to vegetation cover, then asked what would happen if rooftops were treated as additional vegetated area under controlled scenarios."
+     },
+     {
+      "label": "C",
+      "text": "Three greening scenarios were chosen to reflect policies already on the books. A low scenario assumes twenty percent of each roof is vegetated; a medium scenario forty percent; and a high scenario sixty percent. Those ratios echo mandates and programmes in cities such as Toronto, San Francisco and Basel — where roughly forty percent of flat roofs are now greened after decades of incentives and rules. Across thousands of cities, average daytime land surface temperature fell by 0.57 ± 0.47°C, 1.12 ± 0.92°C and 1.58 ± 1.31°C under the low, medium and high scenarios respectively. Nighttime cooling was weaker: 0.14, 0.27 and 0.39°C. Because daytime reductions consistently outpaced nighttime ones, the diurnal temperature range narrowed by about 0.39, 0.77 and 1.10°C across the three scenarios — an extra public-health bonus, since large day–night swings are themselves linked to illness risk."
+     },
+     {
+      "label": "D",
+      "text": "The geography of cooling is uneven. Cities nearer the equator generally showed stronger daytime potential, consistent with greater evaporative cooling where moisture is available, while arid zones face clearer physical limits. For cities whose surface urban heat island intensity already reaches at least one degree Celsius, green roofs could trim that intensity by 16.1–44.9 percent by day and 6.4–18.2 percent by night on average. Yet the places that cool most are not always the places where the most people gain. Oceania and South America posted higher average cooling potential, while Africa, Asia and Europe — continents with dense urban populations — showed higher cooling benefit when population is multiplied by temperature reduction. Asia recorded the greatest cooling benefit to urbanites despite not having the highest cooling potential, underscoring how demography shapes the human payoff of a technical intervention."
+     },
+     {
+      "label": "E",
+      "text": "The authors emphasise that the figures are potentials under stylised assumptions, not forecasts of what every city will achieve next year. Their temperature data come from MODIS at a one-kilometre resolution and describe land surface temperature, which is not the same as the air temperature people experience at street level. Not every roof can take plants: heritage structures, steep pitches and limited load-bearing capacity exclude many buildings from safe retrofits. In arid climates, irrigation may be scarce or politically contested, and plant choice becomes decisive. The scenarios also assume relatively uniform greening across a city's roofs, whereas real programmes are patchy, contested and slow. Setting the high scenario at sixty percent was itself a conservative nod to those constraints, matching the upper end of existing green-roof policies rather than an imaginary city blanketed in vegetation."
+     },
+     {
+      "label": "F",
+      "text": "Even with those caveats, the study argues that rooftop vegetation belongs in the urban climate toolkit — especially where ground-level greening is blocked by land prices or density. Green roofs can also deliver co-benefits beyond temperature, including stormwater retention, noise reduction, biodiversity habitat and, in some designs, space for solar panels or food growing. Turning potential into practice, the authors note, will require subsidies, building-code duties and better tools — including three-dimensional mapping and machine learning — for identifying which roofs can safely be retrofitted. As heat extremes intensify under climate change, the question for mayors may shift from whether green roofs work in principle to how quickly suitable rooftops can be planted at scale, and whether the cooling gains reach the neighbourhoods that need them most."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "why earlier local and modelling studies were difficult to apply worldwide",
+        "a": "B",
+        "ref": "B",
+        "ev": "those methods are hard to extend across thousands of urban areas",
+        "zh": "B 段：地方實驗與城市尺度模型難以擴展到全球數千城市。"
+       },
+       {
+        "q": "numerical daytime and nighttime cooling averages under three greening levels",
+        "a": "C",
+        "ref": "C",
+        "ev": "average daytime land surface temperature fell by 0.57 ± 0.47°C, 1.12 ± 0.92°C and 1.58 ± 1.31°C",
+        "zh": "C 段：低／中／高情境的日間與夜間降溫平均值。"
+       },
+       {
+        "q": "a contrast between continents with the strongest cooling and those with the largest population benefit",
+        "a": "D",
+        "ref": "D",
+        "ev": "Oceania and South America posted higher average cooling potential, while Africa, Asia and Europe — continents with dense urban populations — showed higher cooling benefit",
+        "zh": "D 段：大洋洲／南美降溫潛力較高；非／亞／歐因人口密集，冷卻效益較高。"
+       },
+       {
+        "q": "practical co-benefits of green roofs besides lowering temperature",
+        "a": "F",
+        "ref": "F",
+        "ev": "including stormwater retention, noise reduction, biodiversity habitat and, in some designs, space for solar panels or food growing",
+        "zh": "F 段：雨水滯留、降噪、生物多樣性、太陽能／農作等共伴效益。"
+       },
+       {
+        "q": "an estimate of how much of a city's surface is covered by rooftops",
+        "a": "A",
+        "ref": "A",
+        "ev": "Rooftops, which account for an estimated twenty to twenty-five percent of urban surface area",
+        "zh": "A 段：屋頂約佔城市地表 20–25%。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Nighttime cooling from green roofs was greater than daytime cooling in the global averages.",
+        "a": "False",
+        "ref": "C",
+        "ev": "Because daytime reductions consistently outpaced nighttime ones",
+        "zh": "C 段：日間降溫持續大於夜間 → 與題目相反 → False。"
+       },
+       {
+        "q": "Asia had both the highest cooling potential and the highest cooling benefit to urban populations.",
+        "a": "False",
+        "ref": "D",
+        "ev": "Asia recorded the greatest cooling benefit to urbanites despite not having the highest cooling potential",
+        "zh": "D 段：亞洲冷卻效益最高，但降溫潛力並非最高 → False。"
+       },
+       {
+        "q": "The researchers measured pedestrian-level air temperature with street sensors in every city.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "Their temperature data come from MODIS at a one-kilometre resolution and describe land surface temperature, which is not the same as the air temperature people experience at street level",
+        "zh": "陷阱：E 段只說用 MODIS 地表溫度、且不同於行人空氣溫；完全沒提是否在每座城市用街道感測器測氣溫 → Not Given（文章否定的是「等於氣溫」，不是「有沒有街感測器」——更精確：文章說資料來自衛星 LST，沒有說用街感測器，但也沒明確寫「沒有用」，不過題目說 measured ... with street sensors in every city，文中無此資訊 → Not Given）。"
+       },
+       {
+        "q": "The high greening scenario was capped at sixty percent partly because of real-world constraints on which roofs can be planted.",
+        "a": "True",
+        "ref": "E",
+        "ev": "Setting the high scenario at sixty percent was itself a conservative nod to those constraints, matching the upper end of existing green-roof policies",
+        "zh": "E 段：高情境訂在 60% 是對現實限制的保守處理 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **NO MORE THAN TWO WORDS** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "How the global assessment was built",
+      "lines": [
+       {
+        "t": "Bai and colleagues combined ultra-high-resolution building [[1]] with models linking vegetation cover to land surface temperature. Greening levels of 20%, 40% and 60% were chosen to mirror existing [[2]]. Stronger daytime than nighttime cooling also reduced the diurnal temperature [[3]]. The authors warn that MODIS captures [[4]] temperature, not the air people feel."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "footprint maps",
+         "footprints"
+        ],
+        "ref": "B",
+        "ev": "ultra-high-resolution building footprint maps",
+        "zh": "B 段：building footprint maps。"
+       },
+       {
+        "a": [
+         "policies"
+        ],
+        "ref": "C",
+        "ev": "Three greening scenarios were chosen to reflect policies already on the books",
+        "zh": "C 段：reflect policies already on the books → policies。"
+       },
+       {
+        "a": [
+         "range"
+        ],
+        "ref": "C",
+        "ev": "the diurnal temperature range narrowed by about 0.39, 0.77 and 1.10°C",
+        "zh": "C 段：diurnal temperature range。"
+       },
+       {
+        "a": [
+         "land surface",
+         "surface"
+        ],
+        "ref": "E",
+        "ev": "describe land surface temperature, which is not the same as the air temperature",
+        "zh": "E 段：land surface temperature。題幹 MODIS captures ___ temperature → land surface。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "land surface temperature",
+     "pos": "n.",
+     "def": "the temperature of the ground or building surface measured by satellite",
+     "zh": "地表溫度",
+     "example": "Daytime land surface temperature fell by up to about 1.58°C.",
+     "match": [
+      "land surface temperature",
+      "land surface temperatures",
+      "LST"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "diurnal temperature range",
+     "pos": "n.",
+     "def": "the difference between daytime and nighttime temperatures",
+     "zh": "日溫差",
+     "example": "Stronger daytime cooling shrank the diurnal temperature range.",
+     "match": [
+      "diurnal temperature range"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "urban heat island",
+     "pos": "n.",
+     "def": "the effect by which a city is warmer than surrounding rural areas",
+     "zh": "都市熱島",
+     "example": "Green roofs could cut surface urban heat island intensity.",
+     "match": [
+      "urban heat island",
+      "heat island"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "evaporative cooling",
+     "pos": "n.",
+     "def": "cooling caused by water turning into vapour and taking heat away",
+     "zh": "蒸發冷卻",
+     "example": "Equatorial cities benefit from higher evaporative cooling.",
+     "match": [
+      "evaporative cooling"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "footprint",
+     "pos": "n.",
+     "def": "the outline of a building's ground coverage, often mapped from above",
+     "zh": "建築輪廓／足跡圖",
+     "example": "The study used ultra-high-resolution building footprints.",
+     "match": [
+      "footprints",
+      "footprint maps",
+      "footprint"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "vegetation cover",
+     "pos": "n.",
+     "def": "the proportion of an area occupied by plants",
+     "zh": "植被覆蓋率",
+     "example": "Models linked land surface temperature to vegetation cover.",
+     "match": [
+      "vegetation cover",
+      "vegetation"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "nature-based",
+     "pos": "adj.",
+     "def": "using natural systems to solve environmental problems",
+     "zh": "基於自然的",
+     "example": "Green roofs are a practical nature-based option in dense cities.",
+     "match": [
+      "nature-based"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "irrigation",
+     "pos": "n.",
+     "def": "the supply of water to plants by artificial means",
+     "zh": "灌溉",
+     "example": "Arid regions face irrigation constraints for green roofs.",
+     "match": [
+      "irrigation"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "load-bearing",
+     "pos": "adj.",
+     "def": "able to support structural weight",
+     "zh": "承重的",
+     "example": "Limited load-bearing capacity can rule roofs out.",
+     "match": [
+      "load-bearing"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "stylised",
+     "pos": "adj.",
+     "def": "simplified or idealised rather than fully realistic",
+     "zh": "簡化的、理想化的",
+     "example": "The figures are potentials under stylised assumptions.",
+     "match": [
+      "stylised",
+      "idealised",
+      "idealized"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "co-benefit",
+     "pos": "n.",
+     "def": "an extra positive effect that comes with the main goal",
+     "zh": "共伴效益、附加效益",
+     "example": "Green roofs can deliver co-benefits beyond temperature.",
+     "match": [
+      "co-benefits",
+      "co-benefit"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "retrofit",
+     "pos": "v.",
+     "def": "to add a new feature to something already built",
+     "zh": "改造、加裝",
+     "example": "Cities need tools to identify which roofs can be retrofitted.",
+     "match": [
+      "retrofitted",
+      "retrofit"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "stormwater retention",
+     "pos": "n.",
+     "def": "holding rainwater on site instead of letting it run off immediately",
+     "zh": "雨水滯留",
+     "example": "Green roofs aid stormwater retention during heavy rain.",
+     "match": [
+      "stormwater retention"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "mandate",
+     "pos": "n.",
+     "def": "an official order requiring something to be done",
+     "zh": "強制規定、法令要求",
+     "example": "Scenarios echo mandates in Toronto and San Francisco.",
+     "match": [
+      "mandates",
+      "mandate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "compound",
+     "pos": "v.",
+     "def": "to make a problem more serious by adding to it",
+     "zh": "加劇、使更嚴重",
+     "example": "The urban heat island compounds the risk of extreme heat.",
+     "match": [
+      "compounds",
+      "compound"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-07-2.mp3",
+    "times": [
+     [
+      0.36,
+      15.55
+     ],
+     [
+      15.89,
+      22.72
+     ],
+     [
+      23.02,
+      24.12
+     ],
+     [
+      24.9,
+      32.08
+     ],
+     [
+      32.35,
+      41.57
+     ],
+     [
+      41.89,
+      51.07
+     ],
+     [
+      51.31,
+      58.34
+     ],
+     [
+      59.12,
+      62.98
+     ],
+     [
+      63.31,
+      75.41
+     ],
+     [
+      75.73,
+      83.34
+     ],
+     [
+      83.72,
+      93.94
+     ],
+     [
+      94.72,
+      109.6
+     ],
+     [
+      109.93,
+      117.01
+     ],
+     [
+      117.79,
+      122.17
+     ],
+     [
+      122.4,
+      126.04
+     ],
+     [
+      126.43,
+      132.72
+     ],
+     [
+      133.03,
+      139.85
+     ],
+     [
+      140.21,
+      144.23
+     ],
+     [
+      145.01,
+      146.87
+     ],
+     [
+      147.16,
+      152.9
+     ],
+     [
+      153.14,
+      161.37
+     ],
+     [
+      161.67,
+      167.8
+     ],
+     [
+      168.09,
+      173.26
+     ],
+     [
+      173.52,
+      179.27
+     ],
+     [
+      180.05,
+      187.04
+     ],
+     [
+      187.26,
+      193.4
+     ],
+     [
+      193.67,
+      195.93
+     ]
+    ],
+    "duration": 196.6,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-11-07-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
