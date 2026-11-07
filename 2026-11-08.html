@@ -1,0 +1,2160 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-08",
+ "date": "2026-11-08",
+ "title": "Hubble Finds Small Galaxies Have Lost Most of the Oxygen Their Stars Made · Tech Sell-Off Shifts Market Fears from Inflation to Growth, Cooling Bets on More Rate Hikes",
+ "stories": [
+  {
+   "title": "Hubble Finds Small Galaxies Have Lost Most of the Oxygen Their Stars Made",
+   "topic": "Space · galaxy evolution",
+   "source": {
+    "name": "NASA Science: NASA's Hubble Uncovers Case of Missing Oxygen in Nearby Dwarf Galaxies (2 Nov 2026)",
+    "url": "https://science.nasa.gov/missions/hubble/nasas-hubble-uncovers-case-of-missing-oxygen-in-nearby-dwarf-galaxies/",
+    "links": [
+     {
+      "name": "McQuinn et al., The Astrophysical Journal 1011, 158: GLOW. II. A Census of Oxygen in Low-mass Galaxies (2 Nov 2026)",
+      "url": "https://iopscience.iop.org/article/10.3847/1538-4357/ae93a6"
+     },
+     {
+      "name": "Rutgers University: Stars Make Oxygen for Small Galaxies. They Lose Most of It.",
+      "url": "https://www.rutgers.edu/news/stars-make-oxygen-small-galaxies-they-lose-most-it"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead space story: astronomers using the Hubble Space Telescope say small nearby galaxies have lost most of the oxygen their stars ever made, and nobody yet knows exactly where it went.",
+     "Here's the report."
+    ],
+    [
+     "The study, published on Monday in The Astrophysical Journal, examined thirty-seven dwarf galaxies in our cosmic neighborhood.",
+     "These are modest systems, holding anywhere from a few thousand to hundreds of millions of stars.",
+     "The project is called GLOW, short for Galaxies Losing Oxygen via Winds, and it is funded by NASA and the National Science Foundation.",
+     "Why oxygen?",
+     "It is the most common element after hydrogen and helium, and astronomers treat it as a tracer for a much wider family of heavy elements.",
+     "Principal investigator Kristen McQuinn, of Rutgers University, said the choice was largely practical.",
+     "Oxygen is relatively easy to detect, she explained, and its production inside stars is well understood."
+    ],
+    [
+     "Interestingly, the team did not need new observations.",
+     "It drew on archival images from Hubble, along with measurements from NASA's retired Spitzer telescope and from two radio arrays, one in New Mexico and one in Australia.",
+     "Crucially, every galaxy in the sample is close enough for Hubble to pick out individual stars.",
+     "That allowed the researchers to reconstruct each galaxy's history of star formation, and so estimate how much oxygen it should have produced.",
+     "Most known dwarf galaxies, by contrast, are simply too far away for that kind of work."
+    ],
+    [
+     "The result was striking.",
+     "On average, the galaxies have kept only about eleven percent of their oxygen.",
+     "The range runs from as little as four percent to around twenty-five percent, and twenty-nine of the thirty-seven hold on to fifteen percent or less.",
+     "Nearly all of the oxygen that remains is found in the gas between stars, rather than in the stars themselves or in dust.",
+     "Computer simulations had predicted far higher figures."
+    ],
+    [
+     "So where did it go?",
+     "Co-investigator Grace Telford, of the University of Utah, said the oxygen had to be inside the galaxies at some point, so it must have been ejected.",
+     "Doing that, she said, takes energy from massive stars and supernova explosions, which drive material out into the space between galaxies.",
+     "In other words, galactic winds appear to strip oxygen from small galaxies more effectively than current models assume.",
+     "Location seems to matter, too.",
+     "Galaxies in denser environments, or close to a much larger galaxy, show a wider spread, with some keeping noticeably more oxygen."
+    ],
+    [
+     "Still, the case is far from closed.",
+     "Some of the lost oxygen has been detected in a diffuse halo of gas surrounding each galaxy, known as the circumgalactic medium.",
+     "But that halo appears to hold only part of the missing amount, and the rest may have escaped into intergalactic space altogether."
+    ],
+    [
+     "Looking ahead, McQuinn plans to use NASA's newly launched Nancy Grace Roman Space Telescope to hunt for even fainter, tinier galaxies across a wide swath of sky.",
+     "Telford, meanwhile, will use Hubble to zoom in on the individual massive stars that forge oxygen and then blow it away.",
+     "The case of the missing oxygen, it seems, will outlast this study.",
+     "That's the space and astronomy report.",
+     "Join us next week for more news from the night sky."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "The missing oxygen of dwarf galaxies",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Why study oxygen?"
+       },
+       {
+        "t": "Used as a [[1]] for many heavier elements"
+       },
+       {
+        "t": "Its [[2]] in stars is well understood"
+       },
+       {
+        "h": "Data and method"
+       },
+       {
+        "t": "Relied on [[3]] Hubble images plus Spitzer and radio data"
+       },
+       {
+        "t": "All galaxies near enough to see individual [[4]]"
+       },
+       {
+        "h": "Findings"
+       },
+       {
+        "t": "Oxygen kept on average: about [[5]] %"
+       },
+       {
+        "t": "Most remaining oxygen sits in interstellar [[6]]"
+       },
+       {
+        "h": "Explanation"
+       },
+       {
+        "t": "Material pushed out by massive stars and [[7]]"
+       },
+       {
+        "t": "Retention varies more among galaxies in denser [[8]]"
+       },
+       {
+        "h": "Open questions and next steps"
+       },
+       {
+        "t": "Some oxygen detected in a diffuse [[9]] around each galaxy"
+       },
+       {
+        "t": "Roman telescope to survey a wide [[10]] of sky"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "tracer"
+        ],
+        "ref": "treat it as a tracer for a much wider family",
+        "ev": "astronomers treat it as a tracer for a much wider family of heavy elements",
+        "zh": "Used as a ___ for heavier elements = treat it as a tracer for a much wider family of heavy elements → tracer（指標、示蹤物）。干擾：most common element after hydrogen and helium 是另一個特點。"
+       },
+       {
+        "a": [
+         "production"
+        ],
+        "ref": "its production inside stars is well understood",
+        "ev": "Oxygen is relatively easy to detect, she explained, and its production inside stars is well understood.",
+        "zh": "Its ___ in stars is well understood = its production inside stars is well understood → production（生成）。注意 easy to detect 是另一個理由。"
+       },
+       {
+        "a": [
+         "archival"
+        ],
+        "ref": "It drew on archival images from Hubble",
+        "ev": "It drew on archival images from Hubble, along with measurements from NASA's retired Spitzer telescope",
+        "zh": "Relied on ___ Hubble images = drew on archival images from Hubble → archival（檔案庫的、既有存檔的）。前一句 did not need new observations 是提示。retired 是形容 Spitzer，不是 Hubble 影像。"
+       },
+       {
+        "a": [
+         "stars"
+        ],
+        "ref": "close enough for Hubble to pick out individual stars",
+        "ev": "Crucially, every galaxy in the sample is close enough for Hubble to pick out individual stars.",
+        "zh": "near enough to see individual ___ = close enough … to pick out individual stars → stars。"
+       },
+       {
+        "a": [
+         "eleven",
+         "11"
+        ],
+        "ref": "kept only about eleven percent of their oxygen",
+        "ev": "On average, the galaxies have kept only about eleven percent of their oxygen.",
+        "zh": "平均約 11%。干擾：four percent（最低）、twenty-five percent（最高）、fifteen percent（29 個星系的上限）都不是平均值。"
+       },
+       {
+        "a": [
+         "gas"
+        ],
+        "ref": "found in the gas between stars",
+        "ev": "Nearly all of the oxygen that remains is found in the gas between stars, rather than in the stars themselves or in dust.",
+        "zh": "interstellar ___ = the gas between stars → gas。干擾：stars themselves、dust 都被 rather than 排除。"
+       },
+       {
+        "a": [
+         "supernova explosions",
+         "supernovae",
+         "supernovas",
+         "supernova"
+        ],
+        "ref": "massive stars and supernova explosions",
+        "ev": "takes energy from massive stars and supernova explosions, which drive material out into the space between galaxies",
+        "zh": "pushed out by massive stars and ___ → supernova explosions（超新星爆炸）。題幹已有 massive stars，答案是另一個能量來源。"
+       },
+       {
+        "a": [
+         "environments",
+         "environment"
+        ],
+        "ref": "Galaxies in denser environments",
+        "ev": "Galaxies in denser environments, or close to a much larger galaxy, show a wider spread",
+        "zh": "varies more … in denser ___ = denser environments … show a wider spread → environments（環境）。"
+       },
+       {
+        "a": [
+         "halo"
+        ],
+        "ref": "detected in a diffuse halo of gas",
+        "ev": "Some of the lost oxygen has been detected in a diffuse halo of gas surrounding each galaxy, known as the circumgalactic medium.",
+        "zh": "diffuse ___ around each galaxy = a diffuse halo of gas surrounding each galaxy → halo（暈、外圍氣體暈）。"
+       },
+       {
+        "a": [
+         "swath",
+         "swathe"
+        ],
+        "ref": "across a wide swath of sky",
+        "ev": "to hunt for even fainter, tinier galaxies across a wide swath of sky",
+        "zh": "survey a wide ___ of sky = across a wide swath of sky → swath（一大片區域）。fainter, tinier 是形容要找的星系，不是答案。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "The Missing Oxygen of Small Galaxies",
+    "intro": "A census of 37 nearby dwarf galaxies suggests that most of the oxygen their stars have forged has been lost, and that computer models underestimate how efficiently it escapes.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Almost every atom heavier than helium was manufactured inside stars. When massive stars die in supernova explosions, they scatter these elements into their surroundings, where they may later be incorporated into new stars, planets and, eventually, living things. Astronomers refer to the circulation of gas into, within and out of galaxies as the baryon cycle, and understanding it is central to explaining how galaxies grow and change over cosmic time. Yet one of the cycle's most basic quantities, namely how much of the material that stars produce a galaxy actually manages to keep, has proved surprisingly difficult to pin down, particularly for the small, faint systems known as dwarf galaxies."
+     },
+     {
+      "label": "B",
+      "text": "The Galaxies Losing Oxygen via Winds (GLOW) project, led by Kristen McQuinn of Rutgers University and funded by NASA and the US National Science Foundation, set out to measure that quantity directly. The team concentrated on oxygen for largely practical reasons: it is the most abundant element after hydrogen and helium, it is comparatively easy to detect, and its production in stars is well understood. It can therefore act as a dependable indicator for the wider population of heavy elements. The results, published on 2 November 2026 in The Astrophysical Journal, are based on 37 gas-rich galaxies lying within roughly six megaparsecs of the Milky Way. These galaxies were chosen partly because their masses fall in the range where theory predicts that an increasing share of their oxygen should be driven out by supernova explosions. All are close enough for the Hubble Space Telescope to resolve their individual stars, which is not possible for the vast majority of known dwarf galaxies."
+     },
+     {
+      "label": "C",
+      "text": "The method amounts to a kind of audit. Hubble images of resolved stars allowed the researchers to reconstruct each galaxy's star formation history and, from that history, to estimate how much oxygen its stars should have forged through nucleosynthesis over billions of years. This theoretical total was then compared with the oxygen actually present today in stars, dust and, above all, interstellar gas, using additional data from the retired Spitzer Space Telescope and from two radio facilities, the Very Large Array and the Australia Telescope Compact Array. The difference between the two figures represents oxygen that has, in effect, gone missing."
+     },
+     {
+      "label": "D",
+      "text": "That difference turned out to be large. The galaxies retain between 4% and 25% of the oxygen their stars have produced, with a mean of about 11%, and 29 of the 37 keep 15% or less. Nearly all of the oxygen that remains resides in gas rather than in stars or dust. Two further patterns emerged. Galaxies in denser surroundings, or within about one megaparsec of a massive neighbour, showed greater scatter towards higher retention, which suggests that environment influences how much oxygen is kept, recycled or captured from outside. Contrary to the team's expectations, however, retention showed no correlation with a galaxy's position on the mass–metallicity relation, a well-established link between a galaxy's mass and its chemical richness."
+     },
+     {
+      "label": "E",
+      "text": "The measurements also expose a weakness in theory. Hydrodynamical simulations successfully reproduce the mass–metallicity relation, yet they predict that small galaxies should hold on to considerably more oxygen than the GLOW sample does. The authors' preferred explanation is that galactic winds, powered by massive stars and supernova explosions, are apparently more effective at expelling oxygen from low-mass galaxies than current models allow. Simple modelling in the paper indicates that retention is governed largely by the amount of mass these winds carry and by how enriched the outflowing gas is. As co-investigator Grace Telford of the University of Utah put it, the oxygen had to be inside the galaxies at some point in the past, so it must have been ejected."
+     },
+     {
+      "label": "F",
+      "text": "Where the oxygen has ended up remains uncertain. A 2014 study of galaxies similar to the Milky Way found that some of their lost oxygen lingers in the circumgalactic medium, a diffuse halo of gas surrounding the visible disc. For dwarf galaxies, however, ionised oxygen detected in such haloes accounts for only around 1% to 7% of the oxygen produced, and even after a correction for forms of oxygen that cannot be observed, the halo may hold between 5% and 35%. Much of the remainder could have escaped into intergalactic space entirely, although this has not been directly observed. The estimates also depend on assumptions about stellar yields, that is, how much oxygen a given population of stars creates. McQuinn now plans to use the newly launched Nancy Grace Roman Space Telescope to locate even fainter dwarf galaxies, which Hubble and the James Webb Space Telescope could then examine in greater depth."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a description of how the amount of oxygen produced in the past was calculated",
+        "a": "C",
+        "ref": "C",
+        "ev": "to estimate how much oxygen its stars should have forged through nucleosynthesis over billions of years",
+        "zh": "C 段：用哈伯解析出的恆星重建恆星形成史，再推算恆星應該製造了多少氧（nucleosynthesis）。"
+       },
+       {
+        "q": "an acknowledgement that some figures rely on assumed values",
+        "a": "F",
+        "ref": "F",
+        "ev": "The estimates also depend on assumptions about stellar yields",
+        "zh": "F 段：估計值取決於對 stellar yields（恆星產量）的假設 → acknowledgement of assumptions。"
+       },
+       {
+        "q": "the reasons why one particular element was chosen for the research",
+        "a": "B",
+        "ref": "B",
+        "ev": "The team concentrated on oxygen for largely practical reasons",
+        "zh": "B 段：選氧的實際理由——含量多、容易偵測、生成過程清楚。"
+       },
+       {
+        "q": "an expected relationship that was not found",
+        "a": "D",
+        "ref": "D",
+        "ev": "Contrary to the team's expectations, however, retention showed no correlation with a galaxy's position on the mass–metallicity relation",
+        "zh": "D 段：與預期相反，保留率與質量－金屬量關係上的位置沒有相關。"
+       },
+       {
+        "q": "a general account of how elements made in stars are spread and reused",
+        "a": "A",
+        "ref": "A",
+        "ev": "they scatter these elements into their surroundings, where they may later be incorporated into new stars, planets and, eventually, living things",
+        "zh": "A 段：超新星把元素散布出去，之後併入新恆星、行星與生命 → 元素的散布與再利用（baryon cycle）。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Hubble can distinguish individual stars in only a small minority of known dwarf galaxies.",
+        "a": "True",
+        "ref": "B",
+        "ev": "which is not possible for the vast majority of known dwarf galaxies",
+        "zh": "B 段：對 the vast majority of known dwarf galaxies 都做不到 → 只有少數可以 → True。"
+       },
+       {
+        "q": "Galaxies that sit higher on the mass–metallicity relation were found to retain more oxygen.",
+        "a": "False",
+        "ref": "D",
+        "ev": "retention showed no correlation with a galaxy's position on the mass–metallicity relation",
+        "zh": "D 段：保留率與該關係上的位置「沒有相關」，題目說有正相關 → 與原文相反 → False。"
+       },
+       {
+        "q": "The Roman Space Telescope is expected to begin its search for faint galaxies within the next year.",
+        "a": "Not Given",
+        "ref": "F",
+        "ev": "McQuinn now plans to use the newly launched Nancy Grace Roman Space Telescope to locate even fainter dwarf galaxies",
+        "zh": "陷阱：F 段只說 McQuinn 計畫用 Roman 尋找更暗的矮星系，完全沒提何時開始或「一年內」→ Not Given。"
+       },
+       {
+        "q": "Existing simulations overestimate how much oxygen small galaxies keep.",
+        "a": "True",
+        "ref": "E",
+        "ev": "they predict that small galaxies should hold on to considerably more oxygen than the GLOW sample does",
+        "zh": "E 段：模擬預測的保留量比實測多很多 → 模擬高估 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Measuring and explaining the oxygen loss",
+      "lines": [
+       {
+        "t": "The GLOW team essentially carried out an [[1]] of each galaxy's oxygen: they estimated the total created through [[2]] in stars and compared it with the amount present today. Hydrodynamical [[3]] predict far higher retention than was measured. The authors argue that galactic winds are responsible, and that retention depends mainly on the mass these winds carry and on how [[4]] the outflowing gas is."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "audit"
+        ],
+        "ref": "C",
+        "ev": "The method amounts to a kind of audit.",
+        "zh": "C 段：The method amounts to a kind of audit → audit（盤點、稽核）。"
+       },
+       {
+        "a": [
+         "nucleosynthesis"
+        ],
+        "ref": "C",
+        "ev": "how much oxygen its stars should have forged through nucleosynthesis",
+        "zh": "C 段：created through ___ in stars = forged through nucleosynthesis（核合成）。"
+       },
+       {
+        "a": [
+         "simulations"
+        ],
+        "ref": "E",
+        "ev": "Hydrodynamical simulations successfully reproduce the mass–metallicity relation",
+        "zh": "E 段：Hydrodynamical simulations（流體動力學模擬）。"
+       },
+       {
+        "a": [
+         "enriched"
+        ],
+        "ref": "E",
+        "ev": "by how enriched the outflowing gas is",
+        "zh": "E 段：how enriched the outflowing gas is → enriched（富含重元素的）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "tracer",
+     "pos": "n.",
+     "def": "a substance whose presence or amount is used to follow or indicate something else",
+     "zh": "示蹤物、指標",
+     "example": "Oxygen is treated as a tracer for heavy elements.",
+     "match": [
+      "tracer"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "archival",
+     "pos": "adj.",
+     "def": "taken from records or data that were collected and stored earlier",
+     "zh": "檔案庫的、存檔的",
+     "example": "The team drew on archival images from Hubble.",
+     "match": [
+      "archival"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "retain",
+     "pos": "v.",
+     "def": "to keep or continue to have something",
+     "zh": "保留、保有",
+     "example": "The galaxies retain between 4% and 25% of their oxygen.",
+     "match": [
+      "retain",
+      "retention"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "eject",
+     "pos": "v.",
+     "def": "to push or throw something out with force",
+     "zh": "噴出、逐出",
+     "example": "The oxygen must have been ejected.",
+     "match": [
+      "ejected"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "expel",
+     "pos": "v.",
+     "def": "to force something out of a place",
+     "zh": "排出、驅逐",
+     "example": "Winds are effective at expelling oxygen from low-mass galaxies.",
+     "match": [
+      "expelling"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "diffuse",
+     "pos": "adj.",
+     "def": "spread out over a large area; not concentrated",
+     "zh": "瀰漫的、稀薄分散的",
+     "example": "Some oxygen lingers in a diffuse halo of gas.",
+     "match": [
+      "diffuse"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "halo",
+     "pos": "n.",
+     "def": "a cloud of gas surrounding the visible part of a galaxy",
+     "zh": "（星系）暈",
+     "example": "That halo holds only part of the missing oxygen.",
+     "match": [
+      "halo",
+      "haloes"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "intergalactic",
+     "pos": "adj.",
+     "def": "existing or happening in the space between galaxies",
+     "zh": "星系際的",
+     "example": "The rest may have escaped into intergalactic space.",
+     "match": [
+      "intergalactic"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "swath",
+     "pos": "n.",
+     "def": "a long, broad area of land or sky",
+     "zh": "一大片區域",
+     "example": "Roman will search a wide swath of sky.",
+     "match": [
+      "swath"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "abundant",
+     "pos": "adj.",
+     "def": "existing in large quantities",
+     "zh": "豐富的、大量存在的",
+     "example": "Oxygen is the most abundant element after hydrogen and helium.",
+     "match": [
+      "abundant"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "nucleosynthesis",
+     "pos": "n.",
+     "def": "the creation of new atomic nuclei, especially inside stars",
+     "zh": "核合成",
+     "example": "Stars forge oxygen through nucleosynthesis.",
+     "match": [
+      "nucleosynthesis"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "audit",
+     "pos": "n.",
+     "def": "an official, detailed check of amounts or accounts",
+     "zh": "稽核、盤點",
+     "example": "The method amounts to a kind of audit.",
+     "match": [
+      "audit"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "correlation",
+     "pos": "n.",
+     "def": "a connection in which two things change together",
+     "zh": "相關性",
+     "example": "Retention showed no correlation with position on the relation.",
+     "match": [
+      "correlation"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "scatter",
+     "pos": "n./v.",
+     "def": "(of data) the degree to which values are spread out; to spread widely",
+     "zh": "離散程度；散布",
+     "example": "Galaxies in denser surroundings showed greater scatter.",
+     "match": [
+      "scatter"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "pin down",
+     "pos": "phr. v.",
+     "def": "to discover or describe something exactly",
+     "zh": "確定、弄清楚",
+     "example": "The quantity has proved difficult to pin down.",
+     "match": [
+      "pin down"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-08-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.11
+     ],
+     [
+      1.33,
+      13.23
+     ],
+     [
+      13.61,
+      14.66
+     ],
+     [
+      15.44,
+      23.01
+     ],
+     [
+      23.28,
+      28.79
+     ],
+     [
+      29.11,
+      37.6
+     ],
+     [
+      37.84,
+      38.76
+     ],
+     [
+      39.16,
+      47.4
+     ],
+     [
+      47.73,
+      54.34
+     ],
+     [
+      54.58,
+      61.16
+     ],
+     [
+      61.94,
+      65.0
+     ],
+     [
+      65.21,
+      75.39
+     ],
+     [
+      75.73,
+      81.15
+     ],
+     [
+      81.46,
+      89.71
+     ],
+     [
+      89.93,
+      95.15
+     ],
+     [
+      95.93,
+      97.3
+     ],
+     [
+      97.58,
+      102.18
+     ],
+     [
+      102.41,
+      110.92
+     ],
+     [
+      111.2,
+      118.25
+     ],
+     [
+      118.58,
+      121.99
+     ],
+     [
+      122.77,
+      123.94
+     ],
+     [
+      124.36,
+      133.49
+     ],
+     [
+      133.7,
+      142.28
+     ],
+     [
+      142.66,
+      149.53
+     ],
+     [
+      149.83,
+      151.84
+     ],
+     [
+      152.03,
+      160.37
+     ],
+     [
+      161.15,
+      163.24
+     ],
+     [
+      163.56,
+      171.43
+     ],
+     [
+      171.78,
+      179.1
+     ],
+     [
+      179.88,
+      190.05
+     ],
+     [
+      190.46,
+      197.86
+     ],
+     [
+      198.11,
+      202.15
+     ],
+     [
+      202.44,
+      204.78
+     ],
+     [
+      204.97,
+      207.81
+     ]
+    ],
+    "duration": 208.5,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-11-08-1-words/"
+   }
+  },
+  {
+   "title": "Tech Sell-Off Shifts Market Fears from Inflation to Growth, Cooling Bets on More Rate Hikes",
+   "topic": "Economics · rates & growth",
+   "source": {
+    "name": "Reuters (via Investing.com): Analysis - Trader angst pivots from inflation to growth as tech rout deepens (Dhara Ranasinghe, Karin Strohecker, 6 Nov 2026)",
+    "url": "https://www.investing.com/news/economy-news/analysistrader-angst-pivots-from-inflation-to-growth-as-tech-rout-deepens-5008688",
+    "links": [
+     {
+      "name": "Reuters (via Investing.com): Markets fret over growth and inflation, just as tech rout gains speed (6 Nov 2026)",
+      "url": "https://www.investing.com/news/economy-news/markets-fret-over-growth-and-inflation-despite-easing-oil-prices-5006479"
+     },
+     {
+      "name": "Reuters (via Investing.com): IMF's Georgieva says any slowdown in AI-driven growth would be factor for central banks (6 Nov 2026)",
+      "url": "https://www.investing.com/news/economy-news/imfs-georgieva-says-any-slowdown-in-aidriven-growth-would-be-factor-for-central-banks-5009427"
+     },
+     {
+      "name": "TD Economics: Weekly Bottom Line (US jobs report, October 2026)",
+      "url": "https://economics.td.com/us-weekly-bottom-line"
+     },
+     {
+      "name": "Axios: Interest rate hike isn't a sure thing, despite strong jobs report (6 Nov 2026)",
+      "url": "https://www.axios.com/2026/11/06/federal-reserve-jobs-report-bonds"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning, and welcome to the business and economy desk.",
+     "A sharp sell-off in technology shares has shifted investors' main worry from inflation to growth, and traders are now less certain that central banks will keep raising interest rates.",
+     "Here's the story."
+    ],
+    [
+     "On Thursday, the tech-heavy Nasdaq index suffered its deepest one-day drop since the so-called Liberation Day rout of April twenty twenty-five.",
+     "Trillions of dollars in market value were wiped out.",
+     "According to Reuters, the selling followed the Democrats' sweeping victory in the US midterm elections.",
+     "Investors fear tougher scrutiny of artificial intelligence and possible curbs on data centre construction, on top of existing worries about the huge cost of the AI build-out.",
+     "The rout also spread to Asia, where Taiwanese shares had their worst week since two thousand and one."
+    ],
+    [
+     "Why does that matter for the wider economy?",
+     "Tim Graf, head of macro strategy for Europe, the Middle East and Africa at State Street, said the stock market is inextricably linked to the economy.",
+     "When share values fall, he argued, the wealth effects that helped fuel consumer-led growth go into reverse.",
+     "That is significant, because US household wealth rose at a record pace in the second quarter, while the S and P five hundred is up almost sixty percent over five years."
+    ],
+    [
+     "Meanwhile, bets on further rate rises have cooled.",
+     "Traders now see roughly a seventy percent chance of a Federal Reserve hike in December, down from more than eighty percent a week earlier.",
+     "For the European Central Bank, the odds have slipped to about sixty percent, from seventy-five.",
+     "Lee Hardman, a senior currency analyst at MUFG, said tighter financial conditions could prove more important to the Fed's December decision than Friday's jobs report.",
+     "That report was strong, as it happens: employers added a hundred and sixty-five thousand jobs in October, and the unemployment rate edged down to four point one percent."
+    ],
+    [
+     "In Asia, South Korea looks particularly exposed, because the data-centre boom has become increasingly important to its exports and investment.",
+     "Bank of Korea policymakers have stressed that actual memory prices, rather than chipmakers' share prices, are the better guide to the real economy.",
+     "Elsewhere in emerging markets, a global retreat from risk could weaken currencies and add to inflation, limiting how far central banks can respond to slower growth."
+    ],
+    [
+     "Still, analysts caution that it is too early to call this a lasting downturn.",
+     "Ross Hutchinson, of Zurich Insurance, said the sell-off raises short-term downside risks, but the longer-term situation looks more sustainable.",
+     "In his view, the real case for AI rests not on building data centres but on a boost to productivity.",
+     "The International Monetary Fund forecasts global growth of three point one percent this year, but warns that a steep fall in AI investment could cut world output by one point one percent by twenty twenty-eight."
+    ],
+    [
+     "There are risks on both sides, though.",
+     "Phoenix Kalen of Societe Generale said elevated energy prices, linked to the conflict in the Middle East, remain a central focus for policymakers.",
+     "Euro zone inflation stands at a three-year high of four percent, double the European Central Bank's target.",
+     "And on Friday, the IMF's managing director, Kristalina Georgieva, warned that markets were swinging up and down, and that this was likely to continue.",
+     "She added that such volatility would complicate the job of central banks.",
+     "That's the economy desk for this week.",
+     "Next week, all eyes turn to the latest US inflation figures."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Tech sell-off and the interest-rate outlook",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The trigger"
+       },
+       {
+        "t": "Selling came after the Democrats won the [[1]] elections"
+       },
+       {
+        "t": "Worries about limits on data centre [[2]]"
+       },
+       {
+        "t": "Taiwan's stock market: worst week since [[3]]"
+       },
+       {
+        "h": "Economic impact"
+       },
+       {
+        "t": "Falling shares can reverse consumer wealth [[4]]"
+       },
+       {
+        "h": "Rate expectations"
+       },
+       {
+        "t": "MUFG: tighter financial [[5]] may outweigh the jobs data"
+       },
+       {
+        "h": "Asia and emerging markets"
+       },
+       {
+        "t": "Bank of Korea watches actual memory [[6]], not chip stocks"
+       },
+       {
+        "t": "Flight from risk could weaken [[7]]"
+       },
+       {
+        "h": "Longer view and risks"
+       },
+       {
+        "t": "Zurich Insurance: AI's real promise lies in greater [[8]]"
+       },
+       {
+        "t": "Policymakers still focused on high [[9]] prices"
+       },
+       {
+        "t": "IMF chief: ongoing [[10]] makes central banks' work harder"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "midterm",
+         "mid-term",
+         "midterms"
+        ],
+        "ref": "victory in the US midterm elections",
+        "ev": "the selling followed the Democrats' sweeping victory in the US midterm elections",
+        "zh": "won the ___ elections = sweeping victory in the US midterm elections → midterm（期中選舉）。"
+       },
+       {
+        "a": [
+         "construction"
+        ],
+        "ref": "possible curbs on data centre construction",
+        "ev": "possible curbs on data centre construction",
+        "zh": "limits on data centre ___ = curbs on data centre construction → construction。干擾：scrutiny of artificial intelligence、cost of the AI build-out 是其他擔憂。"
+       },
+       {
+        "a": [
+         "2001"
+        ],
+        "ref": "worst week since two thousand and one",
+        "ev": "Taiwanese shares had their worst week since two thousand and one",
+        "zh": "台股最慘一週「自 2001 年以來」。干擾：April 2025（那斯達克單日最大跌幅的比較基準）。"
+       },
+       {
+        "a": [
+         "effects",
+         "effect"
+        ],
+        "ref": "the wealth effects that helped fuel consumer-led growth",
+        "ev": "the wealth effects that helped fuel consumer-led growth go into reverse",
+        "zh": "reverse consumer wealth ___ = the wealth effects … go into reverse → effects（財富效果）。"
+       },
+       {
+        "a": [
+         "conditions"
+        ],
+        "ref": "tighter financial conditions could prove more important",
+        "ev": "tighter financial conditions could prove more important to the Fed's December decision than Friday's jobs report",
+        "zh": "may outweigh the jobs data = could prove more important … than Friday's jobs report → financial conditions（金融情勢）。"
+       },
+       {
+        "a": [
+         "prices"
+        ],
+        "ref": "actual memory prices, rather than chipmakers' share prices",
+        "ev": "Bank of Korea policymakers have stressed that actual memory prices, rather than chipmakers' share prices, are the better guide to the real economy.",
+        "zh": "actual memory ___, not chip stocks = actual memory prices, rather than chipmakers' share prices → prices（記憶體實際價格）。"
+       },
+       {
+        "a": [
+         "currencies"
+        ],
+        "ref": "could weaken currencies and add to inflation",
+        "ev": "a global retreat from risk could weaken currencies and add to inflation",
+        "zh": "Flight from risk = a global retreat from risk；could weaken ___ → currencies（貨幣）。add to inflation 是另一個後果。"
+       },
+       {
+        "a": [
+         "productivity"
+        ],
+        "ref": "on a boost to productivity",
+        "ev": "the real case for AI rests not on building data centres but on a boost to productivity",
+        "zh": "real promise lies in greater ___ = the real case for AI rests … on a boost to productivity → productivity（生產力）。干擾：building data centres 被 not … but 否定。"
+       },
+       {
+        "a": [
+         "energy"
+        ],
+        "ref": "elevated energy prices, linked to the conflict",
+        "ev": "Phoenix Kalen of Societe Generale said elevated energy prices, linked to the conflict in the Middle East, remain a central focus for policymakers.",
+        "zh": "still focused on high ___ prices = elevated energy prices … remain a central focus → energy（能源）。"
+       },
+       {
+        "a": [
+         "volatility"
+        ],
+        "ref": "such volatility would complicate the job of central banks",
+        "ev": "She added that such volatility would complicate the job of central banks.",
+        "zh": "ongoing ___ makes central banks' work harder = such volatility would complicate the job of central banks → volatility（波動）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "When Markets Do the Tightening",
+    "intro": "A sharp fall in technology shares in November 2026 turned investors' attention from inflation to growth, and raised questions about how far central banks still need to go.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "For most of 2026, the dominant question for central bankers was inflation. Energy prices surged as a result of the war involving Iran, and by early November oil was still up 64% on the year, even after a 15% fall in a single week, while natural gas remained nearly three times its level at the start of the year. Euro zone inflation reached a three-year high of 4%, twice the European Central Bank's target, and US inflation had been above the Federal Reserve's goal for more than five years. Against this backdrop, interest rates rose across much of the world. In the first week of November, however, the focus of financial markets began to shift, as a sharp fall in technology shares raised a different concern: that growth, rather than inflation, might become the larger problem."
+     },
+     {
+      "label": "B",
+      "text": "The trigger was political as well as financial. After the Democrats swept the US midterm elections, investors began to anticipate tougher scrutiny of artificial intelligence and possible restrictions on new data centres, adding to existing doubts about the enormous cost of the AI build-out. On 5 November the Nasdaq recorded its deepest one-day fall since April 2025, and trillions of dollars of market value disappeared. The damage was not confined to the United States: Taiwanese equities endured their worst week since 2001. Analysts were divided over whether this was a healthy correction from lofty valuations or the beginning of a deeper slide that could slow growth sharply."
+     },
+     {
+      "label": "C",
+      "text": "Economists pay close attention to such episodes because of the so-called wealth effect. When the value of shares and other assets rises, households tend to feel richer and spend more freely; when prices fall, the process can go into reverse. The effect may be unusually potent at present. US household wealth rose at a record pace in the second quarter of 2026 on a surge in equity holdings, and the S&P 500 had gained almost 60% over five years. Tim Graf of State Street described the stock market as 'inextricably linked to the economy', warning that falling asset values would weaken consumer-led growth. Further declines could also raise companies' funding costs and curb investors' appetite for risk, which might in turn weigh on future investment."
+     },
+     {
+      "label": "D",
+      "text": "This creates a dilemma for policymakers. A fall in asset prices tightens financial conditions without any decision by a central bank, potentially doing some of the work that rate rises would otherwise do. Markets adjusted quickly: the probability attached to a December Fed hike fell to around 70% from more than 80% a week earlier, and the chance of an ECB increase fell to about 60% from 75%. Yet the inflation picture remains uncomfortable. Food prices, pushed up by extreme weather, shipping disruptions and high energy costs, have lifted the United Nations Food and Agriculture Organization's index to its highest level in nearly four years. Economists warn of so-called second-round effects, in which workers who expect prices to keep rising press for higher wages, making inflation harder to dislodge."
+     },
+     {
+      "label": "E",
+      "text": "The consequences are likely to differ from country to country. South Korea appears especially exposed, since the data-centre boom has become increasingly important to its exports, investment and stock market. Its central bank has emphasised that actual memory chip prices matter more for the real economy than chipmakers' share prices. One Citi economist expects rate rises in November and February, but says a sharp fall in memory prices and semiconductor exports could prompt the bank to pause after November. In other emerging economies, a global retreat from risk could weaken currencies and thereby add to inflation, constraining central banks precisely when growth is slowing. A Manulife portfolio manager argued that greater policy dispersion should be expected, rather than a synchronised response."
+     },
+     {
+      "label": "F",
+      "text": "Not everyone regards the sell-off as a turning point. Ross Hutchinson of Zurich Insurance argued that although short-term downside risks had increased, the longer-term situation looked more sustainable, because the true promise of AI lies in productivity gains rather than in data-centre construction. The International Monetary Fund, which expects global growth of 3.1% this year, has nonetheless sketched a downside scenario in which a steep fall in AI investment cuts global output by 1.1% by 2028, including a 1.8% drop in US output. Others caution against gloomy labels: RJ Gallo of Federated Hermes warned against overusing the term stagflation, noting that the US economy is still growing at a solid pace. For now, the episode illustrates how quickly the balance of risks can tilt, and how closely monetary policy is bound up with the mood of financial markets."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reference to an international measure of food costs",
+        "a": "D",
+        "ref": "D",
+        "ev": "have lifted the United Nations Food and Agriculture Organization's index to its highest level in nearly four years",
+        "zh": "D 段：聯合國糧農組織（FAO）的糧價指數創近四年新高。"
+       },
+       {
+        "q": "an argument that the main benefit of AI is not physical infrastructure",
+        "a": "F",
+        "ref": "F",
+        "ev": "the true promise of AI lies in productivity gains rather than in data-centre construction",
+        "zh": "F 段：AI 真正的價值在生產力提升，而不是蓋資料中心（physical infrastructure 的改述）。"
+       },
+       {
+        "q": "an explanation of how asset prices can affect household spending",
+        "a": "C",
+        "ref": "C",
+        "ev": "households tend to feel richer and spend more freely; when prices fall, the process can go into reverse",
+        "zh": "C 段：wealth effect——資產價格上漲讓家庭覺得更富有而多花錢，下跌則相反。"
+       },
+       {
+        "q": "a prediction that central banks will not all respond in the same way",
+        "a": "E",
+        "ref": "E",
+        "ev": "greater policy dispersion should be expected, rather than a synchronised response",
+        "zh": "E 段：policy dispersion（政策分歧）而非 synchronised response → 各國央行反應不一。"
+       },
+       {
+        "q": "the political development that came before the fall in share prices",
+        "a": "B",
+        "ref": "B",
+        "ev": "After the Democrats swept the US midterm elections",
+        "zh": "B 段：民主黨在期中選舉大勝之後，市場開始預期更嚴格的 AI 監管。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "US inflation had exceeded the Federal Reserve's target for over half a decade.",
+        "a": "True",
+        "ref": "A",
+        "ev": "US inflation had been above the Federal Reserve's goal for more than five years",
+        "zh": "A 段：more than five years = over half a decade → True。"
+       },
+       {
+        "q": "After the sell-off, traders became more confident that the ECB would raise rates in December.",
+        "a": "False",
+        "ref": "D",
+        "ev": "the chance of an ECB increase fell to about 60% from 75%",
+        "zh": "D 段：ECB 升息機率從 75% 降到約 60%，是「較沒信心」→ 與題目相反 → False。"
+       },
+       {
+        "q": "Taiwan's central bank intervened to support local share prices.",
+        "a": "Not Given",
+        "ref": "B",
+        "ev": "Taiwanese equities endured their worst week since 2001",
+        "zh": "陷阱：B 段只說台股創 2001 年以來最差一週，完全沒提台灣央行有無進場干預 → Not Given。（E 段談的是韓國央行。）"
+       },
+       {
+        "q": "In the IMF's downside scenario, the fall in US output is larger than the fall in global output.",
+        "a": "True",
+        "ref": "F",
+        "ev": "cuts global output by 1.1% by 2028, including a 1.8% drop in US output",
+        "zh": "F 段：全球 −1.1%，美國 −1.8% → 美國跌幅較大 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Reading the November sell-off",
+      "lines": [
+       {
+        "t": "Some analysts saw the slump as a healthy [[1]] after shares had become expensive, while others feared a deeper slide. Further falls could raise firms' funding costs and reduce investors' [[2]] for risk. At the same time, rising food prices could prompt workers to seek higher [[3]], keeping inflation high. Even so, one fund manager cautioned that the word [[4]] was being used too often."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "correction"
+        ],
+        "ref": "B",
+        "ev": "whether this was a healthy correction from lofty valuations",
+        "zh": "B 段：a healthy correction from lofty valuations → correction（修正、回檔）。lofty valuations = shares had become expensive。"
+       },
+       {
+        "a": [
+         "appetite"
+        ],
+        "ref": "C",
+        "ev": "curb investors' appetite for risk",
+        "zh": "C 段：curb investors' appetite for risk → appetite（胃口、意願）。"
+       },
+       {
+        "a": [
+         "wages"
+        ],
+        "ref": "D",
+        "ev": "press for higher wages, making inflation harder to dislodge",
+        "zh": "D 段：second-round effects——工人要求更高工資 → wages。"
+       },
+       {
+        "a": [
+         "stagflation"
+        ],
+        "ref": "F",
+        "ev": "warned against overusing the term stagflation",
+        "zh": "F 段：warned against overusing the term stagflation（停滯性通膨）= used too often。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "rout",
+     "pos": "n.",
+     "def": "a sudden, heavy fall in prices accompanied by widespread selling",
+     "zh": "暴跌、潰敗",
+     "example": "The rout also spread to Asia.",
+     "match": [
+      "rout"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "scrutiny",
+     "pos": "n.",
+     "def": "close and critical examination, often by regulators",
+     "zh": "審查、嚴格檢視",
+     "example": "Investors fear tougher scrutiny of artificial intelligence.",
+     "match": [
+      "scrutiny"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "curb",
+     "pos": "n./v.",
+     "def": "a limit on something; to restrict it",
+     "zh": "限制；抑制",
+     "example": "There could be curbs on data centre construction.",
+     "match": [
+      "curbs",
+      "curb"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "build-out",
+     "pos": "n.",
+     "def": "the large-scale construction and expansion of infrastructure",
+     "zh": "大規模建置",
+     "example": "Investors worry about the huge cost of the AI build-out.",
+     "match": [
+      "build-out"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "inextricably",
+     "pos": "adv.",
+     "def": "in a way that is impossible to separate",
+     "zh": "密不可分地",
+     "example": "The stock market is inextricably linked to the economy.",
+     "match": [
+      "inextricably"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "wealth effect",
+     "pos": "n.",
+     "def": "the tendency of people to spend more when their assets rise in value",
+     "zh": "財富效果",
+     "example": "The wealth effects that fuelled growth may go into reverse.",
+     "match": [
+      "wealth effects",
+      "wealth effect"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "financial conditions",
+     "pos": "n.",
+     "def": "how easy or costly it is to borrow and raise money in markets",
+     "zh": "金融情勢",
+     "example": "Tighter financial conditions could matter more than the jobs report.",
+     "match": [
+      "financial conditions"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "exposed",
+     "pos": "adj.",
+     "def": "likely to be harmed by a particular risk",
+     "zh": "曝險的、易受衝擊的",
+     "example": "South Korea looks particularly exposed.",
+     "match": [
+      "exposed"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "downside risk",
+     "pos": "n.",
+     "def": "the possibility that things will turn out worse than expected",
+     "zh": "下行風險",
+     "example": "The sell-off raises short-term downside risks.",
+     "match": [
+      "downside risks",
+      "downside"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "volatility",
+     "pos": "n.",
+     "def": "rapid and unpredictable changes in prices",
+     "zh": "波動性",
+     "example": "Such volatility would complicate the job of central banks.",
+     "match": [
+      "volatility"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "lofty",
+     "pos": "adj.",
+     "def": "(of prices or values) very high, possibly too high",
+     "zh": "（價格）高昂的",
+     "example": "It may be a correction from lofty valuations.",
+     "match": [
+      "lofty"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "potent",
+     "pos": "adj.",
+     "def": "having a strong effect",
+     "zh": "強而有力的",
+     "example": "The wealth effect may be unusually potent at present.",
+     "match": [
+      "potent"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "dislodge",
+     "pos": "v.",
+     "def": "to remove something that is firmly fixed",
+     "zh": "使移位、去除",
+     "example": "Second-round effects make inflation harder to dislodge.",
+     "match": [
+      "dislodge"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "dispersion",
+     "pos": "n.",
+     "def": "the spreading out of something so that it varies widely",
+     "zh": "分歧、分散",
+     "example": "Greater policy dispersion should be expected.",
+     "match": [
+      "dispersion"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "stagflation",
+     "pos": "n.",
+     "def": "a combination of high inflation, weak growth and rising unemployment",
+     "zh": "停滯性通膨",
+     "example": "He warned against overusing the term stagflation.",
+     "match": [
+      "stagflation"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-08-2.mp3",
+    "times": [
+     [
+      0.36,
+      3.57
+     ],
+     [
+      3.83,
+      12.57
+     ],
+     [
+      12.95,
+      14.01
+     ],
+     [
+      14.79,
+      22.11
+     ],
+     [
+      22.38,
+      25.13
+     ],
+     [
+      25.45,
+      30.76
+     ],
+     [
+      31.0,
+      40.27
+     ],
+     [
+      40.63,
+      45.77
+     ],
+     [
+      46.55,
+      48.71
+     ],
+     [
+      49.11,
+      57.06
+     ],
+     [
+      57.36,
+      63.46
+     ],
+     [
+      63.67,
+      72.75
+     ],
+     [
+      73.53,
+      76.43
+     ],
+     [
+      76.73,
+      83.53
+     ],
+     [
+      83.76,
+      88.73
+     ],
+     [
+      89.0,
+      97.9
+     ],
+     [
+      98.21,
+      107.23
+     ],
+     [
+      108.01,
+      115.97
+     ],
+     [
+      116.26,
+      123.65
+     ],
+     [
+      123.98,
+      132.74
+     ],
+     [
+      133.52,
+      137.93
+     ],
+     [
+      138.22,
+      145.9
+     ],
+     [
+      146.11,
+      151.71
+     ],
+     [
+      151.97,
+      162.32
+     ],
+     [
+      163.1,
+      165.29
+     ],
+     [
+      165.51,
+      173.54
+     ],
+     [
+      173.81,
+      179.41
+     ],
+     [
+      179.73,
+      188.28
+     ],
+     [
+      188.51,
+      192.33
+     ],
+     [
+      192.61,
+      194.56
+     ],
+     [
+      195.01,
+      198.87
+     ]
+    ],
+    "duration": 199.5,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-08-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
