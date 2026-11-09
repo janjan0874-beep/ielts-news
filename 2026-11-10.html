@@ -1,0 +1,2134 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-10",
+ "date": "2026-11-10",
+ "title": "Memory Makers Split Over Next DRAM Design as China's CXMT Bets on '4F²' and Micron Opts Out · Short Course of New Pills May Cure a Common Hormonal Cause of High Blood Pressure",
+ "stories": [
+  {
+   "title": "Memory Makers Split Over Next DRAM Design as China's CXMT Bets on '4F²' and Micron Opts Out",
+   "topic": "Semiconductors · DRAM design",
+   "source": {
+    "name": "Businesskorea: CXMT Claims Breakthrough with 4F² DRAM Verification, Raising Mass Production Doubts (3 Nov 2026)",
+    "url": "https://www.businesskorea.co.kr/news/articleView.html?idxno=280315",
+    "links": [
+     {
+      "name": "Tom's Hardware: Micron details ambitious DRAM and NAND roadmap (4 Nov 2026)",
+      "url": "https://www.tomshardware.com/pc-components/dram/micron-details-ambitious-dram-and-nand-roadmap-3d-nand-high-na-euv-new-materials-and-custom-silicon-makes-a-comeback"
+     },
+     {
+      "name": "DIGITIMES: Micron skips 4F² for 3D DRAM as CXMT pushes ahead (22 Oct 2026)",
+      "url": "https://www.digitimes.com/news/a20261022VL208/dram-micron-cxmt-technology-roadmap.html"
+     },
+     {
+      "name": "DIGITIMES weekly roundup: DRAM rivals diverge (9 Nov 2026)",
+      "url": "https://www.digitimes.com/news/a20261109VL201/2026-competition-dram-cxmt-packaging.html"
+     },
+     {
+      "name": "SMM: CXMT completes engineering sample validation of 6th-gen DRAM platform (31 Oct 2026)",
+      "url": "https://news.metal.com/newscontent/XE3HUN7OLOT2P74GJZCEUTXYPTF5SYLXUR4AUQI-cxmt-completes-engineering-sample-validation-of-6th-gen-dram-platform"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead story in technology: the world's memory chipmakers are split over how to cram more data onto a chip, and the disagreement could shape who leads the industry for the rest of the decade.",
+     "Here's the report."
+    ],
+    [
+     "The chips in question are DRAM, the working memory found in everything from smartphones to the servers that run artificial intelligence.",
+     "Each DRAM chip is made up of billions of tiny cells, and each cell stores a single bit of data.",
+     "For years, the standard cell has measured three units wide by two units long, a layout the industry calls six F squared.",
+     "A newer design, known as four F squared, shrinks that footprint to two units by two.",
+     "In theory, that means more cells, and so more capacity, on the same area of silicon."
+    ],
+    [
+     "The Chinese memory maker CXMT says it is ahead in that race.",
+     "Announcing its quarterly results on October the thirtieth, the company said engineering samples using the new design had passed verification.",
+     "It plans to send samples to customers before the end of the year, and claims it will be the first in the world to bring such a product to market.",
+     "Still, analysts are cautious.",
+     "The firm has not disclosed its yield, meaning the share of chips on each wafer that actually work.",
+     "Professor Lee Jong-hwan of Sangmyung University told the news site Businesskorea that a yield of seventy to eighty percent is generally considered viable for mass production.",
+     "There's also a track record to consider.",
+     "CXMT had been reported to be planning mass production of an earlier type of memory, DDR5, in twenty twenty-two, but products using its chips only reached the market at the end of twenty twenty-four, two years later."
+    ],
+    [
+     "Meanwhile, the American company Micron has gone in the opposite direction.",
+     "It has dropped four F squared from its roadmap altogether, saying the design offers no viable path for further scaling.",
+     "Instead, Micron will stay with the familiar six F squared cell for several more generations.",
+     "Its next process, called one-delta, is due to enter mass production in the second half of twenty twenty-seven.",
+     "Micron's president and technology chief, Scott DeBoer, said that DRAM is nearing atomic limits.",
+     "He added that the company wants to introduce three-D DRAM at the optimal time, from a cost and performance point of view.",
+     "In other words, rather than making each cell smaller, Micron eventually wants to stack cells vertically, much as the industry already does with flash storage."
+    ],
+    [
+     "By contrast, South Korea's Samsung Electronics and SK hynix are also developing four F squared, and are preparing to use it on processes finer than ten nanometres.",
+     "Industry estimates suggest CXMT has built its version on an older process of twelve to fifteen nanometres.",
+     "So even if the Chinese firm wins the race to market, it may not immediately close the gap with its Korean rivals.",
+     "Its real advantage lies elsewhere: a vast domestic market, with Chinese tech giants such as Alibaba, Tencent and ByteDance already among its customers."
+    ],
+    [
+     "There are risks on both sides, though.",
+     "If four F squared works at scale, Micron could find itself behind; if yields disappoint, CXMT's early lead may count for little.",
+     "That's the technology report for this Tuesday morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "The race to redesign DRAM",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "What DRAM is"
+       },
+       {
+        "t": "Acts as the [[1]] in phones and AI servers"
+       },
+       {
+        "t": "Each cell holds one [[2]] of data"
+       },
+       {
+        "h": "CXMT's 4F² progress"
+       },
+       {
+        "t": "Samples to be shipped to [[3]] by year-end"
+       },
+       {
+        "t": "Key figure not yet revealed: its [[4]]"
+       },
+       {
+        "t": "DDR5 memory arrived about [[5]] years behind plan"
+       },
+       {
+        "h": "Micron's position"
+       },
+       {
+        "t": "Says 4F² has no realistic route to further [[6]]"
+       },
+       {
+        "t": "DeBoer: DRAM is approaching [[7]] limits"
+       },
+       {
+        "t": "3D DRAM timing to be judged on cost and [[8]]"
+       },
+       {
+        "t": "Long-term aim: to [[9]] cells vertically"
+       },
+       {
+        "h": "CXMT's strength"
+       },
+       {
+        "t": "A huge [[10]] market and major tech clients"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "working memory"
+        ],
+        "ref": "the working memory found in everything",
+        "ev": "DRAM, the working memory found in everything from smartphones to the servers that run artificial intelligence",
+        "zh": "Acts as the ___ = DRAM, the working memory found in… → working memory（工作記憶體／主記憶體）。phones ↔ smartphones、AI servers ↔ servers that run artificial intelligence。"
+       },
+       {
+        "a": [
+         "bit",
+         "single bit"
+        ],
+        "ref": "each cell stores a single bit of data",
+        "ev": "each cell stores a single bit of data",
+        "zh": "holds one ___ of data = stores a single bit of data → bit（位元）。干擾：billions of tiny cells 是晶片內的格子數量。"
+       },
+       {
+        "a": [
+         "customers",
+         "customer"
+        ],
+        "ref": "send samples to customers before the end of the year",
+        "ev": "It plans to send samples to customers before the end of the year",
+        "zh": "shipped to ___ by year-end = send samples to customers before the end of the year → customers（客戶）。干擾：engineering samples 已通過 verification 是過去式、不是要送給誰。"
+       },
+       {
+        "a": [
+         "yield"
+        ],
+        "ref": "The firm has not disclosed its yield",
+        "ev": "The firm has not disclosed its yield, meaning the share of chips on each wafer that actually work.",
+        "zh": "Key figure not yet revealed = has not disclosed → yield（良率）。干擾：seventy to eighty percent 是教授說的「可量產門檻」，不是 CXMT 公布的數字。"
+       },
+       {
+        "a": [
+         "two",
+         "2"
+        ],
+        "ref": "two years later",
+        "ev": "in twenty twenty-two, but products using its chips only reached the market at the end of twenty twenty-four, two years later",
+        "zh": "arrived about ___ years behind plan = 原計畫 2022、實際 2024 年底上市，two years later → 2 / two。本篇唯一的數字答案；同句出現兩個年份當干擾。"
+       },
+       {
+        "a": [
+         "scaling"
+        ],
+        "ref": "no viable path for further scaling",
+        "ev": "saying the design offers no viable path for further scaling",
+        "zh": "no realistic route to further ___ = no viable path for further scaling → scaling（微縮）。realistic ↔ viable、route ↔ path 是改述。"
+       },
+       {
+        "a": [
+         "atomic"
+        ],
+        "ref": "DRAM is nearing atomic limits",
+        "ev": "said that DRAM is nearing atomic limits",
+        "zh": "approaching ___ limits = nearing atomic limits → atomic（原子的）。approaching ↔ nearing。"
+       },
+       {
+        "a": [
+         "performance"
+        ],
+        "ref": "from a cost and performance point of view",
+        "ev": "introduce three-D DRAM at the optimal time, from a cost and performance point of view",
+        "zh": "judged on cost and ___ = from a cost and performance point of view → performance（效能）。題幹已給 cost，填另一個。"
+       },
+       {
+        "a": [
+         "stack"
+        ],
+        "ref": "wants to stack cells vertically",
+        "ev": "Micron eventually wants to stack cells vertically",
+        "zh": "Long-term aim: to ___ cells vertically = eventually wants to stack cells vertically → stack（堆疊，動詞）。Long-term ↔ eventually。干擾：making each cell smaller 是「不再走」的路線。"
+       },
+       {
+        "a": [
+         "domestic"
+        ],
+        "ref": "a vast domestic market",
+        "ev": "Its real advantage lies elsewhere: a vast domestic market",
+        "zh": "A huge ___ market = a vast domestic market → domestic（國內的）。strength ↔ real advantage、huge ↔ vast。干擾：Korean rivals、older process 是劣勢。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Two Roads to Denser Memory",
+    "intro": "Memory makers agree that conventional DRAM is running out of room to shrink, but they disagree sharply about what should come next.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Dynamic random-access memory, or DRAM, is the short-term workspace of almost every computer. Unlike flash storage, it loses its contents when the power is switched off, but it can be read and rewritten far more quickly, which is why it sits close to the processor. A DRAM chip contains billions of cells, each pairing a tiny transistor with a capacitor that holds an electrical charge. For decades, manufacturers have increased capacity chiefly by making these cells smaller. That strategy is now approaching its physical limits. Scott DeBoer, president and chief technology and products officer at Micron, observed at a recent company event that 'DRAM is nearing atomic limits', although he added that the company has confidence in 'several more planar nodes'. The question confronting the industry is therefore not whether a new approach will be needed, but which one, and when."
+     },
+     {
+      "label": "B",
+      "text": "One candidate is a change in cell geometry. Engineers describe cell area in multiples of F, the smallest feature that a given manufacturing process can define. Most DRAM today uses a 6F² layout, in which each cell is three units wide and two units long. The alternative, known as 4F², reduces this to two units by two, so that, in principle, more cells fit on the same area of silicon. Achieving it is far from straightforward. The design relies on what is called a vertical-channel transistor, and because the existing cell structure must be rebuilt, even small errors can easily lead to defects. The commercial viability of 4F² therefore depends above all on yield, the proportion of chips that work as intended, and on cost."
+     },
+     {
+      "label": "C",
+      "text": "China's ChangXin Memory Technologies (CXMT) has been the most vocal advocate of the approach. At a conference in Shanghai on 10 October, its president, Cao Kanyu, said that the company would introduce server DRAM using 4F² within the year, although he provided no basic specifications such as capacity or speed. Three weeks later, alongside its quarterly results, CXMT announced that engineering samples built on its sixth-generation platform had completed verification, and it described itself as the first company to reach this stage. Under industry practice, completing this step indicates that a platform's core performance has met design expectations on real wafers; mass production can follow once customers have validated it. Its finances are undeniably strong: third-quarter revenue reached 118.7 billion yuan, roughly $18.3 billion, an increase of 613 per cent on a year earlier, as tight supply and demand from AI servers lifted sales."
+     },
+     {
+      "label": "D",
+      "text": "Sceptics point out that verification is not the same as production. Lee Jong-hwan, a professor of system semiconductor engineering at Sangmyung University, told Businesskorea that prototype verification 'merely means that the desired performance has been secured, but yield must be raised for actual mass production'. CXMT has disclosed no yield figures. Its record also invites caution: the company was reported in 2022 to be planning mass production of DDR5 memory that year, yet products containing its chips appeared only at the end of 2024 and were then hampered by low yields. Moreover, the industry estimates that CXMT's 4F² chips are made on a 12 to 15 nanometre process, whereas Samsung Electronics and SK hynix are preparing to apply the same cell design at below 10 nanometres."
+     },
+     {
+      "label": "E",
+      "text": "Micron, the largest American memory maker, has chosen a different path. It has dropped 4F² from its roadmap entirely, citing the lack of a viable scaling path beyond its current position, and will instead extend the conventional 6F² cell. Its current 1-gamma process is the first of its DRAM nodes to use extreme ultraviolet (EUV) lithography; previously, the company relied on multiple patterning with older deep ultraviolet tools. The next node, 1-delta, is scheduled for mass production in the second half of 2027 and is expected to raise bit density by an amount in the mid-20 per cent range. Later generations will introduce wafer bonding and, eventually, High-NA EUV equipment, although Micron has given no production dates for them."
+     },
+     {
+      "label": "F",
+      "text": "Beyond these planar nodes lies 3D DRAM, which would build cells upwards rather than shrinking them further, much as flash memory has done for years. Micron is developing two generations, provisionally named 3D1 and 3D2, but intends to introduce them only when they can compete with conventional DRAM on manufacturing cost and performance. It is not yet clear which strategy will prove wiser. If 4F² can be produced reliably and cheaply, Micron may find itself at a disadvantage; if not, its caution may look prudent. CXMT, meanwhile, benefits from a government policy of semiconductor self-reliance, which encourages Chinese companies to adopt domestically made memory and gives the firm ample opportunities to test new products and improve its yields."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reason given by a manufacturer for abandoning a particular design",
+        "a": "E",
+        "ref": "E",
+        "ev": "citing the lack of a viable scaling path beyond its current position",
+        "zh": "E 段：Micron 把 4F² 從路線圖拿掉，理由是 the lack of a viable scaling path → 放棄某設計的理由。"
+       },
+       {
+        "q": "an explanation of a unit used to describe the size of memory cells",
+        "a": "B",
+        "ref": "B",
+        "ev": "Engineers describe cell area in multiples of F, the smallest feature that a given manufacturing process can define.",
+        "zh": "B 段：F 是製程能定義的最小尺寸，cell 面積用 F 的倍數表示 → 解釋單位。"
+       },
+       {
+        "q": "an example of a company failing to meet an earlier production target",
+        "a": "D",
+        "ref": "D",
+        "ev": "the company was reported in 2022 to be planning mass production of DDR5 memory that year, yet products containing its chips appeared only at the end of 2024",
+        "zh": "D 段：2022 年說要量產 DDR5，實際 2024 年底才上市 → 沒達成先前的量產目標。"
+       },
+       {
+        "q": "the conditions under which a new type of memory will be launched",
+        "a": "F",
+        "ref": "F",
+        "ev": "intends to introduce them only when they can compete with conventional DRAM on manufacturing cost and performance",
+        "zh": "F 段：3D DRAM 只有在成本與效能能和傳統 DRAM 競爭時才推出 → 推出的條件。"
+       },
+       {
+        "q": "figures showing a sharp rise in a company's income",
+        "a": "C",
+        "ref": "C",
+        "ev": "third-quarter revenue reached 118.7 billion yuan, roughly $18.3 billion, an increase of 613 per cent on a year earlier",
+        "zh": "C 段：第三季營收年增 613% → 收入大幅成長的數字。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "DRAM retains the information stored in it when a device is turned off.",
+        "a": "False",
+        "ref": "A",
+        "ev": "it loses its contents when the power is switched off",
+        "zh": "A 段：斷電就會遺失內容 → 與「保留資料」相反 → False。"
+       },
+       {
+        "q": "Samsung and SK hynix plan to use the 4F² design on more advanced processes than CXMT.",
+        "a": "True",
+        "ref": "D",
+        "ev": "CXMT's 4F² chips are made on a 12 to 15 nanometre process, whereas Samsung Electronics and SK hynix are preparing to apply the same cell design at below 10 nanometres",
+        "zh": "D 段：CXMT 用 12–15 nm，三星與 SK hynix 準備在 10 nm 以下使用 → 更先進的製程 → True。"
+       },
+       {
+        "q": "CXMT's 4F² engineering samples were verified by an independent laboratory.",
+        "a": "Not Given",
+        "ref": "C",
+        "ev": "CXMT announced that engineering samples built on its sixth-generation platform had completed verification",
+        "zh": "陷阱：C 段只說樣品 completed verification，完全沒提是誰驗證、是否為獨立實驗室 → Not Given。"
+       },
+       {
+        "q": "Micron has announced when each of its nodes after 1-delta will enter production.",
+        "a": "False",
+        "ref": "E",
+        "ev": "although Micron has given no production dates for them",
+        "zh": "E 段：只有 1-delta 有時程（2027 下半年），之後的世代 no production dates → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Competing approaches to denser DRAM",
+      "lines": [
+       {
+        "t": "The 4F² layout depends on a vertical-[[1]] transistor, and its commercial future rests largely on yield and cost. Micron, by contrast, is staying with 6F². Its 1-gamma node was its first to adopt EUV [[2]], whereas earlier nodes used multiple [[3]] with older tools. Future generations are expected to add wafer [[4]] before eventually moving to High-NA equipment."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "channel"
+        ],
+        "ref": "B",
+        "ev": "The design relies on what is called a vertical-channel transistor",
+        "zh": "B 段：vertical-channel transistor（垂直通道電晶體）→ channel。"
+       },
+       {
+        "a": [
+         "lithography"
+        ],
+        "ref": "E",
+        "ev": "the first of its DRAM nodes to use extreme ultraviolet (EUV) lithography",
+        "zh": "E 段：1-gamma 是第一個使用 EUV lithography（微影）的節點。"
+       },
+       {
+        "a": [
+         "patterning"
+        ],
+        "ref": "E",
+        "ev": "previously, the company relied on multiple patterning with older deep ultraviolet tools",
+        "zh": "E 段：以前用 multiple patterning（多重曝光圖案化）搭配較舊的 DUV 設備。"
+       },
+       {
+        "a": [
+         "bonding"
+        ],
+        "ref": "E",
+        "ev": "Later generations will introduce wafer bonding",
+        "zh": "E 段：之後世代會導入 wafer bonding（晶圓鍵合）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "cram",
+     "pos": "v.",
+     "def": "to force a lot of something into a small space",
+     "zh": "塞進、硬擠進",
+     "example": "Chipmakers want to cram more data onto every chip.",
+     "match": [
+      "cram"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "footprint",
+     "pos": "n.",
+     "def": "the amount of space that something takes up",
+     "zh": "佔用面積",
+     "example": "The new design shrinks the cell's footprint.",
+     "match": [
+      "footprint"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "verification",
+     "pos": "n.",
+     "def": "the process of checking that something is true or works as claimed",
+     "zh": "驗證",
+     "example": "The samples passed verification last month.",
+     "match": [
+      "verification"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "viable",
+     "pos": "adj.",
+     "def": "able to work successfully, especially in practical or financial terms",
+     "zh": "可行的",
+     "example": "A yield of 70–80% is considered viable for mass production.",
+     "match": [
+      "viable"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "track record",
+     "pos": "n.",
+     "def": "the past achievements or failures of a person or organisation",
+     "zh": "過往紀錄",
+     "example": "The firm's track record suggests caution.",
+     "match": [
+      "track record"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "optimal",
+     "pos": "adj.",
+     "def": "best or most favourable",
+     "zh": "最佳的",
+     "example": "Micron wants to launch 3D DRAM at the optimal time.",
+     "match": [
+      "optimal"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "count for little",
+     "pos": "phr.",
+     "def": "to have little importance or value",
+     "zh": "沒什麼分量、意義不大",
+     "example": "An early lead may count for little if yields disappoint.",
+     "match": [
+      "count for little"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "chiefly",
+     "pos": "adv.",
+     "def": "mainly; mostly",
+     "zh": "主要地",
+     "example": "Capacity has grown chiefly through smaller cells.",
+     "match": [
+      "chiefly"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "confront",
+     "pos": "v.",
+     "def": "(of a problem) to face or demand attention from someone",
+     "zh": "擺在…面前、使面對",
+     "example": "The question confronting the industry is which approach to choose.",
+     "match": [
+      "confronting"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "in principle",
+     "pos": "phr.",
+     "def": "in theory, although not necessarily in practice",
+     "zh": "原則上、理論上",
+     "example": "In principle, more cells fit on the same area.",
+     "match": [
+      "in principle"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "advocate",
+     "pos": "n.",
+     "def": "a person or organisation that publicly supports an idea",
+     "zh": "擁護者、提倡者",
+     "example": "CXMT is the most vocal advocate of 4F².",
+     "match": [
+      "advocate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sceptic",
+     "pos": "n.",
+     "def": "a person who doubts that a claim is true",
+     "zh": "懷疑者",
+     "example": "Sceptics say verification is not production.",
+     "match": [
+      "Sceptics"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "hamper",
+     "pos": "v.",
+     "def": "to hinder or slow the progress of something",
+     "zh": "妨礙、拖累",
+     "example": "The products were hampered by low yields.",
+     "match": [
+      "hampered"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "provisionally",
+     "pos": "adv.",
+     "def": "for the time being; not yet final",
+     "zh": "暫定地",
+     "example": "The generations are provisionally named 3D1 and 3D2.",
+     "match": [
+      "provisionally"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "prudent",
+     "pos": "adj.",
+     "def": "acting with care and thought for the future",
+     "zh": "謹慎的、明智的",
+     "example": "Micron's caution may look prudent.",
+     "match": [
+      "prudent"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-10-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.09
+     ],
+     [
+      1.31,
+      12.29
+     ],
+     [
+      12.67,
+      13.71
+     ],
+     [
+      14.49,
+      22.03
+     ],
+     [
+      22.3,
+      27.83
+     ],
+     [
+      28.15,
+      35.66
+     ],
+     [
+      35.9,
+      41.04
+     ],
+     [
+      41.32,
+      46.79
+     ],
+     [
+      47.57,
+      51.73
+     ],
+     [
+      51.97,
+      60.11
+     ],
+     [
+      60.41,
+      68.29
+     ],
+     [
+      68.58,
+      70.43
+     ],
+     [
+      70.65,
+      76.32
+     ],
+     [
+      76.62,
+      86.44
+     ],
+     [
+      86.66,
+      88.93
+     ],
+     [
+      89.2,
+      102.23
+     ],
+     [
+      103.01,
+      107.41
+     ],
+     [
+      107.65,
+      114.55
+     ],
+     [
+      114.83,
+      120.5
+     ],
+     [
+      120.83,
+      127.49
+     ],
+     [
+      127.74,
+      133.95
+     ],
+     [
+      134.24,
+      141.06
+     ],
+     [
+      141.39,
+      150.63
+     ],
+     [
+      151.41,
+      161.86
+     ],
+     [
+      162.25,
+      169.06
+     ],
+     [
+      169.28,
+      175.85
+     ],
+     [
+      176.12,
+      185.65
+     ],
+     [
+      186.43,
+      188.26
+     ],
+     [
+      188.49,
+      197.09
+     ],
+     [
+      197.37,
+      200.34
+     ]
+    ],
+    "duration": 201.0,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-11-10-1-words/"
+   }
+  },
+  {
+   "title": "Short Course of New Pills May Cure a Common Hormonal Cause of High Blood Pressure",
+   "topic": "Health · hypertension",
+   "source": {
+    "name": "Queen Mary University of London: New treatment may cure common hormonal cause of high blood pressure (9 Nov 2026)",
+    "url": "https://www.qmul.ac.uk/news/latest-news/2026/medicine-and-dentistry/fmd/new-treatment-may-cure-common-hormonal-cause-of-high-blood-pressure--.html",
+    "links": [
+     {
+      "name": "Medical Xpress: New treatment may cure common hormonal cause of high blood pressure (Nov 2026)",
+      "url": "https://medicalxpress.com/news/2026-11-treatment-common-hormonal-high-blood.html"
+     },
+     {
+      "name": "NEJM (2025): Phase 2a Study of Baxdrostat in Primary Aldosteronism",
+      "url": "https://www.nejm.org/doi/full/10.1056/NEJMc2508629"
+     },
+     {
+      "name": "Review: Emerging Medical Therapies for Primary Aldosteronism (PMC)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13001030/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning, and we begin with health.",
+     "Doctors in London say a course of tablets lasting less than a year may have cured some patients of a common hormonal form of high blood pressure, something that until now has required surgery.",
+     "Here's the latest."
+    ],
+    [
+     "The condition is called primary aldosteronism.",
+     "Benign nodules in the adrenal glands produce too much of a hormone called aldosterone.",
+     "That makes the kidneys hold on to extra salt, and that, in turn, pushes blood pressure up.",
+     "It's estimated to lie behind between five and ten percent of all cases of high blood pressure.",
+     "Usually, patients either take medicine for life to keep it under control, or have an entire adrenal gland removed."
+    ],
+    [
+     "The new approach, led by Queen Mary University of London, takes a different route.",
+     "It uses a newer class of drugs that block the enzyme the body needs to make aldosterone in the first place.",
+     "Conventional treatments keep blood pressure in check; this one appears to reverse the underlying cause.",
+     "Crucially, patients took the tablets for six to twelve months.",
+     "Earlier trials of these drugs in people with high blood pressure typically lasted just six to twelve weeks.",
+     "The researchers then went back through routine follow-up records for fourteen people treated at eight centres across the United States, and compared them with readings taken before treatment."
+    ],
+    [
+     "The results surprised even the team.",
+     "Up to two years after patients stopped taking the drug, the main marker of excess aldosterone was still ninety-nine percent lower than before treatment.",
+     "Blood pressure was, on average, twenty-five points lower.",
+     "In fact, hormone levels and blood pressure stayed similar to, or even lower than, the levels recorded during treatment itself.",
+     "And almost a quarter of the participants had normal blood pressure without taking any other medication.",
+     "Mason Freeman, a professor of medicine at Harvard Medical School, called the findings extraordinary and unexpected."
+    ],
+    [
+     "Still, the scientists are choosing their words carefully.",
+     "The lead author, Professor Morris Brown, said the team was duly cautious, because of the pragmatic nature of the study.",
+     "But he said longer follow-up may justify a claim that a finite course of medication leads to an infinite cure.",
+     "He also said the treatment is unlikely to be the answer for most people with high blood pressure, though a tablet that achieves a surgical cure has long been a holy grail for this particular type.",
+     "The idea itself isn't new.",
+     "It goes back to a two thousand and five experiment in mice, in which deleting the gene for that enzyme caused the cells that make aldosterone to disappear."
+    ],
+    [
+     "Looking ahead, the team is now running a larger trial, named ELIXIR.",
+     "It will use molecular imaging of the adrenal glands to see whether long treatment really does make those hormone-producing cells vanish.",
+     "Professor Freeman says many patients may one day be able to take a once-a-day pill, perhaps for a limited time, instead of going through major surgery.",
+     "On safety, the published results showed only modest rises in blood potassium and in a marker of kidney function.",
+     "So for now, this is a promising lead rather than a proven cure.",
+     "That's the health news this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "A possible drug cure for a type of high blood pressure",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The condition"
+       },
+       {
+        "t": "Too much aldosterone makes the kidneys keep extra [[1]]"
+       },
+       {
+        "t": "Standard cure: removal of a whole [[2]]"
+       },
+       {
+        "h": "The new treatment"
+       },
+       {
+        "t": "Drugs stop an [[3]] needed to produce the hormone"
+       },
+       {
+        "t": "Taken for six to twelve [[4]]"
+       },
+       {
+        "t": "Data came from routine [[5]] records"
+       },
+       {
+        "h": "Results"
+       },
+       {
+        "t": "Almost a [[6]] of patients had normal blood pressure without other drugs"
+       },
+       {
+        "h": "Expert comment"
+       },
+       {
+        "t": "Caution needed because the study was [[7]] in nature"
+       },
+       {
+        "t": "Brown: a limited course might produce an [[8]] cure"
+       },
+       {
+        "t": "Original idea came from experiments on [[9]]"
+       },
+       {
+        "h": "Next steps"
+       },
+       {
+        "t": "ELIXIR trial will use molecular [[10]] of the glands"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "salt"
+        ],
+        "ref": "hold on to extra salt",
+        "ev": "That makes the kidneys hold on to extra salt",
+        "zh": "keep extra ___ = hold on to extra salt → salt（鹽）。keep ↔ hold on to。"
+       },
+       {
+        "a": [
+         "adrenal gland",
+         "gland"
+        ],
+        "ref": "have an entire adrenal gland removed",
+        "ev": "or have an entire adrenal gland removed",
+        "zh": "removal of a whole ___ = have an entire adrenal gland removed → adrenal gland（腎上腺）。whole ↔ entire。干擾：nodules（結節）是病因，不是被切除的器官；medicine for life 是另一個選項。"
+       },
+       {
+        "a": [
+         "enzyme"
+        ],
+        "ref": "block the enzyme the body needs",
+        "ev": "drugs that block the enzyme the body needs to make aldosterone",
+        "zh": "stop an ___ needed to produce the hormone = block the enzyme the body needs to make aldosterone → enzyme（酵素）。題幹 an 也提示母音開頭。"
+       },
+       {
+        "a": [
+         "months"
+        ],
+        "ref": "took the tablets for six to twelve months",
+        "ev": "Crucially, patients took the tablets for six to twelve months.",
+        "zh": "Taken for six to twelve ___ → months。干擾：下一句 Earlier trials … six to twelve weeks（週）是舊研究的長度，不是這次療程。"
+       },
+       {
+        "a": [
+         "follow-up",
+         "follow up"
+        ],
+        "ref": "routine follow-up records",
+        "ev": "went back through routine follow-up records for fourteen people",
+        "zh": "routine ___ records = routine follow-up records → follow-up（追蹤）。干擾：fourteen people、eight centres 是數字資訊。"
+       },
+       {
+        "a": [
+         "quarter"
+        ],
+        "ref": "almost a quarter of the participants",
+        "ev": "almost a quarter of the participants had normal blood pressure without taking any other medication",
+        "zh": "Almost a ___ of patients = almost a quarter of the participants → quarter（四分之一）。本篇唯一數字型答案；干擾：ninety-nine percent（指標下降）與 twenty-five points（血壓降幅）。"
+       },
+       {
+        "a": [
+         "pragmatic"
+        ],
+        "ref": "the pragmatic nature of the study",
+        "ev": "duly cautious, because of the pragmatic nature of the study",
+        "zh": "the study was ___ in nature = the pragmatic nature of the study → pragmatic（務實的；指用常規臨床資料而非專門設計的試驗）。"
+       },
+       {
+        "a": [
+         "infinite"
+        ],
+        "ref": "leads to an infinite cure",
+        "ev": "a finite course of medication leads to an infinite cure",
+        "zh": "a limited course might produce an ___ cure = a finite course of medication leads to an infinite cure → infinite（無限的、永久的）。limited ↔ finite；注意別填成 finite。"
+       },
+       {
+        "a": [
+         "mice"
+        ],
+        "ref": "experiment in mice",
+        "ev": "It goes back to a two thousand and five experiment in mice",
+        "zh": "experiments on ___ = a 2005 experiment in mice → mice（小鼠）。干擾：two thousand and five 是年份。"
+       },
+       {
+        "a": [
+         "imaging"
+        ],
+        "ref": "molecular imaging of the adrenal glands",
+        "ev": "It will use molecular imaging of the adrenal glands",
+        "zh": "molecular ___ of the glands = molecular imaging of the adrenal glands → imaging（造影）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "A Finite Course, a Lasting Cure?",
+    "intro": "A small follow-up study suggests that a limited course of a new class of drug could reverse a common hormonal cause of high blood pressure.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "High blood pressure, or hypertension, affects millions of people worldwide and is generally regarded as a condition to be managed rather than cured. Patients are commonly prescribed medication that they will take indefinitely. A notable exception is primary aldosteronism, in which benign nodules in the adrenal glands secrete excessive amounts of the hormone aldosterone. This prompts the kidneys to retain salt, which in turn raises blood pressure. According to researchers at Queen Mary University of London, between 5 and 10 per cent of all cases of hypertension are thought to be caused by the condition, which makes it one of the more common identifiable causes of the disease."
+     },
+     {
+      "label": "B",
+      "text": "Until recently, the options available to such patients were limited. Conventional drugs can control their blood pressure, but they do not remove its cause and so must, in most cases, be taken for life. The only established cure has been surgery to remove an entire adrenal gland. Mason Freeman, a professor of medicine at Harvard Medical School, notes that the benefits patients currently obtain are achieved 'only after invasive diagnostic testing and major adrenal surgery'. For many people, therefore, the condition has meant a choice between permanent medication and a significant operation."
+     },
+     {
+      "label": "C",
+      "text": "The theoretical basis for an alternative can be traced to a 2005 experiment in mice. When researchers deleted the gene responsible for producing aldosterone synthase, the enzyme that the body uses to make the hormone, the cells that produce aldosterone disappeared. Scientists at Queen Mary predicted that blocking the same enzyme with a drug for a prolonged period might have a comparable effect in humans, potentially removing the underlying cause of the hypertension rather than merely suppressing it. The opportunity to investigate this came through the first study of aldosterone synthase inhibitors in people with primary aldosteronism, which was also led by Queen Mary and reported in the New England Journal of Medicine in 2025. That trial gave one such drug, baxdrostat, to 15 patients and found that it resolved or reduced the severity of their hypertension, their excessive aldosterone production and their low potassium levels."
+     },
+     {
+      "label": "D",
+      "text": "The new study, published in the same journal, examined routine follow-up measurements from 14 people who had been treated at eight centres in the United States. Crucially, they had taken the drug for six to twelve months. Earlier, larger studies of aldosterone synthase inhibitors in people with hypertension generally involved treatment periods of only six to twelve weeks, with outcomes measured while the patients were still taking the medication. In the follow-up, by contrast, the main marker of excess aldosterone production remained 99 per cent lower than before treatment, and blood pressure was on average 25 points lower, for up to two years after the course had ended. Hormone levels and blood pressure remained similar to, or lower than, those recorded during treatment, which suggests that the benefits could persist long after the drug is withdrawn. Almost a quarter of participants had normal blood pressure without any other medication."
+     },
+     {
+      "label": "E",
+      "text": "The researchers are careful not to overstate their case. Morris Brown, Professor of Endocrine Hypertension at Queen Mary and the study's lead author, said the team was 'duly cautious' about its findings because of the pragmatic nature of the study, which drew on routine follow-up measurements. Freeman described the results as 'extraordinary and unexpected'. Brown, nonetheless, suggested that longer follow-up 'may justify a claim that a finite course of medication leads to infinite cure'. He also conceded that the treatment 'is unlikely to be the elixir for most patients with hypertension'. On safety, the evidence so far is encouraging but not conclusive: the published results showed only modest increases in blood potassium and in creatinine, a marker of kidney function."
+     },
+     {
+      "label": "F",
+      "text": "The next step is a larger prospective clinical trial, named ELIXIR, which will investigate whether the treatment can provide a lasting cure for people with primary aldosteronism. The trial will also use molecular imaging of the adrenal glands to establish whether prolonged treatment genuinely causes aldosterone-producing cells to disappear, as the earlier experiment in mice implied. Freeman believes that many patients may eventually be able to take a once-a-day pill, perhaps for a limited period, and obtain benefits similar to those now achieved through surgery. For a condition that has long depended on either lifelong tablets or the surgeon's knife, that would represent a considerable shift."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a description of how a hormone leads to raised blood pressure",
+        "a": "A",
+        "ref": "A",
+        "ev": "This prompts the kidneys to retain salt, which in turn raises blood pressure.",
+        "zh": "A 段：aldosterone 使腎臟留住鹽分，進而升高血壓 → 荷爾蒙如何導致高血壓。"
+       },
+       {
+        "q": "an admission that the treatment may not be suitable for most people with high blood pressure",
+        "a": "E",
+        "ref": "E",
+        "ev": "He also conceded that the treatment 'is unlikely to be the elixir for most patients with hypertension'.",
+        "zh": "E 段：conceded（承認）對大多數高血壓患者不太可能是萬靈丹 → admission。"
+       },
+       {
+        "q": "the origin of the idea behind the new treatment",
+        "a": "C",
+        "ref": "C",
+        "ev": "The theoretical basis for an alternative can be traced to a 2005 experiment in mice.",
+        "zh": "C 段：理論基礎可追溯到 2005 年的小鼠實驗 → 想法的來源。"
+       },
+       {
+        "q": "a contrast between the duration of earlier studies and the new one",
+        "a": "D",
+        "ref": "D",
+        "ev": "generally involved treatment periods of only six to twelve weeks",
+        "zh": "D 段：本研究服藥 6–12 個月，早期研究只有 6–12 週 → 研究期間的對比。"
+       },
+       {
+        "q": "a reference to a technique that will be used to examine the inside of the body",
+        "a": "F",
+        "ref": "F",
+        "ev": "The trial will also use molecular imaging of the adrenal glands",
+        "zh": "F 段：molecular imaging（分子造影）觀察腎上腺 → 檢查體內的技術。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Primary aldosteronism is caused by cancerous growths in the adrenal glands.",
+        "a": "False",
+        "ref": "A",
+        "ev": "benign nodules in the adrenal glands secrete excessive amounts of the hormone aldosterone",
+        "zh": "A 段：是 benign（良性）結節 → 與 cancerous（癌性）相反 → False。"
+       },
+       {
+        "q": "Surgery has been the only proven way of curing primary aldosteronism.",
+        "a": "True",
+        "ref": "B",
+        "ev": "The only established cure has been surgery to remove an entire adrenal gland.",
+        "zh": "B 段：the only established cure 是切除腎上腺手術 → True。"
+       },
+       {
+        "q": "Most of the 14 patients in the follow-up study were over the age of sixty.",
+        "a": "Not Given",
+        "ref": "D",
+        "ev": "examined routine follow-up measurements from 14 people who had been treated at eight centres in the United States",
+        "zh": "陷阱：D 段只給人數（14）與中心數（8），沒有任何年齡資訊 → Not Given。"
+       },
+       {
+        "q": "In the earlier, shorter studies, results were recorded after patients had stopped taking the drug.",
+        "a": "False",
+        "ref": "D",
+        "ev": "with outcomes measured while the patients were still taking the medication",
+        "zh": "D 段：早期研究是在「仍在服藥時」量測結果 → 與「停藥後」相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "From managing to curing",
+      "lines": [
+       {
+        "t": "At present, a cure normally involves surgery, which follows [[1]] diagnostic tests. Researchers hoped that blocking aldosterone synthase for a long period would remove the [[2]] cause of the disease. So far, rises in blood potassium and creatinine have been [[3]], and a larger [[4]] trial will now test whether the cure lasts."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "invasive"
+        ],
+        "ref": "B",
+        "ev": "'only after invasive diagnostic testing and major adrenal surgery'",
+        "zh": "B 段：invasive diagnostic testing（侵入性診斷檢查）。"
+       },
+       {
+        "a": [
+         "underlying"
+        ],
+        "ref": "C",
+        "ev": "potentially removing the underlying cause of the hypertension rather than merely suppressing it",
+        "zh": "C 段：removing the underlying cause（根本原因）。"
+       },
+       {
+        "a": [
+         "modest"
+        ],
+        "ref": "E",
+        "ev": "the published results showed only modest increases in blood potassium and in creatinine",
+        "zh": "E 段：only modest increases（輕微的上升）。"
+       },
+       {
+        "a": [
+         "prospective"
+        ],
+        "ref": "F",
+        "ev": "The next step is a larger prospective clinical trial, named ELIXIR",
+        "zh": "F 段：larger prospective clinical trial（前瞻性臨床試驗）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "benign",
+     "pos": "adj.",
+     "def": "(of a growth) not cancerous",
+     "zh": "良性的",
+     "example": "Benign nodules in the adrenal glands produce the hormone.",
+     "match": [
+      "Benign",
+      "benign"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "in turn",
+     "pos": "phr.",
+     "def": "as a result of something that has just been mentioned",
+     "zh": "進而、接著",
+     "example": "Salt retention, in turn, pushes blood pressure up.",
+     "match": [
+      "in turn"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "enzyme",
+     "pos": "n.",
+     "def": "a protein that speeds up a chemical reaction in the body",
+     "zh": "酵素",
+     "example": "The drugs block the enzyme that makes aldosterone.",
+     "match": [
+      "enzyme"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "duly",
+     "pos": "adv.",
+     "def": "in a proper or expected manner",
+     "zh": "適當地、應有地",
+     "example": "The team was duly cautious about its findings.",
+     "match": [
+      "duly"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "pragmatic",
+     "pos": "adj.",
+     "def": "based on practical considerations rather than theory or ideal design",
+     "zh": "務實的",
+     "example": "The pragmatic nature of the study calls for caution.",
+     "match": [
+      "pragmatic"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "finite",
+     "pos": "adj.",
+     "def": "having limits; not lasting for ever",
+     "zh": "有限的",
+     "example": "A finite course of medication may lead to a lasting cure.",
+     "match": [
+      "finite"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "holy grail",
+     "pos": "n.",
+     "def": "something extremely desirable that is very hard to achieve",
+     "zh": "夢寐以求的目標",
+     "example": "A pill that cures the condition has long been a holy grail.",
+     "match": [
+      "holy grail"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "indefinitely",
+     "pos": "adv.",
+     "def": "for an unlimited period of time",
+     "zh": "無限期地",
+     "example": "Patients take medication indefinitely.",
+     "match": [
+      "indefinitely"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "secrete",
+     "pos": "v.",
+     "def": "(of a gland or cell) to produce and release a substance",
+     "zh": "分泌",
+     "example": "The nodules secrete excessive amounts of aldosterone.",
+     "match": [
+      "secrete"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "prompt",
+     "pos": "v.",
+     "def": "to cause something to happen",
+     "zh": "促使、引起",
+     "example": "Aldosterone prompts the kidneys to retain salt.",
+     "match": [
+      "prompts"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "comparable",
+     "pos": "adj.",
+     "def": "similar enough to be compared",
+     "zh": "相當的、類似的",
+     "example": "The drug might have a comparable effect in humans.",
+     "match": [
+      "comparable"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "prolonged",
+     "pos": "adj.",
+     "def": "continuing for a long time",
+     "zh": "長期的、延長的",
+     "example": "Prolonged treatment may make the cells disappear.",
+     "match": [
+      "prolonged"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "overstate",
+     "pos": "v.",
+     "def": "to describe something as more important or certain than it really is",
+     "zh": "誇大",
+     "example": "The researchers are careful not to overstate their case.",
+     "match": [
+      "overstate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "concede",
+     "pos": "v.",
+     "def": "to admit, often reluctantly, that something is true",
+     "zh": "承認、讓步",
+     "example": "He conceded that it is unlikely to help most patients.",
+     "match": [
+      "conceded"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "conclusive",
+     "pos": "adj.",
+     "def": "proving something beyond doubt",
+     "zh": "確定的、決定性的",
+     "example": "The safety evidence is encouraging but not conclusive.",
+     "match": [
+      "conclusive"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-10-2.mp3",
+    "times": [
+     [
+      0.36,
+      2.55
+     ],
+     [
+      2.81,
+      12.14
+     ],
+     [
+      12.52,
+      13.64
+     ],
+     [
+      14.42,
+      17.14
+     ],
+     [
+      17.37,
+      22.08
+     ],
+     [
+      22.4,
+      27.69
+     ],
+     [
+      27.93,
+      32.76
+     ],
+     [
+      33.04,
+      39.55
+     ],
+     [
+      40.33,
+      44.95
+     ],
+     [
+      45.19,
+      50.57
+     ],
+     [
+      50.87,
+      56.19
+     ],
+     [
+      56.4,
+      59.72
+     ],
+     [
+      59.98,
+      65.29
+     ],
+     [
+      65.59,
+      74.6
+     ],
+     [
+      75.38,
+      77.37
+     ],
+     [
+      77.6,
+      85.28
+     ],
+     [
+      85.6,
+      89.1
+     ],
+     [
+      89.33,
+      96.73
+     ],
+     [
+      97.02,
+      102.02
+     ],
+     [
+      102.35,
+      108.65
+     ],
+     [
+      109.43,
+      112.51
+     ],
+     [
+      112.8,
+      119.07
+     ],
+     [
+      119.4,
+      124.91
+     ],
+     [
+      125.17,
+      134.32
+     ],
+     [
+      134.7,
+      136.52
+     ],
+     [
+      136.71,
+      144.41
+     ],
+     [
+      145.19,
+      149.42
+     ],
+     [
+      149.74,
+      156.3
+     ],
+     [
+      156.54,
+      164.39
+     ],
+     [
+      164.67,
+      170.62
+     ],
+     [
+      170.95,
+      174.55
+     ],
+     [
+      174.79,
+      176.35
+     ]
+    ],
+    "duration": 177.0,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-10-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
