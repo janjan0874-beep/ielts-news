@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-11",
+ "date": "2026-11-11",
+ "title": "Women Keep Closing the Gap on Men in Elite Running, 25-Year Study Finds · Stanford Review: AI Helps Students Learn Only When It Doesn't Do the Work for Them",
+ "stories": [
+  {
+   "title": "Women Keep Closing the Gap on Men in Elite Running, 25-Year Study Finds",
+   "topic": "Sport science · gender gap",
+   "source": {
+    "name": "Scientific Reports: The gap between elite female and male runners continues to shrink in the 21st century (Jucker, 9 Nov 2026)",
+    "url": "https://www.nature.com/articles/s41598-026-79043-7",
+    "links": [
+     {
+      "name": "News-Medical: The gap between male and female runners is shrinking. What's driving it? (10 Nov 2026)",
+      "url": "https://www.news-medical.net/news/20261110/The-gap-between-male-and-female-runners-is-shrinking-Whats-driving-it.aspx"
+     },
+     {
+      "name": "Zenodo: Athletics gender gap – data and code (Jucker)",
+      "url": "https://zenodo.org/records/16612750"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our top sports story: a new study suggests the gap between the world's best male and female runners is still shrinking, overturning a long-held belief that it stopped closing decades ago.",
+     "Here's the report."
+    ],
+    [
+     "The research was carried out by Tommaso Jucker, a biologist at the University of Bristol, and published this week in the journal Scientific Reports.",
+     "The idea that women might one day catch up is not new.",
+     "Back in nineteen ninety-two, a controversial analysis of world records raised exactly that possibility.",
+     "For years, though, the consensus among sports scientists has been that the difference levelled off towards the end of the twentieth century.",
+     "Some researchers put the gap at roughly ten percent, and linked it to differences in aerobic capacity, muscle and bone structure, and hormones.",
+     "Jucker set out to test whether that was still true."
+    ],
+    [
+     "He drew on official results published by World Athletics, covering eleven events from the sixty-metre sprint to the marathon.",
+     "To stop a handful of busy athletes from dominating the figures, only each runner's fastest time of the year was counted.",
+     "The season of twenty twenty was left out entirely, because so many races were cancelled during the pandemic.",
+     "In total, the dataset contained just over thirteen thousand performances by more than three and a half thousand elite athletes.",
+     "Separate checks using the top ten and the top fifty runners in each event produced similar results."
+    ],
+    [
+     "So what did he find?",
+     "Over the whole period, women were on average twelve point six percent slower than men.",
+     "But that average hides a clear trend.",
+     "In two thousand and one, the gap stood at thirteen point two percent; by twenty twenty-five, it had fallen to eleven point nine.",
+     "It was smallest in the shortest race, the sixty metres, and widest over ten kilometres, before narrowing again in the half marathon and the marathon."
+    ],
+    [
+     "Crucially, the change is not because men have slowed down.",
+     "Men got faster in all eleven events, shaving an average of two point two seconds off every kilometre.",
+     "Women, however, improved roughly twice as much, by four and a half seconds per kilometre.",
+     "The biggest gains came on the roads: in the half marathon and the marathon, elite women's average pace improved by more than ten seconds per kilometre.",
+     "In other words, both sexes are getting quicker, but women are getting quicker faster."
+    ],
+    [
+     "Meanwhile, many fans will point to so-called super shoes, the high-tech racing footwear that reached road races around twenty sixteen.",
+     "Track spikes using similar technology followed around twenty twenty-one.",
+     "Jucker says shoes may well have helped, but the improvements follow steady lines that began before the new technology appeared.",
+     "He suggests that growing opportunities for women to compete may also have played a part.",
+     "Still, because the study looks back at past results, it cannot prove what caused the trend, and it tells us nothing about recreational runners."
+    ],
+    [
+     "Will women one day run faster than men?",
+     "According to the paper, the jury is still out.",
+     "What does seem more certain is that women will keep pushing the boundaries of the sport.",
+     "That's the sport and science report for this Wednesday."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Elite running: is the gender gap still closing?",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The traditional view"
+       },
+       {
+        "t": "Scientific [[1]]: the gap stopped changing in the late 20th century"
+       },
+       {
+        "t": "Suggested causes include aerobic capacity, body structure and [[2]]"
+       },
+       {
+        "h": "The data"
+       },
+       {
+        "t": "Official results from [[3]]"
+       },
+       {
+        "t": "Per athlete per year: only the [[4]] was used"
+       },
+       {
+        "t": "2020 excluded because of the [[5]]"
+       },
+       {
+        "h": "Findings"
+       },
+       {
+        "t": "Gap in 2025: [[6]] %"
+       },
+       {
+        "t": "The trend is not explained by men having [[7]]"
+       },
+       {
+        "t": "Women's largest gains: races on the [[8]]"
+       },
+       {
+        "h": "Possible explanations"
+       },
+       {
+        "t": "Super shoes: progress started before this [[9]] arrived"
+       },
+       {
+        "t": "More [[10]] for women to race"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "consensus"
+        ],
+        "ref": "the consensus among sports scientists",
+        "ev": "the consensus among sports scientists has been that the difference levelled off towards the end of the twentieth century",
+        "zh": "Scientific ___ = the consensus among sports scientists → consensus（共識）。stopped changing ↔ levelled off、late 20th century ↔ towards the end of the twentieth century。"
+       },
+       {
+        "a": [
+         "hormones",
+         "hormone"
+        ],
+        "ref": "muscle and bone structure, and hormones",
+        "ev": "linked it to differences in aerobic capacity, muscle and bone structure, and hormones",
+        "zh": "題幹已給 aerobic capacity 與 body structure（= muscle and bone structure），剩下的是 hormones（荷爾蒙）。干擾：ten percent 是舊研究估的差距大小。"
+       },
+       {
+        "a": [
+         "World Athletics"
+        ],
+        "ref": "official results published by World Athletics",
+        "ev": "He drew on official results published by World Athletics",
+        "zh": "Official results from ___ = official results published by World Athletics → World Athletics（世界田徑總會，專有名詞要大寫）。"
+       },
+       {
+        "a": [
+         "fastest time"
+        ],
+        "ref": "only each runner's fastest time of the year was counted",
+        "ev": "only each runner's fastest time of the year was counted",
+        "zh": "Per athlete per year: only the ___ was used = only each runner's fastest time of the year was counted → fastest time。目的：避免比賽很多的選手 dominating the figures。"
+       },
+       {
+        "a": [
+         "pandemic"
+        ],
+        "ref": "cancelled during the pandemic",
+        "ev": "because so many races were cancelled during the pandemic",
+        "zh": "2020 excluded because of the ___ = races were cancelled during the pandemic → pandemic（疫情）。"
+       },
+       {
+        "a": [
+         "11.9"
+        ],
+        "ref": "it had fallen to eleven point nine",
+        "ev": "by twenty twenty-five, it had fallen to eleven point nine",
+        "zh": "Gap in 2025 = 2025 年降到 eleven point nine → 11.9。本篇唯一數字題；干擾：12.6% 是 25 年平均、13.2% 是 2001 年的數值。"
+       },
+       {
+        "a": [
+         "slowed down"
+        ],
+        "ref": "not because men have slowed down",
+        "ev": "Crucially, the change is not because men have slowed down.",
+        "zh": "not explained by men having ___ = the change is not because men have slowed down → slowed down（變慢）。後面接著說 men got faster in all eleven events。"
+       },
+       {
+        "a": [
+         "roads",
+         "road"
+        ],
+        "ref": "The biggest gains came on the roads",
+        "ev": "The biggest gains came on the roads",
+        "zh": "Women's largest gains = The biggest gains came on the roads → roads（路跑）。half marathon / marathon 就是路跑項目。"
+       },
+       {
+        "a": [
+         "technology",
+         "new technology"
+        ],
+        "ref": "before the new technology appeared",
+        "ev": "the improvements follow steady lines that began before the new technology appeared",
+        "zh": "progress started before this ___ arrived = began before the new technology appeared → technology。arrived ↔ appeared。"
+       },
+       {
+        "a": [
+         "opportunities"
+        ],
+        "ref": "growing opportunities for women to compete",
+        "ev": "He suggests that growing opportunities for women to compete may also have played a part.",
+        "zh": "More ___ for women to race = growing opportunities for women to compete → opportunities（機會）。race ↔ compete。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Closing the Gap: Women, Men and the Limits of Running",
+    "intro": "For decades, scientists assumed the difference between elite male and female runners had stopped shrinking. A new analysis of 25 years of results suggests otherwise.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "In 1992, a widely discussed analysis of world-record trends made a provocative claim: if women continued to improve at the rate they had been doing, they might eventually run faster than men across a whole range of athletic events. The prediction proved controversial, and in the decades that followed it was largely set aside. Subsequent research suggested that the performance difference between elite men and women had stabilised at around 10% from the 1980s onwards, and scientists offered several biological reasons for this, pointing to aerobic, biomechanical, musculoskeletal and hormonal differences between the sexes. Recent gains in women's middle- and long-distance world records, however, have begun to call this settled view into question."
+     },
+     {
+      "label": "B",
+      "text": "To examine the issue more systematically, Tommaso Jucker of the University of Bristol's School of Biological Sciences analysed officially ratified race results from 2001 to 2025, which he obtained from the World Athletics website. Eleven events were included, grouped into sprints (60 m to 400 m), middle-distance races (800 m to 3000 m) and long-distance races (5 km to the marathon). All were outdoor events except the 60 m, which is run indoors. The mile, hurdle races and steeplechase-type events were excluded, as was the 2020 season, when the pandemic led to widespread cancellations. For each event and year, Jucker began with the 100 best performances by each sex, kept only each athlete's fastest result of the season, and then selected the top 25 men and women. This approach was designed to prevent a small number of athletes who race frequently from exerting a disproportionate influence on the results. The final dataset comprised 13,094 performances by 3,611 athletes, drawn from 971 competitions."
+     },
+     {
+      "label": "C",
+      "text": "Across the 25-year period as a whole, elite women were on average 12.6% slower than elite men. The size of the gap, however, depended considerably on distance. Because the comparison was expressed both as a difference in pace, in seconds per kilometre, and as a percentage, events of very different lengths could be compared directly. It was narrowest in the 60 m, at 9.2%, and generally widened as races grew longer, peaking at 14.2% over 10 km before contracting again in the half marathon and marathon. More significantly, the gap did not stand still. Between 2001 and 2025 it fell by an average of 1.3 percentage points, from 13.2% to 11.9%. To ensure that this result was not an artefact of the sample size chosen, Jucker repeated the analysis using the top 10 and the top 50 athletes in each event, and obtained similar findings."
+     },
+     {
+      "label": "D",
+      "text": "The narrowing was by no means uniform. The largest relative gains for women were concentrated in races longer than 800 m, where they gained an average of 3.6 seconds per kilometre on men, equivalent to a reduction of 1.9 percentage points in the gap. At the same time, the gaps across different events became more alike: the spread between the smallest and largest differences shrank from 5.6 percentage points in 2001 to 4.6 in 2025. Interestingly, the event with the widest gap also changed over the period, shifting from the 10 km to the 800 m. In other words, it was the longer events, rather than the sprints, that drove most of the overall convergence."
+     },
+     {
+      "label": "E",
+      "text": "Crucially, the closing of the gap cannot be attributed to stagnation among men. Male athletes improved in all 11 disciplines, cutting their average time per kilometre by 2.2 seconds, with the most striking progress in the half marathon and marathon, where times fell by 6.0 to 6.2 seconds per kilometre. Female athletes, though, improved roughly twice as much, by 4.5 seconds per kilometre on average. Their greatest advances came in long-distance road races, in which average times dropped by between 10.3 and 12.6 seconds per kilometre, an improvement of 5.0 to 6.3%. For both sexes, progress was broadly linear in most events, with no obvious plateaus or turning points, suggesting that it is women's faster rate of improvement, rather than any slowdown by men, that explains the trend."
+     },
+     {
+      "label": "F",
+      "text": "What lies behind these gains is less clear. Advanced footwear technology, introduced in road races around 2016 and on the track around 2021, may well have contributed. Yet the improvements generally followed steady trajectories that were already under way before these shoes appeared, implying that footwear alone cannot account for women's greater progress. Expanding opportunities for female participation in competitive running are another plausible factor. Because the study relied on historical results, it could not establish causes, and its conclusions apply only to elite athletes rather than to runners in general. Jucker calls for controlled research into footwear, biomechanics and running economy. Whether women will one day outrun men remains, in his words, an open question; what seems more certain is that they will continue to push the boundaries of performance."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a check showing that the main result did not depend on how many athletes were analysed",
+        "a": "C",
+        "ref": "C",
+        "ev": "Jucker repeated the analysis using the top 10 and the top 50 athletes in each event, and obtained similar findings",
+        "zh": "C 段：改用前 10 名與前 50 名重跑，結果相似 → 證明結果不受樣本人數影響（robustness check）。"
+       },
+       {
+        "q": "examples of races that were not included in the study",
+        "a": "B",
+        "ref": "B",
+        "ev": "The mile, hurdle races and steeplechase-type events were excluded",
+        "zh": "B 段：一英里、跨欄與障礙賽被排除 → 未納入研究的比賽例子。"
+       },
+       {
+        "q": "a change in which event showed the largest difference between the sexes",
+        "a": "D",
+        "ref": "D",
+        "ev": "the event with the widest gap also changed over the period, shifting from the 10 km to the 800 m",
+        "zh": "D 段：差距最大的項目從 10 公里變成 800 公尺。注意 C 段也提到 10 km 差距 14.2% 最大，但那是整段期間的平均，沒有講「改變」。"
+       },
+       {
+        "q": "a list of physical factors that were proposed to explain the difference",
+        "a": "A",
+        "ref": "A",
+        "ev": "pointing to aerobic, biomechanical, musculoskeletal and hormonal differences between the sexes",
+        "zh": "A 段：有氧、生物力學、肌肉骨骼、荷爾蒙差異 → 生理因素清單。"
+       },
+       {
+        "q": "a reason why the findings cannot be applied to ordinary runners",
+        "a": "F",
+        "ref": "F",
+        "ev": "its conclusions apply only to elite athletes rather than to runners in general",
+        "zh": "F 段：結論只適用於菁英選手，不適用一般跑者 → ordinary runners = runners in general。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "All of the races in the dataset took place outdoors.",
+        "a": "False",
+        "ref": "B",
+        "ev": "All were outdoor events except the 60 m, which is run indoors.",
+        "zh": "B 段：除了 60 公尺是室內賽以外都在室外 → 「全部在室外」與原文矛盾 → False。"
+       },
+       {
+        "q": "Elite female marathon runners now cover more training distance each week than they did in 2001.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "Their greatest advances came in long-distance road races",
+        "zh": "E 段只說女子路跑進步最多（每公里快 10.3–12.6 秒），完全沒提訓練量 → Not Given。陷阱：看起來像是進步的合理原因，但文章沒說。"
+       },
+       {
+        "q": "Neither men nor women appear to have reached a performance plateau in most events.",
+        "a": "True",
+        "ref": "E",
+        "ev": "progress was broadly linear in most events, with no obvious plateaus or turning points",
+        "zh": "E 段：兩性在多數項目都大致線性進步、沒有明顯停滯 → True。"
+       },
+       {
+        "q": "Advanced shoes were used in track events before they were used in road races.",
+        "a": "False",
+        "ref": "F",
+        "ev": "introduced in road races around 2016 and on the track around 2021",
+        "zh": "F 段：路跑約 2016 年、田徑場約 2021 年 → 先路跑後田徑場，與敘述相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Explaining women's progress",
+      "lines": [
+       {
+        "t": "The study challenges the view that the gap had become fixed, a position once supported by biological explanations. Although new shoes may have helped, women's gains followed steady [[1]] that began before the shoes were introduced. Greater female [[2]] in competitive running is another possible influence. However, since the data were historical, the study could not identify [[3]], and further controlled studies of footwear, biomechanics and running [[4]] are needed."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "trajectories"
+        ],
+        "ref": "F",
+        "ev": "the improvements generally followed steady trajectories that were already under way",
+        "zh": "F 段：steady trajectories（穩定的進步軌跡）→ trajectories。began before ↔ already under way before。"
+       },
+       {
+        "a": [
+         "participation"
+        ],
+        "ref": "F",
+        "ev": "Expanding opportunities for female participation in competitive running are another plausible factor.",
+        "zh": "F 段：female participation（女性參與）→ participation。another possible influence ↔ another plausible factor。"
+       },
+       {
+        "a": [
+         "causes"
+        ],
+        "ref": "F",
+        "ev": "it could not establish causes",
+        "zh": "F 段：could not establish causes → identify ___ = causes（原因）。"
+       },
+       {
+        "a": [
+         "economy"
+        ],
+        "ref": "F",
+        "ev": "Jucker calls for controlled research into footwear, biomechanics and running economy.",
+        "zh": "F 段：running economy（跑步經濟性：同速度下耗氧量）→ economy。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "overturn",
+     "pos": "v.",
+     "def": "to show that a belief or decision is wrong and replace it",
+     "zh": "推翻（看法、判決）",
+     "example": "The findings overturn a long-held assumption about elite sport.",
+     "match": [
+      "overturning"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "consensus",
+     "pos": "n.",
+     "def": "general agreement among a group of people",
+     "zh": "共識",
+     "example": "There is no consensus on how much super shoes help.",
+     "match": [
+      "consensus"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "level off",
+     "pos": "phr. v.",
+     "def": "to stop rising or falling and stay at the same level",
+     "zh": "趨於平穩",
+     "example": "Her race times levelled off after three years of rapid progress.",
+     "match": [
+      "levelled off"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "aerobic capacity",
+     "pos": "n.",
+     "def": "the body's maximum ability to take in and use oxygen during exercise",
+     "zh": "有氧能力",
+     "example": "Long easy runs gradually raise your aerobic capacity.",
+     "match": [
+      "aerobic capacity"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "shave",
+     "pos": "v.",
+     "def": "to reduce something by a small amount",
+     "zh": "削減（一點點）",
+     "example": "He shaved ten seconds off his personal best.",
+     "match": [
+      "shaving"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "recreational",
+     "pos": "adj.",
+     "def": "done for enjoyment rather than as a job or serious competition",
+     "zh": "休閒性的、業餘的",
+     "example": "Most marathon entrants are recreational runners.",
+     "match": [
+      "recreational"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "the jury is still out",
+     "pos": "idiom",
+     "def": "people have not yet reached a decision or agreement about something",
+     "zh": "尚無定論",
+     "example": "The jury is still out on whether the new policy works.",
+     "match": [
+      "the jury is still out"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "push the boundaries",
+     "pos": "phr.",
+     "def": "to go beyond the limits of what is normally done or thought possible",
+     "zh": "突破極限",
+     "example": "Each generation of athletes pushes the boundaries of human performance.",
+     "match": [
+      "pushing the boundaries"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "provocative",
+     "pos": "adj.",
+     "def": "intended to cause discussion or strong reactions",
+     "zh": "引人爭議的、挑釁的",
+     "example": "The professor made a provocative claim about future records.",
+     "match": [
+      "provocative"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "ratify",
+     "pos": "v.",
+     "def": "to make an agreement or result officially valid",
+     "zh": "正式批准、認可",
+     "example": "Only officially ratified results were included in the analysis.",
+     "match": [
+      "ratified"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "artefact",
+     "pos": "n.",
+     "def": "a result that is produced by the method of a study rather than by what is being studied",
+     "zh": "（研究方法造成的）假象",
+     "example": "The apparent trend was merely an artefact of poor sampling.",
+     "match": [
+      "artefact"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "attribute (to)",
+     "pos": "v.",
+     "def": "to say or believe that something is caused by something else",
+     "zh": "把…歸因於",
+     "example": "The improvement cannot be attributed to new equipment alone.",
+     "match": [
+      "attributed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "stagnation",
+     "pos": "n.",
+     "def": "a situation in which there is no growth, development or progress",
+     "zh": "停滯",
+     "example": "Economists warned of a long period of stagnation.",
+     "match": [
+      "stagnation"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "trajectory",
+     "pos": "n.",
+     "def": "the path or general direction of development over time",
+     "zh": "軌跡、發展走向",
+     "example": "The company's growth trajectory remained steady for a decade.",
+     "match": [
+      "trajectories"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "plausible",
+     "pos": "adj.",
+     "def": "seeming reasonable or likely to be true",
+     "zh": "看似合理的",
+     "example": "Greater participation is a plausible explanation for the trend.",
+     "match": [
+      "plausible"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-11-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      10.95
+     ],
+     [
+      11.33,
+      12.39
+     ],
+     [
+      13.17,
+      20.95
+     ],
+     [
+      21.22,
+      24.27
+     ],
+     [
+      24.59,
+      30.2
+     ],
+     [
+      30.44,
+      37.19
+     ],
+     [
+      37.47,
+      45.34
+     ],
+     [
+      45.67,
+      48.11
+     ],
+     [
+      48.89,
+      55.26
+     ],
+     [
+      55.55,
+      61.64
+     ],
+     [
+      61.85,
+      67.48
+     ],
+     [
+      67.74,
+      74.34
+     ],
+     [
+      74.65,
+      79.82
+     ],
+     [
+      80.6,
+      81.95
+     ],
+     [
+      82.34,
+      86.86
+     ],
+     [
+      87.29,
+      89.31
+     ],
+     [
+      89.55,
+      96.53
+     ],
+     [
+      96.81,
+      104.92
+     ],
+     [
+      105.7,
+      108.8
+     ],
+     [
+      109.05,
+      114.63
+     ],
+     [
+      114.92,
+      120.24
+     ],
+     [
+      120.45,
+      128.03
+     ],
+     [
+      128.49,
+      132.86
+     ],
+     [
+      133.64,
+      140.7
+     ],
+     [
+      140.92,
+      144.56
+     ],
+     [
+      144.83,
+      151.04
+     ],
+     [
+      151.36,
+      155.74
+     ],
+     [
+      155.97,
+      163.58
+     ],
+     [
+      164.36,
+      166.74
+     ],
+     [
+      167.23,
+      169.91
+     ],
+     [
+      170.16,
+      174.1
+     ],
+     [
+      174.39,
+      177.04
+     ]
+    ],
+    "duration": 177.7,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-11-1-words/"
+   }
+  },
+  {
+   "title": "Stanford Review: AI Helps Students Learn Only When It Doesn't Do the Work for Them",
+   "topic": "Education · AI in schools",
+   "source": {
+    "name": "Stanford SCALE / AI Hub for Education: The Evidence Base on AI in K-12 – A November 2026 Review (10 Nov 2026)",
+    "url": "https://scale.stanford.edu/ai/evidence-base-review/evidence-base-ai-k12-november-review",
+    "links": [
+     {
+      "name": "Education Week: Is AI Good or Bad for Learning? The Answer Isn't So Simple (10 Nov 2026)",
+      "url": "https://www.edweek.org/technology/is-ai-good-or-bad-for-learning-the-answer-isnt-so-simple/2026/11"
+     }
+    ]
+   },
+   "script": [
+    [
+     "This is the education report.",
+     "A major review of the research on artificial intelligence in education has found that chatbots can help students learn, but mainly when they are used to understand material rather than to do the work for them.",
+     "Here's more."
+    ],
+    [
+     "The review comes from the AI Hub for Education at Stanford University in California, and updates a similar analysis published in March.",
+     "Since then, the number of rigorous studies the team could include has more than doubled, from twenty to fifty-two.",
+     "Most are randomised trials, the kind of experiment that can show cause and effect.",
+     "Out of nearly seventeen hundred papers in the hub's database, only those fifty-two tested the impact of a specific intervention in this way.",
+     "To find them, the researchers first used an AI model to screen hundreds of papers, before Stanford staff checked the strongest candidates by hand."
+    ],
+    [
+     "The central finding is about how students use the technology.",
+     "When they asked a chatbot to explain concepts or set practice problems, results were generally better than when they used it to produce essays or homework.",
+     "Even so, neither approach improved learning consistently.",
+     "And using AI to offload academic tasks, the authors warn, can actually reduce how much students learn.",
+     "One study from Brazil illustrates the risk.",
+     "Undergraduates who prepared a presentation with ChatGPT spent just over three hours on it, compared with almost six for those using traditional resources.",
+     "But on a surprise test forty-five days later, the students who had done things the slow way scored higher."
+    ],
+    [
+     "Meanwhile, the review highlights a gap between how learning feels and what students actually learn.",
+     "Students often said they enjoyed working with AI, and rated its feedback as clear and motivating.",
+     "But those positive experiences frequently failed to show up in test scores.",
+     "Some students even believed they were learning more when they were not.",
+     "Susanna Loeb, a professor at Stanford's Graduate School of Education and one of the authors, told the publication Education Week that it is very tempting for students to hand the learning over to the chatbot."
+    ],
+    [
+     "Teachers are not immune either.",
+     "Earlier research found that AI could cut the time spent planning lessons without lowering their quality.",
+     "However, a new trial in Türkiye found that when teachers were given a broad AI assistant, their pupils became less motivated and less confident.",
+     "Exam results did not change overall, but they fell among pupils of weaker teachers.",
+     "The authors note that many of those teachers simply accepted the materials the tool produced, with very little revision.",
+     "No one is sure why this happened, but one possibility is that writing their own lessons helps teachers build important skills."
+    ],
+    [
+     "There is an important caveat, though.",
+     "Only ten of the fifty-two studies involved American school pupils or their teachers, so the findings may not apply widely.",
+     "Professor Loeb compares the question to asking whether paper is good or bad for learning: it depends on how you use it.",
+     "In the meantime, she says, schools that adopt AI should do so strategically and keep a close eye on how it is used.",
+     "A fuller review is planned for the spring of twenty twenty-seven.",
+     "That's the education report for today."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "AI in education: what the evidence shows",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The Stanford review"
+       },
+       {
+        "t": "Rigorous studies now included: [[1]]"
+       },
+       {
+        "t": "Mostly randomised [[2]]"
+       },
+       {
+        "t": "Papers first filtered by an [[3]]"
+       },
+       {
+        "h": "How students use AI"
+       },
+       {
+        "t": "Better outcomes when AI clarifies [[4]] or sets exercises"
+       },
+       {
+        "t": "Brazil: students had to prepare a [[5]]"
+       },
+       {
+        "t": "Non-AI group did better in a [[6]] test"
+       },
+       {
+        "h": "Feelings versus learning"
+       },
+       {
+        "t": "AI feedback described as clear and [[7]]"
+       },
+       {
+        "t": "Good experiences often not reflected in [[8]]"
+       },
+       {
+        "h": "Teachers"
+       },
+       {
+        "t": "Türkiye: pupils lost motivation and felt less [[9]]"
+       },
+       {
+        "t": "AI materials often used with almost no [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "52",
+         "fifty-two"
+        ],
+        "ref": "from twenty to fifty-two",
+        "ev": "the number of rigorous studies the team could include has more than doubled, from twenty to fifty-two",
+        "zh": "Rigorous studies now included = 從 twenty 增加到 fifty-two → 52。本篇唯一數字題；干擾：twenty 是三月版的數量，答題要聽「現在」。"
+       },
+       {
+        "a": [
+         "trials",
+         "trial"
+        ],
+        "ref": "Most are randomised trials",
+        "ev": "Most are randomised trials, the kind of experiment that can show cause and effect.",
+        "zh": "Mostly randomised ___ = Most are randomised trials → trials（隨機對照試驗）。"
+       },
+       {
+        "a": [
+         "AI model"
+        ],
+        "ref": "first used an AI model to screen",
+        "ev": "the researchers first used an AI model to screen hundreds of papers",
+        "zh": "Papers first filtered by an ___ = first used an AI model to screen hundreds of papers → AI model。filtered ↔ screen。干擾：Stanford staff 是第二步人工檢查。"
+       },
+       {
+        "a": [
+         "concepts"
+        ],
+        "ref": "asked a chatbot to explain concepts",
+        "ev": "When they asked a chatbot to explain concepts or set practice problems",
+        "zh": "AI clarifies ___ or sets exercises = explain concepts or set practice problems → concepts（概念）。clarifies ↔ explain、exercises ↔ practice problems。"
+       },
+       {
+        "a": [
+         "presentation"
+        ],
+        "ref": "prepared a presentation with ChatGPT",
+        "ev": "Undergraduates who prepared a presentation with ChatGPT",
+        "zh": "prepare a ___ = prepared a presentation → presentation（簡報）。干擾數字：three hours / almost six hours 是準備時間。"
+       },
+       {
+        "a": [
+         "surprise"
+        ],
+        "ref": "on a surprise test forty-five days later",
+        "ev": "But on a surprise test forty-five days later, the students who had done things the slow way scored higher.",
+        "zh": "Non-AI group did better in a ___ test = on a surprise test… the students who had done things the slow way scored higher → surprise（突擊的）。forty-five days 是時間，不是答案。"
+       },
+       {
+        "a": [
+         "motivating"
+        ],
+        "ref": "rated its feedback as clear and motivating",
+        "ev": "rated its feedback as clear and motivating",
+        "zh": "AI feedback described as clear and ___ = rated its feedback as clear and motivating → motivating（激勵人心的）。題幹已給 clear。"
+       },
+       {
+        "a": [
+         "test scores"
+        ],
+        "ref": "failed to show up in test scores",
+        "ev": "But those positive experiences frequently failed to show up in test scores.",
+        "zh": "not reflected in ___ = failed to show up in test scores → test scores。reflected ↔ show up。"
+       },
+       {
+        "a": [
+         "confident"
+        ],
+        "ref": "less motivated and less confident",
+        "ev": "their pupils became less motivated and less confident",
+        "zh": "pupils lost motivation and felt less ___ = became less motivated and less confident → confident（有自信的）。題幹 motivation 已用掉，填另一個形容詞。"
+       },
+       {
+        "a": [
+         "revision"
+        ],
+        "ref": "with very little revision",
+        "ev": "many of those teachers simply accepted the materials the tool produced, with very little revision",
+        "zh": "used with almost no ___ = accepted… with very little revision → revision（修改）。almost no ↔ very little。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Learning Aid or Shortcut? What the Evidence Says About AI in Schools",
+    "intro": "A Stanford review of 52 rigorous studies finds that the effects of generative AI on learning depend heavily on how it is used.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "As generative artificial intelligence has swept into classrooms, its promoters and its critics have offered starkly different visions of what it will do to learning. In the optimistic account, AI could finally personalise instruction, working with each student on the specific skills they lack and offering targeted feedback. In the pessimistic one, it outsources the learning process altogether and flattens students' creativity and voice. A review published in November 2026 by the AI Hub for Education, part of Stanford University's Accelerator for Learning, suggests that the reality is neither so simple nor so binary. The document updates an earlier review released in March of the same year."
+     },
+     {
+      "label": "B",
+      "text": "The authors' first task was to separate strong evidence from weak. By the end of June 2026, the hub's research repository held 1,686 papers, more than twice the 818 available for the March review. Of the 868 papers added during the review period, 201 were randomised controlled trials or quasi-experimental studies. A large language model carried out an initial screening, after which Stanford researchers examined 97 prioritised papers against criteria derived from a US government handbook on education research standards. Only 32 met the bar, bringing the total evidence base to 52. Of these new papers, 28 examined tools used by students, while just four looked at tools used by educators. The authors acknowledge that the repository consists primarily of preprints that have not undergone peer review, although at least two human researchers checked each causal paper discussed."
+     },
+     {
+      "label": "C",
+      "text": "The clearest pattern concerns the purpose for which students use AI. When it is used to produce work, such as drafting essays or completing homework problems, the consequences can be negative once the tool is taken away. One quasi-experiment analysed 3.2 million interactions on an adaptive mathematics platform used in the United States. After ChatGPT was released, students spent less time on text-based practice problems, which could easily be typed into a chatbot, than on graph-based ones, which were harder to enter. On supervised assessments, the odds of a correct answer to the text-based type fell by approximately 25% relative to the graph-based type. Similarly, US college students who relied on AI to draft essays wrote better essays while they had access to it, but those gains disappeared when they later wrote without help."
+     },
+     {
+      "label": "D",
+      "text": "Using AI for learning support, by contrast, produced more encouraging but still mixed results. In Sierra Leone, 1,423 students in grades seven and eight used a guided version of Google's Gemini in half of their mathematics lessons for eight weeks, and their scores rose by about a quarter of a standard deviation; the effect was larger among those who had begun with higher marks. Yet several other studies found no benefit from AI tools compared with static materials or standard online practice. Interestingly, two new studies found that US college students who used general-purpose chatbots to learn unfamiliar material later performed better on tests taken without AI, in contrast to earlier research in which such tools had harmed performance. A recurring theme is that students' perceptions do not always match their progress: they frequently described AI as more enjoyable, useful or clear, even in studies where their learning outcomes were no better."
+     },
+     {
+      "label": "E",
+      "text": "Evidence on teachers is thinner and more contradictory. An earlier trial in England found that teachers using ChatGPT saved about 25 minutes a week on lesson preparation, a 31% reduction, with no detectable loss of quality. At a US university, teaching assistants who received AI suggestions provided nearly twice as much feedback without spending longer on grading; their students produced stronger revisions but did not score significantly higher on a later test. More troubling was a semester-long trial in Türkiye involving 193 teachers and 2,816 students. Giving teachers a broad AI assistant reduced students' motivation and confidence, and test scores declined among the students of lower-performing teachers. The authors observed that teachers mostly used the tool to generate materials, which they accepted with minimal revision."
+     },
+     {
+      "label": "F",
+      "text": "Several limitations temper these conclusions. Only ten of the 52 studies involved US school students or educators, and most new research took place in postsecondary settings. Little is known about whether gains persist over the long term, or whether AI reduces or reinforces educational inequities. Elizabeth Tipton, a statistician at Northwestern University who was not involved in the review, remarked that it is really hard to improve student learning, with or without technology. Some school systems have opted for caution; New York City, for instance, has banned student-facing generative AI for younger pupils while limiting access in high schools. For Susanna Loeb, one of the authors, schools that adopt AI must do so strategically and closely monitor implementation. A comprehensive review is scheduled for spring 2027."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a type of problem that was less easy to enter into a chatbot",
+        "a": "C",
+        "ref": "C",
+        "ev": "graph-based ones, which were harder to enter",
+        "zh": "C 段：graph-based problems 比較難輸入聊天機器人 → less easy to enter = harder to enter。"
+       },
+       {
+        "q": "a comparison of the size of a collection of studies at two different times",
+        "a": "B",
+        "ref": "B",
+        "ev": "held 1,686 papers, more than twice the 818 available for the March review",
+        "zh": "B 段：資料庫從 818 篇增加到 1,686 篇 → 兩個時間點的數量比較。"
+       },
+       {
+        "q": "an example of a city's policy on students' access to AI",
+        "a": "F",
+        "ref": "F",
+        "ev": "New York City, for instance, has banned student-facing generative AI for younger pupils while limiting access in high schools",
+        "zh": "F 段：紐約市禁止低年級學生使用生成式 AI、高中則限制 → 城市政策。"
+       },
+       {
+        "q": "two contrasting predictions about the effect of AI on learning",
+        "a": "A",
+        "ref": "A",
+        "ev": "its promoters and its critics have offered starkly different visions of what it will do to learning",
+        "zh": "A 段：樂觀版（個人化教學）vs 悲觀版（外包學習、扼殺創意）→ 兩種相反預測。"
+       },
+       {
+        "q": "a figure for the amount of time teachers saved",
+        "a": "E",
+        "ref": "E",
+        "ev": "saved about 25 minutes a week on lesson preparation, a 31% reduction",
+        "zh": "E 段：英國老師每週省約 25 分鐘備課（減少 31%）。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "All of the papers in the repository had been reviewed by other experts before publication.",
+        "a": "False",
+        "ref": "B",
+        "ev": "the repository consists primarily of preprints that have not undergone peer review",
+        "zh": "B 段：資料庫主要是未經同儕審查的預印本 → 與「全部經過審查」矛盾 → False。"
+       },
+       {
+        "q": "In the Sierra Leone study, students who started with higher marks benefited more.",
+        "a": "True",
+        "ref": "D",
+        "ev": "the effect was larger among those who had begun with higher marks",
+        "zh": "D 段：原本分數較高的學生效果較大 → True。"
+       },
+       {
+        "q": "Teachers in the Türkiye trial received training on the AI assistant before the semester began.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "Giving teachers a broad AI assistant reduced students' motivation and confidence",
+        "zh": "E 段只說老師拿到 AI 助理、主要用來產生教材，完全沒提是否受過訓練 → Not Given。陷阱：看似合理的背景細節。"
+       },
+       {
+        "q": "Students whose teaching assistants used AI suggestions achieved significantly better results on a subsequent test.",
+        "a": "False",
+        "ref": "E",
+        "ev": "their students produced stronger revisions but did not score significantly higher on a later test",
+        "zh": "E 段：修改稿變好，但後續測驗沒有顯著較高 → 與敘述相反 → False（不是 Not Given，因為文章明確說了 did not）。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Limits of the evidence on AI in education",
+      "lines": [
+       {
+        "t": "The review's authors were careful about which studies to trust, using criteria taken from a government [[1]] on research standards. They caution that the evidence base remains narrow: most recent studies were conducted in [[2]] settings rather than schools, and it is unclear whether AI narrows or widens educational [[3]]. Schools that choose to introduce AI are advised to plan strategically and closely [[4]] how it is implemented."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "handbook"
+        ],
+        "ref": "B",
+        "ev": "criteria derived from a US government handbook on education research standards",
+        "zh": "B 段：criteria derived from a US government handbook → handbook（手冊）。taken from ↔ derived from。"
+       },
+       {
+        "a": [
+         "postsecondary"
+        ],
+        "ref": "F",
+        "ev": "most new research took place in postsecondary settings",
+        "zh": "F 段：postsecondary settings（高等教育，即大學以上）→ postsecondary。rather than schools 是改述提示。"
+       },
+       {
+        "a": [
+         "inequities"
+        ],
+        "ref": "F",
+        "ev": "whether AI reduces or reinforces educational inequities",
+        "zh": "F 段：reduces or reinforces educational inequities → narrows or widens ___ = inequities（不平等）。"
+       },
+       {
+        "a": [
+         "monitor"
+        ],
+        "ref": "F",
+        "ev": "schools that adopt AI must do so strategically and closely monitor implementation",
+        "zh": "F 段：closely monitor implementation → monitor（監控，動詞）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "rigorous",
+     "pos": "adj.",
+     "def": "done carefully and thoroughly, following strict rules",
+     "zh": "嚴謹的",
+     "example": "Only rigorous studies were included in the review.",
+     "match": [
+      "rigorous"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "randomised trial",
+     "pos": "n.",
+     "def": "an experiment in which participants are assigned to groups by chance",
+     "zh": "隨機（對照）試驗",
+     "example": "A randomised trial is the best way to test a new teaching method.",
+     "match": [
+      "randomised trials"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "screen",
+     "pos": "v.",
+     "def": "to examine items in order to select or reject them",
+     "zh": "篩選",
+     "example": "The software screens thousands of applications every day.",
+     "match": [
+      "screen"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "illustrate",
+     "pos": "v.",
+     "def": "to make a point clearer by giving an example",
+     "zh": "說明、例證",
+     "example": "The case illustrates the risks of relying on shortcuts.",
+     "match": [
+      "illustrates"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "immune (to)",
+     "pos": "adj.",
+     "def": "not affected by something",
+     "zh": "不受影響的",
+     "example": "No profession is immune to the effects of automation.",
+     "match": [
+      "immune"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "caveat",
+     "pos": "n.",
+     "def": "a warning that a statement or finding has limits",
+     "zh": "但書、警告",
+     "example": "There is one caveat: the sample was very small.",
+     "match": [
+      "caveat"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "tempting",
+     "pos": "adj.",
+     "def": "attractive in a way that makes you want to do something, often unwisely",
+     "zh": "誘人的",
+     "example": "It is tempting to skip the warm-up when you are short of time.",
+     "match": [
+      "tempting"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "starkly",
+     "pos": "adv.",
+     "def": "in a very clear and obvious way",
+     "zh": "鮮明地、截然地",
+     "example": "The two reports reach starkly different conclusions.",
+     "match": [
+      "starkly"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "binary",
+     "pos": "adj.",
+     "def": "involving only two choices or possibilities",
+     "zh": "二元的、非此即彼的",
+     "example": "The debate is often framed in binary terms: good or bad.",
+     "match": [
+      "binary"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "outsource",
+     "pos": "v.",
+     "def": "to give a task to someone or something else instead of doing it yourself",
+     "zh": "外包",
+     "example": "Students may outsource their thinking to a chatbot.",
+     "match": [
+      "outsources"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "derive (from)",
+     "pos": "v.",
+     "def": "to get or develop something from a particular source",
+     "zh": "源自、取自",
+     "example": "The criteria were derived from an official handbook.",
+     "match": [
+      "derived"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "peer review",
+     "pos": "n.",
+     "def": "the evaluation of research by other experts before it is published",
+     "zh": "同儕審查",
+     "example": "The paper has not yet undergone peer review.",
+     "match": [
+      "peer review"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "temper",
+     "pos": "v.",
+     "def": "to make something less strong or extreme",
+     "zh": "緩和、降低（結論的強度）",
+     "example": "Several limitations temper the study's conclusions.",
+     "match": [
+      "temper"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "persist",
+     "pos": "v.",
+     "def": "to continue to exist over a long period",
+     "zh": "持續存在",
+     "example": "It is unclear whether the gains persist over time.",
+     "match": [
+      "persist"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "reinforce",
+     "pos": "v.",
+     "def": "to make an existing feeling, idea or situation stronger",
+     "zh": "強化、加深",
+     "example": "Poorly designed tools may reinforce existing inequalities.",
+     "match": [
+      "reinforces"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-11-2.mp3",
+    "times": [
+     [
+      0.36,
+      2.02
+     ],
+     [
+      2.24,
+      12.56
+     ],
+     [
+      12.94,
+      13.61
+     ],
+     [
+      14.39,
+      21.98
+     ],
+     [
+      22.25,
+      28.0
+     ],
+     [
+      28.32,
+      32.67
+     ],
+     [
+      32.91,
+      40.24
+     ],
+     [
+      40.52,
+      48.45
+     ],
+     [
+      49.23,
+      52.36
+     ],
+     [
+      52.6,
+      60.29
+     ],
+     [
+      60.59,
+      63.87
+     ],
+     [
+      64.08,
+      70.1
+     ],
+     [
+      70.36,
+      72.67
+     ],
+     [
+      72.97,
+      81.23
+     ],
+     [
+      81.57,
+      87.32
+     ],
+     [
+      88.1,
+      93.49
+     ],
+     [
+      93.81,
+      99.3
+     ],
+     [
+      99.66,
+      103.72
+     ],
+     [
+      104.0,
+      107.04
+     ],
+     [
+      107.37,
+      117.91
+     ],
+     [
+      118.69,
+      120.27
+     ],
+     [
+      120.52,
+      125.43
+     ],
+     [
+      125.64,
+      133.43
+     ],
+     [
+      133.69,
+      138.28
+     ],
+     [
+      138.59,
+      144.57
+     ],
+     [
+      144.79,
+      151.4
+     ],
+     [
+      152.18,
+      154.05
+     ],
+     [
+      154.33,
+      161.03
+     ],
+     [
+      161.26,
+      167.24
+     ],
+     [
+      167.6,
+      174.0
+     ],
+     [
+      174.33,
+      177.46
+     ],
+     [
+      177.71,
+      179.63
+     ]
+    ],
+    "duration": 180.3,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-11-11-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
