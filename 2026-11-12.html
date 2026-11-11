@@ -1,0 +1,2177 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-12",
+ "date": "2026-11-12",
+ "title": "Central Banks Keep Buying Gold at Record Prices, World Gold Council Says · Norwegian Study: Zero-Emission Fast Ferries Are Feasible, if Politicians Back Them",
+ "stories": [
+  {
+   "title": "Central Banks Keep Buying Gold at Record Prices, World Gold Council Says",
+   "topic": "Markets · gold",
+   "source": {
+    "name": "World Gold Council: Gold Demand Trends Q3 2026 (3 Nov 2026)",
+    "url": "https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-q3-2026",
+    "links": [
+     {
+      "name": "World Gold Council: Central Banks (Q3 2026)",
+      "url": "https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-q3-2026/central-banks"
+     },
+     {
+      "name": "Kitco News: China buys gold for two straight years as central bank demand remains a key pillar of support (10 Nov 2026)",
+      "url": "https://www.kitco.com/news/article/2026-11-10/china-buys-gold-two-straight-years-central-bank-demand-remains-key-pillar"
+     },
+     {
+      "name": "CNBC: Gold falls as hot inflation figures, higher dollar weigh (11 Nov 2026)",
+      "url": "https://www.cnbc.com/2026/11/11/gold-edges-higher-after-sharp-selloff-fed-hike-bets-weigh.html"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead story in the markets report: central banks bought far more gold than usual last quarter, and that demand may be the one thing holding up a price now under pressure from higher US interest rates.",
+     "Here's the report."
+    ],
+    [
+     "The figures come from the World Gold Council, an industry body, in its quarterly demand report published last week.",
+     "According to the council, central banks and other official institutions bought three hundred and twenty-one tonnes of gold between July and September.",
+     "That was up forty-two percent on a year earlier, and well above the five-year quarterly average of two hundred and twenty-seven tonnes.",
+     "Purchases so far this year total six hundred and seventy-five tonnes, six percent ahead of last year's pace."
+    ],
+    [
+     "Still, the headline number hides a lot.",
+     "Governments disclosed only a hundred and twenty tonnes of those purchases, and the council estimates that around sixty-three percent of the quarter's buying went unreported.",
+     "Of the buying that was reported, most came from two countries.",
+     "The People's Bank of China was the biggest buyer, adding sixty-three tonnes, followed by Poland's central bank with forty.",
+     "Together, the two accounted for around eighty-six percent of reported net purchases."
+    ],
+    [
+     "Meanwhile, ordinary buyers are feeling the pinch.",
+     "The council says jewellery demand fell seventeen percent to three hundred and thirteen tonnes, the weakest third quarter in its records, as high prices held shoppers back.",
+     "Even so, the value of that demand edged up two percent, to about forty-three billion dollars, because buyers paid more for less gold.",
+     "Demand for bars and coins fell nineteen percent.",
+     "There was one bright spot.",
+     "Gold used in technology rose three percent, as AI-related manufacturing more than offset the effect of high prices."
+    ],
+    [
+     "October's figures suggest the central-bank buying continues.",
+     "According to the council's senior analyst Krishan Gopaul, China added twenty-six tonnes last month, putting its official reserves almost level with those of France.",
+     "The gap is now just two tonnes.",
+     "Poland, meanwhile, has reached its target of seven hundred tonnes.",
+     "Its central bank governor, Adam Glapinski, said he sees no reason to stop buying, and believes gold reserves should grow in line with overall reserves.",
+     "The Czech National Bank is also closing in on its own target of one hundred tonnes, with holdings at ninety."
+    ],
+    [
+     "Now, to the market itself.",
+     "Gold slid about three percent on Tuesday, to roughly four thousand and thirteen dollars an ounce, after US consumer prices rose zero point four percent in October.",
+     "Economists polled by Reuters had been forecasting zero point three.",
+     "Traders now fully expect a quarter-point rise in US interest rates next month, and Fed governor Christopher Waller had said that a core reading of zero point three percent would make him consider a half-point increase.",
+     "By Wednesday, spot gold was trading near three thousand, nine hundred and eighty-five dollars, after touching four thousand and sixty-seven earlier in the session.",
+     "Higher rates tend to hurt gold, because it pays no interest."
+    ],
+    [
+     "Even so, StoneX market strategist Bob Haberkorn says strong central-bank buying has kept a floor under the price.",
+     "The council itself is more cautious.",
+     "It says official purchases appear sensitive to price, so the relationship is not stable enough to guarantee a firm floor.",
+     "There are risks on both sides, though.",
+     "That's the markets report for this Thursday."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Gold: central banks and the price",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The World Gold Council report"
+       },
+       {
+        "t": "Q3 buying by central banks: far higher than the five-year [[1]]"
+       },
+       {
+        "t": "Most of the buying was [[2]]"
+       },
+       {
+        "t": "Largest reported buyers: China and [[3]]"
+       },
+       {
+        "h": "Consumers and industry"
+       },
+       {
+        "t": "Jewellery demand weakest on record because of high [[4]]"
+       },
+       {
+        "t": "Jewellery spending still rose: buyers paid more for [[5]]"
+       },
+       {
+        "t": "Technology demand up thanks to AI-related [[6]]"
+       },
+       {
+        "h": "October and the price"
+       },
+       {
+        "t": "China is now only [[7]] tonnes behind France's reserves"
+       },
+       {
+        "t": "Poland's governor sees no reason to [[8]] buying"
+       },
+       {
+        "t": "Gold fell about 3% after US [[9]] rose faster than forecast"
+       },
+       {
+        "t": "Central-bank buying is said to have kept a [[10]] under the price"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "average"
+        ],
+        "ref": "five-year quarterly average",
+        "ev": "well above the five-year quarterly average of two hundred and twenty-seven tonnes",
+        "zh": "far higher than the five-year ___ = well above the five-year quarterly average → average（平均值）。干擾：321 噸是本季買量、227 噸才是五年平均。"
+       },
+       {
+        "a": [
+         "unreported"
+        ],
+        "ref": "went unreported",
+        "ev": "around sixty-three percent of the quarter's buying went unreported",
+        "zh": "Most of the buying was ___ = around 63% … went unreported → unreported（未申報的）。干擾：政府公開的只有 120 噸（disclosed），別填 reported。"
+       },
+       {
+        "a": [
+         "Poland"
+        ],
+        "ref": "followed by Poland's central bank",
+        "ev": "followed by Poland's central bank with forty",
+        "zh": "Largest reported buyers: China and ___ → 中國人民銀行最大（63 噸），其次 Poland（40 噸）。兩國合計約 86%。"
+       },
+       {
+        "a": [
+         "prices",
+         "high prices"
+        ],
+        "ref": "as high prices held shoppers back",
+        "ev": "as high prices held shoppers back",
+        "zh": "weakest on record because of high ___ = as high prices held shoppers back → prices。題幹已給 high，答案只填 prices。"
+       },
+       {
+        "a": [
+         "less gold",
+         "less metal"
+        ],
+        "ref": "because buyers paid more for less gold",
+        "ev": "because buyers paid more for less gold",
+        "zh": "paid more for ___ → less gold（更少的黃金）。珠寶『量』掉 17%，但『金額』仍增 2%（約 430 億美元）。"
+       },
+       {
+        "a": [
+         "manufacturing"
+        ],
+        "ref": "AI-related manufacturing",
+        "ev": "as AI-related manufacturing more than offset the effect of high prices",
+        "zh": "Technology demand up thanks to AI-related ___ → manufacturing（製造）。more than offset = 抵銷有餘。"
+       },
+       {
+        "a": [
+         "two",
+         "2"
+        ],
+        "ref": "The gap is now just two tonnes",
+        "ev": "The gap is now just two tonnes",
+        "zh": "China only ___ tonnes behind France → two。干擾：中國十月買了 26 噸（twenty-six），與法國差距才是 2 噸。"
+       },
+       {
+        "a": [
+         "stop"
+        ],
+        "ref": "sees no reason to stop buying",
+        "ev": "he sees no reason to stop buying",
+        "zh": "sees no reason to ___ buying → stop。波蘭已達 700 噸目標，但總裁表示沒理由停止；捷克則是 90 噸朝 100 噸邁進（干擾）。"
+       },
+       {
+        "a": [
+         "consumer prices",
+         "consumer price",
+         "inflation data",
+         "CPI"
+        ],
+        "ref": "after US consumer prices rose zero point four percent",
+        "ev": "after US consumer prices rose zero point four percent in October",
+        "zh": "after US ___ rose faster than forecast → consumer prices（消費者物價）。干擾：預測 0.3%、實際 0.4%（forecasting vs actual）。"
+       },
+       {
+        "a": [
+         "floor"
+        ],
+        "ref": "has kept a floor under the price",
+        "ev": "strong central-bank buying has kept a floor under the price",
+        "zh": "kept a ___ under the price → floor（價格支撐底線）。注意：StoneX 這麼說，但黃金協會較謹慎（不保證 firm floor）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Who Is Buying Gold at US$4,000 an Ounce?",
+    "intro": "Central banks bought more gold in a single quarter than in most recent years. A new industry report explains who is buying, who is not, and why the price has not collapsed.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Central banks do not usually make headlines in the gold market, but in recent months they have become its most closely watched customers. According to the World Gold Council (WGC), an industry body that publishes quarterly demand figures, official-sector institutions bought 321 tonnes of gold in the third quarter of 2026. That was 42% more than in the same period of 2025 and well above the five-year quarterly average of 227 tonnes. The surge was all the more notable given the hesitant start to the year: the first quarter had produced only 58 tonnes, and it was the stronger second and third quarters that lifted purchases for the year so far to 675 tonnes, 6% ahead of 2025."
+     },
+     {
+      "label": "B",
+      "text": "The headline total, however, conceals a significant gap between what is disclosed and what is estimated. Reported net buying amounted to just 120 tonnes in the quarter, which means that around 63% of the estimated demand came from unreported activity, that is, purchases not captured in official statistics because of reporting delays or non-disclosure. The council notes that this pattern has been evident since 2022. Among the buyers who do publish their holdings, activity was highly concentrated: China and Poland together added 104 tonnes, equivalent to around 86% of reported net purchases. Their rhythms differed, however, since China's buying accelerated while Poland's slowed after a particularly strong second quarter. Sales, by contrast, were generally limited. Small reductions by Qatar, the Kyrgyz Republic and the United Arab Emirates were modest relative to their holdings, and Russia's 19-tonne decline was the only sizeable one."
+     },
+     {
+      "label": "C",
+      "text": "Why would institutions keep accumulating gold when its price remains historically elevated? The WGC suggests that the easing of the quarterly average price from its first-quarter high, together with lower volatility, may have supported purchases at the margin. Nevertheless, it argues that longer-term strategic considerations, such as diversification and risk management, remain the primary driver. Two further features stand out. China, Poland and the Czech Republic have continued multi-year accumulation trends despite the cost; the Czech Republic's 5-tonne addition was equivalent to 6% of its holdings at the start of the quarter. In addition, several buyers, including Kazakhstan, Uzbekistan, Ghana and Bolivia, are significant gold producers, which points to the role of domestic gold markets and local purchasing programmes in shaping reserve activity. There are signs that the trend will continue: after Poland announced that it had reached its target of 700 tonnes, its central bank governor, Adam Glapinski, said that he saw no reason to stop buying."
+     },
+     {
+      "label": "D",
+      "text": "Ordinary buyers have reacted very differently to the same prices. The LBMA gold price averaged US$4,262 an ounce in the quarter, 23% higher than a year earlier and the third strongest quarterly average on record. Jewellery demand fell 17% to 313 tonnes, the weakest third quarter in the council's data series, although the value of that demand edged up 2% to US$43 billion, which suggests that consumers were paying more for each gram. Investors in bars and coins were more circumspect, with demand down 19% to 268 tonnes as they waited for a clearer price trend to emerge. Exchange-traded funds, by contrast, reversed course after outflows in the second quarter, adding 211 tonnes, an inflow that seemed to be driven by mounting concerns over fiscal sustainability and inflation, among other things. Even technology, a small segment, grew by 3%, as demand generated by AI-related manufacturing more than offset the limiting effect of high prices."
+     },
+     {
+      "label": "E",
+      "text": "On the supply side, there was little relief. Mine production rose 3% to 1,071 tonnes, a record for a third quarter, whereas recycling volumes fell 8% to a three-year low of 314 tonnes. The council describes recycling as broadly unresponsive to high prices, and it therefore expects mine output to remain the only likely source of modest supply growth. Total supply edged down 1% to 1,369 tonnes, matching total demand, which was also 1% lower than a year earlier. Even so, demand for the first nine months of 3,881 tonnes virtually equalled the 2025 record of 3,884 tonnes, while its value reached a record US$566 billion."
+     },
+     {
+      "label": "F",
+      "text": "Gold's recent price action shows how finely balanced these forces are. Early this week, a 0.4% rise in US consumer prices in October, against the 0.3% forecast by economists polled by Reuters, fed expectations of an interest rate increase by the Federal Reserve in December, and gold fell about 3% to US$4,013 an ounce on Tuesday. Higher rates erode the appeal of bullion, which pays no interest, and a stronger dollar makes it dearer for overseas buyers. Bob Haberkorn, a market strategist at StoneX, nevertheless attributed some stability to central banks, saying that their strong third-quarter buying had kept a floor under the market. The WGC is more guarded. It says that official purchases appear sensitive to price, which could provide some price support, but that the relationship is not sufficiently stable to imply a firm floor. For now, it expects central-bank buying for 2026 to at least match last year's level."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reference to buyers that mine part of the gold they purchase",
+        "a": "C",
+        "ref": "C",
+        "ev": "several buyers, including Kazakhstan, Uzbekistan, Ghana and Bolivia, are significant gold producers",
+        "zh": "C 段：哈薩克、烏茲別克、迦納、玻利維亞本身是重要產金國 → 買家同時也是礦產國。"
+       },
+       {
+        "q": "a comparison between officially reported purchases and the overall estimated figure",
+        "a": "B",
+        "ref": "B",
+        "ev": "The headline total, however, conceals a significant gap between what is disclosed and what is estimated.",
+        "zh": "B 段：公開申報只有 120 噸，估計總量 321 噸，約 63% 是未申報 → 申報與估計的落差。"
+       },
+       {
+        "q": "an explanation of why gold use in manufacturing still grew despite the cost",
+        "a": "D",
+        "ref": "D",
+        "ev": "as demand generated by AI-related manufacturing more than offset the limiting effect of high prices",
+        "zh": "D 段：科技用金成長 3%，因為 AI 相關製造的需求抵銷了高價的限制。"
+       },
+       {
+        "q": "a statement that one source of supply does not react to the price",
+        "a": "E",
+        "ref": "E",
+        "ev": "The council describes recycling as broadly unresponsive to high prices",
+        "zh": "E 段：回收金對高價『大致無反應（unresponsive）』→ 供給面不隨價格變動。"
+       },
+       {
+        "q": "a warning that support from official buyers may not be dependable",
+        "a": "F",
+        "ref": "F",
+        "ev": "the relationship is not sufficiently stable to imply a firm floor",
+        "zh": "F 段：WGC 較審慎，認為買盤與價格的關係不夠穩定，不能保證價格有一個『確定的底』。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Central banks bought less gold in the first quarter of 2026 than in the second.",
+        "a": "True",
+        "ref": "A",
+        "ev": "the first quarter had produced only 58 tonnes, and it was the stronger second and third quarters",
+        "zh": "A 段：第一季只有 58 噸，第二、第三季『更強』→ 第一季少於第二季 → True。"
+       },
+       {
+        "q": "Russia was the only country to reduce its gold holdings in the third quarter.",
+        "a": "False",
+        "ref": "B",
+        "ev": "Small reductions by Qatar, the Kyrgyz Republic and the United Arab Emirates were modest relative to their holdings",
+        "zh": "B 段：卡達、吉爾吉斯、阿聯也有小幅減持；俄羅斯只是『唯一大幅（sizeable）』減持 → 『only country』與原文矛盾 → False。"
+       },
+       {
+        "q": "The People's Bank of China intends to keep buying gold throughout 2027.",
+        "a": "Not Given",
+        "ref": "B",
+        "ev": "China's buying accelerated while Poland's slowed after a particularly strong second quarter",
+        "zh": "文章只說中國今年買盤加速、波蘭總裁不想停手，完全沒提中國人行 2027 年的計畫 → Not Given。陷阱：與波蘭的說法混在一起。"
+       },
+       {
+        "q": "Demand for bars and coins fell more sharply than demand for jewellery in the third quarter.",
+        "a": "True",
+        "ref": "D",
+        "ev": "Jewellery demand fell 17% to 313 tonnes",
+        "zh": "D 段：珠寶 −17%、金條金幣 −19%（with demand down 19%）→ 金條金幣跌幅較大 → True。需要自己比較兩個數字。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Why the gold price has held up",
+      "lines": [
+       {
+        "t": "The WGC believes that central banks are motivated mainly by [[1]] considerations such as diversification, rather than by short-term price movements. Among private buyers, those who invest in bars and coins have been [[2]], waiting for a clearer price trend, while funds that track gold attracted new money because of concerns about fiscal [[3]] and inflation. On the supply side, only mine production is expected to deliver [[4]] growth."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "strategic"
+        ],
+        "ref": "C",
+        "ev": "longer-term strategic considerations, such as diversification and risk management",
+        "zh": "C 段：longer-term strategic considerations → strategic（策略性的）。"
+       },
+       {
+        "a": [
+         "circumspect"
+        ],
+        "ref": "D",
+        "ev": "Investors in bars and coins were more circumspect",
+        "zh": "D 段：more circumspect（較謹慎）→ circumspect。"
+       },
+       {
+        "a": [
+         "sustainability"
+        ],
+        "ref": "D",
+        "ev": "mounting concerns over fiscal sustainability and inflation",
+        "zh": "D 段：fiscal sustainability（財政永續性）→ sustainability。"
+       },
+       {
+        "a": [
+         "modest"
+        ],
+        "ref": "E",
+        "ev": "the only likely source of modest supply growth",
+        "zh": "E 段：modest supply growth（溫和的供給成長）→ modest。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "bullion",
+     "pos": "n.",
+     "def": "gold or silver in bulk form, valued by weight",
+     "zh": "金條；貴金屬塊",
+     "example": "Higher interest rates reduce the appeal of bullion, which pays no interest.",
+     "match": [
+      "bullion"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "conceal",
+     "pos": "v.",
+     "def": "to hide something or stop it from being seen",
+     "zh": "隱藏、掩蓋",
+     "example": "The headline figure conceals how much buying went unreported.",
+     "match": [
+      "conceals"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "disclose",
+     "pos": "v.",
+     "def": "to make information known publicly",
+     "zh": "公開、揭露",
+     "example": "Governments disclosed only part of their purchases.",
+     "match": [
+      "disclosed"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "accumulate",
+     "pos": "v.",
+     "def": "to gradually get more of something over time",
+     "zh": "累積、囤積",
+     "example": "Some central banks have kept accumulating gold for years.",
+     "match": [
+      "accumulating"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "diversification",
+     "pos": "n.",
+     "def": "spreading investments or assets across different types to reduce risk",
+     "zh": "分散配置",
+     "example": "Diversification is a key reason for official gold buying.",
+     "match": [
+      "diversification"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "circumspect",
+     "pos": "adj.",
+     "def": "careful to consider risks before acting",
+     "zh": "謹慎的",
+     "example": "Bar and coin investors were more circumspect.",
+     "match": [
+      "circumspect"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "offset",
+     "pos": "v.",
+     "def": "to balance or cancel out the effect of something",
+     "zh": "抵銷",
+     "example": "AI demand more than offset the effect of high prices.",
+     "match": [
+      "offset"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "volatility",
+     "pos": "n.",
+     "def": "the tendency of prices to change sharply and unpredictably",
+     "zh": "波動性",
+     "example": "Lower volatility may have encouraged some purchases.",
+     "match": [
+      "volatility"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "erode",
+     "pos": "v.",
+     "def": "to gradually reduce or wear away",
+     "zh": "侵蝕、削弱",
+     "example": "Higher rates erode the appeal of bullion.",
+     "match": [
+      "erode"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "guarded",
+     "pos": "adj.",
+     "def": "careful and not revealing too much, often cautious",
+     "zh": "謹慎保守的",
+     "example": "The council's tone was more guarded than the strategist's.",
+     "match": [
+      "guarded"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sizeable",
+     "pos": "adj.",
+     "def": "fairly large",
+     "zh": "相當大的",
+     "example": "Russia's decline was the only sizeable reduction.",
+     "match": [
+      "sizeable"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "concentrated",
+     "pos": "adj.",
+     "def": "focused in a small number of places or people",
+     "zh": "集中的",
+     "example": "Reported buying was highly concentrated in two countries.",
+     "match": [
+      "concentrated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "unresponsive",
+     "pos": "adj.",
+     "def": "not reacting to something",
+     "zh": "無反應的",
+     "example": "Recycling was unresponsive to high prices.",
+     "match": [
+      "unresponsive"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "elevated",
+     "pos": "adj.",
+     "def": "higher than usual or normal",
+     "zh": "偏高的",
+     "example": "Prices remained historically elevated.",
+     "match": [
+      "elevated"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sensitive",
+     "pos": "adj.",
+     "def": "easily affected by something",
+     "zh": "敏感的、易受影響的",
+     "example": "Official purchases appear sensitive to price.",
+     "match": [
+      "sensitive"
+     ],
+     "src": "聽力"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-12-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.08
+     ],
+     [
+      1.3,
+      13.12
+     ],
+     [
+      13.5,
+      14.57
+     ],
+     [
+      15.35,
+      22.17
+     ],
+     [
+      22.44,
+      30.71
+     ],
+     [
+      31.03,
+      38.47
+     ],
+     [
+      38.71,
+      45.47
+     ],
+     [
+      46.25,
+      48.58
+     ],
+     [
+      48.91,
+      58.3
+     ],
+     [
+      58.54,
+      62.2
+     ],
+     [
+      62.5,
+      69.49
+     ],
+     [
+      69.7,
+      74.67
+     ],
+     [
+      75.45,
+      78.47
+     ],
+     [
+      78.77,
+      88.35
+     ],
+     [
+      88.65,
+      96.62
+     ],
+     [
+      96.89,
+      99.7
+     ],
+     [
+      100.02,
+      101.42
+     ],
+     [
+      101.62,
+      108.76
+     ],
+     [
+      109.54,
+      113.11
+     ],
+     [
+      113.44,
+      122.98
+     ],
+     [
+      123.22,
+      125.03
+     ],
+     [
+      125.33,
+      129.18
+     ],
+     [
+      129.39,
+      138.28
+     ],
+     [
+      138.53,
+      144.62
+     ],
+     [
+      145.4,
+      146.97
+     ],
+     [
+      147.16,
+      156.97
+     ],
+     [
+      157.32,
+      161.15
+     ],
+     [
+      161.47,
+      173.85
+     ],
+     [
+      174.17,
+      183.11
+     ],
+     [
+      183.39,
+      186.88
+     ],
+     [
+      187.66,
+      194.87
+     ],
+     [
+      195.11,
+      197.36
+     ],
+     [
+      197.62,
+      204.8
+     ],
+     [
+      205.01,
+      206.83
+     ],
+     [
+      207.09,
+      209.49
+     ]
+    ],
+    "duration": 210.1,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-11-12-1-words/"
+   }
+  },
+  {
+   "title": "Norwegian Study: Zero-Emission Fast Ferries Are Feasible, if Politicians Back Them",
+   "topic": "Transport · green ferries",
+   "source": {
+    "name": "Ocean Engineering: Zero-emission fast ferries (Godø, Thorne, Sundvor, Steen, 2026)",
+    "url": "https://doi.org/10.1016/j.oceaneng.2026.126414",
+    "links": [
+     {
+      "name": "Tech Xplore / NTNU: How high-speed ferries can reclaim their environmental credentials (11 Nov 2026)",
+      "url": "https://techxplore.com/news/2026-11-high-ferries-reclaim-environmental-credentials.html"
+     },
+     {
+      "name": "Maritime Executive: How High-Speed Ferries Can Reclaim Their Environmental Credentials",
+      "url": "https://maritime-executive.com/editorials/how-high-speed-ferries-can-reclaim-their-environmental-credentials"
+     },
+     {
+      "name": "Science Norway: This is how emissions from express ferries can be halved in just five years",
+      "url": "https://partner.sciencenorway.no/energy-environment-ntnu/this-is-how-emissions-from-express-ferries-can-be-halved-in-just-five-years/2661733"
+     },
+     {
+      "name": "Arup: What will make electric ferry deployment commercially viable? (Nov 2026)",
+      "url": "https://www.arup.com/en-us/insights/what-will-make-electric-ferry-deployment-commercially-viable/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Now to transport and the environment.",
+     "Fast passenger ferries are among the most energy-hungry vessels afloat, but Norwegian researchers say zero-emission versions could be in service within five years, if politicians are prepared to back them.",
+     "Here's the report."
+    ],
+    [
+     "The study, published in the journal Ocean Engineering, comes from the Norwegian University of Science and Technology, working with two research institutes.",
+     "Most of the country's high-speed ferries still run on diesel.",
+     "Norway has promised to cut emissions from domestic shipping by fifty percent by twenty thirty, and to reach zero by twenty fifty.",
+     "To see what that would take, the team gathered real-world sailing data from eighty-five fast ferries on ninety-five routes, then built computer models to test the alternatives."
+    ],
+    [
+     "Four options were compared: batteries alone, batteries with one or two battery swaps along the way, and hydrogen fuel cells.",
+     "The core problem is weight.",
+     "Batteries are heavy for the amount of energy they store, and a heavier hull pushes harder against the water.",
+     "According to the lead author, the answer is to lift the hull out of the water.",
+     "Hydrofoils, in effect underwater wings, cut energy consumption by about thirty-eight percent.",
+     "They also allow smaller, lighter vessels, and across the Norwegian fleet the combined saving averages about forty-six percent."
+    ],
+    [
+     "Without any swaps, seventy-eight percent of the fleet could go electric using today's catamarans.",
+     "But those are the shortest routes, so doing so would remove only about thirty-one percent of the fleet's emissions.",
+     "The worst offenders are a small number of long routes with numerous stops."
+    ],
+    [
+     "The researchers took one of the toughest as their test case: a route in northern Norway that covers two hundred and twenty kilometres.",
+     "One of its two ferries is built from carbon fibre, carries two hundred and twenty passengers, and cruises at thirty-three knots on four diesel engines.",
+     "The study suggests that if this route can run without emissions, any Norwegian fast ferry can.",
+     "With today's technology, the vessel could be electrified if it swapped its battery packs twice.",
+     "With hydrofoils, one swap would be enough.",
+     "So far, battery swapping has only been tested in the Oslofjord."
+    ],
+    [
+     "Hydrogen looks far less promising.",
+     "Producing it through electrolysis wastes as much as seventy percent of the energy, compared with using electricity directly.",
+     "In the worst case, conventional catamarans running on hydrogen made with European electricity could emit one hundred and eleven percent more than diesel vessels do today.",
+     "By contrast, hydrofoil ferries running on batteries and charged with Norwegian electricity could cut operational emissions by ninety-seven percent."
+    ],
+    [
+     "So why isn't this happening already?",
+     "Professor Sverre Steen says Norway lost its nerve.",
+     "A development project launched in twenty seventeen fell apart when the government failed to follow through on its promised emissions rules for ferry tenders.",
+     "He wants counties and municipalities to introduce zero-emission requirements when they issue new tenders for fast ferry services, and he advises politicians to forget hydrogen.",
+     "Parliament did set aside a hundred million kroner in June, and asked the government to work towards zero-emission rules from twenty twenty-nine.",
+     "Even so, Professor Steen says progress is far too slow.",
+     "There is a catch, though: few companies or countries have solutions ready for widespread use.",
+     "That's the transport report for this Thursday."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Zero-emission high-speed ferries",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The study"
+       },
+       {
+        "t": "Most Norwegian fast ferries are currently powered by [[1]]"
+       },
+       {
+        "t": "Models were built using real [[2]] data from 2019"
+       },
+       {
+        "h": "Technical solutions"
+       },
+       {
+        "t": "Main problem with batteries: they are [[3]] for their energy"
+       },
+       {
+        "t": "Underwater wings called [[4]] reduce energy use"
+       },
+       {
+        "t": "These also allow vessels that are smaller and [[5]]"
+       },
+       {
+        "t": "Worst-polluting routes are long, with many [[6]]"
+       },
+       {
+        "h": "The test route"
+       },
+       {
+        "t": "Ferry hull made of carbon [[7]]"
+       },
+       {
+        "t": "With current technology, battery packs would be swapped [[8]]"
+       },
+       {
+        "h": "Hydrogen and policy"
+       },
+       {
+        "t": "Hydrogen: a lot of energy is lost during [[9]]"
+       },
+       {
+        "t": "Steen wants counties to introduce zero-emission [[10]] in tenders"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "diesel"
+        ],
+        "ref": "still run on diesel",
+        "ev": "Most of the country's high-speed ferries still run on diesel.",
+        "zh": "currently powered by ___ → still run on diesel（柴油）。Most ↔ Most。"
+       },
+       {
+        "a": [
+         "sailing"
+        ],
+        "ref": "real-world sailing data",
+        "ev": "gathered real-world sailing data from eighty-five fast ferries",
+        "zh": "real ___ data → sailing（航行數據）。干擾：85 艘船、95 條航線都是數字，不是答案。"
+       },
+       {
+        "a": [
+         "heavy"
+        ],
+        "ref": "Batteries are heavy for the amount of energy they store",
+        "ev": "Batteries are heavy for the amount of energy they store",
+        "zh": "they are ___ for their energy = heavy for the amount of energy they store → heavy（重）。"
+       },
+       {
+        "a": [
+         "hydrofoils",
+         "hydrofoil"
+        ],
+        "ref": "Hydrofoils, in effect underwater wings",
+        "ev": "Hydrofoils, in effect underwater wings, cut energy consumption by about thirty-eight percent.",
+        "zh": "Underwater wings called ___ → Hydrofoils（水翼）。干擾：38%（單船）與 46%（全船隊平均）。"
+       },
+       {
+        "a": [
+         "lighter"
+        ],
+        "ref": "smaller, lighter vessels",
+        "ev": "They also allow smaller, lighter vessels",
+        "zh": "smaller and ___ → lighter（更輕）。"
+       },
+       {
+        "a": [
+         "stops"
+        ],
+        "ref": "long routes with numerous stops",
+        "ev": "a small number of long routes with numerous stops",
+        "zh": "long, with many ___ = numerous stops → stops（停靠站）。干擾：短航線可用電池，但只減 31% 排放。"
+       },
+       {
+        "a": [
+         "fibre",
+         "fiber"
+        ],
+        "ref": "built from carbon fibre",
+        "ev": "One of its two ferries is built from carbon fibre",
+        "zh": "carbon ___ → fibre（碳纖維；美式 fiber）。"
+       },
+       {
+        "a": [
+         "twice",
+         "two times"
+        ],
+        "ref": "it swapped its battery packs twice",
+        "ev": "it swapped its battery packs twice",
+        "zh": "swapped ___ → twice（兩次）。干擾：加裝水翼後只需換一次（one swap）。"
+       },
+       {
+        "a": [
+         "electrolysis"
+        ],
+        "ref": "Producing it through electrolysis",
+        "ev": "Producing it through electrolysis wastes as much as seventy percent of the energy",
+        "zh": "energy is lost during ___ → electrolysis（電解；製氫過程）。"
+       },
+       {
+        "a": [
+         "requirements",
+         "requirement"
+        ],
+        "ref": "introduce zero-emission requirements",
+        "ev": "introduce zero-emission requirements when they issue new tenders",
+        "zh": "zero-emission ___ in tenders → requirements（要求）。干擾：2017 年政府承諾的是 emissions rules（未兌現）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Flying Ferries: Can Fast Passenger Boats Go Zero-Emission?",
+    "intro": "Fast ferries burn large amounts of diesel. A Norwegian study asks whether batteries, hydrofoils or hydrogen could clean them up, and what is holding progress back.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "High-speed passenger ferries are a paradox of public transport. Carrying commuters across fjords and between islands, they replace long road journeys, yet catamarans in particular consume enormous amounts of energy for every kilometre they travel and therefore generate very high emissions. Norway, which depends heavily on such vessels, has committed itself to halving emissions from domestic shipping by 2030 and eliminating them by 2050, which in practice means replacing diesel engines with batteries or hydrogen fuel cells. Sverre Steen, a professor of marine technology at the Norwegian University of Science and Technology (NTNU), believes that a zero-emission catamaran carrying 150-250 passengers at 20-35 knots could be built in less than five years. This, he stresses, would require political will and decisive action."
+     },
+     {
+      "label": "B",
+      "text": "A new study, published in the journal Ocean Engineering by researchers at NTNU and two other research institutes, sets out to test how realistic that ambition is. The team drew on automatic identification system data for 85 high-speed ferries operating 95 routes in 2019, and combined it with models of vessel resistance and mass. Their central innovation is an automated sizing method: for each route, a vessel is redesigned to carry the extra weight of batteries or fuel cells. Crucially, the redesigned vessels must not require changes to timetables, operating speeds, passenger capacity or fleet size. Feasibility is then judged against a threshold for how much a vessel's energy demand rises compared with that of its diesel-powered counterpart."
+     },
+     {
+      "label": "C",
+      "text": "The results suggest that there is no single answer. Batteries are heavy relative to the energy they store, which makes a vessel heavier and increases its resistance in the water. Both battery-electric and hydrogen vessels remain within the feasibility threshold on every route, provided that two battery swaps are allowed per route. Fitting hydrofoils, essentially wings beneath the hull that lift it clear of the water and so reduce resistance, drops energy demand by 46% and reduces the requirement to a single swap. The extra power needed for lift-off, according to the lead author, accounts for only a few percent of total energy requirements. Where no swapping is allowed, 98% of a hydrofoil-based fleet but only 78% of a catamaran-based fleet meets the criterion, mitigating 88% and 31% of direct carbon dioxide emissions respectively. The explanation is that the routes which conventional catamarans can already serve on batteries alone are the shortest, and so burn the least diesel; the worst offenders are a handful of long routes with numerous stops, such as the 220-km Nordland Express in northern Norway."
+     },
+     {
+      "label": "D",
+      "text": "The study also offers a warning about hydrogen, which is often presented as the natural fuel for longer routes. Although fuel cells can power every route, producing hydrogen by electrolysis wastes as much as 70% of the energy compared with using electricity directly. A well-to-wake assessment, which follows emissions from the production of the energy to the operation of the vessel, therefore shows that the outcome depends heavily on the power system and on how efficient the vessel is. Conventional catamarans running on hydrogen made with the European electricity mix could emit 111% more than today's diesel vessels, whereas battery-electric hydrofoils charged with Norwegian electricity would cut operational emissions by 97%. The authors stress the importance of energy-efficient vessels, low-loss conversion chains and clean electricity. Professor Steen puts it more bluntly: politicians should forget hydrogen as an energy carrier for high-speed ferries."
+     },
+     {
+      "label": "E",
+      "text": "None of this technology is entirely new. In the 1990s, Norway built hydrofoil catamarans capable of 50 knots, and although Australia shared the lead in passenger catamarans, only Norway had hydrofoil solutions. But the emphasis was entirely on speed, and the designs proved too expensive. Scheduled services need only 20-35 knots, and the sensors and computing power needed for hydrofoil control systems are now available. Elsewhere, Sweden's Candela has succeeded with smaller hydrofoil passenger catamarans, and the British company Artemis is working on similar technology, but few companies or countries have solutions ready for widespread use. Steen is confident that Norwegian shipyards, battery makers and control-system specialists could commercialise hydrofoil ferries within a few years."
+     },
+     {
+      "label": "F",
+      "text": "The obstacle, Steen argues, is not engineering but policy. A development project launched by several county authorities in 2017 gradually fell apart when the government failed to follow through on promised emissions requirements for tenders, and Norway, in his words, 'lost its nerve'. In June, parliament allocated NOK 100 million to emission-free fast ferries and asked the government to work towards stricter requirements from 2029, yet the researchers are not celebrating. 'Progress is far too slow,' Steen says. Godø, the lead author, adds that research funding is welcome, but that what is needed is incentives for industrialisation and tenders that genuinely encourage low- or zero-emission solutions. Steen also points to increasingly stringent climate requirements and the rising cost of fossil fuels. The consultancy Arup, which has studied ferry electrification more broadly, makes a complementary point: the technology is proven, but whether an electric ferry makes commercial sense depends on the route, local energy prices and financing, and operators should judge projects on whole-life costs rather than the upfront price."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a description of the conditions that the redesigned vessels had to satisfy",
+        "a": "B",
+        "ref": "B",
+        "ev": "the redesigned vessels must not require changes to timetables, operating speeds, passenger capacity or fleet size",
+        "zh": "B 段：重新設計的船不能改變時刻表、航速、載客量或船隊規模 → 必須滿足的條件。"
+       },
+       {
+        "q": "a reason why an earlier generation of fast boats was not commercially successful",
+        "a": "E",
+        "ref": "E",
+        "ev": "the emphasis was entirely on speed, and the designs proved too expensive",
+        "zh": "E 段：1990 年代只追求速度、設計太貴 → 商業上不成功。"
+       },
+       {
+        "q": "a comparison of two vessel types showing a large difference in avoidable pollution",
+        "a": "C",
+        "ref": "C",
+        "ev": "98% of a hydrofoil-based fleet but only 78% of a catamaran-based fleet meets the criterion, mitigating 88% and 31% of direct carbon dioxide emissions respectively",
+        "zh": "C 段：水翼船隊可減 88% 直接 CO2，傳統雙體船只減 31% → 兩種船型的比較。"
+       },
+       {
+        "q": "a warning that a fuel seen as clean could actually increase emissions",
+        "a": "D",
+        "ref": "D",
+        "ev": "Conventional catamarans running on hydrogen made with the European electricity mix could emit 111% more than today's diesel vessels",
+        "zh": "D 段：用歐洲電力製氫的傳統雙體船，排放反而比柴油船多 111% → 『看似乾淨的燃料可能增加排放』。"
+       },
+       {
+        "q": "a suggestion that the financial case for electric ferries varies from place to place",
+        "a": "F",
+        "ref": "F",
+        "ev": "whether an electric ferry makes commercial sense depends on the route, local energy prices and financing",
+        "zh": "F 段：Arup 指出商業可行性取決於航線、當地能源價格與融資 → 因地而異。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The ferry operations analysed in the study were all recorded in the same year.",
+        "a": "True",
+        "ref": "B",
+        "ev": "85 high-speed ferries operating 95 routes in 2019",
+        "zh": "B 段：85 艘高速渡輪、95 條航線的數據都來自 2019 年 → True。"
+       },
+       {
+        "q": "Hydrofoil ferries need a large share of their battery energy simply to rise out of the water.",
+        "a": "False",
+        "ref": "C",
+        "ev": "accounts for only a few percent of total energy requirements",
+        "zh": "C 段：起飛（lift-off）所需額外電力只占總能量需求的『幾個百分點』→ 與『大部分』矛盾 → False。"
+       },
+       {
+        "q": "Hydrofoil ferries would cost more to build than conventional catamarans.",
+        "a": "Not Given",
+        "ref": "E",
+        "ev": "the designs proved too expensive",
+        "zh": "E 段只說 1990 年代那批（只追求速度）太貴，並沒有比較現今水翼船與雙體船的造價 → Not Given。陷阱：too expensive 看似相關，但指的是過去的設計。"
+       },
+       {
+        "q": "Norway has already made zero-emission requirements compulsory for new fast-ferry tenders.",
+        "a": "False",
+        "ref": "F",
+        "ev": "asked the government to work towards stricter requirements from 2029",
+        "zh": "F 段：政府未兌現承諾，國會只是『要求政府朝 2029 年起更嚴格規範努力』→ 尚未強制 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "What helps and what hinders zero-emission ferries",
+      "lines": [
+       {
+        "t": "Hydrofoils lift the hull above the water, which cuts [[1]] and therefore the energy needed. Their control systems rely on [[2]] and computing power that are now available. Hydrogen performs poorly partly because so much energy is lost during its [[3]], and Norway's earlier project stalled when the government failed to deliver the promised emissions requirements for [[4]]."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "resistance"
+        ],
+        "ref": "C",
+        "ev": "lift it clear of the water and so reduce resistance",
+        "zh": "C 段：lift it clear of the water and so reduce resistance → resistance（阻力）。"
+       },
+       {
+        "a": [
+         "sensors"
+        ],
+        "ref": "E",
+        "ev": "the sensors and computing power needed for hydrofoil control systems are now available",
+        "zh": "E 段：sensors and computing power → sensors（感測器）。"
+       },
+       {
+        "a": [
+         "production"
+        ],
+        "ref": "D",
+        "ev": "producing hydrogen by electrolysis wastes as much as 70% of the energy",
+        "zh": "D 段：producing hydrogen → 能量在 production（生產過程）中損失。"
+       },
+       {
+        "a": [
+         "tenders"
+        ],
+        "ref": "F",
+        "ev": "promised emissions requirements for tenders",
+        "zh": "F 段：promised emissions requirements for tenders → tenders（招標）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "propulsion",
+     "pos": "n.",
+     "def": "the force or system that moves a vehicle forward",
+     "zh": "推進（系統）",
+     "example": "Battery propulsion is heavier than diesel engines.",
+     "match": [
+      "propulsion"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "feasibility",
+     "pos": "n.",
+     "def": "how possible and practical something is",
+     "zh": "可行性",
+     "example": "The study judged the feasibility of each route.",
+     "match": [
+      "feasibility",
+      "Feasibility"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "mitigate",
+     "pos": "v.",
+     "def": "to make something harmful less severe",
+     "zh": "減輕、緩解",
+     "example": "Hydrofoils could mitigate most direct emissions.",
+     "match": [
+      "mitigating"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "resistance",
+     "pos": "n.",
+     "def": "a force that slows down a moving object",
+     "zh": "阻力",
+     "example": "A heavier hull increases resistance in the water.",
+     "match": [
+      "resistance"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "complementary",
+     "pos": "adj.",
+     "def": "adding something that completes or improves another thing",
+     "zh": "互補的",
+     "example": "Arup makes a complementary point about costs.",
+     "match": [
+      "complementary"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "incentive",
+     "pos": "n.",
+     "def": "something that encourages people to act",
+     "zh": "誘因、獎勵",
+     "example": "Industry needs incentives for industrialisation.",
+     "match": [
+      "incentives"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "tender",
+     "pos": "n.",
+     "def": "an official offer to do a job or supply goods at a stated price",
+     "zh": "招標",
+     "example": "Counties issue tenders for ferry services.",
+     "match": [
+      "tenders"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "stringent",
+     "pos": "adj.",
+     "def": "very strict",
+     "zh": "嚴格的",
+     "example": "Stricter climate rules are increasingly stringent.",
+     "match": [
+      "stringent"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "postpone",
+     "pos": "v.",
+     "def": "to delay something until later",
+     "zh": "延後",
+     "example": "Deadlines were repeatedly postponed.",
+     "match": [
+      "postponed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "conversion",
+     "pos": "n.",
+     "def": "the process of changing from one form to another",
+     "zh": "轉換",
+     "example": "Low-loss conversion chains waste less energy.",
+     "match": [
+      "conversion"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "swap",
+     "pos": "v./n.",
+     "def": "to exchange one thing for another",
+     "zh": "交換、更換",
+     "example": "The ferry would swap its battery packs twice.",
+     "match": [
+      "swap",
+      "swapped",
+      "swapping",
+      "swaps"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "hull",
+     "pos": "n.",
+     "def": "the main body of a ship",
+     "zh": "船體",
+     "example": "A lighter hull needs less energy.",
+     "match": [
+      "hull"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "offender",
+     "pos": "n.",
+     "def": "a person or thing that does something wrong or harmful",
+     "zh": "違規者（此指污染最大者）",
+     "example": "The worst offenders are long routes with many stops.",
+     "match": [
+      "offenders"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "decisive",
+     "pos": "adj.",
+     "def": "showing quick, firm action or a clear result",
+     "zh": "果斷的",
+     "example": "Steen calls for political will and decisive action.",
+     "match": [
+      "decisive"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "hydrofoil",
+     "pos": "n.",
+     "def": "an underwater wing that lifts a boat's hull out of the water",
+     "zh": "水翼",
+     "example": "Hydrofoils cut energy use by about 38%.",
+     "match": [
+      "hydrofoils",
+      "Hydrofoils",
+      "hydrofoil"
+     ],
+     "src": "聽力"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-12-2.mp3",
+    "times": [
+     [
+      0.36,
+      2.44
+     ],
+     [
+      2.66,
+      12.79
+     ],
+     [
+      13.17,
+      14.23
+     ],
+     [
+      15.01,
+      23.13
+     ],
+     [
+      23.4,
+      26.29
+     ],
+     [
+      26.61,
+      33.35
+     ],
+     [
+      33.59,
+      42.08
+     ],
+     [
+      42.86,
+      49.97
+     ],
+     [
+      50.38,
+      51.73
+     ],
+     [
+      51.93,
+      57.26
+     ],
+     [
+      57.56,
+      61.48
+     ],
+     [
+      61.69,
+      67.26
+     ],
+     [
+      67.51,
+      74.45
+     ],
+     [
+      75.23,
+      80.53
+     ],
+     [
+      80.88,
+      86.65
+     ],
+     [
+      86.92,
+      90.38
+     ],
+     [
+      91.16,
+      97.31
+     ],
+     [
+      97.62,
+      105.37
+     ],
+     [
+      105.65,
+      110.99
+     ],
+     [
+      111.32,
+      116.15
+     ],
+     [
+      116.4,
+      119.09
+     ],
+     [
+      119.38,
+      123.23
+     ],
+     [
+      124.01,
+      125.97
+     ],
+     [
+      126.19,
+      132.87
+     ],
+     [
+      133.18,
+      141.49
+     ],
+     [
+      141.71,
+      149.4
+     ],
+     [
+      150.18,
+      152.31
+     ],
+     [
+      152.75,
+      155.5
+     ],
+     [
+      155.73,
+      162.82
+     ],
+     [
+      163.1,
+      172.15
+     ],
+     [
+      172.48,
+      179.42
+     ],
+     [
+      179.67,
+      183.44
+     ],
+     [
+      183.73,
+      188.94
+     ],
+     [
+      189.23,
+      191.53
+     ]
+    ],
+    "duration": 192.2,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-12-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
