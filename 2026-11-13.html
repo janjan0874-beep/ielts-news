@@ -1,0 +1,2136 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-13",
+ "date": "2026-11-13",
+ "title": "Not Doomed After All: Most Tiny Animal Populations Recover When Conservationists Step In · Energy Security, Not Climate, Now Drives the Global Renewables Boom, IEA Says",
+ "stories": [
+  {
+   "title": "Not Doomed After All: Most Tiny Animal Populations Recover When Conservationists Step In",
+   "topic": "Conservation · species recovery",
+   "source": {
+    "name": "Smith, Ewen, Clarke, Wessels & Turvey, Proceedings of the Royal Society B: Inevitable fates? The recovery potential of small populations (4 Nov 2026)",
+    "url": "https://royalsocietypublishing.org/rspb/article/293/2082/20262436/484055/Inevitable-fates-The-recovery-potential-of-small",
+    "links": [
+     {
+      "name": "Monash University: Small populations, big potential – New research overturns extinction assumptions",
+      "url": "https://www.monash.edu/news/articles/small-populations,-big-potential-new-research-overturns-extinction-assumptions"
+     },
+     {
+      "name": "Earth.com: Tiny populations are challenging what we know about wildlife recovery",
+      "url": "https://www.earth.com/environment/tiny-populations-are-challenging-what-we-know-about-wildlife-recovery/"
+     },
+     {
+      "name": "Full text (PubMed Central)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13730801/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead environment story: animal species that have dwindled to fewer than fifty individuals in the wild are not necessarily doomed, according to a major new review of conservation history.",
+     "Here's the report."
+    ],
+    [
+     "The study was led by Dr Donal Smith of Monash University in Australia, working with colleagues at the Zoological Society of London.",
+     "It was published earlier this month in the journal Proceedings of the Royal Society B.",
+     "For decades, many ecologists have argued that once a population becomes very small, it gets trapped in what they call an extinction vortex.",
+     "Inbreeding, the loss of genetic diversity and simple bad luck are expected to drag numbers down further, even after the original threat has gone.",
+     "Some experts have therefore called for a kind of conservation triage, in which scarce funds are diverted away from species judged to be beyond saving."
+    ],
+    [
+     "To test that idea, the team looked at every bird and mammal species that has fallen below fifty wild individuals at any point since nineteen fifty.",
+     "That came to one hundred and forty-seven species, of which one hundred and forty-one had a long enough history to judge the outcome.",
+     "Most of the information came from the Red List, the official global record of threatened species, backed up by scientific papers and reports.",
+     "The team then checked whether each species had gone extinct, stayed below one hundred, or recovered beyond that level."
+    ],
+    [
+     "So what happened to them?",
+     "The picture is mixed.",
+     "Thirty-nine species, roughly twenty-eight percent, have since disappeared altogether.",
+     "But thirty-three have recovered to at least one hundred animals, and eleven now number more than a thousand.",
+     "The key difference, the researchers say, appears to be direct action.",
+     "Of the fifty-one species that received hands-on help, sixty-one percent recovered.",
+     "Among the ninety that did not, just two percent bounced back, and more than a third went extinct.",
+     "Recovery was rarely quick, though: it typically took around eighteen years from the moment that help began."
+    ],
+    [
+     "Direct action came in two broad forms.",
+     "One tackles the outside pressures, for example by controlling invasive predators or restoring habitat.",
+     "The other works on the animals themselves, through captive breeding or by moving them to safer sites, a technique known as translocation.",
+     "The best results came when both approaches were combined."
+    ],
+    [
+     "Take the Lord Howe woodhen, a bird found only on Lord Howe Island, off Australia's east coast.",
+     "By the late nineteen seventies, only about twenty-three birds were left, after hunting and introduced pigs, cats and rodents had taken their toll.",
+     "Conservationists removed the feral pigs and cats and ran a captive breeding programme from nineteen eighty.",
+     "Numbers then held steady at around two hundred for decades.",
+     "But after rodents were eradicated in twenty nineteen, the population surged to more than sixteen hundred by twenty twenty-four."
+    ],
+    [
+     "Co-author Professor Rohan Clarke said that abandoning critically endangered species because their numbers look too low is a mistake.",
+     "Still, the authors stress that their study is observational, not a controlled trial.",
+     "And many of the species that have recovered still depend on intensive management, which means funding and expertise over decades.",
+     "That's all from the environment desk this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Can tiny animal populations recover?",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Background"
+       },
+       {
+        "t": "Lead author is based at [[1]]"
+       },
+       {
+        "t": "Old view: very small populations are caught in an extinction [[2]]"
+       },
+       {
+        "t": "Further decline caused by inbreeding, chance and less genetic [[3]]"
+       },
+       {
+        "t": "Proposed policy of conservation [[4]]: give up on hopeless cases"
+       },
+       {
+        "h": "The study"
+       },
+       {
+        "t": "Main data source: the [[5]]"
+       },
+       {
+        "h": "Results"
+       },
+       {
+        "t": "Species now extinct: about [[6]] %"
+       },
+       {
+        "t": "Recovery linked mainly to [[7]] action"
+       },
+       {
+        "t": "Relocating animals to safer places = [[8]]"
+       },
+       {
+        "h": "Lord Howe woodhen"
+       },
+       {
+        "t": "Rapid increase once [[9]] had been removed"
+       },
+       {
+        "h": "Caution"
+       },
+       {
+        "t": "Many recovered species still need ongoing, intensive [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "Monash University",
+         "Monash"
+        ],
+        "ref": "of Monash University in Australia",
+        "ev": "The study was led by Dr Donal Smith of Monash University in Australia",
+        "zh": "Lead author is based at ___ = led by Dr Donal Smith of Monash University → Monash University。注意 Zoological Society of London 是合作單位（colleagues），不是第一作者所屬。"
+       },
+       {
+        "a": [
+         "vortex"
+        ],
+        "ref": "what they call an extinction vortex",
+        "ev": "it gets trapped in what they call an extinction vortex",
+        "zh": "caught in ↔ gets trapped in → extinction vortex（滅絕漩渦）。"
+       },
+       {
+        "a": [
+         "diversity"
+        ],
+        "ref": "the loss of genetic diversity",
+        "ev": "Inbreeding, the loss of genetic diversity and simple bad luck",
+        "zh": "less genetic ___ = the loss of genetic diversity → diversity。chance ↔ simple bad luck。"
+       },
+       {
+        "a": [
+         "triage"
+        ],
+        "ref": "a kind of conservation triage",
+        "ev": "called for a kind of conservation triage, in which scarce funds are diverted away from species judged to be beyond saving",
+        "zh": "give up on hopeless cases ↔ funds diverted away from species judged to be beyond saving → triage（檢傷分類；保育上指放棄沒希望的物種）。"
+       },
+       {
+        "a": [
+         "Red List"
+        ],
+        "ref": "Most of the information came from the Red List",
+        "ev": "Most of the information came from the Red List, the official global record of threatened species",
+        "zh": "Main data source ↔ Most of the information came from → Red List（紅色名錄）。scientific papers and reports 只是輔助（backed up by）。"
+       },
+       {
+        "a": [
+         "28"
+        ],
+        "ref": "roughly twenty-eight percent",
+        "ev": "Thirty-nine species, roughly twenty-eight percent, have since disappeared altogether.",
+        "zh": "now extinct ↔ disappeared altogether → 28%。干擾：thirty-nine 是物種數不是百分比；61%、2% 是不同組的恢復率。本篇唯一數字題。"
+       },
+       {
+        "a": [
+         "direct"
+        ],
+        "ref": "appears to be direct action",
+        "ev": "The key difference, the researchers say, appears to be direct action.",
+        "zh": "Recovery linked mainly to ___ action = the key difference … direct action → direct（直接的）。下一句 hands-on help 是同義改述。"
+       },
+       {
+        "a": [
+         "translocation"
+        ],
+        "ref": "a technique known as translocation",
+        "ev": "by moving them to safer sites, a technique known as translocation",
+        "zh": "Relocating animals to safer places ↔ moving them to safer sites → translocation（遷地移置）。干擾：captive breeding 是另一種方法。"
+       },
+       {
+        "a": [
+         "rodents",
+         "rodent"
+        ],
+        "ref": "after rodents were eradicated",
+        "ev": "But after rodents were eradicated in twenty nineteen, the population surged",
+        "zh": "Rapid increase once ___ had been removed ↔ after rodents were eradicated … surged → rodents。干擾：pigs and cats 在 1980 年代就移除了，之後數量只是 held steady。"
+       },
+       {
+        "a": [
+         "management"
+        ],
+        "ref": "still depend on intensive management",
+        "ev": "many of the species that have recovered still depend on intensive management",
+        "zh": "still need ongoing, intensive ___ ↔ still depend on intensive management → management。干擾：controlled trial 是在講研究限制。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Beyond the Extinction Vortex: Can the Rarest Species Recover?",
+    "intro": "Conservation theory has long suggested that very small populations are doomed. A review of every bird and mammal that has fallen below 50 individuals since 1950 tells a more hopeful story.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "In the 1970s, the forest birds of Mauritius appeared to be beyond help. A combination of introduced mammalian predators, habitat degradation and pesticide use had pushed several species to the brink, and the Mauritius kestrel, a small forest-dwelling falcon, had a known population of only six. One ornithologist judged its chances of survival in the wild to be 'virtually nil'; another suggested that the money spent on it might be better used to support threatened birds with brighter prospects. Given the perilous state of the island's wildlife, such assessments were hardly unreasonable. Yet the kestrel eventually recovered from a low point of just four birds, and its story raises an uncomfortable question: how often have species been written off too early?"
+     },
+     {
+      "label": "B",
+      "text": "The pessimism rests on a substantial body of theory. Once a population becomes critically small, it is expected to grow more vulnerable to random fluctuations in births and deaths, to environmental variation, to inbreeding depression and to the gradual loss of genetic diversity through chance. Each of these effects tends to reduce numbers further, and because they compound one another, they are thought to create a feedback loop often described as an 'extinction vortex'. Such reasoning underpins general thresholds for viability. The well-known '50/500 rule' held that effective population sizes of 50 and 500 were required for short-term and long-term genetic health respectively; these figures have since been revised upward to 100 and 1,000, and some researchers have argued that at least 5,000 adults are needed to avoid a slide towards extinction. Against this background, some conservationists have advocated 'triage', in which limited resources are withdrawn from species judged to be beyond rescue."
+     },
+     {
+      "label": "C",
+      "text": "To test whether this pessimism is justified, a team led by Donal Smith of Monash University, with colleagues at the Zoological Society of London, examined every bird and mammal species known to have fallen below 50 individuals in the wild at any point since 1950. Of the 147 species identified, 141 (96 birds and 45 mammals) had enough elapsed time for an outcome to be assessed. The researchers compiled population and conservation histories mainly from the narrative text of Red List assessments, supplemented by targeted searches of the scientific literature. Because the extent and duration of conservation work were not consistently reported, they recorded only the year in which each action was initiated. Actions were then sorted into three classes: indirect measures such as area protection; 'limiting factor mitigation', which targets the external causes of decline through measures such as predator control or habitat restoration; and 'population manipulation', which acts on the animals directly through captive care or translocation."
+     },
+     {
+      "label": "D",
+      "text": "The results are sobering in one respect: 39 species (28%) have since become extinct, and a further 69 remain below 100 individuals. Yet 33 species have recovered to at least 100, and 11 now exceed 1,000. Outcomes differed starkly according to the type of help received. Of the 51 species that were subject to direct action, 31 (61%) reached 100 or more individuals, while only six went extinct. Among the 90 species that received no direct action, just two recovered and 33 disappeared. Recovery was rarely quick: the median interval between the start of action and recovery was 18 years. Statistical modelling confirmed the pattern. With both forms of direct action in place, the predicted probability of recovery to 100 individuals was 74% for birds and 71% for mammals, compared with 6% and 5% respectively when no action was recorded. Indirect action alone, by contrast, showed no association with recovery."
+     },
+     {
+      "label": "E",
+      "text": "The Lord Howe woodhen, which suffered a precipitous decline after humans arrived on its island in 1788, illustrates the potential for recovery that may lie latent in small populations: from about 23 birds in the late 1970s, it reached 1,638 in 2024. Perhaps more striking, however, is what did not happen. If small-population effects were as powerful as theory suggests, the dataset should contain species that kept declining even after the external pressures on them had been removed. In practice, extinction despite efforts to mitigate limiting factors occurred in only two species, the Aguijan reed-warbler and the po'ouli, and in neither case had the drivers of decline been meaningfully alleviated, so neither is a convincing example of the extinction vortex at work. Moreover, recent assessments of the Hainan gibbon and the vaquita, with populations of 45 and 10 individuals respectively, found that neither had experienced substantial inbreeding depression."
+     },
+     {
+      "label": "F",
+      "text": "The authors are careful not to overstate their case. Their data reflect a diverse, uneven and non-random allocation of conservation effort over 75 years rather than a controlled experiment, so the associations they report cannot be attributed unambiguously to the interventions. Nor do the findings contradict analyses arguing that populations in the thousands are needed for viability over centuries; the empirical record offers a flat rebuttal only to predictions of short-term extinction, while longer-term claims cannot yet be tested. Many 'recovered' species, moreover, remain heavily managed and will require money and applied skills for decades to come. The authors nevertheless conclude that such investment is associated with continued progress and need not be regarded as futile, which presents a direct challenge to those who would abandon the rarest species under a triage framework."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reference to how long recovery typically took after conservation work began",
+        "a": "D",
+        "ref": "D",
+        "ev": "the median interval between the start of action and recovery was 18 years",
+        "zh": "D 段：開始行動到恢復的中位數間隔為 18 年 → how long recovery typically took。"
+       },
+       {
+        "q": "an explanation of how several problems faced by small populations may strengthen one another",
+        "a": "B",
+        "ref": "B",
+        "ev": "because they compound one another, they are thought to create a feedback loop",
+        "zh": "B 段：這些效應互相加乘（compound one another）形成回饋循環 → strengthen one another。"
+       },
+       {
+        "q": "an early prediction that a particular bird had almost no chance of survival",
+        "a": "A",
+        "ref": "A",
+        "ev": "One ornithologist judged its chances of survival in the wild to be 'virtually nil'",
+        "zh": "A 段：鳥類學家認為模里西斯隼在野外存活機會「幾乎為零」→ almost no chance of survival。"
+       },
+       {
+        "q": "the reason why the researchers noted only the date when each measure started",
+        "a": "C",
+        "ref": "C",
+        "ev": "Because the extent and duration of conservation work were not consistently reported, they recorded only the year in which each action was initiated.",
+        "zh": "C 段：因為保育工作的規模與期間記錄不一致，所以只記錄開始年份 → the reason why … only the date。"
+       },
+       {
+        "q": "examples of very small populations that have shown little genetic harm",
+        "a": "E",
+        "ref": "E",
+        "ev": "neither had experienced substantial inbreeding depression",
+        "zh": "E 段：海南長臂猿（45 隻）與小頭鼠海豚（10 隻）都沒有明顯近親繁殖衰退 → little genetic harm。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Estimates of the population size needed for long-term genetic health have increased over time.",
+        "a": "True",
+        "ref": "B",
+        "ev": "these figures have since been revised upward to 100 and 1,000",
+        "zh": "B 段：50/500 法則後來上修為 100/1,000 → 估計值變高 → True。"
+       },
+       {
+        "q": "The majority of species analysed in the study were mammals.",
+        "a": "False",
+        "ref": "C",
+        "ev": "141 (96 birds and 45 mammals)",
+        "zh": "C 段：96 種鳥、45 種哺乳類 → 多數是鳥類，與敘述相反 → False。"
+       },
+       {
+        "q": "Bird species in the study attracted more conservation funding than mammal species.",
+        "a": "Not Given",
+        "ref": "D",
+        "ev": "the predicted probability of recovery to 100 individuals was 74% for birds and 71% for mammals",
+        "zh": "文章比較了鳥類與哺乳類的恢復機率（74% vs 71%），但完全沒提經費多寡 → Not Given。陷阱：有鳥/哺乳類的比較，但比的不是 funding。"
+       },
+       {
+        "q": "The two species that died out despite mitigation efforts provide strong evidence for the extinction vortex.",
+        "a": "False",
+        "ref": "E",
+        "ev": "neither is a convincing example of the extinction vortex at work",
+        "zh": "E 段：兩種滅絕物種的威脅都沒真正被解除，所以都不是滅絕漩渦的有力例子 → 與 strong evidence 相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Limits of the study",
+      "lines": [
+       {
+        "t": "The researchers admit that their data come from an uneven allocation of effort rather than a controlled [[1]], so cause and effect cannot be proven. They also accept that populations in the [[2]] may be necessary for survival over very long periods. Many species that have recovered still need funding and practical [[3]] over many years, but the authors argue that this spending should not be seen as [[4]]."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "experiment"
+        ],
+        "ref": "F",
+        "ev": "rather than a controlled experiment",
+        "zh": "F 段：rather than a controlled experiment → experiment。cause and effect cannot be proven ↔ cannot be attributed unambiguously。"
+       },
+       {
+        "a": [
+         "thousands"
+        ],
+        "ref": "F",
+        "ev": "populations in the thousands are needed for viability over centuries",
+        "zh": "F 段：populations in the thousands → thousands。over very long periods ↔ over centuries。（本組唯一的數量字答案）"
+       },
+       {
+        "a": [
+         "skills"
+        ],
+        "ref": "F",
+        "ev": "will require money and applied skills for decades to come",
+        "zh": "F 段：money and applied skills → funding and practical ___ = skills。over many years ↔ for decades to come。"
+       },
+       {
+        "a": [
+         "futile"
+        ],
+        "ref": "F",
+        "ev": "need not be regarded as futile",
+        "zh": "F 段：need not be regarded as futile → should not be seen as ___ = futile（徒勞的）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "dwindle",
+     "pos": "v.",
+     "def": "to become gradually smaller in number or size",
+     "zh": "逐漸減少",
+     "example": "The village population dwindled after the factory closed.",
+     "match": [
+      "dwindled"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "doomed",
+     "pos": "adj.",
+     "def": "certain to fail, die or be destroyed",
+     "zh": "注定失敗／滅亡的",
+     "example": "Without funding, the project was doomed from the start.",
+     "match": [
+      "doomed"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "inbreeding",
+     "pos": "n.",
+     "def": "breeding between closely related animals, which can weaken a population",
+     "zh": "近親繁殖",
+     "example": "Inbreeding can make small herds more vulnerable to disease.",
+     "match": [
+      "Inbreeding"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "triage",
+     "pos": "n.",
+     "def": "the process of deciding which cases receive help first when resources are limited",
+     "zh": "檢傷分類；資源有限時的優先排序",
+     "example": "Hospitals use triage to decide who should be treated first.",
+     "match": [
+      "triage"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "divert",
+     "pos": "v.",
+     "def": "to send money, resources or attention to a different purpose",
+     "zh": "轉移（資金、資源）",
+     "example": "Funds were diverted from road building to public transport.",
+     "match": [
+      "diverted"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "bounce back",
+     "pos": "phr. v.",
+     "def": "to return to a good condition after a difficult period",
+     "zh": "反彈、恢復",
+     "example": "Tourism bounced back quickly after the crisis.",
+     "match": [
+      "bounced back"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "invasive",
+     "pos": "adj.",
+     "def": "(of a species) spreading into a new area and harming native wildlife",
+     "zh": "入侵性的（外來種）",
+     "example": "Invasive weeds have choked many native plants.",
+     "match": [
+      "invasive"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "eradicate",
+     "pos": "v.",
+     "def": "to destroy or remove something completely",
+     "zh": "根除、徹底消滅",
+     "example": "Smallpox was eradicated in 1980.",
+     "match": [
+      "eradicated"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "perilous",
+     "pos": "adj.",
+     "def": "extremely dangerous",
+     "zh": "極危險的",
+     "example": "The economy was in a perilous state after the crash.",
+     "match": [
+      "perilous"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "compound",
+     "pos": "v.",
+     "def": "to make a problem worse by adding to it",
+     "zh": "使（問題）加劇",
+     "example": "Poor planning compounded the effects of the drought.",
+     "match": [
+      "compound"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "precipitous",
+     "pos": "adj.",
+     "def": "(of a fall or decline) very sudden and large",
+     "zh": "急遽的（下跌）",
+     "example": "Sales suffered a precipitous fall last year.",
+     "match": [
+      "precipitous"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "latent",
+     "pos": "adj.",
+     "def": "present but not yet visible, active or developed",
+     "zh": "潛在的、潛伏的",
+     "example": "The crisis revealed latent weaknesses in the system.",
+     "match": [
+      "latent"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "allocation",
+     "pos": "n.",
+     "def": "the way in which money or resources are shared out for particular purposes",
+     "zh": "分配",
+     "example": "The allocation of research funding is often uneven.",
+     "match": [
+      "allocation"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "rebuttal",
+     "pos": "n.",
+     "def": "a statement or evidence that shows a claim to be false",
+     "zh": "反駁、駁斥",
+     "example": "The data provide a clear rebuttal of the critics' argument.",
+     "match": [
+      "rebuttal"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "futile",
+     "pos": "adj.",
+     "def": "having no chance of success; pointless",
+     "zh": "徒勞的、無效的",
+     "example": "It is futile to argue once the decision has been made.",
+     "match": [
+      "futile"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-13-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      11.03
+     ],
+     [
+      11.41,
+      12.46
+     ],
+     [
+      13.24,
+      20.52
+     ],
+     [
+      20.79,
+      24.97
+     ],
+     [
+      25.29,
+      33.04
+     ],
+     [
+      33.28,
+      41.0
+     ],
+     [
+      41.28,
+      48.83
+     ],
+     [
+      49.61,
+      57.19
+     ],
+     [
+      57.43,
+      63.75
+     ],
+     [
+      64.05,
+      71.73
+     ],
+     [
+      71.94,
+      78.08
+     ],
+     [
+      78.86,
+      80.12
+     ],
+     [
+      80.54,
+      81.74
+     ],
+     [
+      81.93,
+      86.7
+     ],
+     [
+      87.09,
+      92.6
+     ],
+     [
+      92.92,
+      96.63
+     ],
+     [
+      96.87,
+      101.31
+     ],
+     [
+      101.59,
+      106.77
+     ],
+     [
+      107.1,
+      112.85
+     ],
+     [
+      113.63,
+      115.95
+     ],
+     [
+      116.24,
+      121.95
+     ],
+     [
+      122.16,
+      129.33
+     ],
+     [
+      129.59,
+      132.51
+     ],
+     [
+      133.29,
+      138.71
+     ],
+     [
+      138.93,
+      146.94
+     ],
+     [
+      147.21,
+      152.42
+     ],
+     [
+      152.74,
+      155.83
+     ],
+     [
+      156.18,
+      162.64
+     ],
+     [
+      163.42,
+      169.84
+     ],
+     [
+      170.17,
+      174.91
+     ],
+     [
+      175.16,
+      182.01
+     ],
+     [
+      182.3,
+      184.74
+     ]
+    ],
+    "duration": 185.4,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-13-1-words/"
+   }
+  },
+  {
+   "title": "Energy Security, Not Climate, Now Drives the Global Renewables Boom, IEA Says",
+   "topic": "Energy · renewables outlook",
+   "source": {
+    "name": "IEA: Energy security concerns spur faster renewables growth across a widening constellation of countries (6 Nov 2026)",
+    "url": "https://www.iea.org/news/energy-security-concerns-spur-faster-renewables-growth-across-a-widening-constellation-of-countries",
+    "links": [
+     {
+      "name": "IEA Renewables 2026 – Executive summary",
+      "url": "https://www.iea.org/reports/renewables-2026/executive-summary"
+     },
+     {
+      "name": "list.solar: IEA Renewables 2026 Forecast – Solar Leads 4,800 GW to 2031 (6 Nov 2026)",
+      "url": "https://list.solar/news/iea-renewables-2026-report-solar-forecast/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Our lead story on energy this morning.",
+     "Renewable power is spreading faster and wider than expected, and the main reason, according to the International Energy Agency, is no longer climate policy but energy security.",
+     "This report from our energy desk."
+    ],
+    [
+     "The agency's annual renewables report, published last week, forecasts that almost four thousand eight hundred gigawatts of renewable capacity will be added worldwide between twenty twenty-six and twenty thirty-one.",
+     "That is close to sixty percent more than in the previous six years.",
+     "Wind turbines on land will contribute, but solar panels are expected to supply more than three-quarters of the growth.",
+     "Renewables already generate about a third of the world's electricity, and the agency expects that share to approach half within five years."
+    ],
+    [
+     "The backdrop is the conflict in the Middle East.",
+     "Since the war involving Iran broke out at the end of February, disruption around the Strait of Hormuz has pushed up oil and gas prices.",
+     "The agency's executive director, Fatih Birol, said environmental concerns used to be the policy priority, but that today it is mainly energy security that is driving the expansion.",
+     "In other words, governments want to rely less on imported fuel.",
+     "He added that the new chapter of the renewables story is a truly global one."
+    ],
+    [
+     "Meanwhile, the map of growth is changing.",
+     "China will still add the most capacity, but its share is expected to fall from over sixty percent last year to an average of fifty-three percent.",
+     "One reason is a change in policy: China has switched from fixed tariffs to competitive auctions, and solar installations there have dropped sharply this year.",
+     "India, by contrast, is set to become the second-largest growth market, more than doubling its renewable capacity by twenty thirty-one.",
+     "And for the first time, developing economies outside China are expected to add as much capacity as the advanced economies.",
+     "Across Southeast Asia, the Middle East and Africa, new capacity is forecast to almost triple compared with the previous six years."
+    ],
+    [
+     "Ordinary consumers are part of the story too.",
+     "Faced with high fuel prices and unreliable supplies, households and small businesses are turning to cheap rooftop solar systems, which can be installed quickly.",
+     "The agency estimates that these have improved electricity services for around seventy million households.",
+     "Biofuels are getting a boost as well, as several countries raise the minimum share that has to be blended into petrol and diesel.",
+     "As a result, the agency has raised its biofuel forecast by forty percent compared with last year's report."
+    ],
+    [
+     "There are serious obstacles, though.",
+     "The biggest is the grid.",
+     "Projects waiting to be connected to electricity networks jumped by sixty percent in a single year, to around three thousand gigawatts.",
+     "Power that is wasted because the system cannot absorb it, known as curtailment, reached almost two hundred terawatt hours last year, and could top eight hundred by twenty thirty-one.",
+     "Battery storage is spreading quickly, the agency notes, but not fast enough.",
+     "It says investment in grids, storage and more flexible demand must keep pace.",
+     "That's the energy report for this Friday."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Renewables 2026: the IEA's annual forecast",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Overview"
+       },
+       {
+        "t": "Main motive for growth today: energy [[1]]"
+       },
+       {
+        "t": "Technology providing most new capacity: [[2]]"
+       },
+       {
+        "h": "Why now?"
+       },
+       {
+        "t": "Governments aim to reduce dependence on [[3]]"
+       },
+       {
+        "h": "Where growth is happening"
+       },
+       {
+        "t": "China's average share of new capacity: [[4]] %"
+       },
+       {
+        "t": "China replaced fixed tariffs with [[5]]"
+       },
+       {
+        "t": "Country set to be second-largest growth market: [[6]]"
+       },
+       {
+        "h": "Consumers and fuels"
+       },
+       {
+        "t": "Rooftop systems popular as they are cheap and can be set up [[7]]"
+       },
+       {
+        "t": "Higher minimum amounts of biofuel to be [[8]] into road fuels"
+       },
+       {
+        "h": "Challenges"
+       },
+       {
+        "t": "Most serious problem: the [[9]]"
+       },
+       {
+        "t": "Wasted output, called [[10]], may exceed 800 TWh"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "security"
+        ],
+        "ref": "no longer climate policy but energy security",
+        "ev": "the main reason, according to the International Energy Agency, is no longer climate policy but energy security",
+        "zh": "Main motive ↔ the main reason → energy security（能源安全）。干擾：climate policy 是「不再是」的那個。"
+       },
+       {
+        "a": [
+         "solar panels",
+         "solar"
+        ],
+        "ref": "solar panels are expected to supply more than three-quarters",
+        "ev": "Wind turbines on land will contribute, but solar panels are expected to supply more than three-quarters of the growth.",
+        "zh": "providing most new capacity ↔ more than three-quarters of the growth → solar panels。干擾：wind turbines 先出現但只是 contribute。"
+       },
+       {
+        "a": [
+         "imported fuel",
+         "imported fuels"
+        ],
+        "ref": "rely less on imported fuel",
+        "ev": "In other words, governments want to rely less on imported fuel.",
+        "zh": "reduce dependence on ↔ rely less on → imported fuel（進口燃料）。"
+       },
+       {
+        "a": [
+         "53"
+        ],
+        "ref": "an average of fifty-three percent",
+        "ev": "its share is expected to fall from over sixty percent last year to an average of fifty-three percent",
+        "zh": "average share ↔ an average of fifty-three percent → 53。干擾：over sixty percent 是去年（2025）的占比。本篇唯一數字題。"
+       },
+       {
+        "a": [
+         "competitive auctions",
+         "auctions"
+        ],
+        "ref": "switched from fixed tariffs to competitive auctions",
+        "ev": "China has switched from fixed tariffs to competitive auctions",
+        "zh": "replaced fixed tariffs with ↔ switched from fixed tariffs to → competitive auctions（競標制度）。"
+       },
+       {
+        "a": [
+         "India"
+        ],
+        "ref": "India, by contrast, is set to become the second-largest growth market",
+        "ev": "India, by contrast, is set to become the second-largest growth market",
+        "zh": "題幹幾乎同句，關鍵是聽出國名 India。干擾：前面提到 China 是最大市場。"
+       },
+       {
+        "a": [
+         "quickly"
+        ],
+        "ref": "which can be installed quickly",
+        "ev": "cheap rooftop solar systems, which can be installed quickly",
+        "zh": "can be set up ___ ↔ can be installed quickly → quickly。"
+       },
+       {
+        "a": [
+         "blended"
+        ],
+        "ref": "has to be blended into petrol and diesel",
+        "ev": "raise the minimum share that has to be blended into petrol and diesel",
+        "zh": "minimum amounts … to be ___ into road fuels ↔ minimum share that has to be blended into petrol and diesel → blended（混摻）。"
+       },
+       {
+        "a": [
+         "grid",
+         "grids"
+        ],
+        "ref": "The biggest is the grid.",
+        "ev": "There are serious obstacles, though. The biggest is the grid.",
+        "zh": "Most serious problem ↔ serious obstacles … The biggest → grid（電網）。"
+       },
+       {
+        "a": [
+         "curtailment"
+        ],
+        "ref": "known as curtailment",
+        "ev": "Power that is wasted because the system cannot absorb it, known as curtailment",
+        "zh": "Wasted output, called ___ ↔ Power that is wasted … known as curtailment → curtailment（棄電、限電）。800 已寫在題幹，干擾是 two hundred（去年的數字）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Security First: The Changing Logic of Renewable Energy",
+    "intro": "The International Energy Agency's latest annual forecast suggests that the global energy crisis is reshaping why, where and how renewable power is being built.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "For much of the past two decades, the case for wind and solar power rested chiefly on climate change and falling costs. That emphasis is shifting. Disruptions to energy flows through the Strait of Hormuz, stemming from the conflict in the Middle East, have driven up oil and gas prices and increased market volatility, and governments are now valuing renewables above all for the protection they offer against such shocks. In its annual report on the sector, Renewables 2026, the International Energy Agency (IEA) argues that because renewable resources are widely distributed, every country has some domestic potential that can be developed competitively. Crucially, it maintains that governments do not have to choose between security, affordability and sustainability: with well-designed policies, renewables can diversify the energy mix, reduce exposure to imported fuels and lower overall electricity costs while also cutting emissions."
+     },
+     {
+      "label": "B",
+      "text": "The agency contends that these security benefits are already substantial. Without the growth of renewables since 2010, it calculates, global annual demand for fossil fuels would have been around 8% higher in 2025, an amount equivalent to India's total energy consumption. Renewables have also displaced natural gas consumption equivalent to 11% of global demand, which has reduced the influence of gas-fired power plants on wholesale electricity prices and helped to limit price rises during the crisis in many countries. In addition, biofuels and other renewables have displaced 2.4 million barrels of oil equivalent per day, comparable to the entire oil demand of Canada."
+     },
+     {
+      "label": "C",
+      "text": "The geography of expansion is also changing. The IEA forecasts that almost 4,800 gigawatts of renewable capacity will be added between 2026 and 2031, 57% more than in the previous six years, and for the first time growth in emerging and developing economies outside China is expected to match that in advanced economies. In the 2020-2025 period, by comparison, those economies expanded at only half the rate of the advanced ones. China remains the largest market, but its shift from fixed tariffs to competitive auctions led to an almost 55% year-on-year decline in solar additions in the first nine months of 2026, prompting the agency to cut its Chinese forecast by 5%. That downgrade is more than offset elsewhere: the outlook for the United States has been raised by almost 40%, largely because solar panels and batteries can be installed quickly to meet demand from data centres, while that for sub-Saharan Africa has risen by 54%."
+     },
+     {
+      "label": "D",
+      "text": "One of the most striking developments has been in consumer behaviour. Faced with high fuel prices and unreliable grid electricity, households and small businesses are increasingly buying affordable solar panels of their own. Based on module trade data and other indicators, the IEA estimates that rooftop solar has improved electricity access and services for at least 70 million households since 2022, and it expects off-grid solar capacity to grow 2.5 times by 2031, led by Pakistan, sub-Saharan Africa and Southeast Asia. Batteries are following the same path. Storage installed in homes and businesses is forecast to expand almost sixfold, and by 2031 more than one-third of home solar systems are expected to include a battery, allowing owners to shield themselves from volatile electricity prices."
+     },
+     {
+      "label": "E",
+      "text": "Manufacturing presents a more troubled picture. Over 90% of major Chinese solar manufacturers reported losses in 2026, and more than 70 companies have filed for bankruptcy since 2024, as overcapacity and falling prices have eroded margins. Despite this turmoil, solar supply chains remain highly concentrated in China at every stage, from polysilicon to finished modules. The agency sees India as an important source of diversification: by 2031, it is expected to be the only country besides China capable of manufacturing every major component of the solar supply chain at scale. Wind supply chains are more geographically diverse, although Chinese turbine makers are expanding rapidly into international markets."
+     },
+     {
+      "label": "F",
+      "text": "The greatest test, however, may be integrating all this new capacity. Renewables are forecast to generate almost 45% of global electricity in 2031, up from 33% in 2025; solar output has already surpassed that of wind and is set to overtake hydropower in 2029. As variable sources expand, power systems will need far greater flexibility. Curtailment of wind and solar output reached almost 200 terawatt-hours in 2025, and the number of hours with negative electricity prices continues to rise across Europe, reducing revenues for some projects. Hybrid projects that combine solar or wind with batteries are emerging as a promising response. Even so, the world is likely to miss the COP28 goal of tripling renewable capacity by 2030; the IEA suggests that faster grid investment, storage and permitting reform could allow the target to be met in 2031."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison between the amount of oil replaced and one nation's consumption",
+        "a": "B",
+        "ref": "B",
+        "ev": "displaced 2.4 million barrels of oil equivalent per day, comparable to the entire oil demand of Canada",
+        "zh": "B 段：每天取代 240 萬桶油當量，相當於加拿大全國石油需求 → 與一國消費量的比較。"
+       },
+       {
+        "q": "a reference to financial difficulties among equipment producers",
+        "a": "E",
+        "ref": "E",
+        "ev": "Over 90% of major Chinese solar manufacturers reported losses in 2026",
+        "zh": "E 段：九成以上中國太陽能大廠虧損、70 多家破產 → financial difficulties among equipment producers。"
+       },
+       {
+        "q": "a suggestion of when an international capacity goal might be achieved",
+        "a": "F",
+        "ref": "F",
+        "ev": "could allow the target to be met in 2031",
+        "zh": "F 段：COP28 三倍目標 2030 年達不到，但加速情境下 2031 年可達 → when … goal might be achieved。"
+       },
+       {
+        "q": "an explanation for a sharp drop in installations in one country",
+        "a": "C",
+        "ref": "C",
+        "ev": "its shift from fixed tariffs to competitive auctions led to an almost 55% year-on-year decline in solar additions",
+        "zh": "C 段：中國由固定電價改為競標，導致太陽能新增量年減近 55% → sharp drop 的原因。"
+       },
+       {
+        "q": "an estimate of how many homes have benefited from small-scale solar power",
+        "a": "D",
+        "ref": "D",
+        "ev": "rooftop solar has improved electricity access and services for at least 70 million households since 2022",
+        "zh": "D 段：屋頂太陽能改善了至少 7,000 萬戶的供電 → how many homes have benefited。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "According to the IEA, countries must accept higher energy costs if they want greater energy security.",
+        "a": "False",
+        "ref": "A",
+        "ev": "governments do not have to choose between security, affordability and sustainability",
+        "zh": "A 段：政府不必在安全、可負擔與永續之間取捨，還能降低整體電力成本 → 與「必須接受更高成本」相反 → False。"
+       },
+       {
+        "q": "Before the current forecast period, emerging economies outside China were adding renewable capacity more slowly than advanced economies.",
+        "a": "True",
+        "ref": "C",
+        "ev": "In the 2020-2025 period, by comparison, those economies expanded at only half the rate of the advanced ones.",
+        "zh": "C 段：2020–2025 年它們的擴張速度只有先進經濟體的一半 → 較慢 → True。"
+       },
+       {
+        "q": "Most of the rooftop solar panels bought by households in developing countries are made in China.",
+        "a": "Not Given",
+        "ref": "D",
+        "ev": "Based on module trade data and other indicators",
+        "zh": "D 段只說 IEA 用模組貿易數據估算受惠戶數；E 段說供應鏈集中在中國，但沒有說開發中國家家戶買的屋頂板「大多」來自中國 → Not Given。陷阱：把兩段資訊自行拼湊。"
+       },
+       {
+        "q": "Solar power already produces more electricity worldwide than wind power.",
+        "a": "True",
+        "ref": "F",
+        "ev": "solar output has already surpassed that of wind",
+        "zh": "F 段：太陽能發電量已超過風電 → True。（超越水力要到 2029 年，那是另一件事。）"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Managing a power system dominated by renewables",
+      "lines": [
+       {
+        "t": "As wind and solar expand, electricity systems will require much more [[1]]. Increasing amounts of output are being wasted, and in Europe there are more and more hours when electricity prices are [[2]], which cuts the income of some projects. Combining solar or wind with batteries in [[3]] projects is one possible solution, and more than a third of household solar systems are expected to come with a [[4]] by the early 2030s."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "flexibility"
+        ],
+        "ref": "F",
+        "ev": "power systems will need far greater flexibility",
+        "zh": "F 段：power systems will need far greater flexibility → flexibility（彈性）。"
+       },
+       {
+        "a": [
+         "negative"
+        ],
+        "ref": "F",
+        "ev": "the number of hours with negative electricity prices continues to rise across Europe",
+        "zh": "F 段：negative electricity prices（負電價）→ negative。cuts the income ↔ reducing revenues。"
+       },
+       {
+        "a": [
+         "hybrid"
+        ],
+        "ref": "F",
+        "ev": "Hybrid projects that combine solar or wind with batteries",
+        "zh": "F 段：Hybrid projects → hybrid（混合型）。注意要從文章取 ONE WORD。"
+       },
+       {
+        "a": [
+         "battery"
+        ],
+        "ref": "D",
+        "ev": "more than one-third of home solar systems are expected to include a battery",
+        "zh": "D 段：by 2031 more than one-third of home solar systems … include a battery → battery。by the early 2030s ↔ by 2031。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "backdrop",
+     "pos": "n.",
+     "def": "the general situation in which particular events happen",
+     "zh": "背景（情勢）",
+     "example": "The talks took place against a backdrop of rising tension.",
+     "match": [
+      "backdrop"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "disruption",
+     "pos": "n.",
+     "def": "a situation in which something cannot continue normally",
+     "zh": "中斷、擾亂",
+     "example": "The strike caused major disruption to rail services.",
+     "match": [
+      "disruption"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "tariff",
+     "pos": "n.",
+     "def": "a fixed price paid for a service such as electricity, or a tax on imports",
+     "zh": "費率；關稅",
+     "example": "The government guaranteed a feed-in tariff for solar power.",
+     "match": [
+      "tariffs"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "auction",
+     "pos": "n.",
+     "def": "a process in which contracts go to whoever offers the lowest price or best terms",
+     "zh": "競標（拍賣）",
+     "example": "Wind farms now win contracts through competitive auctions.",
+     "match": [
+      "auctions"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "unreliable",
+     "pos": "adj.",
+     "def": "not able to be trusted to work or happen as expected",
+     "zh": "不可靠的",
+     "example": "Unreliable power supplies hurt small factories.",
+     "match": [
+      "unreliable"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "blend",
+     "pos": "v.",
+     "def": "to mix two or more substances together",
+     "zh": "混合、混摻",
+     "example": "Ethanol is blended into petrol to cut emissions.",
+     "match": [
+      "blended"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "curtailment",
+     "pos": "n.",
+     "def": "the act of reducing or limiting something; in power systems, cutting renewable output the grid cannot use",
+     "zh": "削減；（電力）棄電",
+     "example": "Curtailment rises when transmission lines are congested.",
+     "match": [
+      "curtailment"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "keep pace (with)",
+     "pos": "phr.",
+     "def": "to increase or develop at the same rate as something else",
+     "zh": "跟上（步調）",
+     "example": "Wages have failed to keep pace with inflation.",
+     "match": [
+      "keep pace"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "volatility",
+     "pos": "n.",
+     "def": "the tendency to change suddenly and unpredictably",
+     "zh": "波動性",
+     "example": "Investors fear the volatility of oil prices.",
+     "match": [
+      "volatility"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "displace",
+     "pos": "v.",
+     "def": "to take the place of something",
+     "zh": "取代、替代",
+     "example": "Electric cars are gradually displacing petrol vehicles.",
+     "match": [
+      "displaced"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "wholesale",
+     "pos": "adj.",
+     "def": "relating to the sale of goods or energy in large amounts, before they reach consumers",
+     "zh": "批發的（躉售的）",
+     "example": "Wholesale electricity prices fell during the windy week.",
+     "match": [
+      "wholesale"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "offset",
+     "pos": "v.",
+     "def": "to balance the effect of something with an opposite effect",
+     "zh": "抵銷",
+     "example": "Higher sales offset the rise in costs.",
+     "match": [
+      "offset"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "overcapacity",
+     "pos": "n.",
+     "def": "a situation in which an industry can produce more than the market needs",
+     "zh": "產能過剩",
+     "example": "Overcapacity has pushed steel prices down.",
+     "match": [
+      "overcapacity"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "erode",
+     "pos": "v.",
+     "def": "to gradually reduce or weaken something",
+     "zh": "侵蝕、逐漸削弱",
+     "example": "Rising costs have eroded the company's profits.",
+     "match": [
+      "eroded"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "turmoil",
+     "pos": "n.",
+     "def": "a state of great confusion, disorder or uncertainty",
+     "zh": "動盪、混亂",
+     "example": "The industry is in turmoil after a wave of bankruptcies.",
+     "match": [
+      "turmoil"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-13-2.mp3",
+    "times": [
+     [
+      0.36,
+      2.42
+     ],
+     [
+      2.68,
+      12.53
+     ],
+     [
+      12.91,
+      14.66
+     ],
+     [
+      15.44,
+      27.14
+     ],
+     [
+      27.49,
+      30.76
+     ],
+     [
+      31.08,
+      37.11
+     ],
+     [
+      37.35,
+      44.93
+     ],
+     [
+      45.71,
+      47.98
+     ],
+     [
+      48.31,
+      55.47
+     ],
+     [
+      55.71,
+      65.93
+     ],
+     [
+      66.43,
+      69.95
+     ],
+     [
+      70.16,
+      74.1
+     ],
+     [
+      74.88,
+      77.34
+     ],
+     [
+      77.64,
+      85.07
+     ],
+     [
+      85.29,
+      93.81
+     ],
+     [
+      94.16,
+      101.7
+     ],
+     [
+      102.02,
+      108.76
+     ],
+     [
+      109.0,
+      116.24
+     ],
+     [
+      117.02,
+      119.41
+     ],
+     [
+      119.74,
+      128.57
+     ],
+     [
+      128.81,
+      134.41
+     ],
+     [
+      134.71,
+      141.36
+     ],
+     [
+      141.57,
+      147.81
+     ],
+     [
+      148.59,
+      150.57
+     ],
+     [
+      150.83,
+      151.99
+     ],
+     [
+      152.18,
+      159.52
+     ],
+     [
+      159.79,
+      169.34
+     ],
+     [
+      169.74,
+      174.26
+     ],
+     [
+      174.49,
+      179.05
+     ],
+     [
+      179.34,
+      181.34
+     ]
+    ],
+    "duration": 182.0,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-11-13-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
