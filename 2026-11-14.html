@@ -1,0 +1,2158 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-14",
+ "date": "2026-11-14",
+ "title": "Online Therapy Saves Therapist Time, but Falls Short of Proving It Works as Well, Norwegian Trial Finds · Heat Doesn't Make Runners Fade Faster, but It Lowers the Ceiling They Start From, Study Finds",
+ "stories": [
+  {
+   "title": "Online Therapy Saves Therapist Time, but Falls Short of Proving It Works as Well, Norwegian Trial Finds",
+   "topic": "Psychology · online therapy",
+   "source": {
+    "name": "Psychreg: Online Therapy for Anxiety and Depression Cuts Therapist Time, Trial Finds (13 Nov 2026)",
+    "url": "https://www.psychreg.org/online-therapy-anxiety-depression-cuts-therapist-time-trial-finds/",
+    "links": [
+     {
+      "name": "Knapstad & Smith, Internet Interventions: Guided internet-based treatment for anxiety and depression in Norwegian primary care (full text, PMC)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12907875/"
+     },
+     {
+      "name": "Journal record (DOI 10.1016/j.invent.2026.100913)",
+      "url": "https://doi.org/10.1016/j.invent.2026.100913"
+     },
+     {
+      "name": "ClinicalTrials.gov: INTERMENTAL trial (NCT05118828)",
+      "url": "https://clinicaltrials.gov/study/NCT05118828"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Our lead health story: therapy delivered over the internet can help people with anxiety and depression while using far less of a therapist's time, according to a large trial in Norway.",
+     "Here's the report."
+    ],
+    [
+     "The study was carried out by the Norwegian Institute of Public Health and published in the journal Internet Interventions.",
+     "The trial was led by researchers Marit Knapstad and Otto Robert Smith, and it ran from October twenty twenty-one to December twenty twenty-three.",
+     "It followed three hundred and ninety adults who were seeking help for anxiety, or for mild to moderate depression, at six primary care services.",
+     "Those services belong to a national scheme called Prompt Mental Health Care, which was modelled on a programme in England called NHS Talking Therapies.",
+     "Participants were randomly assigned either to the usual treatment or to a guided online programme.",
+     "In the online group, people worked through a series of digital modules.",
+     "They also had short weekly sessions with a therapist, most of them by telephone rather than in person.",
+     "In the usual care group, by contrast, seventy-eight percent received individual face-to-face therapy."
+    ],
+    [
+     "So how did the two approaches compare?",
+     "Both groups improved markedly over six months.",
+     "The recovery rate was just over fifty-six percent for the online group and almost fifty-nine percent for usual care.",
+     "That is a small gap.",
+     "However, the researchers had set a strict threshold in advance to show that the online option was not meaningfully worse, and it fell short of that threshold for both depression and anxiety.",
+     "There was another complication.",
+     "Only about half of the participants completed the final questionnaire at six months, which weakened the statistical power of the study."
+    ],
+    [
+     "Where online therapy did stand out was efficiency.",
+     "Both groups had a median of five sessions.",
+     "But the online route used, on average, about one hundred and forty-four minutes of a therapist's time per client.",
+     "Usual care took two hundred and sixty-six minutes.",
+     "In other words, online therapy needed roughly forty-six percent less professional time.",
+     "For services with long waiting lists, that could mean the same workforce treating many more people."
+    ],
+    [
+     "Still, the results were mixed in other ways.",
+     "Early dropout was higher online, at around ten percent, against six percent for usual care.",
+     "Therapists also reported using fewer core techniques in the online format, such as homework assignments and exposure exercises.",
+     "The authors suggest that this may explain why the results for anxiety were less convincing than those for depression."
+    ],
+    [
+     "Attitudes matter too.",
+     "Among eligible people who chose not to take part, fifty-three percent said they simply did not want internet-based treatment.",
+     "Fewer than one in five participants named it as their preferred option, although those who tried it were generally satisfied.",
+     "That reluctance varied a great deal from one service to another.",
+     "Even so, the authors estimate that the online approach could suit at least half of primary care clients."
+    ],
+    [
+     "The researchers conclude that guided online therapy should sit alongside traditional care rather than replace it.",
+     "They are calling for more research on how to deliver it well, particularly for anxiety, and on its overall cost-effectiveness.",
+     "That's the health and science report for this Saturday."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Guided online therapy: a Norwegian trial",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Background"
+       },
+       {
+        "t": "Research conducted by the Norwegian Institute of [[1]]"
+       },
+       {
+        "t": "National service was based on a scheme from [[2]]"
+       },
+       {
+        "h": "The two treatments"
+       },
+       {
+        "t": "Online group completed a set of digital [[3]]"
+       },
+       {
+        "t": "Brief weekly contact with a therapist, mainly by [[4]]"
+       },
+       {
+        "t": "Most people in usual care had individual [[5]] therapy"
+       },
+       {
+        "h": "Results after six months"
+       },
+       {
+        "t": "Online option did not pass a strict [[6]] fixed beforehand"
+       },
+       {
+        "t": "Study weakened because only half returned the final [[7]]"
+       },
+       {
+        "t": "Therapist time per client in usual care: [[8]] minutes"
+       },
+       {
+        "t": "Online format: therapists used fewer techniques, e.g. [[9]] exercises"
+       },
+       {
+        "h": "Conclusion"
+       },
+       {
+        "t": "Further research needed on delivery and on overall [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "Public Health"
+        ],
+        "ref": "carried out by the Norwegian Institute of Public Health",
+        "ev": "The study was carried out by the Norwegian Institute of Public Health",
+        "zh": "Research conducted by ↔ The study was carried out by → Norwegian Institute of Public Health（挪威公共衛生研究院）。注意 Internet Interventions 是期刊名，不是研究機構。"
+       },
+       {
+        "a": [
+         "England"
+        ],
+        "ref": "modelled on a programme in England",
+        "ev": "which was modelled on a programme in England called NHS Talking Therapies",
+        "zh": "was based on a scheme from ↔ was modelled on a programme in → England。Prompt Mental Health Care 是挪威本身的服務，NHS Talking Therapies 是被參考的英國計畫。"
+       },
+       {
+        "a": [
+         "modules",
+         "module"
+        ],
+        "ref": "worked through a series of digital modules",
+        "ev": "people worked through a series of digital modules",
+        "zh": "completed a set of ↔ worked through a series of → digital modules（數位單元）。"
+       },
+       {
+        "a": [
+         "telephone",
+         "phone"
+        ],
+        "ref": "most of them by telephone rather than in person",
+        "ev": "most of them by telephone rather than in person",
+        "zh": "mainly by ↔ most of them by telephone → telephone。干擾：rather than in person 是「不是」的方式。"
+       },
+       {
+        "a": [
+         "face-to-face"
+        ],
+        "ref": "received individual face-to-face therapy",
+        "ev": "seventy-eight percent received individual face-to-face therapy",
+        "zh": "Most people in usual care ↔ seventy-eight percent → face-to-face（面對面）。78% 已寫在題幹意思裡，答案是治療形式，不是數字。"
+       },
+       {
+        "a": [
+         "threshold"
+        ],
+        "ref": "had set a strict threshold in advance",
+        "ev": "the researchers had set a strict threshold in advance",
+        "zh": "fixed beforehand ↔ set in advance；did not pass ↔ fell short of → threshold（門檻；這裡指「不劣於」的統計標準）。"
+       },
+       {
+        "a": [
+         "questionnaire",
+         "questionnaires"
+        ],
+        "ref": "completed the final questionnaire at six months",
+        "ev": "Only about half of the participants completed the final questionnaire at six months, which weakened the statistical power",
+        "zh": "only half returned ↔ only about half … completed → questionnaire（問卷）。weakened ↔ weakened the statistical power。"
+       },
+       {
+        "a": [
+         "266"
+        ],
+        "ref": "Usual care took two hundred and sixty-six minutes.",
+        "ev": "Usual care took two hundred and sixty-six minutes.",
+        "zh": "題目問 usual care → 266 分鐘。干擾：144 分鐘是線上組；46% 是節省比例；five 是療程次數。本篇唯一數字題。"
+       },
+       {
+        "a": [
+         "exposure"
+        ],
+        "ref": "homework assignments and exposure exercises",
+        "ev": "such as homework assignments and exposure exercises",
+        "zh": "fewer techniques, e.g. ___ exercises ↔ fewer core techniques … such as … exposure exercises → exposure（暴露練習）。homework 後面接的是 assignments，不符合題幹 exercises。"
+       },
+       {
+        "a": [
+         "cost-effectiveness",
+         "cost effectiveness"
+        ],
+        "ref": "on its overall cost-effectiveness",
+        "ev": "more research on how to deliver it well, particularly for anxiety, and on its overall cost-effectiveness",
+        "zh": "Further research needed ↔ calling for more research → overall cost-effectiveness（成本效益）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Therapy by Screen: Can Online Treatment Match the Consulting Room?",
+    "intro": "Guided internet-based therapy promises to stretch scarce mental health resources. A Norwegian trial in routine primary care suggests the savings are real, but the evidence on effectiveness is less clear-cut.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Few areas of healthcare face a gap between demand and supply as wide as mental health. In many countries, people seeking help for anxiety or depression wait weeks or months for treatment, and services struggle to recruit enough trained staff. Guided internet-based cognitive behavioural therapy (iCBT), in which clients work through structured online material while receiving brief support from a therapist, has long been promoted as one way to scale up provision. Meta-analyses suggest it can be as effective as face-to-face therapy, and one study within England's NHS Talking Therapies programme found that iCBT needed only 6.45 hours of therapist time to achieve symptom reduction comparable to 15.8 hours of face-to-face work. Yet widespread adoption has been slower than expected, and rigorous comparisons in routine primary care, rather than in specialist research settings, remain scarce."
+     },
+     {
+      "label": "B",
+      "text": "Norway offers a useful test case. Its Prompt Mental Health Care (PMHC) service, a primary care programme modelled on the English scheme, treats adults with anxiety and mild to moderate depression. To stimulate the use of digital tools, the Norwegian Directorate of Health selected a programme through a tender competition; it is developed and run by a company whose name translates as 'Assisted self-help'. Although the tool had already been introduced at most PMHC sites, uptake and the way it was used varied substantially, and it had previously been evaluated only in a qualitative study. Whether it worked as well as the face-to-face care that PMHC normally provides was therefore an open question."
+     },
+     {
+      "label": "C",
+      "text": "To answer it, Marit Knapstad and Otto Robert Smith of the Norwegian Institute of Public Health designed a pragmatic randomised trial, intended to mirror everyday practice as closely as possible. It was run at six PMHC sites covering 11 urban and rural municipalities, and between October 2021 and December 2023 it enrolled 390 adults, representing 37.4% of those eligible. Participants were allocated in a ratio of one to two, so that for every client assigned to the online programme, two received usual care, which in 78% of cases consisted of individual face-to-face therapy. The trial was designed as a non-inferiority study: rather than asking whether iCBT was better, it asked whether it was not meaningfully worse, using a margin fixed in advance. The main outcomes were changes in symptoms of depression and anxiety after six months."
+     },
+     {
+      "label": "D",
+      "text": "On one level, the results were encouraging. Both groups showed clinically significant reductions in symptoms, and recovery rates were similar: 56.1% in the online group and 58.9% in usual care. However, the online programme did not satisfy the pre-defined criteria for non-inferiority on either primary outcome, or on several secondary ones. The picture was more favourable elsewhere: online therapy was judged no worse for mental wellbeing, social anxiety, sleep problems and physical activity. Clients in both groups rated their relationship with the therapist, known as the therapeutic alliance, as good, although therapists themselves rated it higher in face-to-face care. One caveat applies throughout. Only about half of participants returned the six-month questionnaire, and this attrition reduced the study's statistical power."
+     },
+     {
+      "label": "E",
+      "text": "Where the online format clearly stood out was in its use of professional time. The median number of sessions was five in both groups, yet the average therapist time per client was 144.4 minutes online against 266.0 minutes in usual care, approximately 46% less. Three-quarters of online sessions took place by telephone, and platform data, available for 58% of the online group, showed that most clients relied mainly on a single tool. The savings, however, may have come at a price. Therapists reported applying several standard techniques, including homework assignments, behavioural experiments, exposure training and behavioural activation, significantly less often in the online group, and some found exposure training particularly hard to deliver in that format. The authors suggest that this may help to explain why the results for anxiety were weaker than those for depression."
+     },
+     {
+      "label": "F",
+      "text": "Acceptability is another hurdle. Of the eligible people who did not take part, 53% declined because they did not want guided iCBT, while only 7% specifically sought it, and the share declining varied between sites from 25% to 67%. Even so, those who tried the programme were generally satisfied, and the authors estimate that it could suit at least half of primary care clients. They also acknowledge that therapist time was the only factor considered in relation to cost-effectiveness; a later paper will link questionnaire answers to registry data on healthcare use and benefits. Their conclusion is measured: guided online therapy appears to be a resource-efficient option that should complement, rather than replace, traditional care."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison of the therapist hours needed for online and in-person treatment in another country",
+        "a": "A",
+        "ref": "A",
+        "ev": "iCBT needed only 6.45 hours of therapist time to achieve symptom reduction comparable to 15.8 hours of face-to-face work",
+        "zh": "A 段：英國 NHS Talking Therapies 的研究：iCBT 6.45 小時 vs 面對面 15.8 小時 → 另一個國家的治療師時數比較。E 段也有時間比較，但那是挪威本身的試驗。"
+       },
+       {
+        "q": "a description of how the digital programme used in Norway was chosen",
+        "a": "B",
+        "ref": "B",
+        "ev": "the Norwegian Directorate of Health selected a programme through a tender competition",
+        "zh": "B 段：衛生局透過招標競賽（tender competition）選出程式 → how … was chosen。"
+       },
+       {
+        "q": "examples of therapy methods that were used less often online",
+        "a": "E",
+        "ref": "E",
+        "ev": "including homework assignments, behavioural experiments, exposure training and behavioural activation, significantly less often in the online group",
+        "zh": "E 段：作業、行為實驗、暴露訓練、行為活化在線上組使用較少 → examples of methods used less often。"
+       },
+       {
+        "q": "differences between locations in how many people rejected online treatment",
+        "a": "F",
+        "ref": "F",
+        "ev": "the share declining varied between sites from 25% to 67%",
+        "zh": "F 段：拒絕線上治療的比例在各地點介於 25%–67% → differences between locations。"
+       },
+       {
+        "q": "the proportion of eligible people who joined the trial",
+        "a": "C",
+        "ref": "C",
+        "ev": "it enrolled 390 adults, representing 37.4% of those eligible",
+        "zh": "C 段：390 人，占符合資格者的 37.4% → proportion of eligible people who joined。F 段的 53% 是「沒參加者」中拒絕的比例，不是參加比例。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Before this trial, the Norwegian online tool had not been assessed in a quantitative study.",
+        "a": "True",
+        "ref": "B",
+        "ev": "it had previously been evaluated only in a qualitative study",
+        "zh": "B 段：之前「只」有質性研究評估過 → 沒有量化研究 → True。"
+       },
+       {
+        "q": "Clients and therapists gave similar ratings of their working relationship in the two formats.",
+        "a": "False",
+        "ref": "D",
+        "ev": "although therapists themselves rated it higher in face-to-face care",
+        "zh": "D 段：個案在兩組都評為良好，但治療師給面對面組較高分 → 雙方評價並不一致 → False。"
+       },
+       {
+        "q": "Participants from rural municipalities were less likely to complete the online programme than those from towns.",
+        "a": "Not Given",
+        "ref": "C",
+        "ev": "It was run at six PMHC sites covering 11 urban and rural municipalities",
+        "zh": "C 段只說研究涵蓋城市與鄉村的 11 個市鎮，完全沒有比較城鄉的完成率 → Not Given。陷阱：F 段有「各地點拒絕比例不同」，但那是拒絕參加，不是城鄉完成率。"
+       },
+       {
+        "q": "The online programme was found to be no worse than usual care for sleep problems.",
+        "a": "True",
+        "ref": "D",
+        "ev": "online therapy was judged no worse for mental wellbeing, social anxiety, sleep problems and physical activity",
+        "zh": "D 段：在睡眠問題上被判定不比常規照護差 → True。注意：主要結果（憂鬱、焦慮）才是沒達到不劣性標準。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Design and future direction",
+      "lines": [
+       {
+        "t": "The online tool tested in Norway had been picked by the national health authority through a [[1]] competition. The trial itself was described as [[2]], because it was intended to reflect routine practice. As therapist time was the only cost measure used, the researchers plan to connect survey answers with [[3]] data in future work. Overall, they consider that online therapy should [[4]] existing services rather than take their place."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "tender"
+        ],
+        "ref": "B",
+        "ev": "selected a programme through a tender competition",
+        "zh": "B 段：through a tender competition → tender（招標）。picked ↔ selected。"
+       },
+       {
+        "a": [
+         "pragmatic"
+        ],
+        "ref": "C",
+        "ev": "designed a pragmatic randomised trial, intended to mirror everyday practice",
+        "zh": "C 段：pragmatic（務實型）試驗，intended to mirror everyday practice ↔ reflect routine practice。"
+       },
+       {
+        "a": [
+         "registry"
+        ],
+        "ref": "F",
+        "ev": "a later paper will link questionnaire answers to registry data on healthcare use and benefits",
+        "zh": "F 段：link questionnaire answers to registry data → registry（登記資料庫）。connect survey answers ↔ link questionnaire answers。"
+       },
+       {
+        "a": [
+         "complement"
+        ],
+        "ref": "F",
+        "ev": "should complement, rather than replace, traditional care",
+        "zh": "F 段：complement, rather than replace → complement（補充）。rather than take their place ↔ rather than replace。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "modelled on",
+     "pos": "phr. v.",
+     "def": "designed or created using something else as an example",
+     "zh": "以…為範本",
+     "example": "The new school system was modelled on the Finnish approach.",
+     "match": [
+      "modelled on"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "markedly",
+     "pos": "adv.",
+     "def": "in a way that is clear and noticeable",
+     "zh": "顯著地、明顯地",
+     "example": "Air quality has improved markedly since the ban.",
+     "match": [
+      "markedly"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "fall short of",
+     "pos": "phr. v.",
+     "def": "to fail to reach a required standard or level",
+     "zh": "未達到（標準）",
+     "example": "The results fell short of what investors had hoped for.",
+     "match": [
+      "fell short of"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "complication",
+     "pos": "n.",
+     "def": "something that makes a situation more difficult or less clear",
+     "zh": "複雜因素、麻煩",
+     "example": "A further complication is the lack of reliable data.",
+     "match": [
+      "complication"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "workforce",
+     "pos": "n.",
+     "def": "all the people who work in a particular organisation or sector",
+     "zh": "人力、勞動力",
+     "example": "The health service needs to expand its workforce.",
+     "match": [
+      "workforce"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "scale up",
+     "pos": "phr. v.",
+     "def": "to increase the size or extent of something",
+     "zh": "擴大規模",
+     "example": "The pilot scheme will be scaled up next year.",
+     "match": [
+      "scale up"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "tender",
+     "pos": "n.",
+     "def": "a formal offer to supply goods or services at a stated price, often in competition",
+     "zh": "投標、招標",
+     "example": "The contract was awarded after an open tender.",
+     "match": [
+      "tender"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "uptake",
+     "pos": "n.",
+     "def": "the rate at which something is accepted or used",
+     "zh": "採用率、使用率",
+     "example": "Uptake of the vaccine was slow in rural areas.",
+     "match": [
+      "uptake"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "pragmatic",
+     "pos": "adj.",
+     "def": "dealing with things in a practical, realistic way",
+     "zh": "務實的",
+     "example": "The council took a pragmatic approach to the problem.",
+     "match": [
+      "pragmatic"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "alliance",
+     "pos": "n.",
+     "def": "a close working relationship; in therapy, the bond between client and therapist",
+     "zh": "（治療）同盟關係、合作關係",
+     "example": "A strong therapeutic alliance predicts better outcomes.",
+     "match": [
+      "alliance"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "caveat",
+     "pos": "n.",
+     "def": "a warning that a statement or finding has limits",
+     "zh": "但書、注意事項",
+     "example": "The forecast comes with an important caveat.",
+     "match": [
+      "caveat"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "attrition",
+     "pos": "n.",
+     "def": "the gradual loss of participants or members over time",
+     "zh": "（受試者）流失",
+     "example": "High attrition made the survey results less reliable.",
+     "match": [
+      "attrition"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "acceptability",
+     "pos": "n.",
+     "def": "the degree to which something is considered satisfactory or welcome",
+     "zh": "可接受度",
+     "example": "The acceptability of the new tax remains low.",
+     "match": [
+      "Acceptability"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "resource-efficient",
+     "pos": "adj.",
+     "def": "achieving results while using relatively few resources",
+     "zh": "節省資源的、資源效率高的",
+     "example": "LED lighting is a resource-efficient alternative.",
+     "match": [
+      "resource-efficient"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "complement",
+     "pos": "v.",
+     "def": "to add to something in a way that improves it or makes it complete",
+     "zh": "補充、相輔相成",
+     "example": "Online lessons complement classroom teaching.",
+     "match": [
+      "complement"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-14-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.09
+     ],
+     [
+      1.31,
+      12.06
+     ],
+     [
+      12.44,
+      13.48
+     ],
+     [
+      14.26,
+      21.14
+     ],
+     [
+      21.41,
+      29.82
+     ],
+     [
+      30.14,
+      38.45
+     ],
+     [
+      38.69,
+      47.35
+     ],
+     [
+      47.63,
+      53.39
+     ],
+     [
+      53.72,
+      57.74
+     ],
+     [
+      57.98,
+      63.79
+     ],
+     [
+      64.09,
+      70.45
+     ],
+     [
+      71.23,
+      73.32
+     ],
+     [
+      73.74,
+      76.72
+     ],
+     [
+      77.02,
+      84.26
+     ],
+     [
+      84.48,
+      85.75
+     ],
+     [
+      85.98,
+      96.58
+     ],
+     [
+      96.98,
+      98.67
+     ],
+     [
+      98.87,
+      106.37
+     ],
+     [
+      107.15,
+      110.21
+     ],
+     [
+      110.54,
+      112.97
+     ],
+     [
+      113.33,
+      119.55
+     ],
+     [
+      119.85,
+      122.94
+     ],
+     [
+      123.27,
+      128.5
+     ],
+     [
+      128.75,
+      134.14
+     ],
+     [
+      134.92,
+      137.43
+     ],
+     [
+      137.66,
+      143.71
+     ],
+     [
+      143.98,
+      151.88
+     ],
+     [
+      152.19,
+      158.46
+     ],
+     [
+      159.24,
+      160.63
+     ],
+     [
+      160.88,
+      167.98
+     ],
+     [
+      168.31,
+      175.32
+     ],
+     [
+      175.56,
+      179.2
+     ],
+     [
+      179.5,
+      185.54
+     ],
+     [
+      186.32,
+      193.14
+     ],
+     [
+      193.39,
+      200.81
+     ],
+     [
+      201.12,
+      203.96
+     ]
+    ],
+    "duration": 204.6,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-11-14-1-words/"
+   }
+  },
+  {
+   "title": "Heat Doesn't Make Runners Fade Faster, but It Lowers the Ceiling They Start From, Study Finds",
+   "topic": "Sport science · running in heat",
+   "source": {
+    "name": "Hunter, Fujii, Maunder & Muniz-Pumares, Scandinavian Journal of Medicine & Science in Sports: Durability of Physiological Determinants of Distance-Running Performance in Warm and Temperate Environments (6 Nov 2026)",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13741990/",
+    "links": [
+     {
+      "name": "Journal record (DOI 10.1111/sms.70394)",
+      "url": "https://doi.org/10.1111/sms.70394"
+     },
+     {
+      "name": "Lifescience.net publication summary",
+      "url": "https://www.lifescience.net/publications/2290579/durability-of-physiological-determinants-of-distan/"
+     },
+     {
+      "name": "Background: James et al. (2017), Defining the determinants of endurance running performance in the heat",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5605161/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning, and welcome to the sport science desk.",
+     "Running in warm weather does not make the body wear out faster during a long run, but it does mean starting from a lower baseline, according to new research from Britain, Japan and New Zealand.",
+     "Here's the report."
+    ],
+    [
+     "The study was led by Dr Ben Hunter of London Metropolitan University, and it appears in the Scandinavian Journal of Medicine and Science in Sports.",
+     "The work also involved scientists at the University of Hertfordshire, the University of Tsukuba in Japan and the Auckland University of Technology.",
+     "Scientists have long known that heat hurts endurance performance.",
+     "To lose heat, the body sends more blood to the skin.",
+     "That leaves less blood returning to the heart, so heart rate climbs and less oxygen reaches the working muscles.",
+     "What was less clear is how heat affects a runner's durability, meaning the ability to resist physical decline during a long effort."
+    ],
+    [
+     "To find out, the team recruited ten trained runners, seven men and three women, with an average age of thirty-eight.",
+     "Each visited the laboratory four times.",
+     "They ran on a treadmill inside an environmental chamber set either to nineteen degrees, which the researchers call temperate, or to a warm thirty degrees.",
+     "Humidity was kept at forty percent in both.",
+     "The runners were tested when fresh, and again after ninety minutes of steady running, at the same relative effort in each condition."
+    ],
+    [
+     "Even before the long run, the heat took its toll.",
+     "The speed at which breathing first starts to rise out of step with effort, a marker known as the first ventilatory threshold, was about seven percent lower in the warm room.",
+     "After ninety minutes, that threshold speed fell by between eight and eleven percent in both conditions.",
+     "Surprisingly, the statistics showed no clear difference in how much it fell.",
+     "Peak oxygen uptake also dropped by a similar amount in the heat and the cool."
+    ],
+    [
+     "There were two important exceptions, though.",
+     "The first was running economy, essentially how much oxygen it costs to hold a given pace.",
+     "Over the run, economy worsened by five point four percent in the heat, compared with just one point seven percent in cooler air.",
+     "The second was the top speed runners could reach in a final test to exhaustion, which declined by twelve percent in the warm condition, nearly twice the drop seen at nineteen degrees."
+    ],
+    [
+     "Put the two effects together, and the picture is stark.",
+     "Tired runners in the warm room had a threshold speed seventeen percent below the level they had reached when fresh in temperate conditions.",
+     "The authors suggest the real problem may be less about faster deterioration, and more about operating from a lower physiological baseline."
+    ],
+    [
+     "The practical message is to adjust pace to the conditions, rather than chase targets set in cooler training weather.",
+     "There are limits, however.",
+     "Only ten runners took part, and the researchers caution that the findings may not apply to hotter or more humid races.",
+     "They say future studies should test whether heat acclimation, precooling or nutritional supplements can soften the blow.",
+     "That's all from the sport science desk this Saturday."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Running in the heat: does the body fade faster?",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Why heat hurts performance"
+       },
+       {
+        "t": "To get rid of heat, extra blood is directed to the [[1]]"
+       },
+       {
+        "t": "Less blood goes back to the heart, so [[2]] goes up"
+       },
+       {
+        "t": "Durability = ability to withstand [[3]] over a prolonged effort"
+       },
+       {
+        "h": "The experiment"
+       },
+       {
+        "t": "Participants: ten [[4]] runners, average age 38"
+       },
+       {
+        "t": "Treadmill placed in an [[5]] chamber"
+       },
+       {
+        "t": "Humidity in both conditions: [[6]] %"
+       },
+       {
+        "h": "Findings"
+       },
+       {
+        "t": "Before the long run, speed at the first ventilatory [[7]] was about 7% lower in heat"
+       },
+       {
+        "t": "Running [[8]] (oxygen cost of a pace) got worse mainly in the heat"
+       },
+       {
+        "h": "Advice and next steps"
+       },
+       {
+        "t": "Runners should change their [[9]] to suit conditions"
+       },
+       {
+        "t": "Future research: heat acclimation, [[10]] and supplements"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "skin"
+        ],
+        "ref": "the body sends more blood to the skin",
+        "ev": "To lose heat, the body sends more blood to the skin.",
+        "zh": "To get rid of heat ↔ To lose heat；extra blood is directed to ↔ sends more blood to → skin（皮膚）。"
+       },
+       {
+        "a": [
+         "heart rate"
+        ],
+        "ref": "so heart rate climbs",
+        "ev": "That leaves less blood returning to the heart, so heart rate climbs",
+        "zh": "goes up ↔ climbs → heart rate（心率）。干擾：less oxygen reaches the working muscles 是另一個結果，題幹問的是「上升」的東西。"
+       },
+       {
+        "a": [
+         "physical decline",
+         "decline"
+        ],
+        "ref": "the ability to resist physical decline",
+        "ev": "meaning the ability to resist physical decline during a long effort",
+        "zh": "withstand ↔ resist；prolonged effort ↔ long effort → (physical) decline（衰退）。"
+       },
+       {
+        "a": [
+         "trained"
+        ],
+        "ref": "recruited ten trained runners",
+        "ev": "the team recruited ten trained runners, seven men and three women",
+        "zh": "ten ___ runners → trained（受過訓練的）。形容詞題。seven men and three women 是組成，不是答案。"
+       },
+       {
+        "a": [
+         "environmental"
+        ],
+        "ref": "inside an environmental chamber",
+        "ev": "They ran on a treadmill inside an environmental chamber",
+        "zh": "Treadmill placed in an ___ chamber ↔ ran on a treadmill inside an environmental chamber → environmental（環境控制艙）。"
+       },
+       {
+        "a": [
+         "40",
+         "forty"
+        ],
+        "ref": "Humidity was kept at forty percent in both.",
+        "ev": "Humidity was kept at forty percent in both.",
+        "zh": "濕度 → 40%。干擾：nineteen degrees、thirty degrees 是溫度，不是濕度。本篇唯一數字題。"
+       },
+       {
+        "a": [
+         "threshold"
+        ],
+        "ref": "a marker known as the first ventilatory threshold",
+        "ev": "a marker known as the first ventilatory threshold, was about seven percent lower in the warm room",
+        "zh": "first ventilatory ___ → threshold（第一換氣閾值）。warm room ↔ heat；about seven percent lower 已寫在題幹。"
+       },
+       {
+        "a": [
+         "economy"
+        ],
+        "ref": "The first was running economy",
+        "ev": "The first was running economy, essentially how much oxygen it costs to hold a given pace",
+        "zh": "Running ___ (oxygen cost of a pace) ↔ running economy, essentially how much oxygen it costs to hold a given pace → economy（跑步經濟性）。got worse mainly in the heat ↔ 5.4% vs 1.7%。"
+       },
+       {
+        "a": [
+         "pace"
+        ],
+        "ref": "adjust pace to the conditions",
+        "ev": "The practical message is to adjust pace to the conditions",
+        "zh": "change their ___ to suit conditions ↔ adjust pace to the conditions → pace（配速）。干擾：targets 是「不要追」的東西。"
+       },
+       {
+        "a": [
+         "precooling",
+         "pre-cooling"
+        ],
+        "ref": "heat acclimation, precooling or nutritional supplements",
+        "ev": "whether heat acclimation, precooling or nutritional supplements can soften the blow",
+        "zh": "Future research ↔ future studies should test → precooling（賽前預冷）。heat acclimation 與 supplements 已在題幹。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Running Hot: Why Heat Lowers the Ceiling Rather Than Speeding the Fall",
+    "intro": "Endurance athletes know that warm weather slows them down. A laboratory study asks a subtler question: does heat make the body's key performance markers deteriorate faster during a long run?",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Distance runners increasingly train and race in warm weather, and the effect is visible in results: marathon performance slows as the air temperature rises. Physiologists have traditionally explained endurance performance through a small set of determinants, notably maximal oxygen uptake, running economy (the oxygen cost of running at a given speed) and the intensity at which certain physiological thresholds occur. More recently, attention has turned to 'durability', the extent to which these characteristics hold up during prolonged exercise rather than in a fresh state. Earlier work has shown that the speed at the first ventilatory threshold (VT1), which marks the transition from moderate to heavy exercise, declines as a long run goes on. What had not been established was whether heat accelerates this deterioration."
+     },
+     {
+      "label": "B",
+      "text": "There are good reasons to expect that it might. When the body is heat-stressed, skin vasodilation and the rise in skin blood flow needed to shed heat reduce central blood volume; stroke volume falls and heart rate rises to maintain cardiac output. Because maximal cardiac output, and therefore oxygen delivery to the muscles, is lower, maximal oxygen uptake is reduced. Exhaustion during prolonged exercise in the heat has been shown to coincide with core temperatures of around 40°C, yet aerobic performance can be impaired at more modest core temperatures when the skin is hot, since a narrower core-to-skin temperature gradient requires greater skin blood flow. Evidence on running economy, however, is equivocal. One study found that economy improved during a short graded test in hot conditions, possibly because of a greater reliance on carbohydrate, whereas prolonged cycling in the heat has shown a rising oxygen cost over time. These disparate findings may reflect the point during the onset of heat strain at which measurements were taken."
+     },
+     {
+      "label": "C",
+      "text": "To address the question, a team led by Ben Hunter of London Metropolitan University, including colleagues in Japan and New Zealand, recruited ten trained runners (seven men and three women) with an average age of 38. Each made four laboratory visits within a maximum of four weeks, running on a treadmill inside an environmental chamber set to either 19°C or 30°C, both at 40% relative humidity. The order of conditions was randomised and counterbalanced. Runners were tested in a fresh state and again after 90 minutes of running, with the intensity of the long run prescribed relative to each condition's own capacity. The researchers deliberately chose moderate rather than severe heat: it resembled conditions that could be anticipated during spring or autumn marathons, and it allowed most participants to complete the long run in the warm condition while limiting the risk of exceeding a safety cut-off of 39.5°C core temperature."
+     },
+     {
+      "label": "D",
+      "text": "In the rested state, warm conditions lowered the speed at VT1 by about 7%, or roughly 0.8 km/h. After 90 minutes, this speed had fallen by 8.6% in the temperate condition and by 11.1% in the warm one, while peak oxygen uptake declined by 4.8% and 4.0% respectively. Crucially, there was no statistically significant interaction between condition and time: on average, threshold speed fell by 0.21 km/h more in the heat, but the confidence interval was wide. As the authors note, the data therefore neither show additional deterioration in the heat nor establish equivalent durability between environments. Metabolic energy expenditure at VT1 fell by around 10% in both conditions, suggesting that a decline in metabolic power was the dominant reason for the fall in threshold speed."
+     },
+     {
+      "label": "E",
+      "text": "Two measures did behave differently. Running economy deteriorated by 5.4% between the 15th and 90th minutes in the warm condition, compared with 1.7% in the temperate one, and the speed reached at the end of the final incremental test dropped by 12.1% in the heat against 6.8% in cooler air. The experimental design may also have masked further differences. Because intensity was set relative to condition-specific capacity, participants in the heat ran more slowly (11.0 versus 11.8 km/h), covered less distance (16.5 versus 17.7 km) and expended less energy (1,228 versus 1,300 kcal). The combined effect was nonetheless large: once fatigued in the warm room, runners had a threshold speed of 9.6 km/h, 17.1% below the 11.5 km/h they had managed when rested in temperate conditions."
+     },
+     {
+      "label": "F",
+      "text": "The authors argue that the difficulty facing runners in warm environments may be less about accelerated physiological deterioration and more about operating from a lower baseline, with the usual declines superimposed on reduced capacity. Their practical advice is that pace should be adjusted to environment-specific capacity; some runners, they observe, try to maintain target paces established in cooler training conditions, while pacing in championship races is often tactical. The authors also caution that the conditions were only moderately warm and that the findings may not extend to more severe heat or humidity. Future work is needed to determine whether heat acclimation, precooling or nutritional supplementation can mitigate the effects. The project was supported by the Great Britain Sasakawa Foundation, which funded a research visit to the University of Tsukuba in Japan."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "the reasons why the researchers avoided more extreme temperatures",
+        "a": "C",
+        "ref": "C",
+        "ev": "The researchers deliberately chose moderate rather than severe heat",
+        "zh": "C 段：刻意選擇中度而非嚴重高溫，理由是貼近春秋季馬拉松、讓多數人能完成並控制核心體溫風險 → reasons for avoiding extreme temperatures。F 段只是說結果可能不適用於更熱的環境（限制），不是選擇理由。"
+       },
+       {
+        "q": "an account of how heat reduces the supply of oxygen to working muscles",
+        "a": "B",
+        "ref": "B",
+        "ev": "Because maximal cardiac output, and therefore oxygen delivery to the muscles, is lower",
+        "zh": "B 段：皮膚血管擴張 → 中心血量下降 → 每搏輸出量下降 → 最大心輸出量與肌肉供氧下降 → account of how heat reduces oxygen supply。"
+       },
+       {
+        "q": "a reference to funding that made an overseas visit possible",
+        "a": "F",
+        "ref": "F",
+        "ev": "the Great Britain Sasakawa Foundation, which funded a research visit to the University of Tsukuba",
+        "zh": "F 段：Great Britain Sasakawa Foundation 資助前往筑波大學的研究訪問 → funding … overseas visit。"
+       },
+       {
+        "q": "a possible reason why differences between the two conditions were hidden",
+        "a": "E",
+        "ref": "E",
+        "ev": "The experimental design may also have masked further differences.",
+        "zh": "E 段：實驗設計可能遮蔽（masked）了差異——熱環境組跑得較慢、距離較短、消耗較少 → hidden differences。"
+       },
+       {
+        "q": "an admission that the results do not prove the two conditions produce equal durability",
+        "a": "D",
+        "ref": "D",
+        "ev": "neither show additional deterioration in the heat nor establish equivalent durability between environments",
+        "zh": "D 段：資料既沒顯示熱環境下額外衰退，也無法證明兩種環境耐久性相同 → do not prove equal durability。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "A previous study reported that running economy appeared to improve during a brief test in hot conditions.",
+        "a": "True",
+        "ref": "B",
+        "ev": "One study found that economy improved during a short graded test in hot conditions",
+        "zh": "B 段：一項研究發現短時間分級測試在高溫下經濟性反而改善 → brief test ↔ short graded test → True。"
+       },
+       {
+        "q": "During the prolonged run, participants covered more ground in the warm condition than in the temperate one.",
+        "a": "False",
+        "ref": "E",
+        "ev": "covered less distance (16.5 versus 17.7 km)",
+        "zh": "E 段：熱環境下距離較短（16.5 vs 17.7 km）→ 與 more ground 相反 → False。"
+       },
+       {
+        "q": "The female runners in the study were more affected by the heat than the male runners.",
+        "a": "Not Given",
+        "ref": "C",
+        "ev": "recruited ten trained runners (seven men and three women)",
+        "zh": "C 段只提到 7 男 3 女，文章沒有比較性別差異 → Not Given。陷阱：有男女人數，但沒有「誰受影響較大」的資訊。"
+       },
+       {
+        "q": "The authors accept that their results might not apply to hotter or more humid conditions.",
+        "a": "True",
+        "ref": "F",
+        "ev": "the findings may not extend to more severe heat or humidity",
+        "zh": "F 段：作者提醒結果可能不適用於更嚴重的高溫或濕度 → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "How heat affects the body during exercise",
+      "lines": [
+       {
+        "t": "Under heat stress, skin [[1]] and greater skin blood flow reduce the amount of blood held centrally, so [[2]] volume falls and the heart has to beat faster. Performance can suffer even at moderate core temperatures if the skin is hot, because a smaller temperature [[3]] between the core and the skin means more blood must flow to the skin. In short tests, running may seem more economical in the heat, perhaps because the body depends more on [[4]]."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "vasodilation"
+        ],
+        "ref": "B",
+        "ev": "skin vasodilation and the rise in skin blood flow needed to shed heat reduce central blood volume",
+        "zh": "B 段：skin vasodilation（皮膚血管擴張）→ vasodilation。"
+       },
+       {
+        "a": [
+         "stroke"
+        ],
+        "ref": "B",
+        "ev": "stroke volume falls and heart rate rises to maintain cardiac output",
+        "zh": "B 段：stroke volume（每搏輸出量）falls → stroke。heart has to beat faster ↔ heart rate rises。"
+       },
+       {
+        "a": [
+         "gradient"
+        ],
+        "ref": "B",
+        "ev": "a narrower core-to-skin temperature gradient requires greater skin blood flow",
+        "zh": "B 段：narrower ↔ smaller；core-to-skin temperature gradient → gradient（溫度梯度）。"
+       },
+       {
+        "a": [
+         "carbohydrate",
+         "carbohydrates"
+        ],
+        "ref": "B",
+        "ev": "possibly because of a greater reliance on carbohydrate",
+        "zh": "B 段：greater reliance on carbohydrate ↔ depends more on → carbohydrate（碳水化合物）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "baseline",
+     "pos": "n.",
+     "def": "a starting point used for comparison",
+     "zh": "基準、起點水準",
+     "example": "Scores were compared with each student's baseline.",
+     "match": [
+      "baseline"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "durability",
+     "pos": "n.",
+     "def": "the ability to last or to resist wear and decline over time",
+     "zh": "耐久性",
+     "example": "Marathon runners need durability as much as speed.",
+     "match": [
+      "durability"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "take its toll",
+     "pos": "idiom",
+     "def": "to have a harmful effect, especially gradually",
+     "zh": "造成損害、帶來負面影響",
+     "example": "Years of overtraining took their toll on his knees.",
+     "match": [
+      "took its toll"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "stark",
+     "pos": "adj.",
+     "def": "very clear, obvious and often unpleasant",
+     "zh": "鮮明的、嚴峻的",
+     "example": "The report paints a stark picture of the city's housing crisis.",
+     "match": [
+      "stark"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "soften the blow",
+     "pos": "idiom",
+     "def": "to make something unpleasant less severe",
+     "zh": "減輕衝擊",
+     "example": "A small bonus helped soften the blow of the pay freeze.",
+     "match": [
+      "soften the blow"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "acclimation",
+     "pos": "n.",
+     "def": "the process of the body adjusting to a new climate or condition",
+     "zh": "（對環境的）適應、馴化",
+     "example": "Heat acclimation usually takes one to two weeks.",
+     "match": [
+      "acclimation"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "impair",
+     "pos": "v.",
+     "def": "to damage or weaken something so it works less well",
+     "zh": "損害、削弱",
+     "example": "Lack of sleep can impair judgement.",
+     "match": [
+      "impaired"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "equivocal",
+     "pos": "adj.",
+     "def": "not clear; open to more than one interpretation",
+     "zh": "模稜兩可的、不明確的",
+     "example": "The evidence on the drug's benefits is equivocal.",
+     "match": [
+      "equivocal"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "disparate",
+     "pos": "adj.",
+     "def": "very different from each other and hard to compare",
+     "zh": "迥異的、不一致的",
+     "example": "The study brought together data from disparate sources.",
+     "match": [
+      "disparate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "counterbalanced",
+     "pos": "adj.",
+     "def": "(of an experiment) with conditions given in different orders so that order effects cancel out",
+     "zh": "（實驗順序）平衡交錯的",
+     "example": "Tasks were presented in a counterbalanced order.",
+     "match": [
+      "counterbalanced"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "prescribe",
+     "pos": "v.",
+     "def": "to set or state officially what should be done",
+     "zh": "規定、指定（強度等）",
+     "example": "Training loads were prescribed by the coach.",
+     "match": [
+      "prescribed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "mask",
+     "pos": "v.",
+     "def": "to hide or cover something so it cannot be seen clearly",
+     "zh": "掩蓋、遮蔽",
+     "example": "Average figures can mask large regional differences.",
+     "match": [
+      "masked"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "superimpose",
+     "pos": "v.",
+     "def": "to place one thing on top of another so both have an effect",
+     "zh": "疊加",
+     "example": "Seasonal swings are superimposed on a long-term trend.",
+     "match": [
+      "superimposed"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "tactical",
+     "pos": "adj.",
+     "def": "planned to gain an advantage in a particular situation",
+     "zh": "戰術性的",
+     "example": "The early slow pace was a tactical decision.",
+     "match": [
+      "tactical"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "mitigate",
+     "pos": "v.",
+     "def": "to make something harmful less severe",
+     "zh": "減輕、緩和",
+     "example": "Trees can mitigate the effects of urban heat.",
+     "match": [
+      "mitigate"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-14-2.mp3",
+    "times": [
+     [
+      0.36,
+      3.16
+     ],
+     [
+      3.42,
+      13.22
+     ],
+     [
+      13.6,
+      14.65
+     ],
+     [
+      15.43,
+      23.65
+     ],
+     [
+      23.92,
+      31.75
+     ],
+     [
+      32.07,
+      35.35
+     ],
+     [
+      35.59,
+      38.53
+     ],
+     [
+      38.81,
+      44.58
+     ],
+     [
+      44.91,
+      51.68
+     ],
+     [
+      52.46,
+      59.2
+     ],
+     [
+      59.49,
+      61.67
+     ],
+     [
+      61.86,
+      69.86
+     ],
+     [
+      70.12,
+      72.71
+     ],
+     [
+      73.02,
+      79.67
+     ],
+     [
+      80.45,
+      83.21
+     ],
+     [
+      83.48,
+      92.18
+     ],
+     [
+      92.57,
+      97.91
+     ],
+     [
+      98.15,
+      102.24
+     ],
+     [
+      102.52,
+      106.44
+     ],
+     [
+      107.22,
+      109.58
+     ],
+     [
+      109.79,
+      114.66
+     ],
+     [
+      114.95,
+      121.99
+     ],
+     [
+      122.2,
+      131.36
+     ],
+     [
+      132.14,
+      135.06
+     ],
+     [
+      135.37,
+      141.73
+     ],
+     [
+      141.95,
+      149.16
+     ],
+     [
+      149.94,
+      155.82
+     ],
+     [
+      156.14,
+      157.76
+     ],
+     [
+      157.95,
+      164.07
+     ],
+     [
+      164.35,
+      170.45
+     ],
+     [
+      170.78,
+      173.41
+     ]
+    ],
+    "duration": 174.1,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-14-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
