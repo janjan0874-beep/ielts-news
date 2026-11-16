@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-17",
+ "date": "2026-11-17",
+ "title": "Warming Seas Are Reshaping the Bottom of the Ocean Food Web, 35 Years of Plankton Records Show · Poison-Tipped Spears 125,000 Years Ago? An Ancient Lakeshore in Arabia's Empty Quarter Reveals Skilled Hunters",
+ "stories": [
+  {
+   "title": "Warming Seas Are Reshaping the Bottom of the Ocean Food Web, 35 Years of Plankton Records Show",
+   "topic": "Marine ecology · plankton",
+   "source": {
+    "name": "Plymouth Marine Laboratory: eDNA study reveals cause of dramatic restructuring of the marine food web (3 Nov 2026)",
+    "url": "https://pml.ac.uk/news/edna-study-reveals-cause-of-dramatic-restructuring-of-the-marine-food-web/",
+    "links": [
+     {
+      "name": "Tait, Lindeque, Beesley, McEvoy, Parry & Atkinson, Communications Biology (published 27 Oct 2026): eDNA and microscopy reveal traits underlying long-term zooplankton community change",
+      "url": "https://www.nature.com/articles/s42003-026-10901-w"
+     },
+     {
+      "name": "Coldwater Science: Zooplankton eDNA and microscopes: two views of a changing sea",
+      "url": "https://coldwater.science/journal/edna-and-microscopy-zooplankton/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Some of the smallest animals in the sea are sending a big warning, according to scientists in the south-west of England.",
+     "A study from Plymouth Marine Laboratory has found that warming waters are reshaping the very bottom of the marine food web, with possible knock-on effects for fish and fishing.",
+     "Here's our environment correspondent."
+    ],
+    [
+     "The animals in question are zooplankton, tiny drifting creatures that eat plant-like plankton and are, in turn, eaten by fish.",
+     "Scientists sometimes describe them as the cows of the sea.",
+     "They're so numerous that, according to the laboratory, they make up forty percent of all marine animal biomass.",
+     "For decades, though, researchers have watched some key groups decline across parts of the North-East Atlantic, particularly copepods.",
+     "One species, Calanus helgolandicus, was so dominant in the western English Channel that the lead author, Dr Karen Tait, says it was almost the poster plankton for the ecosystem, before its numbers suddenly collapsed."
+    ],
+    [
+     "So what's behind the change?",
+     "To find out, the team combined two very different records from a monitoring station about six nautical miles south of Plymouth.",
+     "The first is a thirty-five-year series of weekly net samples, examined under a microscope since nineteen eighty-eight.",
+     "The second is eleven years of environmental DNA, or eDNA, the genetic traces that organisms leave behind in seawater, such as skin cells.",
+     "Both records come from the laboratory's own long-term observations, as part of what's called the Western Channel Observatory.",
+     "The results are published in the journal Communications Biology."
+    ],
+    [
+     "Meanwhile, the answer turned out to depend on diet.",
+     "The species that have declined, mainly copepods and other omnivorous grazers, rely on relatively large phytoplankton.",
+     "By contrast, the winners are mostly fine filter feeders, which can survive on much smaller particles.",
+     "The researchers link that to a fall in nutrients.",
+     "As the sea warms, its layers mix less, a process called stratification, so fewer nutrients reach the surface, and smaller phytoplankton take over.",
+     "In other words, the whole system appears to be reorganising, from one built on larger algae to one built on much smaller ones."
+    ],
+    [
+     "Here, the new technology made the difference.",
+     "Microscopes are good at counting animals, but they struggle to identify meroplankton, the young drifting stages of crabs, worms, sea urchins and other creatures.",
+     "The DNA data could pin many of them down to family level, and sometimes further.",
+     "It showed, for the first time, that the rise in meroplankton came from animals that live on soft sediment, rather than species that attach themselves to rocks and other hard surfaces.",
+     "According to co-author Professor Angus Atkinson, that argues against the idea that human-made structures in the sea are behind the increase.",
+     "Still, eDNA can't count individual animals, so Dr Tait says the two methods work best together."
+    ],
+    [
+     "Why does it matter?",
+     "Dr Tait warns that the shift could reduce the quality of food available to marine life, affecting fish size and populations, and even how much carbon sinks into the deep ocean.",
+     "Her colleague, Professor Pennie Lindeque, called the decline of Calanus a wake-up call.",
+     "There are limits, though.",
+     "The findings come from a single station, and the damage to fisheries is, for now, a projection rather than a measurement.",
+     "That's the environment report on this Tuesday morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Changes at the base of the marine food web",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "Background"
+       },
+       {
+        "t": "Zooplankton are sometimes called the [[1]] of the sea"
+       },
+       {
+        "t": "Long-term fall in several important groups, especially [[2]]"
+       },
+       {
+        "h": "The Plymouth study"
+       },
+       {
+        "t": "Record 1: weekly samples studied with a [[3]] since [[4]]"
+       },
+       {
+        "t": "Record 2: genetic material in seawater, e.g. [[5]]"
+       },
+       {
+        "h": "Main findings"
+       },
+       {
+        "t": "Declining species depend on fairly big [[6]]"
+       },
+       {
+        "t": "Successful species: mainly fine [[7]]"
+       },
+       {
+        "t": "Reduced mixing of water layers, known as [[8]], cuts nutrient supply"
+       },
+       {
+        "t": "Increase in meroplankton linked to animals living on soft [[9]]"
+       },
+       {
+        "h": "Possible consequences"
+       },
+       {
+        "t": "Less food quality for marine life; change in the amount of [[10]] reaching the deep ocean"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "cows"
+        ],
+        "ref": "describe them as the cows of the sea",
+        "ev": "Scientists sometimes describe them as the cows of the sea.",
+        "zh": "sometimes called ↔ sometimes describe them as → cows（海洋中的乳牛，比喻浮游動物吃「植物性」浮游生物）。緊接著的 forty percent 是干擾數字。"
+       },
+       {
+        "a": [
+         "copepods"
+        ],
+        "ref": "particularly copepods",
+        "ev": "researchers have watched some key groups decline across parts of the North-East Atlantic, particularly copepods",
+        "zh": "Long-term fall ↔ decline；important groups ↔ key groups；especially ↔ particularly → copepods（橈足類）。Calanus helgolandicus 是其中一種，但題目問的是「類群」。"
+       },
+       {
+        "a": [
+         "microscope"
+        ],
+        "ref": "examined under a microscope since nineteen eighty-eight",
+        "ev": "a thirty-five-year series of weekly net samples, examined under a microscope",
+        "zh": "studied with a ___ ↔ examined under a microscope → microscope（顯微鏡）。"
+       },
+       {
+        "a": [
+         "1988"
+        ],
+        "ref": "examined under a microscope since nineteen eighty-eight",
+        "ev": "examined under a microscope since nineteen eighty-eight",
+        "zh": "since ___ → 1988。干擾：thirty-five-year（35 年）、eleven years（11 年）、six nautical miles（6 海浬）都是數字，但題目問「從哪一年開始」。本篇唯一數字題。"
+       },
+       {
+        "a": [
+         "skin cells"
+        ],
+        "ref": "such as skin cells",
+        "ev": "the genetic traces that organisms leave behind in seawater, such as skin cells",
+        "zh": "genetic material ↔ genetic traces；e.g. ↔ such as → skin cells（皮膚細胞）。兩個字，不要漏掉 cells 的 s。"
+       },
+       {
+        "a": [
+         "phytoplankton"
+        ],
+        "ref": "rely on relatively large phytoplankton",
+        "ev": "mainly copepods and other omnivorous grazers, rely on relatively large phytoplankton",
+        "zh": "Declining species ↔ species that have declined；depend on ↔ rely on；fairly big ↔ relatively large → phytoplankton（浮游植物）。"
+       },
+       {
+        "a": [
+         "filter feeders",
+         "filter-feeders"
+        ],
+        "ref": "the winners are mostly fine filter feeders",
+        "ev": "By contrast, the winners are mostly fine filter feeders",
+        "zh": "Successful species ↔ the winners；mainly ↔ mostly → fine filter feeders（細濾食者）。題目已給 fine，只要填 filter feeders。"
+       },
+       {
+        "a": [
+         "stratification"
+        ],
+        "ref": "a process called stratification",
+        "ev": "As the sea warms, its layers mix less, a process called stratification",
+        "zh": "Reduced mixing of water layers ↔ its layers mix less；known as ↔ called → stratification（分層）。注意拼字。"
+       },
+       {
+        "a": [
+         "sediment",
+         "sediments"
+        ],
+        "ref": "animals that live on soft sediment",
+        "ev": "the rise in meroplankton came from animals that live on soft sediment",
+        "zh": "Increase ↔ rise；animals living on soft ___ ↔ animals that live on soft sediment → sediment（沉積物）。干擾：hard surfaces（硬表面）是被排除的那一類。"
+       },
+       {
+        "a": [
+         "carbon"
+        ],
+        "ref": "how much carbon sinks into the deep ocean",
+        "ev": "and even how much carbon sinks into the deep ocean",
+        "zh": "amount of ___ reaching the deep ocean ↔ how much carbon sinks into the deep ocean → carbon（碳）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Winners and Losers in a Warming Sea",
+    "intro": "A 35-year plankton record from the English Channel, combined with modern DNA analysis, is helping scientists explain why the base of the marine food web is changing.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Plankton are easy to overlook, yet the ocean could not function without them. Microalgae, the plant-like plankton that include phytoplankton and mixoplankton, photosynthesise on such a scale that they produce more than half of the oxygen on the planet, while also absorbing and locking away carbon. Zooplankton, their animal-like counterparts, are equally important. By grazing on microalgae, they convert the carbon fixed by photosynthesis into food for organisms higher up the food chain, such as fish. Because they occupy this pivotal position, declines in zooplankton are projected to amplify into much larger declines among their consumers, from fish to marine mammals and birds, with consequences for commercially important fish stocks and the livelihoods that depend on them."
+     },
+     {
+      "label": "B",
+      "text": "Such declines are no longer hypothetical. For decades, scientists have documented falling numbers of some key zooplankton groups, notably copepods, across parts of the North-East Atlantic. Identifying the cause, however, requires records long enough to separate short-term variability from genuine ecological change, and few such records exist. One exception is the Western Channel Observatory, run by Plymouth Marine Laboratory (PML) and regarded as one of the longest near-continuous marine time series in the world. Since 1988, researchers have collected zooplankton every week at a site known as Station L4, roughly six nautical miles south of Plymouth, hauling nets from a depth of 50 metres to the surface and identifying and counting the animals under a microscope. Since 2012, they have also collected weekly seawater samples for environmental DNA (eDNA) analysis. All of the observatory's data are free to use and open access."
+     },
+     {
+      "label": "C",
+      "text": "In a study published in Communications Biology, a PML team led by Dr Karen Tait set out to compare the two approaches. The methods showed strong agreement for holoplanktonic crustaceans and gelatinous predators, but a weaker correspondence for meroplankton. Each technique, the authors suggest, compensates for the other's weaknesses. Microscopy can establish both which organisms are present and how many there are, throughout the water column, and its long history makes it suitable for climate-relevant timescales. Its limitation is taxonomic detail. eDNA, by contrast, offers much higher taxonomic resolution, identifying many organisms to the level of class, order or family, and sometimes genus. Yet it only detects genetic sequences in the water, so it cannot provide reliable estimates of the abundance of each group. 'What's exciting here is that eDNA doesn't compete with traditional monitoring, it enhances it,' Dr Tait said."
+     },
+     {
+      "label": "D",
+      "text": "The combined data revealed that the long-term winners and losers could largely be distinguished by a single trait: how they feed. The taxa that declined were mainly omnivores, typified by suspension-feeding copepods that capture relatively large individual cells, including bloom-forming diatoms and dinoflagellates. The groups that increased were predominantly fine filter feeders, which may benefit from a greater availability of much smaller cells. The authors link this to the physical state of the water. As the sea warms, its temperature layers become stronger and less likely to mix vertically, so fewer nutrients from deeper water reach phytoplankton near the surface, a situation that favours smaller cells. Notably, the change does not appear to be a simple response to heat: once the long-term trend was removed, years with warmer water did not have more meroplankton."
+     },
+     {
+      "label": "E",
+      "text": "The greatest advantage of eDNA emerged with meroplankton, the young stages of animals such as crabs, worms, corals and fish, which drift as plankton before developing into adults. Under a microscope these larvae are hard to tell apart and are usually lumped into broad categories. The DNA sequences, however, distinguished polychaete worms, sea squirts, sea urchins, brittle stars and many other invertebrates. This detail allowed the team to show, for the first time, that the increase in meroplankton was driven by animals whose adults live in soft sediments, rather than by barnacles and bryozoans that attach to hard surfaces. According to Professor Angus Atkinson, head of the observatory, this argues against the idea that the growing number of human-made structures in the sea is responsible, and adds to the evidence that wider climate impacts on the water column are at work."
+     },
+     {
+      "label": "F",
+      "text": "The ramifications could extend well beyond the plankton. Plankton are often described as 'sentinels of change', and Dr Tait warns that the shift could reduce the quality of food available to marine life, affect fish size and populations, alter fisheries productivity and even change how much carbon sinks into the deep ocean. It is thought that zooplankton may be responsible for as much as 85% of the carbon that sinks to the deep sea, a process known as the biological carbon pump. The findings come from a single station, although Dr Tait notes that similar changes have been mirrored more widely across the North-East Atlantic. For co-author Professor Pennie Lindeque, the message is clear: 'What we are witnessing is not simply a change in species composition, but the restructuring of the marine food web in response to climate change.'"
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 1 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reason why brief data sets may give a misleading picture",
+        "a": "B",
+        "ref": "B",
+        "ev": "requires records long enough to separate short-term variability from genuine ecological change",
+        "zh": "B 段：要分辨「短期波動」與「真正的生態變化」需要夠長的紀錄 ↔ 短期資料可能誤導（misleading）。"
+       },
+       {
+        "q": "an explanation for an increase that the researchers consider unlikely",
+        "a": "E",
+        "ref": "E",
+        "ev": "this argues against the idea that the growing number of human-made structures in the sea is responsible",
+        "zh": "E 段：Atkinson 說結果「反駁」人造海洋結構物造成 meroplankton 增加的說法 ↔ an explanation … unlikely。"
+       },
+       {
+        "q": "an estimate of how much carbon zooplankton help to transport downwards",
+        "a": "F",
+        "ref": "F",
+        "ev": "zooplankton may be responsible for as much as 85% of the carbon that sinks to the deep sea",
+        "zh": "F 段：浮游動物可能負責高達 85% 沉到深海的碳（生物碳泵）↔ estimate … transport downwards。"
+       },
+       {
+        "q": "a description of how closely the results of two techniques matched",
+        "a": "C",
+        "ref": "C",
+        "ev": "The methods showed strong agreement for holoplanktonic crustaceans and gelatinous predators, but a weaker correspondence for meroplankton",
+        "zh": "C 段：兩種方法在某些類群「高度一致」、在 meroplankton「較不一致」↔ how closely … matched。"
+       },
+       {
+        "q": "a reference to the contribution of tiny organisms to the air we breathe",
+        "a": "A",
+        "ref": "A",
+        "ev": "they produce more than half of the oxygen on the planet",
+        "zh": "A 段：微藻產生地球一半以上的氧氣 ↔ contribution … to the air we breathe。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 1?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Samples for eDNA analysis have been collected at Station L4 for longer than samples for microscope analysis.",
+        "a": "False",
+        "ref": "B",
+        "ev": "Since 2012, they have also collected weekly seawater samples for environmental DNA (eDNA) analysis",
+        "zh": "B 段：顯微鏡樣本從 1988 年開始，eDNA 從 2012 年才開始 → eDNA 時間較短，與題目相反 → False。"
+       },
+       {
+        "q": "Members of the public are able to use the observatory's data without charge.",
+        "a": "True",
+        "ref": "B",
+        "ev": "All of the observatory's data are free to use and open access",
+        "zh": "B 段：資料 free to use and open access ↔ without charge → True。"
+       },
+       {
+        "q": "Analysing eDNA samples costs less than identifying zooplankton under a microscope.",
+        "a": "Not Given",
+        "ref": "C",
+        "ev": "Each technique, the authors suggest, compensates for the other's weaknesses",
+        "zh": "C 段比較了兩種方法的優缺點（分類細節、能否計數），但完全沒提到「成本」→ Not Given。陷阱：段落確實在「比較兩種方法」，容易誤以為有提到哪個比較便宜。"
+       },
+       {
+        "q": "Once long-term trends were taken into account, warmer years were associated with larger numbers of meroplankton.",
+        "a": "False",
+        "ref": "D",
+        "ev": "once the long-term trend was removed, years with warmer water did not have more meroplankton",
+        "zh": "D 段：去除長期趨勢後，「較暖的年份並沒有更多 meroplankton」→ 與題目相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Two ways of monitoring plankton",
+      "lines": [
+       {
+        "t": "Microscope analysis provides a long record and counts of organisms, but it gives limited taxonomic detail. eDNA has much greater taxonomic [[1]], although it cannot reliably show the [[2]] of each group. According to Dr Tait, eDNA does not replace traditional monitoring but [[3]] it. Because plankton react early to environmental change, they are often regarded as [[4]] of change."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "resolution"
+        ],
+        "ref": "C",
+        "ev": "eDNA, by contrast, offers much higher taxonomic resolution",
+        "zh": "C 段：much greater ↔ much higher → taxonomic resolution（分類解析度）。"
+       },
+       {
+        "a": [
+         "abundance"
+        ],
+        "ref": "C",
+        "ev": "it cannot provide reliable estimates of the abundance of each group",
+        "zh": "C 段：cannot reliably show ↔ cannot provide reliable estimates → abundance（數量、豐度）。"
+       },
+       {
+        "a": [
+         "enhances"
+        ],
+        "ref": "C",
+        "ev": "eDNA doesn't compete with traditional monitoring, it enhances it",
+        "zh": "C 段：does not replace … but ___ it ↔ doesn't compete with …, it enhances it → enhances（增強）。注意第三人稱單數要加 s。"
+       },
+       {
+        "a": [
+         "sentinels"
+        ],
+        "ref": "F",
+        "ev": "Plankton are often described as 'sentinels of change'",
+        "zh": "F 段：often regarded as ↔ often described as → sentinels（哨兵；預警者），要用複數。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "stratification",
+     "pos": "n.",
+     "def": "the formation of separate layers, e.g. of water at different temperatures",
+     "zh": "分層（作用）",
+     "example": "Summer stratification traps nutrients in deeper water.",
+     "match": [
+      "stratification"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "omnivorous",
+     "pos": "adj.",
+     "def": "eating both plant and animal food",
+     "zh": "雜食性的",
+     "example": "Bears are omnivorous animals.",
+     "match": [
+      "omnivorous"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "reorganise",
+     "pos": "v.",
+     "def": "to change the way something is arranged or structured",
+     "zh": "重組、重新編排",
+     "example": "The company reorganised its sales teams.",
+     "match": [
+      "reorganising"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "projection",
+     "pos": "n.",
+     "def": "an estimate of a future situation based on current data",
+     "zh": "推估、預測",
+     "example": "Population projections suggest slower growth.",
+     "match": [
+      "projection"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "knock-on effect",
+     "pos": "n.",
+     "def": "an indirect result of an action or event",
+     "zh": "連鎖效應",
+     "example": "Higher fuel prices have a knock-on effect on food costs.",
+     "match": [
+      "knock-on effects"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "pivotal",
+     "pos": "adj.",
+     "def": "of central importance; on which other things depend",
+     "zh": "關鍵的、樞紐的",
+     "example": "She played a pivotal role in the negotiations.",
+     "match": [
+      "pivotal"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "amplify",
+     "pos": "v.",
+     "def": "to make something larger, stronger or more intense",
+     "zh": "放大、擴大",
+     "example": "Social media can amplify rumours.",
+     "match": [
+      "amplify"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "livelihood",
+     "pos": "n.",
+     "def": "a means of earning money to live",
+     "zh": "生計",
+     "example": "Tourism is the livelihood of the island.",
+     "match": [
+      "livelihoods"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "hypothetical",
+     "pos": "adj.",
+     "def": "imagined or possible rather than real",
+     "zh": "假設的",
+     "example": "Let's consider a hypothetical example.",
+     "match": [
+      "hypothetical"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "variability",
+     "pos": "n.",
+     "def": "the tendency to change or vary",
+     "zh": "變異性、波動",
+     "example": "Rainfall shows high year-to-year variability.",
+     "match": [
+      "variability"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "compensate for",
+     "pos": "v.",
+     "def": "to reduce or balance the bad effect of something",
+     "zh": "彌補",
+     "example": "Hard work can compensate for a lack of talent.",
+     "match": [
+      "compensates for"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "resolution",
+     "pos": "n.",
+     "def": "the level of detail that a method or image can show",
+     "zh": "解析度",
+     "example": "The new camera offers higher resolution.",
+     "match": [
+      "resolution"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "predominantly",
+     "pos": "adv.",
+     "def": "mainly; for the most part",
+     "zh": "主要地、大多",
+     "example": "The audience was predominantly young.",
+     "match": [
+      "predominantly"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "ramification",
+     "pos": "n.",
+     "def": "a complex, often unwanted, consequence of an action or event",
+     "zh": "（衍生的）後果、影響",
+     "example": "The ramifications of the decision are still unclear.",
+     "match": [
+      "ramifications"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sentinel",
+     "pos": "n.",
+     "def": "something that gives early warning of danger or change",
+     "zh": "哨兵；預警指標",
+     "example": "Frogs act as sentinels of environmental health.",
+     "match": [
+      "sentinels"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-17-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      7.16
+     ],
+     [
+      7.46,
+      15.93
+     ],
+     [
+      16.24,
+      18.2
+     ],
+     [
+      18.98,
+      26.37
+     ],
+     [
+      26.68,
+      29.84
+     ],
+     [
+      30.08,
+      35.96
+     ],
+     [
+      36.24,
+      43.59
+     ],
+     [
+      43.92,
+      55.65
+     ],
+     [
+      56.43,
+      58.05
+     ],
+     [
+      58.46,
+      64.88
+     ],
+     [
+      65.09,
+      71.21
+     ],
+     [
+      71.47,
+      79.85
+     ],
+     [
+      80.16,
+      86.26
+     ],
+     [
+      86.48,
+      89.63
+     ],
+     [
+      90.41,
+      93.46
+     ],
+     [
+      93.78,
+      100.65
+     ],
+     [
+      100.88,
+      106.55
+     ],
+     [
+      106.83,
+      109.36
+     ],
+     [
+      109.69,
+      118.41
+     ],
+     [
+      118.78,
+      125.5
+     ],
+     [
+      126.28,
+      128.83
+     ],
+     [
+      129.04,
+      138.35
+     ],
+     [
+      138.61,
+      143.05
+     ],
+     [
+      143.35,
+      152.83
+     ],
+     [
+      153.14,
+      160.37
+     ],
+     [
+      160.64,
+      166.44
+     ],
+     [
+      167.22,
+      168.3
+     ],
+     [
+      168.65,
+      177.96
+     ],
+     [
+      178.32,
+      182.95
+     ],
+     [
+      183.28,
+      184.72
+     ],
+     [
+      184.93,
+      191.31
+     ],
+     [
+      191.6,
+      194.27
+     ]
+    ],
+    "duration": 194.9,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-17-1-words/"
+   }
+  },
+  {
+   "title": "Poison-Tipped Spears 125,000 Years Ago? An Ancient Lakeshore in Arabia's Empty Quarter Reveals Skilled Hunters",
+   "topic": "Archaeology · early humans",
+   "source": {
+    "name": "Griffith University: Ancient lakeshore reveals how early humans lived in Arabia (16 Nov 2026)",
+    "url": "https://news.griffith.edu.au/2026/11/16/ancient-lakeshore-reveals-how-early-humans-lived-in-arabia/",
+    "links": [
+     {
+      "name": "Clarkson et al., Science (2026): Poisoned hunting weapons, megafauna, and plant use at a 125,000-year-old Arabian paleolakeshore",
+      "url": "https://www.science.org/doi/10.1126/science.aef9342"
+     },
+     {
+      "name": "Live Science: 125,000-year-old poisoned stone points discovered on shore of ancient lake in Saudi Arabia",
+      "url": "https://www.livescience.com/archaeology/middle-east/125-000-year-old-poisoned-stone-points-discovered-on-shore-of-ancient-lake-in-saudi-arabia"
+     },
+     {
+      "name": "The Conversation (by the study authors): Discoveries from a 125,000-year-old lakeshore reveal life in a greener Arabia",
+      "url": "https://theconversation.com/discoveries-from-a-125-000-year-old-lakeshore-reveal-life-in-a-greener-arabia-293952"
+     },
+     {
+      "name": "Phys.org: Chemical traces hint at poisoned hunting weapons in Arabia 125,000 years ago",
+      "url": "https://phys.org/news/2026-11-chemical-hint-poisoned-weapons-arabia.html"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "In one of the driest places on Earth, archaeologists have found signs that people hunted big game around a hundred and twenty-five thousand years ago, possibly with weapons tipped with poison.",
+     "If that's confirmed, it would be the oldest evidence of its kind.",
+     "Here's the report."
+    ],
+    [
+     "The site is called Uruq Aljelibah, and it lies in the Empty Quarter of southern Saudi Arabia.",
+     "According to the geologist Frans van Buchem, one of the study's authors, the name means sand dunes of a watering hole.",
+     "It's an apt description.",
+     "Today the area is buried under vast dunes, but the team found that it once sat beside a freshwater lake covering about three hundred and forty square kilometres and up to twenty-nine metres deep.",
+     "Fossils show it was home to hippos, buffalo, gazelles, oryx and ostriches.",
+     "The research, by an international team that includes Griffith University in Australia and Saudi Arabia's Heritage Commission, is published in the journal Science."
+    ],
+    [
+     "So what exactly did they find?",
+     "More than five thousand stone artefacts, mapped alongside the animal bones.",
+     "Some flakes fit back together, which tells researchers the tools were made right there on the shore.",
+     "Several stone points had broken tips, the kind of damage you'd expect from striking a large animal.",
+     "Under the microscope, the scientists also saw traces of animal tissue near the tips, and plant resin and fibres at the base.",
+     "In other words, the points had probably been glued and bound to a shaft, making them composite weapons rather than simple hand-held tools."
+    ],
+    [
+     "Then came the chemistry.",
+     "Several points carried chemical markers linked to the arrow-poison tree, a plant whose toxins act on the heart.",
+     "African hunters have used extracts from it to coat spear tips and arrowheads.",
+     "The lead researcher, Professor Chris Clarkson, says the finds would be substantially older than poisoned arrowheads identified in South Africa, which date to around sixty thousand years ago.",
+     "But he's being careful.",
+     "He told Live Science the team hasn't shown how the poison was prepared, or whether it actually worked, so he describes this as potentially the oldest evidence, rather than an established first."
+    ],
+    [
+     "Meanwhile, the plant evidence is just as striking.",
+     "Tools preserved fragments of leaves, wood, bark and palm, and wear on tools with toothed edges suggests people sawed or shredded plants, perhaps to produce material for bindings.",
+     "Professor Clarkson argues that researchers have often underestimated early humans, because so much of what they made was organic and has simply disappeared.",
+     "The findings also challenge the view of Arabia as merely a corridor that people passed through on their way out of Africa."
+    ],
+    [
+     "There are doubts, though.",
+     "Jeffrey Rose, an archaeologist at the University of Algarve who wasn't involved, points out that every artefact was collected from the surface, rather than dug out of the layers that were dated.",
+     "In his view, the date belongs to the lake, not to the tools, so for the tools it's only a maximum age.",
+     "He'd like future work to look for artefacts sealed inside the old lake beds.",
+     "No human remains have been found either, although the team believes the site most likely belonged to our own species.",
+     "That's all from the history desk this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Early hunters beside an Arabian lake",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The setting"
+       },
+       {
+        "t": "Site now covered by huge [[1]]"
+       },
+       {
+        "t": "Ancient lake: maximum depth of [[2]] metres"
+       },
+       {
+        "h": "Stone tools"
+       },
+       {
+        "t": "Matching flakes show tools were produced at the [[3]]"
+       },
+       {
+        "t": "Some points had damaged [[4]], suggesting impact"
+       },
+       {
+        "t": "Resin and [[5]] found at the lower end of points"
+       },
+       {
+        "t": "Points were part of [[6]] weapons"
+       },
+       {
+        "h": "Possible poison"
+       },
+       {
+        "t": "Toxins from the tree affect the [[7]]"
+       },
+       {
+        "h": "Plants and wider significance"
+       },
+       {
+        "t": "Plant material may have been used for [[8]]"
+       },
+       {
+        "t": "Ability of early humans underestimated because organic items have [[9]]"
+       },
+       {
+        "h": "A critic's view"
+       },
+       {
+        "t": "All artefacts came from the [[10]], so their age is uncertain"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "dunes",
+         "sand dunes"
+        ],
+        "ref": "buried under vast dunes",
+        "ev": "Today the area is buried under vast dunes",
+        "zh": "now covered by huge ___ ↔ Today the area is buried under vast dunes → dunes（沙丘）。前一句地名意思 sand dunes of a watering hole 也有 dunes，兩個寫法都可。"
+       },
+       {
+        "a": [
+         "29",
+         "twenty-nine"
+        ],
+        "ref": "up to twenty-nine metres deep",
+        "ev": "covering about three hundred and forty square kilometres and up to twenty-nine metres deep",
+        "zh": "maximum depth ↔ up to … deep → 29。干擾：340 平方公里是面積，125,000 年是年代。本篇唯一數字題。"
+       },
+       {
+        "a": [
+         "shore",
+         "lakeshore"
+        ],
+        "ref": "the tools were made right there on the shore",
+        "ev": "Some flakes fit back together, which tells researchers the tools were made right there on the shore",
+        "zh": "Matching flakes ↔ flakes fit back together；produced ↔ made → shore（岸邊）。"
+       },
+       {
+        "a": [
+         "tips"
+        ],
+        "ref": "Several stone points had broken tips",
+        "ev": "Several stone points had broken tips, the kind of damage you'd expect from striking a large animal",
+        "zh": "damaged ↔ broken；suggesting impact ↔ damage you'd expect from striking a large animal → tips（尖端）。"
+       },
+       {
+        "a": [
+         "fibres",
+         "fibers",
+         "plant fibres",
+         "plant fibers"
+        ],
+        "ref": "plant resin and fibres at the base",
+        "ev": "plant resin and fibres at the base",
+        "zh": "lower end ↔ at the base → fibres（纖維；美式 fibers 亦可）。干擾：animal tissue 是在 tips（尖端），不是底部。"
+       },
+       {
+        "a": [
+         "composite"
+        ],
+        "ref": "making them composite weapons",
+        "ev": "making them composite weapons rather than simple hand-held tools",
+        "zh": "part of ___ weapons ↔ composite weapons（複合式武器，石尖＋木柄＋黏著劑）。干擾：simple hand-held tools 是被否定的說法。"
+       },
+       {
+        "a": [
+         "heart"
+        ],
+        "ref": "a plant whose toxins act on the heart",
+        "ev": "a plant whose toxins act on the heart",
+        "zh": "affect ↔ act on → heart（心臟）。"
+       },
+       {
+        "a": [
+         "bindings"
+        ],
+        "ref": "perhaps to produce material for bindings",
+        "ev": "perhaps to produce material for bindings",
+        "zh": "may have been used for ↔ perhaps to produce material for → bindings（綁繩、捆綁用材料）。注意複數。"
+       },
+       {
+        "a": [
+         "disappeared",
+         "simply disappeared"
+        ],
+        "ref": "has simply disappeared",
+        "ev": "because so much of what they made was organic and has simply disappeared",
+        "zh": "organic items have ___ ↔ was organic and has simply disappeared → disappeared（消失；動詞過去分詞）。"
+       },
+       {
+        "a": [
+         "surface"
+        ],
+        "ref": "every artefact was collected from the surface",
+        "ev": "every artefact was collected from the surface, rather than dug out of the layers that were dated",
+        "zh": "All artefacts came from ↔ every artefact was collected from → surface（地表）。干擾：layers（地層）是「沒有」挖出來的地方。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Hunters of a Green Arabia",
+    "intro": "A prehistoric lakeshore in one of the world's harshest deserts is offering an unusually complete picture of how early humans made weapons and used plants some 125,000 years ago.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "A fossil hippopotamus tooth is an unlikely find in the middle of a desert. The Rub' al Khali, or Empty Quarter, is a vast sandy expanse that stretches across the southern Arabian Peninsula, covering parts of Saudi Arabia, Oman, Yemen and the United Arab Emirates, and it is today one of the hottest and driest places on Earth. Yet its sands preserve evidence of a very different landscape. About 125,000 years ago, during a humid interval that scientists call Marine Isotope Stage 5e, a freshwater lake filled the Mundafan basin in southern Saudi Arabia. According to the researchers, it covered about 340 square kilometres and reached a depth of up to 29 metres, and hippos lived in its waters while buffalo, gazelles and oryx roamed the grasslands nearby."
+     },
+     {
+      "label": "B",
+      "text": "The lake matters because of where it lies. Our species evolved in Africa, where fossils show that Homo sapiens existed by about 300,000 years ago, and its expansion into other continents involved repeated movements whose timing is still debated. Fossils from Greece and Israel place our species outside Africa by about 200,000 years ago, and a finger bone from northern Arabia shows that Homo sapiens was on the peninsula at least 85,000 years ago, long before the major expansion of around 60,000 to 70,000 years ago. Arabia, sitting between Africa and the rest of Asia, appears to have been occupied repeatedly during wetter phases, sometimes called periods of 'Green Arabia'. However, sites that preserve both stone tools and animal bones are rare in the region, so how people actually lived there has been difficult to reconstruct."
+     },
+     {
+      "label": "C",
+      "text": "The site of 'Uruq Aljelibah, on the former shore of the Mundafan lake, has begun to fill that gap. An international team led by Griffith University, the King Abdullah University of Science and Technology and the Saudi Heritage Commission recovered more than 5,500 stone tools and manufacturing debris, and mapped their positions alongside animal fossils. Some flakes could be fitted back together, indicating that tools were made on the spot. The shoreline was dated using luminescence, a technique that measures signals in buried sand grains that record how long it has been since sunlight last reached them, and the results were supported by data from hippo teeth. The distribution of the tools closely matched clusters of animal bones, suggesting that the lakeshore was a focal point for hunting and butchering game."
+     },
+     {
+      "label": "D",
+      "text": "The most striking evidence concerns weapons. Several stone points showed impact damage, while one preserved resin and plant fibres near its base and animal fats and proteins nearer the tip, suggesting that it had been glued and bound to a shaft. The authors note, however, that the fracture patterns do not reveal whether such weapons were thrust or thrown. Chemical analysis then identified compounds linked to the arrow-poison tree, Acokanthera schimperi, on several points, and on at least one damaged point these occurred together with animal residues. To guard against contamination, chemical results were checked against blank samples and controls, and some residues were analysed in two separate laboratories. Even so, the authors concede that the residues cannot establish the recipe, concentration or effectiveness of any poison. If confirmed, such poison-assisted hunting would predate recently reported South African examples by about 65,000 years."
+     },
+     {
+      "label": "E",
+      "text": "Plant remains add a further dimension. Tools preserved fragments of leaves, wood and bark, tissue from palm leaves, traces of reeds and evidence of tubers, the underground parts of plants. Wear on tools with saw-like edges suggests that people sawed or shredded plant material, perhaps to make cord. Such evidence is unusual, because wood and fibre normally perish long before archaeologists arrive. For Professor Chris Clarkson, the lead researcher, this is precisely why the technological sophistication of early populations has been underestimated. 'These weren't just people knocking stone flakes off cores,' he told Live Science. Eleanor Scerri of the Max Planck Institute of Geoanthropology, who was not involved, described the quantity of evidence as remarkable, from traces of how spear tips were attached to the relationship between hunting tools and the bones of hippos."
+     },
+     {
+      "label": "F",
+      "text": "The study challenges the idea that Arabia was merely a corridor through which people moved out of Africa. 'People weren't necessarily just passing through these environments,' Clarkson said. 'They were exploiting them in quite sophisticated ways.' Not everyone is fully convinced about the dating, though. Jeffrey Rose of the University of Algarve, who was not part of the research, points out that all the artefacts were collected from the surface rather than excavated from the dated layers, so the 125,000-year figure represents only a maximum age for the tools. No human remains were found, although the team argues that the site most likely belonged to Homo sapiens. What happened to its inhabitants is unknown; the lake eventually dried, the desert returned, and the landscape they had mastered was abandoned."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage 2 has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a method of finding out when sediment was last exposed to daylight",
+        "a": "C",
+        "ref": "C",
+        "ev": "measures signals in buried sand grains that record how long it has been since sunlight last reached them",
+        "zh": "C 段：luminescence（發光定年法）量測沙粒「最後一次照到陽光」至今的時間 ↔ last exposed to daylight。"
+       },
+       {
+        "q": "an admission that the way a weapon was used remains uncertain",
+        "a": "D",
+        "ref": "D",
+        "ev": "the fracture patterns do not reveal whether such weapons were thrust or thrown",
+        "zh": "D 段：斷裂型態無法判斷武器是「刺」還是「擲」↔ the way a weapon was used remains uncertain。"
+       },
+       {
+        "q": "a reference to fossils showing our species had left Africa at an early date",
+        "a": "B",
+        "ref": "B",
+        "ev": "Fossils from Greece and Israel place our species outside Africa by about 200,000 years ago",
+        "zh": "B 段：希臘與以色列的化石顯示約 20 萬年前智人已在非洲以外 ↔ left Africa at an early date。"
+       },
+       {
+        "q": "doubts expressed by an outside expert about how old the tools are",
+        "a": "F",
+        "ref": "F",
+        "ev": "the 125,000-year figure represents only a maximum age for the tools",
+        "zh": "F 段：未參與研究的 Jeffrey Rose 指出工具全來自地表，125,000 年只是「最大年齡」↔ doubts … about how old the tools are。注意 E 段的 Scerri 也是外部專家，但她是稱讚，不是質疑。"
+       },
+       {
+        "q": "a list of countries where a present-day desert is found",
+        "a": "A",
+        "ref": "A",
+        "ev": "covering parts of Saudi Arabia, Oman, Yemen and the United Arab Emirates",
+        "zh": "A 段：Empty Quarter 涵蓋沙烏地、阿曼、葉門、阿聯 ↔ a list of countries。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in Reading Passage 2?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Human bones found at the site indicate that it was used by Homo sapiens.",
+        "a": "False",
+        "ref": "F",
+        "ev": "No human remains were found",
+        "zh": "F 段：No human remains were found（沒有找到人類遺骸），研究團隊只是「推論」是智人 → 與題目相反 → False。"
+       },
+       {
+        "q": "Some chemical residues were examined by more than one laboratory.",
+        "a": "True",
+        "ref": "D",
+        "ev": "some residues were analysed in two separate laboratories",
+        "zh": "D 段：部分殘留物在兩間不同實驗室分析 ↔ more than one laboratory → True。"
+       },
+       {
+        "q": "The poison used at Mundafan was more powerful than that used by later hunters in South Africa.",
+        "a": "Not Given",
+        "ref": "D",
+        "ev": "If confirmed, such poison-assisted hunting would predate recently reported South African examples by about 65,000 years",
+        "zh": "D 段只比較「年代」（比南非早約 65,000 年），而且作者說無法確定毒的濃度與效果，完全沒有比較毒性強弱 → Not Given。陷阱：有提到南非，也有提到 concentration，但沒有「比較強度」。"
+       },
+       {
+        "q": "The researchers believe the residues show exactly how the poison was prepared.",
+        "a": "False",
+        "ref": "D",
+        "ev": "the authors concede that the residues cannot establish the recipe, concentration or effectiveness of any poison",
+        "zh": "D 段：作者承認殘留物「無法」確定配方（recipe）→ 與 exactly how … prepared 相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "What the Mundafan site reveals",
+      "lines": [
+       {
+        "t": "Tools and animal bones were found grouped together, which suggests the shore was a [[1]] point for hunting and processing animals. Besides wood, bark and leaves, people used underground plant parts called [[2]]. Such organic material usually does not survive, because it tends to [[3]] quickly. The findings suggest that Arabia was more than just a [[4]] for people leaving Africa."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "focal"
+        ],
+        "ref": "C",
+        "ev": "suggesting that the lakeshore was a focal point for hunting and butchering game",
+        "zh": "C 段：grouped together ↔ closely matched clusters；processing animals ↔ butchering game → focal point（焦點、中心）。"
+       },
+       {
+        "a": [
+         "tubers"
+        ],
+        "ref": "E",
+        "ev": "evidence of tubers, the underground parts of plants",
+        "zh": "E 段：underground plant parts ↔ the underground parts of plants → tubers（塊莖）。"
+       },
+       {
+        "a": [
+         "perish"
+        ],
+        "ref": "E",
+        "ev": "wood and fibre normally perish long before archaeologists arrive",
+        "zh": "E 段：usually does not survive ↔ normally perish → perish（腐爛消失）。tends to 後接原形動詞。"
+       },
+       {
+        "a": [
+         "corridor"
+        ],
+        "ref": "F",
+        "ev": "The study challenges the idea that Arabia was merely a corridor",
+        "zh": "F 段：more than just a ___ ↔ challenges the idea that Arabia was merely a corridor → corridor（走廊、通道）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "artefact",
+     "pos": "n.",
+     "def": "an object made by a human, especially one of historical interest",
+     "zh": "人工製品、文物",
+     "example": "The museum displays artefacts from the Bronze Age.",
+     "match": [
+      "artefacts",
+      "artefact"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "composite",
+     "pos": "adj.",
+     "def": "made of several different parts or materials",
+     "zh": "複合的",
+     "example": "Modern tennis rackets use composite materials.",
+     "match": [
+      "composite"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "apt",
+     "pos": "adj.",
+     "def": "suitable or appropriate in the circumstances",
+     "zh": "貼切的、恰當的",
+     "example": "It was an apt name for such a windy town.",
+     "match": [
+      "apt"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "substantially",
+     "pos": "adv.",
+     "def": "to a large degree; considerably",
+     "zh": "大幅地、相當地",
+     "example": "Costs have risen substantially this year.",
+     "match": [
+      "substantially"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "underestimate",
+     "pos": "v.",
+     "def": "to think something is smaller, weaker or less important than it really is",
+     "zh": "低估",
+     "example": "Never underestimate your opponent.",
+     "match": [
+      "underestimated"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "expanse",
+     "pos": "n.",
+     "def": "a wide, continuous area of land, sea or sky",
+     "zh": "廣闊的區域",
+     "example": "A vast expanse of ice covers the region.",
+     "match": [
+      "expanse"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "reconstruct",
+     "pos": "v.",
+     "def": "to build up a picture of a past event from evidence",
+     "zh": "重建、還原",
+     "example": "Police tried to reconstruct the events of that night.",
+     "match": [
+      "reconstruct"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "debris",
+     "pos": "n.",
+     "def": "pieces left after something has been made, broken or destroyed",
+     "zh": "碎屑、殘骸",
+     "example": "Debris from the storm blocked the road.",
+     "match": [
+      "debris"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "focal point",
+     "pos": "n.",
+     "def": "the centre of activity or attention",
+     "zh": "焦點、中心",
+     "example": "The square became a focal point for the protests.",
+     "match": [
+      "focal point"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "contamination",
+     "pos": "n.",
+     "def": "the process of making something impure by adding unwanted material",
+     "zh": "汙染",
+     "example": "Samples were sealed to prevent contamination.",
+     "match": [
+      "contamination"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "concede",
+     "pos": "v.",
+     "def": "to admit, often unwillingly, that something is true",
+     "zh": "（勉強）承認",
+     "example": "He conceded that the plan had flaws.",
+     "match": [
+      "concede"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "predate",
+     "pos": "v.",
+     "def": "to exist or happen earlier than something else",
+     "zh": "早於",
+     "example": "The castle predates the town by centuries.",
+     "match": [
+      "predate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "perish",
+     "pos": "v.",
+     "def": "(of materials) to decay and be destroyed; (of people) to die",
+     "zh": "腐爛、消亡",
+     "example": "Leather goods perish quickly in damp conditions.",
+     "match": [
+      "perish"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sophistication",
+     "pos": "n.",
+     "def": "the quality of being advanced, complex or highly developed",
+     "zh": "精密、複雜程度",
+     "example": "The sophistication of the software impressed experts.",
+     "match": [
+      "sophistication"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "exploit",
+     "pos": "v.",
+     "def": "to make full use of a resource or opportunity",
+     "zh": "利用、開發",
+     "example": "Early farmers exploited the fertile river valleys.",
+     "match": [
+      "exploiting"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-17-2.mp3",
+    "times": [
+     [
+      0.36,
+      0.98
+     ],
+     [
+      1.2,
+      11.07
+     ],
+     [
+      11.45,
+      14.64
+     ],
+     [
+      14.87,
+      15.84
+     ],
+     [
+      16.62,
+      21.86
+     ],
+     [
+      22.17,
+      28.39
+     ],
+     [
+      28.63,
+      29.79
+     ],
+     [
+      30.03,
+      40.14
+     ],
+     [
+      40.55,
+      45.55
+     ],
+     [
+      45.8,
+      54.41
+     ],
+     [
+      55.19,
+      56.99
+     ],
+     [
+      57.32,
+      61.68
+     ],
+     [
+      61.93,
+      66.74
+     ],
+     [
+      67.05,
+      72.18
+     ],
+     [
+      72.4,
+      79.4
+     ],
+     [
+      79.79,
+      87.15
+     ],
+     [
+      87.93,
+      89.16
+     ],
+     [
+      89.36,
+      95.16
+     ],
+     [
+      95.44,
+      99.46
+     ],
+     [
+      99.79,
+      109.6
+     ],
+     [
+      110.04,
+      111.25
+     ],
+     [
+      111.51,
+      121.46
+     ],
+     [
+      122.24,
+      125.19
+     ],
+     [
+      125.45,
+      135.72
+     ],
+     [
+      136.1,
+      144.11
+     ],
+     [
+      144.33,
+      150.11
+     ],
+     [
+      150.89,
+      152.24
+     ],
+     [
+      152.52,
+      162.47
+     ],
+     [
+      162.79,
+      168.6
+     ],
+     [
+      168.88,
+      172.94
+     ],
+     [
+      173.27,
+      179.19
+     ],
+     [
+      179.43,
+      181.48
+     ]
+    ],
+    "duration": 182.1,
+    "voice": "en-GB-RyanNeural",
+    "rate": "-2%",
+    "accent": "🇬🇧 British English · Ryan · male",
+    "words": "audio/2026-11-17-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
