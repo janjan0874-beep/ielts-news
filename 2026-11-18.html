@@ -1,0 +1,2154 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-18",
+ "date": "2026-11-18",
+ "title": "Nvidia Beats Forecasts in Its First Results Since Jensen Huang's Exit, but Investors Still Want Answers · Quick-Thinking Crows Make Visual Decisions About Twice as Fast as Humans and Monkeys, Study Suggests",
+ "stories": [
+  {
+   "title": "Nvidia Beats Forecasts in Its First Results Since Jensen Huang's Exit, but Investors Still Want Answers",
+   "topic": "Semiconductors · AI chip earnings",
+   "source": {
+    "name": "NVIDIA Newsroom: NVIDIA Announces Financial Results for Third Quarter Fiscal 2027 (17 Nov 2026)",
+    "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-third-quarter-fiscal-2027",
+    "links": [
+     {
+      "name": "CNBC live coverage: Nvidia interim CEO Kress says it's 'business as usual' (17 Nov 2026)",
+      "url": "https://www.cnbc.com/2026/11/17/nvidia-nvda-earnings-report-q3-2027.html"
+     },
+     {
+      "name": "Reuters (via Investing.com): Nvidia earnings beat estimates; firm won't take questions on resignation (17 Nov 2026)",
+      "url": "https://www.investing.com/news/stock-market-news/nvidia-earnings-beat-estimates-attention-turns-to-call-5034180"
+     },
+     {
+      "name": "Reuters (via Investing.com): Shaky semiconductor trade faces big week, as investors look for bottom (17 Nov 2026)",
+      "url": "https://www.investing.com/news/stock-market-news/shaky-semiconductor-trade-faces-big-week-as-investors-look-for-bottom-5032309"
+     },
+     {
+      "name": "Investopedia: Nvidia's third-quarter earnings, outlook top Wall Street expectations (17 Nov 2026)",
+      "url": "https://www.investopedia.com/nvidia-stock-rises-after-fy27-q3-revenue-net-profit-beat-expectations-nvda-earnings-12258779"
+     },
+     {
+      "name": "The National: Nvidia beats expectations in first earnings since Jensen Huang's exit (17 Nov 2026)",
+      "url": "https://www.thenationalnews.com/business/markets/2026/11/17/nvidia-earnings-q3-jensen-huang/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "The world's most closely watched chipmaker has delivered another blockbuster quarter, in its first set of results since its co-founder and chief executive, Jensen Huang, abruptly resigned last week.",
+     "The question now is whether investors still believe the story without him.",
+     "Here's the report."
+    ],
+    [
+     "Nvidia says revenue for the three months to late October reached one hundred and fifteen point eight billion dollars.",
+     "That's up twenty per cent on the previous quarter, and more than double the figure a year ago.",
+     "Analysts surveyed by LSEG had been expecting around one hundred and nine billion.",
+     "Almost all of the money came from the data centre division, which sells the processors and complete server systems used to train and run artificial intelligence.",
+     "That business alone brought in one hundred and seven point six billion dollars."
+    ],
+    [
+     "Meanwhile, the company says production of its newest platform, called Vera Rubin, is ramping up faster than any product in its history.",
+     "That comes at a cost, though.",
+     "Gross margin, a key measure of profitability, slipped to just under seventy-five per cent, and Nvidia blamed the expense of building those new Rubin chips.",
+     "Even so, that beat the seventy-four per cent Wall Street had pencilled in.",
+     "Looking ahead, Nvidia expects sales of around one hundred and thirty billion dollars this quarter, comfortably above forecasts of about one hundred and twenty-five billion.",
+     "Crucially, that outlook assumes no data centre revenue at all from China."
+    ],
+    [
+     "The results come at an extraordinary moment for the company.",
+     "Mr Huang, who built Nvidia over more than three decades, stepped down last week, and the board has made clear it won't bring him back as chief executive.",
+     "The finance chief, Colette Kress, is now running the company on an interim basis.",
+     "On a call with analysts, she insisted it was business as usual, and said customers, suppliers and partners were all behind the company.",
+     "She also raised the growth forecast for the next financial year to seventy-five per cent, up from the seventy per cent the company had suggested in August.",
+     "Separately, the board has set up a new committee to oversee national security and export controls."
+    ],
+    [
+     "So how did the market react?",
+     "Nvidia's shares rose by around two to three per cent in late trading.",
+     "That follows a bruising few weeks.",
+     "The stock had already lost about a quarter of its value this month, and the wider chip sector has slid on growing doubts about whether the huge spending on AI can last.",
+     "Shay Boloor, chief market strategist at Futurum Equities, called the reaction relatively muted, and said investors were focused on how the growth is being financed, the sustainability of margins, and whether Nvidia can stay competitive without the man who helped build it.",
+     "By contrast, David Wagner of Aptus Capital Advisors said the report showed the franchise is intact and that demand hasn't moved."
+    ],
+    [
+     "There are risks on both sides, though.",
+     "Analysts point out that much of next year's revenue is already contracted, so the real impact of the leadership change may not be felt for some time.",
+     "And the search for a new boss goes on.",
+     "Speaking at a conference on Tuesday, the Amazon founder Jeff Bezos said that if Mr Huang doesn't return, the board should hire from inside the company rather than bring in an outsider.",
+     "That's the business report.",
+     "Later this week, attention turns to the stock market debut of the AI company Anthropic."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Nvidia's results after the founder's exit",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The quarter"
+       },
+       {
+        "t": "Data centre division sells processors and complete [[1]]"
+       },
+       {
+        "t": "Profitability dipped because of the cost of making new [[2]]"
+       },
+       {
+        "t": "Revenue expected this quarter: about $[[3]] billion"
+       },
+       {
+        "t": "Outlook includes no data centre sales to [[4]]"
+       },
+       {
+        "h": "Leadership"
+       },
+       {
+        "t": "Colette Kress is leading the company on an [[5]] basis"
+       },
+       {
+        "t": "New board committee: national security and [[6]]"
+       },
+       {
+        "h": "Investors' reaction"
+       },
+       {
+        "t": "One strategist: investors want to know how expansion is being [[7]]"
+       },
+       {
+        "t": "Another adviser: the [[8]] has not been damaged"
+       },
+       {
+        "h": "Looking ahead"
+       },
+       {
+        "t": "A large part of next year's sales is already [[9]]"
+       },
+       {
+        "t": "Jeff Bezos: the board should not appoint an [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "server systems"
+        ],
+        "ref": "complete server systems used to train",
+        "ev": "sells the processors and complete server systems used to train and run artificial intelligence",
+        "zh": "complete ___ ↔ complete server systems → server systems（伺服器系統）。processors 已在題幹，不能重複填。"
+       },
+       {
+        "a": [
+         "Rubin chips",
+         "chips"
+        ],
+        "ref": "the expense of building those new Rubin chips",
+        "ev": "Nvidia blamed the expense of building those new Rubin chips",
+        "zh": "Profitability dipped ↔ Gross margin … slipped；cost of making ↔ expense of building → Rubin chips（新的 Rubin 晶片）。Vera Rubin 是平台名，本題問的是晶片。"
+       },
+       {
+        "a": [
+         "130",
+         "130 billion"
+        ],
+        "ref": "around one hundred and thirty billion dollars",
+        "ev": "Nvidia expects sales of around one hundred and thirty billion dollars this quarter, comfortably above forecasts of about one hundred and twenty-five billion",
+        "zh": "Revenue expected this quarter ↔ expects sales … this quarter → 130。干擾：125 是分析師預估，115.8 是上一季實際營收，109 是上一季的預估。本篇唯一數字題。"
+       },
+       {
+        "a": [
+         "China"
+        ],
+        "ref": "no data centre revenue at all from China",
+        "ev": "that outlook assumes no data centre revenue at all from China",
+        "zh": "Outlook includes no … sales ↔ outlook assumes no data centre revenue → China（中國）。"
+       },
+       {
+        "a": [
+         "interim"
+        ],
+        "ref": "running the company on an interim basis",
+        "ev": "Colette Kress, is now running the company on an interim basis",
+        "zh": "leading the company ↔ running the company；on an ___ basis → interim（臨時、代理的）。她原本是 finance chief（財務長），不要填 finance。"
+       },
+       {
+        "a": [
+         "export controls"
+        ],
+        "ref": "national security and export controls",
+        "ev": "a new committee to oversee national security and export controls",
+        "zh": "New board committee ↔ the board has set up a new committee → export controls（出口管制）。"
+       },
+       {
+        "a": [
+         "financed"
+        ],
+        "ref": "how the growth is being financed",
+        "ev": "investors were focused on how the growth is being financed",
+        "zh": "expansion ↔ growth；how … is being ___ → financed（被融資、資金來源）。同句還有 sustainability of margins、competitive，但只有 financed 符合 how … is being ___ 的文法。"
+       },
+       {
+        "a": [
+         "franchise"
+        ],
+        "ref": "the franchise is intact",
+        "ev": "the report showed the franchise is intact and that demand hasn't moved",
+        "zh": "has not been damaged ↔ is intact（完好無損）→ franchise（事業版圖、品牌事業）。demand hasn't moved 是「需求沒變」，題幹說的是 not damaged，對應 intact。"
+       },
+       {
+        "a": [
+         "contracted"
+        ],
+        "ref": "already contracted",
+        "ev": "much of next year's revenue is already contracted",
+        "zh": "A large part of ↔ much of；sales ↔ revenue → contracted（已簽約鎖定）。"
+       },
+       {
+        "a": [
+         "outsider"
+        ],
+        "ref": "rather than bring in an outsider",
+        "ev": "the board should hire from inside the company rather than bring in an outsider",
+        "zh": "should not appoint ↔ hire from inside … rather than bring in → outsider（外部人選）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "The Chipmaker After Its Founder",
+    "intro": "Record-breaking results have shown that demand for AI hardware remains strong, but they have not settled the questions surrounding Nvidia's leadership, customers and costs.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "For most of the past three years, Nvidia has been the emblem of the artificial intelligence boom. Its graphics processors, originally designed for video games, became the standard hardware for training and running large AI models, and the company's market value peaked at almost $6 trillion in early October 2026. Since then, however, the shares have fallen by more than 30 per cent, dragged down by wider doubts about AI spending and, more recently, by a governance crisis. Last week Jensen Huang, who co-founded the company in 1993, resigned abruptly as chief executive. The quarterly results published on 17 November were therefore read not only as a measure of demand for AI hardware but also as a test of whether the business could inspire confidence without its founder."
+     },
+     {
+      "label": "B",
+      "text": "By conventional measures, the figures were exceptional. Revenue for the three months to 25 October reached $115.8 billion, up 20 per cent on the previous quarter and 103 per cent on a year earlier, when it stood at $57 billion. Analysts surveyed by LSEG had expected about $109.1 billion, and in August the company itself had guided towards roughly $108 billion. The data centre division, which supplies processors, networking equipment and complete systems to cloud providers and AI developers, generated $107.6 billion, or about 93 per cent of the total. Net income rose to $65.3 billion. Colette Kress, the chief financial officer who is now serving as interim chief executive, declared that the company's momentum was real, and she raised Nvidia's growth forecast for the next financial year to 75 per cent."
+     },
+     {
+      "label": "C",
+      "text": "Beneath the headline numbers, however, lie signs of the cost of sustaining such growth. Gross margin, the share of revenue left after the direct costs of production, edged down to 74.9 per cent on an adjusted basis, from 75.0 per cent in the previous quarter, which the company attributed to the ramp-up of its new Rubin processors. For the current quarter it expects a margin of between 71 and 72 per cent. At the same time, Nvidia has committed vast sums to securing components years in advance. In its most recent filing before the results, it said it had committed $92 billion to supply and capacity for the rest of this financial year, $87 billion for the year ending January 2028 and $88 billion for the year after. In its latest commentary, the company said that a sharp increase in such commitments was primarily related to the multi-year procurement of memory. These obligations arguably reflect confidence in future demand, but they could become a burden if orders were to slow."
+     },
+     {
+      "label": "D",
+      "text": "Demand, meanwhile, remains highly concentrated. Nvidia disclosed that over the last three quarters four direct customers each accounted for between 11 and 13 per cent of total revenue, and it expects major frontier AI laboratories such as OpenAI and Anthropic to account for about 15 per cent of data centre sales this year, as these firms increasingly build their own infrastructure. The largest cloud companies, whose spending underpins much of Nvidia's business, have mostly held their investment plans steady: when they reported last month, Alphabet maintained its full-year capital expenditure forecast at $195 billion to $205 billion and Amazon kept its figure at $220 billion, while Microsoft trimmed its forecast. For investors, the implication is clear: a decision by a handful of buyers to slow their purchases could have a disproportionate effect on the company's revenue."
+     },
+     {
+      "label": "E",
+      "text": "Political risk is a further complication. Nvidia's outlook assumes no data centre computing revenue from China at all, and on 16 November the US Commerce Department announced a change that would prevent the company's chips from being rented to Chinese companies, closing what CNBC described as a rental loophole. On the day of the results, the board also announced a new committee to oversee national security policy, export control compliance and global trade risk. Harvey Jones, who has sat on the board since the company was founded and was recently named its first-ever chair, said that Nvidia had both a responsibility and an opportunity to lead the industry in addressing these challenges. The committee will meet at least quarterly, and the company's compliance teams will report directly to it."
+     },
+     {
+      "label": "F",
+      "text": "Whether the results will restore confidence is still uncertain. The shares rose by between 2 and 3 per cent in after-hours trading, a reaction that one strategist described as relatively muted given the strength of the quarter. The broader semiconductor sector has also been volatile: the Philadelphia Semiconductor Index more than doubled between January and late June but has since fallen 34 per cent, although it remains well ahead of the S&P 500 for the year. More than 20 analysts tracked by FactSet have cut their price targets for Nvidia in little more than a week, and analysts at Mizuho argued that the leadership change adds a six- to seven-month management overhang. Many observers, however, point out that much of next year's revenue is already contracted, which suggests that the financial consequences of the founder's departure, if any, may not appear for some time."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a figure for the highest value the company has reached",
+        "a": "A",
+        "ref": "A",
+        "ev": "the company's market value peaked at almost $6 trillion in early October 2026",
+        "zh": "A 段：market value peaked at almost $6 trillion（市值高峰近 6 兆美元）↔ highest value the company has reached。"
+       },
+       {
+        "q": "the share of revenue coming from a small number of buyers",
+        "a": "D",
+        "ref": "D",
+        "ev": "four direct customers each accounted for between 11 and 13 per cent of total revenue",
+        "zh": "D 段：四個直接客戶各占營收 11–13% ↔ a small number of buyers。"
+       },
+       {
+        "q": "a reason given for a slight fall in profitability",
+        "a": "C",
+        "ref": "C",
+        "ev": "which the company attributed to the ramp-up of its new Rubin processors",
+        "zh": "C 段：毛利率小降（74.9% vs 75.0%）歸因於 Rubin 新處理器量產爬坡 ↔ reason for a slight fall in profitability。"
+       },
+       {
+        "q": "a statement by a board member about the company's role in its industry",
+        "a": "E",
+        "ref": "E",
+        "ev": "Nvidia had both a responsibility and an opportunity to lead the industry",
+        "zh": "E 段：董事長 Harvey Jones 說 Nvidia 有責任也有機會引領產業 ↔ board member、role in its industry。"
+       },
+       {
+        "q": "a comparison between chip stocks and a wider market index",
+        "a": "F",
+        "ref": "F",
+        "ev": "although it remains well ahead of the S&P 500 for the year",
+        "zh": "F 段：費城半導體指數仍大幅領先 S&P 500 ↔ chip stocks vs wider market index。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in the Reading Passage?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Nvidia's quarterly revenue was higher than the company itself had predicted.",
+        "a": "True",
+        "ref": "B",
+        "ev": "in August the company itself had guided towards roughly $108 billion",
+        "zh": "B 段：公司 8 月給的指引約 1,080 億，實際 1,158 億 → 高於公司自己的預測 → True。"
+       },
+       {
+        "q": "Nvidia expects its gross margin to improve in the current quarter.",
+        "a": "False",
+        "ref": "C",
+        "ev": "For the current quarter it expects a margin of between 71 and 72 per cent",
+        "zh": "C 段：本季預期毛利率 71–72%，低於上一季的 74.9% → 是下降不是改善 → False。"
+       },
+       {
+        "q": "Most of the analysts who lowered their price targets now advise investors to sell Nvidia shares.",
+        "a": "Not Given",
+        "ref": "F",
+        "ev": "More than 20 analysts tracked by FactSet have cut their price targets for Nvidia",
+        "zh": "F 段只說 20 多位分析師「調降目標價」，完全沒提到他們是否建議賣出（sell rating）→ Not Given。陷阱：調降目標價 ≠ 建議賣出。"
+       },
+       {
+        "q": "The company's compliance staff will be answerable to the new board committee.",
+        "a": "True",
+        "ref": "E",
+        "ev": "the company's compliance teams will report directly to it",
+        "zh": "E 段：compliance teams will report directly to it（直接向委員會報告）↔ answerable to the committee → True。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Pressures behind the strong results",
+      "lines": [
+       {
+        "t": "Nvidia has committed huge sums to buying components in advance, a sharp increase that the company linked mainly to the long-term [[1]] of memory. Although these commitments may signal confidence, they could turn into a [[2]] if demand weakened. Sales are also highly [[3]], with a few large customers responsible for much of the revenue. Finally, a new government rule is intended to close a [[4]] that involved renting chips to Chinese firms."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "procurement"
+        ],
+        "ref": "C",
+        "ev": "primarily related to the multi-year procurement of memory",
+        "zh": "C 段：multi-year procurement of memory ↔ long-term ___ of memory → procurement（採購）。"
+       },
+       {
+        "a": [
+         "burden"
+        ],
+        "ref": "C",
+        "ev": "they could become a burden if orders were to slow",
+        "zh": "C 段：could become a burden if orders were to slow ↔ could turn into a ___ if demand weakened → burden（負擔）。"
+       },
+       {
+        "a": [
+         "concentrated"
+        ],
+        "ref": "D",
+        "ev": "Demand, meanwhile, remains highly concentrated",
+        "zh": "D 段：Demand … remains highly concentrated ↔ Sales are also highly ___ → concentrated（集中的）。"
+       },
+       {
+        "a": [
+         "loophole"
+        ],
+        "ref": "E",
+        "ev": "closing what CNBC described as a rental loophole",
+        "zh": "E 段：closing … a rental loophole ↔ close a ___ that involved renting chips → loophole（漏洞）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "blockbuster",
+     "pos": "adj.",
+     "def": "extremely successful, especially in terms of sales or profits",
+     "zh": "極為成功的、轟動的",
+     "example": "The firm reported blockbuster profits for the year.",
+     "match": [
+      "blockbuster"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "abruptly",
+     "pos": "adv.",
+     "def": "suddenly and unexpectedly",
+     "zh": "突然地、意外地",
+     "example": "The meeting ended abruptly when the power failed.",
+     "match": [
+      "abruptly"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "pencil in",
+     "pos": "phr. v.",
+     "def": "to expect or arrange something provisionally",
+     "zh": "暫定、預估",
+     "example": "Economists had pencilled in a small rise in prices.",
+     "match": [
+      "pencilled in"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "interim",
+     "pos": "adj.",
+     "def": "temporary, until a permanent arrangement is made",
+     "zh": "臨時的、代理的",
+     "example": "She was appointed interim director while the board searched for a replacement.",
+     "match": [
+      "interim"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "bruising",
+     "pos": "adj.",
+     "def": "difficult and damaging",
+     "zh": "慘烈的、令人受挫的",
+     "example": "The party suffered a bruising defeat in the election.",
+     "match": [
+      "bruising"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "muted",
+     "pos": "adj.",
+     "def": "weaker or quieter than expected",
+     "zh": "反應平淡的、不熱烈的",
+     "example": "The proposal received a muted response from investors.",
+     "match": [
+      "muted"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "sustainability",
+     "pos": "n.",
+     "def": "the ability to continue at the same level over time",
+     "zh": "可持續性",
+     "example": "Analysts questioned the sustainability of such rapid growth.",
+     "match": [
+      "sustainability"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "intact",
+     "pos": "adj.",
+     "def": "not damaged or weakened",
+     "zh": "完好無損的",
+     "example": "Despite the scandal, the brand's reputation remained intact.",
+     "match": [
+      "intact"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "emblem",
+     "pos": "n.",
+     "def": "a thing that represents or symbolises something larger",
+     "zh": "象徵、標誌",
+     "example": "The bridge became an emblem of the city's revival.",
+     "match": [
+      "emblem"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "governance",
+     "pos": "n.",
+     "def": "the way an organisation is directed and controlled",
+     "zh": "治理、公司治理",
+     "example": "Shareholders demanded better corporate governance.",
+     "match": [
+      "governance"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "procurement",
+     "pos": "n.",
+     "def": "the process of obtaining goods or supplies, especially for a business",
+     "zh": "採購",
+     "example": "The hospital reformed its procurement of medical equipment.",
+     "match": [
+      "procurement"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "underpin",
+     "pos": "v.",
+     "def": "to support or form the basis of something",
+     "zh": "支撐、作為基礎",
+     "example": "Exports underpin the country's economic growth.",
+     "match": [
+      "underpins"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "disproportionate",
+     "pos": "adj.",
+     "def": "too large or too small in comparison with something else",
+     "zh": "不成比例的、過大的",
+     "example": "The tax had a disproportionate impact on low-income families.",
+     "match": [
+      "disproportionate"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "compliance",
+     "pos": "n.",
+     "def": "the act of obeying a rule, law or standard",
+     "zh": "遵循、合規",
+     "example": "The bank hired more staff to ensure compliance with new regulations.",
+     "match": [
+      "compliance"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "overhang",
+     "pos": "n.",
+     "def": "an unresolved situation that continues to affect something negatively",
+     "zh": "懸而未決的壓力（市場用語）",
+     "example": "Uncertainty over the merger created an overhang on the share price.",
+     "match": [
+      "overhang"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-18-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.12
+     ],
+     [
+      1.34,
+      12.84
+     ],
+     [
+      13.22,
+      17.25
+     ],
+     [
+      17.48,
+      18.57
+     ],
+     [
+      19.35,
+      25.61
+     ],
+     [
+      25.92,
+      30.91
+     ],
+     [
+      31.15,
+      35.82
+     ],
+     [
+      36.1,
+      44.96
+     ],
+     [
+      45.29,
+      49.52
+     ],
+     [
+      50.3,
+      58.74
+     ],
+     [
+      59.03,
+      60.51
+     ],
+     [
+      60.7,
+      70.2
+     ],
+     [
+      70.46,
+      74.72
+     ],
+     [
+      75.03,
+      84.76
+     ],
+     [
+      84.98,
+      89.14
+     ],
+     [
+      89.92,
+      93.18
+     ],
+     [
+      93.5,
+      102.73
+     ],
+     [
+      103.04,
+      108.01
+     ],
+     [
+      108.29,
+      116.32
+     ],
+     [
+      116.65,
+      125.54
+     ],
+     [
+      125.87,
+      131.86
+     ],
+     [
+      132.64,
+      134.28
+     ],
+     [
+      134.61,
+      138.46
+     ],
+     [
+      138.72,
+      140.72
+     ],
+     [
+      140.98,
+      150.3
+     ],
+     [
+      150.61,
+      166.62
+     ],
+     [
+      166.97,
+      174.74
+     ],
+     [
+      175.52,
+      177.41
+     ],
+     [
+      177.64,
+      186.13
+     ],
+     [
+      186.49,
+      188.56
+     ],
+     [
+      188.89,
+      199.49
+     ],
+     [
+      199.82,
+      201.38
+     ],
+     [
+      201.63,
+      207.2
+     ]
+    ],
+    "duration": 207.9,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-11-18-1-words/"
+   }
+  },
+  {
+   "title": "Quick-Thinking Crows Make Visual Decisions About Twice as Fast as Humans and Monkeys, Study Suggests",
+   "topic": "Animal cognition · crows",
+   "source": {
+    "name": "Schmidbauer & Nieder, Science (22 Oct 2026): Ultrarapid decision-making in an avian brain",
+    "url": "https://www.science.org/doi/10.1126/science.aed6459",
+    "links": [
+     {
+      "name": "University of Tübingen via ScienceDaily: Crows can make decisions twice as fast as humans (12 Nov 2026)",
+      "url": "https://www.sciencedaily.com/releases/2026/11/261111005850.htm"
+     },
+     {
+      "name": "Live Science: Crows may make lightning-fast decisions, sometimes twice as fast as humans, study hints (22 Oct 2026)",
+      "url": "https://www.livescience.com/animals/birds/crows-may-make-lightning-fast-decisions-sometimes-twice-as-fast-as-humans-study-hints"
+     },
+     {
+      "name": "Smithsonian Magazine: Crows can make decisions based on visual information at lightning speed (30 Oct 2026)",
+      "url": "https://www.smithsonianmag.com/smart-news/crows-can-make-decisions-based-on-visual-information-at-lightning-speed-roughly-twice-as-fast-as-humans-can-study-suggests-180989779/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "Crows have a reputation as some of the cleverest birds on the planet, and new research suggests they're also among the quickest thinkers.",
+     "Scientists in Germany say carrion crows can make certain visual decisions roughly twice as fast as monkeys or humans, without losing accuracy.",
+     "Here's the report."
+    ],
+    [
+     "The study comes from the University of Tübingen and is published in the journal Science.",
+     "The researchers, Philipp Schmidbauer and Professor Andreas Nieder, worked with two carrion crows, named Iggy and Lemmy.",
+     "Each bird sat in front of a touchscreen showing a cloud of white dots on a black background.",
+     "Some of the dots drifted left or right, while the rest moved at random, acting as distractors.",
+     "The crow's job was to work out which way most of the dots were heading, and peck a target on that side of the screen.",
+     "A correct answer earned a small reward: a mealworm."
+    ],
+    [
+     "Now, to make the task harder, the team changed the proportion of dots moving together.",
+     "When almost all of them moved the same way, the answer was obvious, and the birds were right nearly every time.",
+     "When only a tiny fraction moved together, the evidence was much weaker, but the crows still did better than chance.",
+     "And they were fast.",
+     "On average, they reported their choice in about two hundred and thirty-five milliseconds, a little under a quarter of a second.",
+     "Earlier studies suggest that humans and monkeys take roughly twice as long on comparable tasks.",
+     "It's worth stressing, though, that there was no direct comparison, because people and monkeys weren't tested on exactly the same task."
+    ],
+    [
+     "So what was going on inside the birds' heads?",
+     "The team recorded the activity of individual nerve cells in a region called the nidopallium caudolaterale.",
+     "It plays a role much like the prefrontal cortex in humans, helping to process information and make decisions.",
+     "Just seventy milliseconds after the dots appeared, those neurons were already signalling which way the bird would choose.",
+     "That's around a hundred and seventy milliseconds before the bird actually pecked the screen.",
+     "The activity built up steadily until it reached what scientists call a decision threshold, much as it does in primates."
+    ],
+    [
+     "What makes this striking is that bird brains are built very differently.",
+     "Birds don't have the layered cerebral cortex found in mammals.",
+     "Professor Nieder told Live Science that the bigger implication is that a brain doesn't need a mammalian neocortex to perform sophisticated computations.",
+     "Mike Colombo, a neuroscientist at the University of Otago in New Zealand who wasn't involved in the study, put it simply: it's not about the architecture, it's the circuitry that matters."
+    ],
+    [
+     "Why would crows be so quick?",
+     "The researchers suspect the answer lies in flight.",
+     "Birds have to steer through three-dimensional spaces, avoid obstacles and react quickly to moving objects, and when foraging they need precise control of the beak.",
+     "Still, there are limits to what one experiment can show.",
+     "Only two birds were tested, and Aaron Blaisdell of the University of California, Los Angeles, who wasn't part of the research, has asked whether the speed is a feature of birds in general, or of crows specifically.",
+     "That's all from the science desk for now."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Fast decisions in crows",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The experiment"
+       },
+       {
+        "t": "Dots moving randomly served as [[1]]"
+       },
+       {
+        "t": "Each correct response was rewarded with a [[2]]"
+       },
+       {
+        "t": "Difficulty adjusted by altering the [[3]] of dots travelling together"
+       },
+       {
+        "h": "Results"
+       },
+       {
+        "t": "Mean response time: roughly [[4]] milliseconds"
+       },
+       {
+        "t": "Caution: no direct [[5]] with people or monkeys"
+       },
+       {
+        "h": "Brain recordings"
+       },
+       {
+        "t": "Activity increased until it hit a decision [[6]]"
+       },
+       {
+        "t": "Birds have no [[7]] cerebral cortex"
+       },
+       {
+        "t": "Outside expert: the [[8]] matters more than the structure"
+       },
+       {
+        "h": "Possible explanation"
+       },
+       {
+        "t": "Speed may be linked to the demands of [[9]]"
+       },
+       {
+        "t": "Feeding requires accurate control of the [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "distractors",
+         "distractor"
+        ],
+        "ref": "acting as distractors",
+        "ev": "while the rest moved at random, acting as distractors",
+        "zh": "Dots moving randomly ↔ the rest moved at random；served as ↔ acting as → distractors（干擾物）。"
+       },
+       {
+        "a": [
+         "mealworm",
+         "mealworms"
+        ],
+        "ref": "a small reward: a mealworm",
+        "ev": "A correct answer earned a small reward: a mealworm",
+        "zh": "rewarded with ↔ earned a small reward → mealworm（麵包蟲）。reward 已在題幹，不能填 reward。"
+       },
+       {
+        "a": [
+         "proportion"
+        ],
+        "ref": "changed the proportion of dots moving together",
+        "ev": "the team changed the proportion of dots moving together",
+        "zh": "Difficulty adjusted ↔ to make the task harder；altering ↔ changed → proportion（比例）。"
+       },
+       {
+        "a": [
+         "235"
+        ],
+        "ref": "two hundred and thirty-five milliseconds",
+        "ev": "they reported their choice in about two hundred and thirty-five milliseconds",
+        "zh": "Mean ↔ On average → 235。干擾：後面的 70 毫秒是神經元開始出現訊號的時間、170 毫秒是訊號比啄螢幕早多少；問的是「反應時間」→ 235。本篇唯一數字題。"
+       },
+       {
+        "a": [
+         "comparison"
+        ],
+        "ref": "there was no direct comparison",
+        "ev": "there was no direct comparison, because people and monkeys weren't tested on exactly the same task",
+        "zh": "Caution ↔ It's worth stressing, though → no direct comparison（沒有直接比較）。"
+       },
+       {
+        "a": [
+         "threshold"
+        ],
+        "ref": "a decision threshold",
+        "ev": "The activity built up steadily until it reached what scientists call a decision threshold",
+        "zh": "increased ↔ built up steadily；hit ↔ reached → threshold（門檻、閾值）。"
+       },
+       {
+        "a": [
+         "layered"
+        ],
+        "ref": "the layered cerebral cortex",
+        "ev": "Birds don't have the layered cerebral cortex found in mammals",
+        "zh": "have no ↔ don't have → layered（分層的）。形容詞題。"
+       },
+       {
+        "a": [
+         "circuitry"
+        ],
+        "ref": "it's the circuitry that matters",
+        "ev": "it's not about the architecture, it's the circuitry that matters",
+        "zh": "Outside expert ↔ who wasn't involved in the study；structure ↔ architecture → circuitry（神經迴路）。注意不要填 architecture（那是「比較不重要」的一方）。"
+       },
+       {
+        "a": [
+         "flight"
+        ],
+        "ref": "the answer lies in flight",
+        "ev": "The researchers suspect the answer lies in flight",
+        "zh": "Speed may be linked to ↔ the answer lies in → flight（飛行）。"
+       },
+       {
+        "a": [
+         "beak"
+        ],
+        "ref": "precise control of the beak",
+        "ev": "when foraging they need precise control of the beak",
+        "zh": "Feeding ↔ foraging（覓食）；accurate ↔ precise → beak（鳥喙）。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Thinking on the Wing",
+    "intro": "Experiments with two carrion crows suggest that birds can reach visual decisions faster than primates, using brain processes that work in surprisingly similar ways.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Calling someone a 'bird brain' has long been an insult, and the assumption behind it was rarely questioned. Birds lack the layered cerebral cortex that mammals possess, and their brains are small, so it seemed reasonable to conclude that they were capable of little more than instinctive behaviour. That view has steadily eroded. Crows are now known to use tools and to recognise individual human faces, and earlier research has hinted that they can count to four and grasp basic geometry. As the editors of the journal Science put it, bird brains were once maligned, but it is increasingly clear that they provide high-level cognitive functions analogous to those of mammals. A study published in Science in October 2026 adds a new dimension to this picture: speed."
+     },
+     {
+      "label": "B",
+      "text": "The researchers, Philipp Schmidbauer and Andreas Nieder of the University of Tübingen in Germany, used a classic test of perception known as visual motion discrimination. Two carrion crows, named Iggy and Lemmy, sat in front of a touchscreen on which a cloud of white dots moved against a black background. A proportion of the dots travelled coherently to the left or right, while the remainder moved randomly. Each bird had to judge the dominant direction and peck a target on the corresponding side of the screen, receiving a mealworm for every correct choice. By altering the share of dots moving together, the experimenters could make the evidence stronger or weaker, and the birds performed the task thousands of times across a range of difficulty levels."
+     },
+     {
+      "label": "C",
+      "text": "The results were striking. The crows reported their decisions in approximately 235 milliseconds on average, which the authors describe as roughly twice as fast as has been observed in monkeys or humans. Crucially, this speed did not appear to come at the expense of accuracy. When the motion signal was clear, the birds were right almost 100 per cent of the time, and even when the pattern was hard to detect, their choices remained better than random. A note of caution is needed, however. The crows were not tested side by side with primates; the comparison relies on earlier studies in which humans and monkeys performed comparable, self-paced motion tasks. As Live Science pointed out, the study also included only two birds."
+     },
+     {
+      "label": "D",
+      "text": "To understand how the birds achieved this, the team recorded the activity of 248 neurons in the nidopallium caudolaterale, a region regarded as the functional analogue of the primate prefrontal cortex. Neurons sensitive to the direction of motion began to signal the upcoming choice as early as about 70 milliseconds after the dots appeared, roughly 170 milliseconds before the bird responded. Their activity then rose steadily, at a rate that depended on the strength of the sensory evidence, until it converged at the moment of response. This pattern closely resembles the process described in primates, in which neurons accumulate information and their activity increases until it reaches a critical threshold and a decision is made."
+     },
+     {
+      "label": "E",
+      "text": "What makes the finding significant is the evolutionary distance involved. Birds and mammals have evolved along separate paths for more than 310 million years, and their brains are organised in very different ways. Nevertheless, according to the Tübingen team, the avian brain appears capable of following the same fundamental principles for evaluating evidence and reaching decisions, and in this visual task it simply completed the process faster. Nieder told Live Science that this suggests evolution may have independently developed similar solutions to the same computational problem, an example of what biologists call convergent evolution. In his view, the bigger implication is that a brain does not need a mammalian neocortex to perform sophisticated computations. The neuroscientist Mike Colombo of the University of Otago, who was not involved in the research, made a similar point, arguing that what matters is not the architecture but the circuitry."
+     },
+     {
+      "label": "F",
+      "text": "Why crows should be so quick remains an open question. The researchers suggest that the answer may lie in flight, which, in Nieder's words, places enormous demands on visual processing and the coordination of sensation and movement: birds must navigate three-dimensional environments, avoid obstacles and react rapidly to moving objects, and finding food can require similarly swift and precise decisions. Yet the exact biological mechanisms behind the speed advantage are still unknown. Aaron Blaisdell, a neuroscientist at the University of California, Los Angeles, has asked whether the trait reflects a general difference between birds and mammals or something specific to crows. For Nieder, the work points to a broader lesson: rather than assuming that the mammalian brain is the blueprint for intelligent behaviour, scientists can study different species to discover which computational principles are shared and which reflect adaptations to particular environments."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a description of how the difficulty of the task was varied",
+        "a": "B",
+        "ref": "B",
+        "ev": "By altering the share of dots moving together, the experimenters could make the evidence stronger or weaker",
+        "zh": "B 段：改變一起移動的點的比例 → 證據變強或變弱 ↔ how the difficulty was varied。"
+       },
+       {
+        "q": "a warning about how the speed comparison was made",
+        "a": "C",
+        "ref": "C",
+        "ev": "the comparison relies on earlier studies in which humans and monkeys performed comparable, self-paced motion tasks",
+        "zh": "C 段：A note of caution … 比較是依據過去的人類與猴子研究，而非同場實驗 ↔ warning about how the comparison was made。"
+       },
+       {
+        "q": "the length of time since birds and mammals took different evolutionary routes",
+        "a": "E",
+        "ref": "E",
+        "ev": "Birds and mammals have evolved along separate paths for more than 310 million years",
+        "zh": "E 段：鳥類與哺乳類分道演化超過 3.1 億年 ↔ length of time since … different evolutionary routes。"
+       },
+       {
+        "q": "examples of mental abilities previously observed in crows",
+        "a": "A",
+        "ref": "A",
+        "ev": "Crows are now known to use tools and to recognise individual human faces",
+        "zh": "A 段：使用工具、辨認人臉、數到四、基本幾何 ↔ mental abilities previously observed。"
+       },
+       {
+        "q": "a suggestion about how researchers should approach the study of intelligence",
+        "a": "F",
+        "ref": "F",
+        "ev": "rather than assuming that the mammalian brain is the blueprint for intelligent behaviour, scientists can study different species",
+        "zh": "F 段：Nieder 認為不要把哺乳類大腦當成智力藍圖，而應研究不同物種 ↔ how researchers should approach the study of intelligence。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in the Reading Passage?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The crows became less accurate as a result of responding so quickly.",
+        "a": "False",
+        "ref": "C",
+        "ev": "this speed did not appear to come at the expense of accuracy",
+        "zh": "C 段：速度並未以犧牲準確度為代價（清楚訊號時近 100% 正確）→ 與題目相反 → False。"
+       },
+       {
+        "q": "Brain activity indicated a crow's choice before the bird physically responded.",
+        "a": "True",
+        "ref": "D",
+        "ev": "roughly 170 milliseconds before the bird responded",
+        "zh": "D 段：神經元在點出現約 70 毫秒後就顯示選擇，比啄螢幕早約 170 毫秒 → True。"
+       },
+       {
+        "q": "Crows performed the motion task faster than any other bird species that has been tested.",
+        "a": "Not Given",
+        "ref": "F",
+        "ev": "has asked whether the trait reflects a general difference between birds and mammals or something specific to crows",
+        "zh": "文章只比較了烏鴉與猴子／人類；F 段提到「不知道是鳥類普遍如此還是只有烏鴉」，但沒有任何其他鳥類的測試結果 → Not Given。陷阱：有提到 birds 和 crows specifically，但沒有鳥種之間的比較。"
+       },
+       {
+        "q": "Birds have a layered cortex similar to that of mammals.",
+        "a": "False",
+        "ref": "A",
+        "ev": "Birds lack the layered cerebral cortex that mammals possess",
+        "zh": "A 段：Birds lack the layered cerebral cortex（鳥類沒有分層的大腦皮質）→ 與題目相反 → False。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "How the crow brain reaches a decision",
+      "lines": [
+       {
+        "t": "The scientists recorded neurons in a region considered the functional [[1]] of the primate prefrontal cortex. The activity of these cells increased at a speed that depended on how strong the sensory [[2]] was. According to Nieder, the resemblance to primates suggests that evolution arrived at similar [[3]] on separate occasions. He argues that the mammalian brain should not be regarded as the [[4]] for intelligent behaviour."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "analogue",
+         "analog"
+        ],
+        "ref": "D",
+        "ev": "a region regarded as the functional analogue of the primate prefrontal cortex",
+        "zh": "D 段：regarded as the functional analogue ↔ considered the functional ___ → analogue（類似物、相當的結構）。美式拼法 analog 也算對。"
+       },
+       {
+        "a": [
+         "evidence"
+        ],
+        "ref": "D",
+        "ev": "at a rate that depended on the strength of the sensory evidence",
+        "zh": "D 段：at a rate that depended on the strength of the sensory evidence ↔ at a speed that depended on how strong the sensory ___ → evidence。"
+       },
+       {
+        "a": [
+         "solutions"
+        ],
+        "ref": "E",
+        "ev": "evolution may have independently developed similar solutions to the same computational problem",
+        "zh": "E 段：independently developed similar solutions ↔ arrived at similar ___ on separate occasions → solutions（解決方案）。"
+       },
+       {
+        "a": [
+         "blueprint"
+        ],
+        "ref": "F",
+        "ev": "rather than assuming that the mammalian brain is the blueprint for intelligent behaviour",
+        "zh": "F 段：不要假設哺乳類大腦是智力行為的 blueprint（藍圖）↔ should not be regarded as the ___ → blueprint。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "distractor",
+     "pos": "n.",
+     "def": "something that draws attention away from the main task",
+     "zh": "干擾物、干擾項",
+     "example": "Some answer options are included only as distractors.",
+     "match": [
+      "distractors"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "threshold",
+     "pos": "n.",
+     "def": "the level at which something starts to happen",
+     "zh": "門檻、閾值",
+     "example": "Pain thresholds vary greatly between individuals.",
+     "match": [
+      "threshold"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "implication",
+     "pos": "n.",
+     "def": "a possible effect or conclusion that follows from something",
+     "zh": "含意、影響",
+     "example": "The findings have important implications for teaching.",
+     "match": [
+      "implication"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "sophisticated",
+     "pos": "adj.",
+     "def": "highly developed and complex",
+     "zh": "精密的、複雜的",
+     "example": "The device uses sophisticated software to detect faults.",
+     "match": [
+      "sophisticated"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "circuitry",
+     "pos": "n.",
+     "def": "a system of connected circuits, or of connected nerve cells in the brain",
+     "zh": "電路；神經迴路",
+     "example": "Fear is controlled by circuitry deep within the brain.",
+     "match": [
+      "circuitry"
+     ],
+     "src": "聽力／閱讀"
+    },
+    {
+     "word": "forage",
+     "pos": "v.",
+     "def": "to search widely for food",
+     "zh": "覓食",
+     "example": "Bears forage for berries in late summer.",
+     "match": [
+      "foraging"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "instinctive",
+     "pos": "adj.",
+     "def": "done naturally, without learning or thinking",
+     "zh": "本能的",
+     "example": "Pulling your hand away from heat is an instinctive reaction.",
+     "match": [
+      "instinctive"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "erode",
+     "pos": "v.",
+     "def": "to gradually weaken or destroy something",
+     "zh": "逐漸削弱、侵蝕",
+     "example": "Public trust in the institution has slowly eroded.",
+     "match": [
+      "eroded"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "malign",
+     "pos": "v.",
+     "def": "to say unfair or harmful things about someone or something",
+     "zh": "誹謗、中傷",
+     "example": "The policy has been unfairly maligned in the press.",
+     "match": [
+      "maligned"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "analogous",
+     "pos": "adj.",
+     "def": "similar in function or form, allowing a comparison",
+     "zh": "類似的、可類比的",
+     "example": "The heart is analogous to a pump.",
+     "match": [
+      "analogous"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "coherently",
+     "pos": "adv.",
+     "def": "in a connected, consistent or unified way",
+     "zh": "一致地、協調地",
+     "example": "The team needs to act coherently to succeed.",
+     "match": [
+      "coherently"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "at the expense of",
+     "pos": "phr.",
+     "def": "with harm or loss to something else",
+     "zh": "以…為代價",
+     "example": "The company grew quickly at the expense of quality.",
+     "match": [
+      "at the expense of"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "analogue",
+     "pos": "n.",
+     "def": "a thing that is similar to or comparable with another",
+     "zh": "類似物、對應物",
+     "example": "The new drug is a synthetic analogue of a natural hormone.",
+     "match": [
+      "analogue"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "convergent evolution",
+     "pos": "n.",
+     "def": "the independent development of similar features in unrelated species",
+     "zh": "趨同演化",
+     "example": "The wings of bats and birds are a classic case of convergent evolution.",
+     "match": [
+      "convergent evolution"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "blueprint",
+     "pos": "n.",
+     "def": "a model or plan that others follow",
+     "zh": "藍圖、範本",
+     "example": "The scheme became a blueprint for reforms in other countries.",
+     "match": [
+      "blueprint"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-18-2.mp3",
+    "times": [
+     [
+      0.36,
+      1.06
+     ],
+     [
+      1.28,
+      8.03
+     ],
+     [
+      8.33,
+      16.12
+     ],
+     [
+      16.35,
+      17.4
+     ],
+     [
+      18.18,
+      22.47
+     ],
+     [
+      22.78,
+      30.02
+     ],
+     [
+      30.26,
+      34.7
+     ],
+     [
+      34.98,
+      40.24
+     ],
+     [
+      40.57,
+      46.22
+     ],
+     [
+      46.47,
+      49.55
+     ],
+     [
+      50.33,
+      55.01
+     ],
+     [
+      55.22,
+      61.06
+     ],
+     [
+      61.31,
+      67.37
+     ],
+     [
+      67.68,
+      68.81
+     ],
+     [
+      69.0,
+      75.39
+     ],
+     [
+      75.66,
+      80.66
+     ],
+     [
+      80.98,
+      88.27
+     ],
+     [
+      89.05,
+      91.59
+     ],
+     [
+      92.03,
+      97.38
+     ],
+     [
+      97.71,
+      103.82
+     ],
+     [
+      104.07,
+      110.2
+     ],
+     [
+      110.49,
+      114.7
+     ],
+     [
+      114.91,
+      121.07
+     ],
+     [
+      121.85,
+      125.16
+     ],
+     [
+      125.47,
+      128.73
+     ],
+     [
+      128.95,
+      136.55
+     ],
+     [
+      136.82,
+      146.68
+     ],
+     [
+      147.46,
+      149.1
+     ],
+     [
+      149.45,
+      152.12
+     ],
+     [
+      152.4,
+      160.98
+     ],
+     [
+      161.31,
+      164.45
+     ],
+     [
+      164.7,
+      176.1
+     ],
+     [
+      176.47,
+      178.52
+     ]
+    ],
+    "duration": 179.2,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-18-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
