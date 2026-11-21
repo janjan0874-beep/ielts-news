@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 每日新聞練習</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#e2e7f0;
+  --brand:#2b59ff;--brand-ink:#fff;--brand-soft:#e8edff;
+  --ok:#0f9d58;--ok-soft:#e3f6ec;--bad:#d93025;--bad-soft:#fdeaea;--hl:#fff1a8;--vocab:#d6e4ff;
+  --radius:16px;--shadow:0 2px 10px rgba(30,45,90,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10141c;--card:#1a2030;--ink:#e8ecf5;--muted:#9aa5ba;--line:#2a3347;--brand:#6c8cff;--brand-ink:#0b1020;--brand-soft:#243059;
+  --ok:#4cc38a;--ok-soft:#173b2b;--bad:#ff6b60;--bad-soft:#412121;--hl:#6b5d12;--vocab:#2c3e6e;--shadow:none}
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+header.hero{background:linear-gradient(135deg,#2b59ff,#6a3df0);color:#fff;border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+.hero .date{font-size:.85rem;opacity:.9;letter-spacing:.02em}
+.hero h1{font-size:1.35rem;line-height:1.35;margin:6px 0 10px}
+.hero a{color:#fff;font-size:.85rem;text-decoration:underline;word-break:break-all}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 10px;font-size:.75rem;margin-bottom:6px}
+nav.tabs{display:flex;gap:8px}
+nav.tabs button{flex:1;padding:11px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+section.panel[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:1.05rem;margin:0 0 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h2 small{font-weight:400;color:var(--muted);font-size:.8rem}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600;min-height:42px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.bad{background:var(--bad);color:#fff;border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,.flip:focus-visible,.opt:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row.spread{justify-content:space-between}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);min-height:42px}
+.bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar>i{display:block;height:100%;width:0;background:var(--brand);transition:width .25s}
+.muted{color:var(--muted);font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--bad);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.transcript{margin-top:12px;font-size:1.02rem;line-height:1.9}
+.sent{padding:2px 3px;border-radius:6px;cursor:pointer;transition:background .15s}
+.sent.cur{background:var(--hl)}
+.vw{background:var(--vocab);border-bottom:2px solid var(--brand);border-radius:4px;padding:0 2px;cursor:help}
+.defbox{margin-top:12px;border-left:4px solid var(--brand);background:var(--brand-soft);padding:10px 12px;border-radius:8px;font-size:.92rem}
+.defbox b{font-size:1.02rem}
+/* flashcards */
+.flip{display:block;width:100%;perspective:1000px;background:none;border:0;padding:0;cursor:pointer;height:250px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;gap:6px;overflow:auto}
+.face.front{background:var(--brand-soft)}
+.face.back{background:var(--card);transform:rotateY(180deg);font-size:.95rem}
+.face .w{font-size:1.9rem;font-weight:800}
+.face .pos{color:var(--muted);font-style:italic}
+.face .zh{font-size:1.3rem;font-weight:700;color:var(--brand)}
+.face .ex{color:var(--muted);font-style:italic;font-size:.9rem}
+.face .hint{font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-weight:700}
+/* quiz */
+.q{font-size:1.05rem;font-weight:600;margin:6px 0 12px}
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;min-height:46px}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.picked{border-color:var(--brand)}
+input.txt{padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);min-width:0;flex:1;min-height:44px;width:100%}
+input.txt.right{border-color:var(--ok);background:var(--ok-soft)}
+input.txt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:.93rem}
+.fb.right{background:var(--ok-soft);color:var(--ok)}
+.fb.wrong{background:var(--bad-soft);color:var(--bad)}
+.fb .ex{color:var(--ink);margin-top:4px}
+.fb q{font-style:italic;color:var(--muted)}
+.score{font-size:2.4rem;font-weight:800;text-align:center;color:var(--brand);margin:6px 0}
+/* reading */
+.passage p{margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif;font-size:1.04rem;line-height:1.85}
+.passage .lab{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:6px;font-weight:800;padding:0 8px;margin-right:8px;font-family:-apple-system,"Segoe UI",sans-serif}
+.w{cursor:pointer;border-radius:3px}
+.w.hl{background:var(--hl)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800}
+.timer.late{color:var(--bad)}
+.rq{border-top:1px solid var(--line);padding:14px 0}
+.rq:first-of-type{border-top:0}
+.tf{display:flex;gap:8px;flex-wrap:wrap}
+.tf .opt{width:auto;flex:1 1 90px;text-align:center;margin:4px 0}
+.instr{background:var(--brand-soft);padding:8px 12px;border-radius:10px;font-size:.85rem;margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.78rem;margin-top:20px}
+@media (max-width:420px){.hero h1{font-size:1.2rem}.face .w{font-size:1.6rem}}
+
+/* ---- exam paper styles ---- */
+.wrap.wide{max-width:1200px}
+.paperhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px}
+.paperhead b{font-size:1.1rem;letter-spacing:.04em}
+.modes{display:flex;gap:6px;margin-bottom:10px}
+.modes button{flex:1;padding:9px 6px;border:1px solid var(--line);background:var(--card);border-radius:10px;font-weight:600;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.status{background:var(--brand-soft);border-left:4px solid var(--brand);border-radius:8px;padding:10px 12px;margin:10px 0;font-family:Georgia,"Times New Roman",serif;font-size:1.02rem}
+.status .cd{float:right;font-variant-numeric:tabular-nums;font-weight:800;font-family:-apple-system,sans-serif}
+input[type=range]{width:100%;accent-color:var(--brand);margin:10px 0 2px}
+.grp{margin:0 0 22px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.gh{font-weight:800;font-size:1.05rem;margin-bottom:4px}
+.gi{font-size:.97rem;line-height:1.55;margin-bottom:12px;white-space:pre-wrap}
+.notes{border:2px solid var(--ink);border-radius:4px;padding:12px 14px;line-height:2.15}
+.notes .nt{text-align:center;font-weight:800;font-size:1.02rem;margin-bottom:4px}
+.notes .nh{font-weight:800;margin-top:6px}
+.notes .nl{padding-left:1.1em;text-indent:-1.1em}
+.notes .nl::before{content:"• ";}
+.notes.plain .nl{padding-left:0;text-indent:0}.notes.plain .nl::before{content:""}
+.bl{width:7.6em;max-width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:.95rem;padding:2px 6px;margin:0 3px;border:0;border-bottom:2px solid var(--ink);border-radius:0;background:var(--brand-soft);min-height:28px;text-align:center}
+.bl::placeholder{color:var(--ink);font-weight:800;opacity:.75}
+.bl.right{background:var(--ok-soft);border-color:var(--ok)}.bl.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.qi{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;font-family:Georgia,"Times New Roman","Noto Serif TC",serif}
+.qn{flex:none;min-width:2em;height:2em;line-height:2em;border:2px solid var(--ink);text-align:center;font-weight:800;font-family:-apple-system,sans-serif;font-size:.9rem}
+.qt{flex:1;min-width:0}
+.qi select{font-family:-apple-system,sans-serif;min-width:5.5em;flex:none}
+.qi select.right{border-color:var(--ok);background:var(--ok-soft)}.qi select.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.mcopt{display:block;margin:4px 0}
+.review{margin-top:8px}
+.rc{border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.92rem;font-family:-apple-system,"Segoe UI","PingFang TC","Noto Sans TC",sans-serif}
+.rc.right{background:var(--ok-soft)}.rc.wrong{background:var(--bad-soft)}
+.rc q{display:block;font-style:italic;color:var(--muted);margin-top:4px;font-family:Georgia,serif}
+.rc .ps{margin-left:6px;min-height:28px;padding:0 8px;font-size:.8rem}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.85rem;cursor:pointer;background:var(--card);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.cell b{margin-right:6px;color:var(--brand)}
+.cell.empty{opacity:.6}.cell.right{border-color:var(--ok);background:var(--ok-soft)}.cell.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.result{text-align:center;margin:10px 0}
+.result .score{margin:2px 0}
+.band{display:inline-block;background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:4px 16px;font-weight:800;font-size:1.2rem}
+.rdhead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:12px;position:sticky;top:100px;z-index:4;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.rdhead .timer{font-size:1.3rem}
+.split{display:block}
+.pane h3{margin:0 0 4px;font-size:1.15rem;font-family:Georgia,"Times New Roman",serif}
+.pane .intro{font-style:italic;margin:0 0 14px;font-family:Georgia,serif;color:var(--muted)}
+@media (min-width:900px){
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .pane{max-height:calc(100vh - 150px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+}
+@media (max-width:899px){.pane.qs{padding-top:4px}}
+@media (max-width:420px){.bl{width:6.4em}.notes{padding:10px}}
+.fcsrc{font-size:.72rem;color:var(--muted)}
+
+
+/* ---- two-story layout ---- */
+.hero .stl{margin:8px 0 0;font-size:.92rem;line-height:1.45;opacity:.97}
+.hero .stl b{background:rgba(255,255,255,.22);border-radius:6px;padding:0 6px;margin-right:6px}
+.plan{border-left:5px solid var(--brand)}
+.hero .note{margin-top:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);font-size:.9rem;font-weight:600}
+.plan summary{margin-bottom:6px}
+.plan .blk{margin:8px 0;padding:10px 12px;border-radius:12px;background:var(--brand-soft);font-size:.93rem}
+.plan .blk b.h{display:block;font-size:.98rem;margin-bottom:2px}
+.plan .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan .chip2{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:600;cursor:pointer;min-height:32px}
+.plan .chip2.done{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.plan .tot{font-size:.85rem;color:var(--muted);margin-top:6px}
+.stick{position:sticky;top:0;z-index:6;background:var(--bg);padding:6px 0 4px;margin:0 0 6px}
+nav.tabs{position:static;margin:0 0 6px;padding:0}
+nav.tabs button small{display:block;font-weight:400;font-size:.7rem;opacity:.85}
+nav.stories{display:flex;gap:8px}
+nav.stories button{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;cursor:pointer;text-align:left;line-height:1.25}
+nav.stories button b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button span{display:block;font-size:.72rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+nav.stories button[aria-selected=true]{border-color:var(--brand);box-shadow:inset 0 0 0 2px var(--brand);background:var(--brand-soft)}
+.storyhead{margin:0 0 10px;font-size:.88rem}
+.storyhead h2{font-size:1.02rem;margin:0 0 4px;line-height:1.35}
+.storyhead .acc{display:inline-block;background:var(--brand-soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:700;margin-right:6px}
+.storyhead a{color:var(--brand);word-break:break-word}
+.storyhead details{margin-top:4px}
+.rdhead{top:calc(var(--stk,104px) + 2px)}
+@media (max-width:899px){.rdhead{top:calc(var(--stk,104px) + 2px)}}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="hero">
+    <span class="tag">IELTS 每日新聞練習 · 目標 7.0</span>
+    <div class="date" id="hDate"></div>
+    <h1 id="hTitle">今日兩篇新聞練習 · Two stories</h1>
+    <div class="note" id="hNote" hidden></div>
+    <div class="stl" id="hStories"></div>
+  </header>
+  <details class="card plan" id="plan" style="margin-top:14px" open></details>
+  <div class="stick" id="stick">
+    <nav class="tabs" role="tablist" id="secNav">
+      <button role="tab" aria-selected="true" data-sec="listen">🎧 Listening<small>通勤</small></button>
+      <button role="tab" aria-selected="false" data-sec="read">📖 Reading<small>休息時間</small></button>
+      <button role="tab" aria-selected="false" data-sec="vocab">🗂 單字<small>隨時</small></button>
+    </nav>
+    <nav class="stories" id="storyNav" role="tablist" aria-label="Story"></nav>
+  </div>
+  <div class="storyhead card" id="storyHead"></div>
+  <div id="stories"></div>
+  <template id="tpl">
+  <!-- LISTENING -->
+  <section class="panel" id="listen" data-sec="listen" hidden>
+    <div class="card">
+      <div class="paperhead"><b>LISTENING · SECTION 4</b><span class="muted" id="lMeta"></span></div>
+      <div class="modes" role="group" aria-label="模式">
+        <button id="mExam" aria-pressed="true">考試模式（只播一次）</button>
+        <button id="mPrac" aria-pressed="false">練習模式（可重播）</button>
+      </div>
+      <audio id="au" preload="metadata"></audio>
+      <div class="status" id="lStatus">Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.<span class="cd" id="lCd"></span></div>
+      <div class="row" id="examCtl">
+        <button class="btn primary" id="btnStart">▶ 開始考試</button>
+        <button class="btn" id="btnSkip" hidden>略過等待 →</button>
+      </div>
+      <div id="pracCtl" hidden>
+        <div class="row">
+          <button class="btn primary" id="btnPlay">▶ 播放</button>
+          <button class="btn" id="btnReplay">⟲ 重播</button>
+          <label class="row muted">速度
+            <select id="selRate" aria-label="語速"><option value="0.8">0.8x</option><option value="1" selected>1x</option><option value="1.2">1.2x</option></select>
+          </label>
+        </div>
+        <input type="range" id="seek" min="0" max="1000" value="0" aria-label="播放進度">
+        <div class="row spread muted"><span id="tCur">0:00</span><span id="plText"></span><span id="tDur">0:00</span></div>
+      </div>
+      <div id="examBar" hidden><div class="bar"><i id="plBar"></i></div><div class="muted" id="exTime"></div></div>
+      <div class="warn" id="audioWarn" hidden>音檔載入失敗，請檢查網路後重新整理頁面。</div>
+    </div>
+    <div class="card">
+      <div class="paperhead"><b id="lTitle"></b><span class="muted">Questions 31–40</span></div>
+      <div id="lQs"></div>
+    </div>
+    <div class="card" id="lSheetCard">
+      <h2>🧾 Answer Sheet <small id="lSheetInfo"></small></h2>
+      <div class="sheet" id="lSheet"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="lSubmit">提交答案</button><button class="btn" id="lReset">重新作答</button></div>
+      <div id="lResult"></div>
+    </div>
+    <div class="card" id="transCard" hidden>
+      <h2>📜 逐字稿 Transcript</h2>
+      <div class="row"><button class="btn" id="btnTrans" aria-pressed="false">顯示逐字稿</button><span class="muted" id="transHint">點選句子可從該句開始播放；藍色底線單字可查看解釋。</span></div>
+      <div id="transWrap" hidden><div class="transcript" id="transcript"></div><div class="defbox" id="defbox" hidden></div></div>
+    </div>
+  </section>
+
+  <!-- READING -->
+  <section class="panel" id="read" data-sec="read" hidden>
+    <div class="rdhead">
+      <div><b>READING PASSAGE 1</b> <span class="muted">You should spend about <span id="tmSug"></span> minutes on Questions 1–13.</span></div>
+      <div class="row"><span class="timer" id="tmShow">20:00</span>
+        <button class="btn primary" id="tmStart" style="min-height:36px">開始計時</button><button class="btn" id="tmPause" style="min-height:36px">暫停</button></div>
+    </div>
+    <div class="split">
+      <div class="pane passage" id="paneP">
+        <h3 id="rdTitle"></h3><p class="intro" id="rdIntro"></p>
+        <div id="passage"></div>
+        <div class="row spread"><span class="muted">點擊單字可標記螢光筆</span><button class="btn" id="hlClear" style="min-height:34px;padding:4px 10px">清除標記</button></div>
+      </div>
+      <div class="pane qs" id="paneQ">
+        <div id="rQs"></div>
+        <div class="card" style="margin-top:8px">
+          <h2>🧾 Answer Sheet <small id="rSheetInfo"></small></h2>
+          <div class="sheet" id="rSheet"></div>
+          <div class="row" style="margin-top:12px"><button class="btn primary" id="rSubmit">提交答案</button><button class="btn" id="rReset">重新作答</button></div>
+          <div id="rResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section class="panel" id="vocab" data-sec="vocab" hidden>
+    <div class="card">
+      <h2>🗂 單字卡 <small id="fcCount"></small></h2>
+      <button class="flip" id="flip" aria-label="翻轉單字卡"><div class="in">
+        <div class="face front"><div class="w" id="fcWord"></div><div class="pos" id="fcPos"></div><div class="fcsrc" id="fcSrc"></div><div class="hint">點擊翻面</div></div>
+        <div class="face back" id="fcBack"></div>
+      </div></button>
+      <div class="row spread" style="margin-top:12px">
+        <button class="btn" id="fcPrev" aria-label="上一張">←</button>
+        <button class="btn" id="fcSpeak">🔊 發音</button>
+        <button class="btn" id="fcNext" aria-label="下一張">→</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn bad" id="fcNo" style="flex:1">✗ 不認識</button>
+        <button class="btn ok" id="fcYes" style="flex:1">✓ 認識</button>
+      </div>
+      <div class="bar"><i id="fcBar"></i></div>
+      <div class="row spread"><span class="muted" id="fcKnown"></span><button class="btn" id="fcReset" style="min-height:34px;padding:4px 10px">重設</button></div>
+    </div>
+    <div class="card"><h2>📋 單字總表</h2><div id="vList"></div></div>
+  </section>
+  </template>
+  <footer>音檔為神經網路語音（Microsoft Edge TTS）· 進度分篇儲存在本機 (localStorage)</footer>
+</div>
+<script>
+/* ============ DATA（由 _src/build.py 產生；內容請改 _src/days/DATE.json）============ */
+/*DATA_START*/
+const DATA = {
+ "id": "2026-11-22",
+ "date": "2026-11-22",
+ "title": "Twelve Sightings in 25 Years: Camera Traps Reveal How Rare South America's Bush Dog Really Is · More Than a Bad Habit: Over Half of Teenagers Bite, Pick or Pull, and Many Find It Distressing, Oxford Survey Finds",
+ "stories": [
+  {
+   "title": "Twelve Sightings in 25 Years: Camera Traps Reveal How Rare South America's Bush Dog Really Is",
+   "topic": "Wildlife · rare carnivores",
+   "source": {
+    "name": "Wildlife Conservation Society newsroom: 25 Years of Camera Traps Reveal Just How Rare Is South America's Elusive Bush Dog (20 Nov 2026)",
+    "url": "https://newsroom.wcs.org/News-Releases/articleType/ArticleView/articleId/26872/25-Years-of-Camera-Traps-Reveal-Just-How-Rare-Is-South-Americas-Elusive-Bush-Dog.aspx",
+    "links": [
+     {
+      "name": "Wallace, Lizcano, Ayala, Viscarra et al., Canid Biology & Conservation 29(5): 15-20 (2026): Camera-trap detection of the bush dog: Further evidence for extreme rarity (PDF)",
+      "url": "https://canidbiologyandconservation.org/index.php/cbc/article/download/2446/2065"
+     },
+     {
+      "name": "IUCN/SSC Canid Specialist Group: journal article page",
+      "url": "https://canids.org/cbc-journal/29-5/"
+     },
+     {
+      "name": "Outdoors.com: Rare Trail-Cam Footage of an Elusive South American Carnivore (21 Nov 2026)",
+      "url": "https://outdoors.com/rare-trail-cam-footage-of-an-elusive-south-american-carnivore/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Good morning.",
+     "A quarter of a century of camera-trap surveys across South America has confirmed what forest biologists long suspected: one of the continent's least-known predators, the bush dog, is extraordinarily rare.",
+     "Here's the report."
+    ],
+    [
+     "The study comes from the Wildlife Conservation Society, known as WCS, and it appears in Canid Biology and Conservation, a journal published by the IUCN's specialist group on wild dogs.",
+     "Researchers pooled camera-trap data gathered between two thousand and one and twenty twenty-five at ninety-seven sites in seven countries.",
+     "Altogether, the cameras ran for more than six hundred thousand trap-nights.",
+     "Yet bush dogs turned up on just twelve occasions, involving fourteen individual animals."
+    ],
+    [
+     "So what exactly is a bush dog?",
+     "It's a small, sociable member of the dog family, weighing up to about seven kilograms, and it lives in groups of as many as twelve.",
+     "Packs hunt cooperatively, and the species is found across the tropical lowlands of Central and South America.",
+     "Officially, it is listed as Near Threatened on the IUCN Red List.",
+     "But that assessment dates back to twenty eleven, and the researchers say the hard evidence behind the animal's reputation has been limited."
+    ],
+    [
+     "Now, most of these surveys were never designed with bush dogs in mind.",
+     "They were set up to monitor jaguars.",
+     "So many cameras were placed along roads, and in the western Amazon, where roads are scarce, on river beaches.",
+     "That makes the dataset unusually useful, because the same cameras captured plenty of other carnivores.",
+     "According to the paper, bush dogs were detected about fifty times less often than the short-eared dog, a hundred times less often than jaguars, and nearly two hundred and eighty times less often than ocelots.",
+     "Lead author Robert Wallace, a senior conservation scientist at WCS, said researchers had long known that seeing a bush dog was an extraordinary event; what the data show, he said, is just how extraordinary."
+    ],
+    [
+     "Still, could the animals simply be elusive, and hard to photograph?",
+     "The team considered that.",
+     "Bush dogs are small and low to the ground, which might make them easier for a camera to miss.",
+     "But the same cameras frequently recorded pacas, rodents of roughly comparable size and shape.",
+     "And because bush dogs travel in groups, their social behaviour should make them more likely, not less likely, to be caught on camera."
+    ],
+    [
+     "In other words, the researchers conclude the animal is genuinely scarce.",
+     "They estimate its density at well below one animal per hundred square kilometres across much of its range.",
+     "In Amazonian forests, the core of that range, it could be fewer than one per three hundred and fifty square kilometres.",
+     "The authors stress, though, that those estimates remain uncertain."
+    ],
+    [
+     "Why does that matter?",
+     "Animals spread this thinly, over large home ranges, are especially vulnerable to habitat loss and fragmentation, fires, road building and climate change.",
+     "Disease is another worry, particularly infections such as distemper and rabies passed on by domestic dogs.",
+     "María Estela Viscarra, a biologist with WCS Bolivia, said the bush dog's rarity makes every record important, but also shows how vulnerable these populations may be."
+    ],
+    [
+     "There is one important caveat.",
+     "The data come mostly from continuous rainforest in the western Amazon, so the team wants camera-trap records from other ecosystems to be analysed as well.",
+     "Even so, the researchers say their findings support a reassessment of the species' conservation status.",
+     "That's the wildlife report for this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Camera traps and the bush dog",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The survey"
+       },
+       {
+        "t": "Data from 97 sites over 25 years; bush dogs recorded on only [[1]] occasions"
+       },
+       {
+        "h": "The animal"
+       },
+       {
+        "t": "Weighs up to about 7 kg; hunts in packs"
+       },
+       {
+        "t": "Red List category (from 2011): [[2]]"
+       },
+       {
+        "h": "How the data were collected"
+       },
+       {
+        "t": "Surveys were originally intended to monitor [[3]]"
+       },
+       {
+        "t": "In areas without roads, cameras were put on river [[4]]"
+       },
+       {
+        "t": "Bush dogs seen nearly 280 times less often than [[5]]"
+       },
+       {
+        "h": "Is the species just hard to detect?"
+       },
+       {
+        "t": "Cameras often caught [[6]], which are a similar size"
+       },
+       {
+        "t": "Their [[7]] should make them easier, not harder, to record"
+       },
+       {
+        "h": "Conclusions and concerns"
+       },
+       {
+        "t": "Amazon forests: perhaps under one animal per [[8]] square kilometres"
+       },
+       {
+        "t": "Infections such as rabies may come from [[9]]"
+       },
+       {
+        "t": "Team wants data analysed from other [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "12",
+         "twelve"
+        ],
+        "ref": "Yet bush dogs turned up on just twelve occasions",
+        "ev": "Yet bush dogs turned up on just twelve occasions, involving fourteen individual animals.",
+        "zh": "recorded on only ___ occasions ↔ turned up on just twelve occasions → 12。干擾：ninety-seven sites、seven countries、fourteen individual animals（14 是「隻數」不是「次數」）。"
+       },
+       {
+        "a": [
+         "Near Threatened"
+        ],
+        "ref": "Officially, it is listed as Near Threatened",
+        "ev": "Officially, it is listed as Near Threatened on the IUCN Red List.",
+        "zh": "Red List category ↔ listed as … on the IUCN Red List → Near Threatened（近危）。2011 是評估年份，寫在題幹裡，不是答案。"
+       },
+       {
+        "a": [
+         "jaguars",
+         "jaguar"
+        ],
+        "ref": "They were set up to monitor jaguars.",
+        "ev": "They were set up to monitor jaguars.",
+        "zh": "originally intended to monitor ↔ were set up to monitor → jaguars（美洲豹）。前一句 never designed with bush dogs in mind 是陷阱：調查本來「不是」為叢林犬設計的。"
+       },
+       {
+        "a": [
+         "beaches",
+         "beach"
+        ],
+        "ref": "where roads are scarce, on river beaches",
+        "ev": "in the western Amazon, where roads are scarce, on river beaches",
+        "zh": "areas without roads ↔ where roads are scarce；cameras were put on river ___ → beaches（河灘）。干擾：placed along roads 是「有路的地方」。"
+       },
+       {
+        "a": [
+         "ocelots",
+         "ocelot"
+        ],
+        "ref": "nearly two hundred and eighty times less often than ocelots",
+        "ev": "nearly two hundred and eighty times less often than ocelots",
+        "zh": "三個數字要對應：50 倍 → short-eared dog、100 倍 → jaguars、近 280 倍 → ocelots（虎貓）。題幹給 280，所以答 ocelots。"
+       },
+       {
+        "a": [
+         "pacas",
+         "paca"
+        ],
+        "ref": "the same cameras frequently recorded pacas",
+        "ev": "But the same cameras frequently recorded pacas, rodents of roughly comparable size and shape.",
+        "zh": "often caught ↔ frequently recorded；a similar size ↔ of roughly comparable size and shape → pacas（無尾刺豚鼠，一種大型齧齒動物）。"
+       },
+       {
+        "a": [
+         "social behaviour",
+         "social behavior",
+         "social behaviours"
+        ],
+        "ref": "their social behaviour should make them more likely",
+        "ev": "their social behaviour should make them more likely, not less likely, to be caught on camera",
+        "zh": "easier, not harder, to record ↔ more likely, not less likely, to be caught on camera → social behaviour（群居行為）。注意兩字以內，英美拼法皆可。"
+       },
+       {
+        "a": [
+         "350"
+        ],
+        "ref": "fewer than one per three hundred and fifty square kilometres",
+        "ev": "it could be fewer than one per three hundred and fifty square kilometres",
+        "zh": "題幹是 Amazon forests（亞馬遜森林，族群分布的核心）→ 350。干擾：前一句 well below one animal per hundred square kilometres 是「大部分分布範圍」的估計（100），不是亞馬遜。"
+       },
+       {
+        "a": [
+         "domestic dogs",
+         "domestic dog"
+        ],
+        "ref": "passed on by domestic dogs",
+        "ev": "particularly infections such as distemper and rabies passed on by domestic dogs",
+        "zh": "may come from ↔ passed on by → domestic dogs（家犬）。distemper（犬瘟熱）和 rabies（狂犬病）是疾病名稱，不是來源。"
+       },
+       {
+        "a": [
+         "ecosystems",
+         "ecosystem"
+        ],
+        "ref": "camera-trap records from other ecosystems",
+        "ev": "the team wants camera-trap records from other ecosystems to be analysed as well",
+        "zh": "data analysed from other ___ ↔ camera-trap records from other ecosystems to be analysed → ecosystems（生態系）。資料偏重 western Amazon 的 continuous rainforest，所以要補其他生態系。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Proving Absence: What a Quarter-Century of Camera Traps Says About the Bush Dog",
+    "intro": "A vast archive of jaguar surveys has been repurposed to answer a deceptively simple question: just how rare is one of South America's least-known carnivores?",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Conservationists face an awkward problem when a species is seldom seen: the absence of sightings may reflect genuine scarcity, or it may simply mean that nobody has looked in the right way. The bush dog (Speothos venaticus), a small, social canid of the tropical lowlands of Central and South America, illustrates the dilemma well. Weighing up to about seven kilograms and living in groups of up to twelve, it is widely regarded as one of the rarest carnivores in the Neotropics, yet the empirical evidence for that reputation has been surprisingly thin. Its current Red List category of Near Threatened rests on an assessment from 2011, which cited apparent rarity and an inferred population decline. Experienced field biologists and indigenous guides report only sporadic encounters, but anecdote is a fragile basis for policy."
+     },
+     {
+      "label": "B",
+      "text": "A new report in Canid Biology & Conservation attempts to put numbers on that impression. Researchers from the Wildlife Conservation Society (WCS) compiled camera-trap data that the organisation collected between 2001 and 2025 at 97 sites in seven countries, from Venezuela to Paraguay. Restricting the analysis to sites below 2,500 metres, consistent with the species' known elevational range, left 6,756 camera stations operating for a combined 611,159 trap-nights. Crucially, most of these surveys were never intended to find bush dogs. They were designed to estimate jaguar densities, so cameras were usually mounted in pairs, 40 to 50 centimetres above the ground, and positioned where jaguars or their prey were likely to pass. Roughly a third of stations were placed along roads or, in the roadless western Amazon, on river beaches; the remainder were set in the surrounding forest. Most surveys took place in the dry season."
+     },
+     {
+      "label": "C",
+      "text": "Against this enormous effort, the result is striking. Bush dogs were recorded on only 12 occasions, at 12 different sites, involving 14 individuals and just 55 photographs. Translated into a standard measure of relative abundance, that is 0.002 independent events per 100 trap-nights, and the estimated probability of detecting a bush dog during a sampling interval was around 0.011. No bush dogs at all were recorded in Paraguay, Peru or Venezuela, even though those three countries accounted for more than 80,000 trap-nights. By comparison, the same cameras photographed jaguars, ocelots and short-eared dogs far more often: their relative abundance indices were roughly 100, 280 and 50 times higher respectively. As co-author Diego Lizcano observes, jaguars and ocelots are animals that most people already think of as difficult to see."
+     },
+     {
+      "label": "D",
+      "text": "Could the bush dog simply be unusually hard to photograph? The authors examine several such explanations and find them wanting. Bush dogs are smaller and lower to the ground than jaguars or ocelots, which might reduce the chance of triggering a camera. Yet pacas, large rodents of broadly similar size and shape, produced 46,679 photographs in the same dataset, with a detection probability of 0.871. Group living, moreover, ought to make an animal easier rather than harder to record. Interestingly, a Brazilian study that reported somewhat higher detection rates had mounted its cameras at 30 centimetres, and the authors concede that this lower placement might partly account for the difference. An earlier suggestion, that bush dogs avoid the trails where cameras are typically placed, is judged unlikely given the sheer intensity of sampling, although surveys using randomly positioned cameras should soon settle the question."
+     },
+     {
+      "label": "E",
+      "text": "Independent datasets tell a similar story. In the Amazon Camera Trap dataset, which contains more than 150,000 independent vertebrate events, only 38 involved bush dogs. A broader compilation of Neotropical carnivore records, drawing on scats, roadkill, museum collections and sightings as well as cameras, lists 313 bush dog records against 8,391 for ocelots and 5,176 for jaguars. The contrast there is less extreme, but the pattern holds. From these relative rates, the team infers that bush dogs probably occur at well below one animal per 100 square kilometres across much of their range, and perhaps fewer than one per 350 square kilometres in Amazonian forests, the core of that range. Such figures, they stress, carry considerable uncertainty, not least because the species is found both in small packs and as solitary individuals."
+     },
+     {
+      "label": "F",
+      "text": "If the estimates are even approximately correct, the implications are sobering. Populations spread this thinly, with home ranges that can exceed 140 square kilometres and possibly semi-nomadic habits, are arguably far more exposed to habitat destruction, fragmentation, fire, road development and persecution than their wide distribution might suggest. Disease is a further concern: social behaviour can allow pathogens to spread quickly within a group, and domestic dogs may transmit canine distemper, parvovirus and rabies. The authors acknowledge that their data are weighted towards continuous western Amazonian rainforest, and they call for comparable analyses from other ecoregions, such as the Cerrado and the Pantanal. Nonetheless, they conclude that the evidence supports reassessing the species' conservation status, and their work demonstrates how data gathered for one charismatic predator can illuminate the fate of another."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a comparison with records obtained by methods other than photography",
+        "a": "E",
+        "ref": "E",
+        "ev": "drawing on scats, roadkill, museum collections and sightings as well as cameras",
+        "zh": "E 段：Neotropical 食肉動物資料庫除了相機，還包含糞便、路殺、博物館標本與目擊紀錄 ↔ methods other than photography。"
+       },
+       {
+        "q": "the original purpose of most of the surveys that were analysed",
+        "a": "B",
+        "ref": "B",
+        "ev": "They were designed to estimate jaguar densities",
+        "zh": "B 段：most of these surveys were never intended to find bush dogs. They were designed to estimate jaguar densities ↔ original purpose。"
+       },
+       {
+        "q": "a technical detail that may help explain why another study obtained different results",
+        "a": "D",
+        "ref": "D",
+        "ev": "had mounted its cameras at 30 centimetres, and the authors concede that this lower placement might partly account for the difference",
+        "zh": "D 段：巴西研究偵測率較高，可能是相機裝得較低（30 公分）↔ a technical detail … different results。"
+       },
+       {
+        "q": "the year of the evaluation on which the animal's official status is based",
+        "a": "A",
+        "ref": "A",
+        "ev": "rests on an assessment from 2011",
+        "zh": "A 段：Near Threatened 這個紅皮書等級 rests on an assessment from 2011 ↔ the evaluation on which the official status is based。"
+       },
+       {
+        "q": "the possibility that infections could be passed to bush dogs by another species",
+        "a": "F",
+        "ref": "F",
+        "ev": "domestic dogs may transmit canine distemper, parvovirus and rabies",
+        "zh": "F 段：家犬可能傳染犬瘟熱、小病毒與狂犬病 ↔ infections passed by another species。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in the Reading Passage?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "Most of the camera stations were located in forest rather than beside roads or rivers.",
+        "a": "True",
+        "ref": "B",
+        "ev": "the remainder were set in the surrounding forest",
+        "zh": "B 段：約三分之一沿道路或河灘，其餘（約三分之二）在森林 ↔ most … in forest → True。"
+       },
+       {
+        "q": "No bush dogs were detected in three of the seven countries surveyed.",
+        "a": "True",
+        "ref": "C",
+        "ev": "No bush dogs at all were recorded in Paraguay, Peru or Venezuela",
+        "zh": "C 段：巴拉圭、秘魯、委內瑞拉三國完全沒有紀錄 ↔ three of the seven countries → True。"
+       },
+       {
+        "q": "Living in groups is likely to make bush dogs more difficult to detect with cameras.",
+        "a": "False",
+        "ref": "D",
+        "ev": "Group living, moreover, ought to make an animal easier rather than harder to record.",
+        "zh": "D 段：群居「應該讓動物更容易而非更難」被拍到 → 與題目相反 → False。"
+       },
+       {
+        "q": "Bush dogs are more numerous in the Cerrado than in the western Amazon.",
+        "a": "Not Given",
+        "ref": "F",
+        "ev": "they call for comparable analyses from other ecoregions, such as the Cerrado and the Pantanal",
+        "zh": "F 段只說作者希望對 Cerrado 等其他生態區做類似分析，完全沒有比較兩地的族群數量 → Not Given（陷阱：Cerrado 有出現，容易誤以為有比較）。"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "Explaining the missing records",
+      "lines": [
+       {
+        "t": "One possible reason for the small number of records is that bush dogs, being small and close to the [[1]], may fail to set off cameras. However, the authors doubt this, and they also reject an earlier idea that the animals keep away from the [[2]] where cameras are normally positioned. Populations this sparse, with very large home [[3]], are regarded as highly vulnerable. The authors admit that their data come mainly from western Amazonian [[4]], and they would like similar analyses from other regions."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "ground"
+        ],
+        "ref": "D",
+        "ev": "Bush dogs are smaller and lower to the ground than jaguars or ocelots",
+        "zh": "D 段：lower to the ground ↔ close to the ___；may fail to set off cameras ↔ reduce the chance of triggering a camera → ground。"
+       },
+       {
+        "a": [
+         "trails",
+         "trail"
+        ],
+        "ref": "D",
+        "ev": "bush dogs avoid the trails where cameras are typically placed",
+        "zh": "D 段：keep away from ↔ avoid；normally positioned ↔ typically placed → trails（小徑）。"
+       },
+       {
+        "a": [
+         "ranges"
+        ],
+        "ref": "F",
+        "ev": "with home ranges that can exceed 140 square kilometres",
+        "zh": "F 段：home ranges that can exceed 140 square kilometres ↔ very large home ___ → ranges（活動範圍）。"
+       },
+       {
+        "a": [
+         "rainforest",
+         "rainforests"
+        ],
+        "ref": "F",
+        "ev": "their data are weighted towards continuous western Amazonian rainforest",
+        "zh": "F 段：data are weighted towards ↔ come mainly from → rainforest（雨林）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "pool",
+     "pos": "v.",
+     "def": "to combine resources or data from several sources",
+     "zh": "匯集；集中（資料、資源）",
+     "example": "The universities pooled their data to build a larger sample.",
+     "match": [
+      "pooled"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "sociable",
+     "pos": "adj.",
+     "def": "(of an animal) tending to live in groups; friendly and liking company",
+     "zh": "群居的；好交際的",
+     "example": "Meerkats are highly sociable animals.",
+     "match": [
+      "sociable"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "cooperatively",
+     "pos": "adv.",
+     "def": "by working together towards a shared goal",
+     "zh": "合作地；協力地",
+     "example": "Wolves hunt cooperatively to bring down large prey.",
+     "match": [
+      "cooperatively"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "elusive",
+     "pos": "adj.",
+     "def": "difficult to find, catch or see",
+     "zh": "難以捉摸的；難得一見的",
+     "example": "The snow leopard is one of the most elusive big cats.",
+     "match": [
+      "elusive"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "fragmentation",
+     "pos": "n.",
+     "def": "the breaking of a habitat into smaller, isolated pieces",
+     "zh": "（棲地）破碎化",
+     "example": "Road building has caused severe forest fragmentation.",
+     "match": [
+      "fragmentation"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "caveat",
+     "pos": "n.",
+     "def": "a warning that something may not be completely true or reliable",
+     "zh": "但書；附加說明；警告",
+     "example": "The report comes with an important caveat about its small sample.",
+     "match": [
+      "caveat"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "reassessment",
+     "pos": "n.",
+     "def": "the act of judging something again, especially after new information",
+     "zh": "重新評估",
+     "example": "The new data prompted a reassessment of the policy.",
+     "match": [
+      "reassessment"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "dilemma",
+     "pos": "n.",
+     "def": "a difficult situation in which it is hard to choose or decide",
+     "zh": "兩難；困境",
+     "example": "Researchers face a dilemma when data are scarce.",
+     "match": [
+      "dilemma"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "empirical",
+     "pos": "adj.",
+     "def": "based on observation or experiment rather than theory",
+     "zh": "實證的；以觀察為依據的",
+     "example": "There is little empirical evidence for the claim.",
+     "match": [
+      "empirical"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "anecdote",
+     "pos": "n.",
+     "def": "a short personal account, not based on systematic evidence",
+     "zh": "軼事；個人經驗之談",
+     "example": "Policy should rest on data, not anecdote.",
+     "match": [
+      "anecdote"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "compile",
+     "pos": "v.",
+     "def": "to collect information from different places into one set",
+     "zh": "彙編；匯整",
+     "example": "The team compiled records from twenty countries.",
+     "match": [
+      "compiled",
+      "compilation"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "find (something) wanting",
+     "pos": "phr.",
+     "def": "to judge that something is not good or convincing enough",
+     "zh": "認為……不夠好／站不住腳",
+     "example": "The theory was tested and found wanting.",
+     "say": "find something wanting",
+     "match": [
+      "find them wanting"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "concede",
+     "pos": "v.",
+     "def": "to admit, often reluctantly, that something is true",
+     "zh": "（勉強）承認",
+     "example": "The minister conceded that mistakes had been made.",
+     "match": [
+      "concede"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "infer",
+     "pos": "v.",
+     "def": "to reach a conclusion from the evidence available",
+     "zh": "推斷；推論",
+     "example": "From the tracks, we can infer that the animal passed at night.",
+     "match": [
+      "infers",
+      "inferred"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "sobering",
+     "pos": "adj.",
+     "def": "making you feel serious and think carefully about a problem",
+     "zh": "令人警醒的；發人深省的",
+     "example": "The figures make sobering reading.",
+     "match": [
+      "sobering"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-22-1.mp3",
+    "times": [
+     [
+      0.36,
+      1.1
+     ],
+     [
+      1.32,
+      14.29
+     ],
+     [
+      14.67,
+      15.72
+     ],
+     [
+      16.5,
+      28.84
+     ],
+     [
+      29.19,
+      36.78
+     ],
+     [
+      37.1,
+      41.58
+     ],
+     [
+      41.82,
+      47.32
+     ],
+     [
+      48.1,
+      50.07
+     ],
+     [
+      50.56,
+      58.19
+     ],
+     [
+      58.43,
+      64.83
+     ],
+     [
+      65.13,
+      69.37
+     ],
+     [
+      69.7,
+      77.15
+     ],
+     [
+      77.93,
+      81.79
+     ],
+     [
+      82.09,
+      84.23
+     ],
+     [
+      84.45,
+      91.21
+     ],
+     [
+      91.48,
+      97.55
+     ],
+     [
+      97.87,
+      109.97
+     ],
+     [
+      110.29,
+      123.31
+     ],
+     [
+      124.09,
+      128.18
+     ],
+     [
+      128.67,
+      130.08
+     ],
+     [
+      130.28,
+      135.47
+     ],
+     [
+      135.89,
+      141.49
+     ],
+     [
+      141.7,
+      149.16
+     ],
+     [
+      149.94,
+      154.55
+     ],
+     [
+      154.85,
+      161.0
+     ],
+     [
+      161.22,
+      167.86
+     ],
+     [
+      168.13,
+      172.13
+     ],
+     [
+      172.91,
+      173.98
+     ],
+     [
+      174.34,
+      184.05
+     ],
+     [
+      184.33,
+      190.86
+     ],
+     [
+      191.19,
+      202.59
+     ],
+     [
+      203.37,
+      205.16
+     ],
+     [
+      205.41,
+      214.48
+     ],
+     [
+      214.69,
+      221.03
+     ],
+     [
+      221.29,
+      223.62
+     ]
+    ],
+    "duration": 224.3,
+    "voice": "en-US-EmmaMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇺🇸 American English · Emma · female",
+    "words": "audio/2026-11-22-1-words/"
+   }
+  },
+  {
+   "title": "More Than a Bad Habit: Over Half of Teenagers Bite, Pick or Pull, and Many Find It Distressing, Oxford Survey Finds",
+   "topic": "Psychology · teen mental health",
+   "source": {
+    "name": "University of Oxford, Department of Psychiatry: Hair pulling, skin picking and nail biting are common in young people and cause significant distress (20 Nov 2026)",
+    "url": "https://www.psych.ox.ac.uk/news/hair-pulling-skin-picking-and-nail-biting-are-common-in-young-people-and-cause-significant-distress",
+    "links": [
+     {
+      "name": "Mackay, Waite, Lee, Haines, Toher, OxWell Study Team & Fazel, BMJ Mental Health 29(1): e302871 (2026): Body-focused repetitive behaviours are common, distressing and under-recognised",
+      "url": "https://mentalhealth.bmj.com/content/29/1/e302871"
+     },
+     {
+      "name": "Preprint (medRxiv, full text via Europe PMC): Body-focused repetitive behaviours in adolescents: a common and under-recognised source of distress and unmet need",
+      "url": "https://europepmc.org/article/PPR/PPR1235857"
+     },
+     {
+      "name": "thesciverse: Oxford researchers asked 5,400 teens about nail biting, skin picking and hair pulling (21 Nov 2026)",
+      "url": "https://thesciverse.org/nail-biting-skin-picking-hair-pulling-teens-study/"
+     }
+    ]
+   },
+   "script": [
+    [
+     "Our health story this morning: a large survey of English schoolchildren suggests that nail biting, skin picking and hair pulling are far more than harmless habits for many teenagers.",
+     "Here's the report."
+    ],
+    [
+     "Researchers at the University of Oxford put questions about these behaviours to more than five thousand four hundred pupils aged eleven to eighteen, mainly in Oxfordshire and Liverpool.",
+     "The questions were added to the OxWell Student Survey, a large school-based study of young people's mental health and wellbeing.",
+     "Doctors group the behaviours under one label: body-focused repetitive behaviours, or BFRBs.",
+     "And, unusually, the questions were written with help from twenty-six people who had lived experience of them."
+    ],
+    [
+     "First, how common are they?",
+     "According to the study, published in the journal BMJ Mental Health, fifty-eight point five per cent of the young people reported at least one.",
+     "Nail biting was the most widespread, at around forty-four per cent, followed by skin picking at thirty-one per cent and hair pulling at about fifteen per cent."
+    ],
+    [
+     "But being common is not the same as being harmful.",
+     "Overall, around thirteen per cent of all the pupils said the behaviours caused them quite a lot, or a great deal, of distress.",
+     "And the picture varied sharply from one behaviour to another.",
+     "Only about eleven per cent of nail biters found it upsetting, compared with twenty-nine per cent of skin pickers and thirty-seven per cent of those who pulled their hair.",
+     "The researchers also asked whether the behaviours got in the way of daily life, at home, with friends, during leisure time and in classroom learning."
+    ],
+    [
+     "Meanwhile, some groups were affected far more than others.",
+     "Around one in six girls, and one in four transgender or gender-diverse young people, reported distressing behaviours.",
+     "Among boys, the figure was roughly one in eighteen."
+    ],
+    [
+     "The strongest links, though, were with emotional health.",
+     "More than a third of young people with anxiety and depression had distressing behaviours, as did twenty-seven per cent of those who had been bullied.",
+     "About one in five autistic young people, or those with ADHD, reported distressing behaviours, around twice the rate of their peers.",
+     "However, the researchers say that gap was largely explained by higher emotional distress and bullying, rather than by neurodivergence itself."
+    ],
+    [
+     "So why does this matter?",
+     "Lead author Clare Mackay, a professor in Oxford's Department of Psychiatry, said these behaviours aren't simply bad habits, and are often a sign that a young person is struggling.",
+     "She added that the distress often goes unrecognised, because the subject is rarely discussed in schools or in healthcare.",
+     "According to the university, a companion study that interviewed twelve teenagers about hair pulling found that shame ran through their accounts, triggering the behaviour and keeping it going.",
+     "Co-author Polly Waite, of the Oxford Centre for Emerging Minds Research, said shame and stigma can make it hard for young people to talk about these behaviours or to seek help."
+    ],
+    [
+     "The authors suggest a simple first step for parents, teachers and doctors.",
+     "Rather than telling a child to stop, ask whether the habit upsets them, or gets in the way of things they want to do.",
+     "In other words, the focus should be on distress, not on the behaviour alone."
+    ],
+    [
+     "There are limits to the findings, though.",
+     "The survey captured a single point in time, so it can't show whether emotional problems cause these behaviours or the other way round.",
+     "The answers were also self-reported, and most pupils came from just two areas of England.",
+     "Even so, the authors argue that the results point to a large and largely hidden unmet need.",
+     "That's our health report for this morning."
+    ]
+   ],
+   "listening": {
+    "title": "SECTION 4",
+    "groups": [
+     {
+      "type": "blanks",
+      "from": 31,
+      "title": "Questions 31–40",
+      "instruction": [
+       "Complete the notes below.",
+       "Write **NO MORE THAN TWO WORDS AND/OR A NUMBER** for each answer."
+      ],
+      "heading": "Repetitive behaviours in teenagers",
+      "bullets": true,
+      "lines": [
+       {
+        "h": "The study"
+       },
+       {
+        "t": "Over 5,400 pupils aged 11–18, mostly in two areas of England"
+       },
+       {
+        "t": "Questions developed with people who had [[1]] of the behaviours"
+       },
+       {
+        "h": "Findings"
+       },
+       {
+        "t": "Most common behaviour: [[2]]"
+       },
+       {
+        "t": "Share of all pupils who were seriously distressed: about [[3]] %"
+       },
+       {
+        "t": "Also asked about effects on home life, friendships, leisure and classroom [[4]]"
+       },
+       {
+        "t": "Lowest rate of distressing behaviours found among [[5]]"
+       },
+       {
+        "t": "Distressing behaviours linked to anxiety, depression and having been [[6]]"
+       },
+       {
+        "t": "Higher rate in autistic pupils mainly due to distress, not [[7]]"
+       },
+       {
+        "h": "Explaining the problem"
+       },
+       {
+        "t": "Interviews: [[8]] both started and maintained hair pulling"
+       },
+       {
+        "t": "Advice: ask about [[9]] rather than only the behaviour"
+       },
+       {
+        "h": "Limitations"
+       },
+       {
+        "t": "One point in time; answers were [[10]]"
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "lived experience"
+        ],
+        "ref": "twenty-six people who had lived experience of them",
+        "ev": "the questions were written with help from twenty-six people who had lived experience of them",
+        "zh": "developed with ↔ written with help from；答案 lived experience（親身經歷）。26 是人數，題目沒有問。"
+       },
+       {
+        "a": [
+         "nail biting",
+         "nail-biting"
+        ],
+        "ref": "Nail biting was the most widespread",
+        "ev": "Nail biting was the most widespread, at around forty-four per cent",
+        "zh": "most common ↔ the most widespread → nail biting（咬指甲）。干擾：skin picking 31%、hair pulling 15%。"
+       },
+       {
+        "a": [
+         "13",
+         "thirteen"
+        ],
+        "ref": "around thirteen per cent of all the pupils",
+        "ev": "Overall, around thirteen per cent of all the pupils said the behaviours caused them quite a lot, or a great deal, of distress.",
+        "zh": "seriously distressed ↔ quite a lot, or a great deal, of distress；share of ALL pupils → 13%。干擾：58.5%（至少有一種行為）、11%／29%／37%（各行為者中感到困擾的比例，母數不同）。"
+       },
+       {
+        "a": [
+         "learning"
+        ],
+        "ref": "during leisure time and in classroom learning",
+        "ev": "at home, with friends, during leisure time and in classroom learning",
+        "zh": "effects on ↔ got in the way of daily life；home life / friendships / leisure 對應 at home / with friends / leisure time → classroom learning。"
+       },
+       {
+        "a": [
+         "boys"
+        ],
+        "ref": "Among boys, the figure was roughly one in eighteen.",
+        "ev": "Among boys, the figure was roughly one in eighteen.",
+        "zh": "lowest rate ↔ 1/18（約 5.6%）低於女生 1/6、跨性別／性別多元者 1/4 → boys。要聽懂分數比較才答得出。"
+       },
+       {
+        "a": [
+         "bullied"
+        ],
+        "ref": "twenty-seven per cent of those who had been bullied",
+        "ev": "as did twenty-seven per cent of those who had been bullied",
+        "zh": "having been ___ ↔ those who had been bullied → bullied（被霸凌）。注意題目要的是過去分詞，配合 having been。"
+       },
+       {
+        "a": [
+         "neurodivergence"
+        ],
+        "ref": "rather than by neurodivergence itself",
+        "ev": "that gap was largely explained by higher emotional distress and bullying, rather than by neurodivergence itself",
+        "zh": "mainly due to distress, not ___ ↔ largely explained by higher emotional distress … rather than by neurodivergence itself → neurodivergence（神經多樣性）。"
+       },
+       {
+        "a": [
+         "shame"
+        ],
+        "ref": "found that shame ran through their accounts",
+        "ev": "found that shame ran through their accounts, triggering the behaviour and keeping it going",
+        "zh": "started ↔ triggering；maintained ↔ keeping it going → shame（羞恥感）。干擾：下一句的 stigma（污名）是「讓人難以求助」，不是觸發行為。"
+       },
+       {
+        "a": [
+         "distress"
+        ],
+        "ref": "the focus should be on distress",
+        "ev": "In other words, the focus should be on distress, not on the behaviour alone.",
+        "zh": "ask about ___ rather than only the behaviour ↔ the focus should be on distress, not on the behaviour alone → distress（困擾、痛苦）。"
+       },
+       {
+        "a": [
+         "self-reported",
+         "self reported"
+        ],
+        "ref": "The answers were also self-reported",
+        "ev": "The answers were also self-reported, and most pupils came from just two areas of England.",
+        "zh": "limitations：只是單一時間點（single point in time）+ 答案為 self-reported（自陳的），非醫師診斷。"
+       }
+      ]
+     }
+    ]
+   },
+   "reading": {
+    "title": "Beyond Bad Habits: Rethinking Body-Focused Repetitive Behaviours in Adolescence",
+    "intro": "A large school survey in England suggests that picking, pulling and biting are more common, and more distressing, among teenagers than is usually recognised.",
+    "minutes": 20,
+    "passage": [
+     {
+      "label": "A",
+      "text": "Most people pick at a cuticle or bite a fingernail from time to time, and such grooming actions are an ordinary part of life. For some individuals, however, they become compulsive, causing bald patches, lost eyelashes or eyebrows, skin lesions and infections. Collectively known as body-focused repetitive behaviours (BFRBs), they typically emerge in childhood or adolescence. Although severe physical complications are relatively uncommon, the psychological impact can be substantial. Diagnostic manuals treat the behaviours unevenly: the DSM-5 formally recognises hair-pulling and skin-picking as trichotillomania and excoriation disorder respectively, whereas nail-biting is not classified as a distinct disorder at all, despite sharing many psychological and behavioural features with the other two."
+     },
+     {
+      "label": "B",
+      "text": "Estimates of how widespread BFRBs are have varied enormously. Studies of adults that rely on diagnostic tools typically put hair-pulling and skin-picking disorders at around one to five per cent, and clinical samples show a marked female predominance of roughly four to one. Larger self-report surveys, by contrast, yield rates of 10 to 25 per cent for non-clinical hair-pulling or skin-picking, and up to 40 to 50 per cent for nail-biting, with much smaller differences between the sexes. Such discrepancies suggest that the behaviours exist along a continuum, from routine grooming to clinically impairing conditions. What has been missing, according to a team at the University of Oxford, is a clear picture of how many young people experience them as distressing and might therefore need support."
+     },
+     {
+      "label": "C",
+      "text": "To address this gap, the researchers added questions to the 2025 wave of the OxWell Student Survey, a large school-based study of mental health and wellbeing in England, which most pupils complete online during a lesson. The items were developed with input from 26 people who had lived experience of BFRBs and were offered in an optional module at the end of the main survey. Pupils were asked whether they picked, pulled or bit at their hair, skin or nails in a way that felt difficult to control, how much this upset them, and whether it interfered with home life, friendships, leisure activities or classroom learning. After those aged 19 or over were excluded, the analysis covered 5,437 students aged 11 to 18."
+     },
+     {
+      "label": "D",
+      "text": "The headline finding was that 58.5 per cent reported at least one behaviour. Nail-biting was the most common, followed by skin-picking and hair-pulling. Perhaps more revealing was how often the behaviours overlapped: 86 per cent of hair-pullers and 75 per cent of skin-pickers reported at least one other BFRB. The authors therefore argue that the behaviours may be better conceptualised as expressions of a shared underlying process than as separate conditions, a view that challenges the habit of studying each in isolation. They also note, anecdotally, that skin-picking tends to surface in dermatology clinics while hair-pulling is more often seen by psychological services. Overall, 22 per cent of those with BFRBs described meaningful distress, and interference with daily life was greatest among the most distressed."
+     },
+     {
+      "label": "E",
+      "text": "Distress was not evenly spread. Girls and trans or gender-diverse pupils were more likely than boys both to engage in BFRBs and to be troubled by them, and these differences persisted after adjustment for anxiety and depression. The strongest predictor of problematic BFRBs, however, was the level of internalising symptoms, with a steep gradient from pupils in the normal range to those in the clinical range. Bullying showed a clear dose–response pattern: the more often pupils were bullied, the more likely they were to report distressing behaviours. Intriguingly, the authors point to evidence from non-human primates that self-grooming is more common among individuals facing greater social uncertainty, raising the possibility that it soothes social discomfort. A higher rate among neurodivergent pupils, by contrast, became non-significant once emotional symptoms, gender and bullying were taken into account."
+     },
+     {
+      "label": "F",
+      "text": "The study has clear limitations. All measures were self-reported rather than based on diagnostic interviews, and those who chose to complete the optional module included proportionally more girls and gender-diverse pupils, and were slightly younger, than the full cohort. Because the survey was cross-sectional, it cannot establish causality; earlier work suggests the link between emotional difficulties and BFRBs probably runs in both directions. Even so, the authors contend that the findings point to a substantial unmet need, since such behaviours are rarely assessed in clinics, schools or communities. They propose a simple screening question focused on distress rather than behaviour alone, asking whether a young person ever picks, pulls or bites in a way that upsets them or gets in the way of things they want to do."
+     }
+    ],
+    "groups": [
+     {
+      "type": "match",
+      "from": 1,
+      "title": "Questions 1–5",
+      "instruction": [
+       "Reading Passage has six paragraphs, **A–F**.",
+       "Which paragraph contains the following information?",
+       "Write the correct letter, **A–F**, in boxes 1–5 on your answer sheet.",
+       "**NB** You may use any letter more than once."
+      ],
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "items": [
+       {
+        "q": "a reference to research on animals other than humans",
+        "a": "E",
+        "ref": "E",
+        "ev": "evidence from non-human primates that self-grooming is more common among individuals facing greater social uncertainty",
+        "zh": "E 段：non-human primates（非人類靈長類）的自我理毛研究 ↔ research on animals other than humans。"
+       },
+       {
+        "q": "a description of how certain participants were removed from the analysis",
+        "a": "C",
+        "ref": "C",
+        "ev": "After those aged 19 or over were excluded",
+        "zh": "C 段：排除 19 歲以上的人 ↔ participants were removed from the analysis。"
+       },
+       {
+        "q": "a contrast between findings produced by different research methods",
+        "a": "B",
+        "ref": "B",
+        "ev": "Larger self-report surveys, by contrast, yield rates of 10 to 25 per cent",
+        "zh": "B 段：診斷工具研究（1–5%）vs 自陳問卷（10–25%，咬指甲可達 40–50%）↔ different research methods。"
+       },
+       {
+        "q": "a suggestion that different behaviours may come to the attention of different types of health service",
+        "a": "D",
+        "ref": "D",
+        "ev": "skin-picking tends to surface in dermatology clinics while hair-pulling is more often seen by psychological services",
+        "zh": "D 段：摳皮多出現在皮膚科、拔毛多見於心理服務 ↔ different types of health service。"
+       },
+       {
+        "q": "an example of a question that could help to identify young people who need support",
+        "a": "F",
+        "ref": "F",
+        "ev": "They propose a simple screening question focused on distress rather than behaviour alone",
+        "zh": "F 段：提出一個以困擾為重點的簡單篩檢問題，並給出問法 ↔ an example of a question。"
+       }
+      ]
+     },
+     {
+      "type": "tfng",
+      "from": 6,
+      "title": "Questions 6–9",
+      "instruction": [
+       "Do the following statements agree with the information given in the Reading Passage?",
+       "In boxes 6–9 on your answer sheet, write",
+       "**TRUE**        if the statement agrees with the information",
+       "**FALSE**       if the statement contradicts the information",
+       "**NOT GIVEN**   if there is no information on this"
+      ],
+      "items": [
+       {
+        "q": "The DSM-5 treats nail-biting as a separate disorder in its own right.",
+        "a": "False",
+        "ref": "A",
+        "ev": "nail-biting is not classified as a distinct disorder at all",
+        "zh": "A 段：咬指甲「根本沒有」被列為獨立疾病 → 與題目相反 → False。"
+       },
+       {
+        "q": "People who had personally experienced BFRBs contributed to the design of the survey questions.",
+        "a": "True",
+        "ref": "C",
+        "ev": "The items were developed with input from 26 people who had lived experience of BFRBs",
+        "zh": "C 段：題目是在 26 位有親身經歷者的意見下設計 ↔ contributed to the design → True。"
+       },
+       {
+        "q": "Pupils who completed the optional module had experienced more bullying than other OxWell participants.",
+        "a": "Not Given",
+        "ref": "F",
+        "ev": "included proportionally more girls and gender-diverse pupils, and were slightly younger, than the full cohort",
+        "zh": "F 段只比較了選答模組者的性別比例與年齡（女生與性別多元者較多、較年輕），完全沒有比較霸凌經驗 → Not Given（陷阱：E 段有談霸凌，F 段也有「與全體比較」，容易混在一起）。"
+       },
+       {
+        "q": "Differences between boys and girls disappeared once anxiety and depression were taken into account.",
+        "a": "False",
+        "ref": "E",
+        "ev": "these differences persisted after adjustment for anxiety and depression",
+        "zh": "E 段：性別差異在調整焦慮與憂鬱後「仍然存在」（persisted）→ 與「消失」相反 → False。（注意：真正在調整後變得不顯著的是 neurodivergent 那一項。）"
+       }
+      ]
+     },
+     {
+      "type": "blanks",
+      "from": 10,
+      "title": "Questions 10–13",
+      "bullets": false,
+      "instruction": [
+       "Complete the summary below.",
+       "Choose **ONE WORD ONLY** from the passage for each answer.",
+       "Write your answers in boxes 10–13 on your answer sheet."
+      ],
+      "heading": "What the Oxford survey suggests",
+      "lines": [
+       {
+        "t": "Because earlier estimates differed so widely, BFRBs are thought to lie on a [[1]] that runs from everyday grooming to serious conditions. In the Oxford data, the behaviours often [[2]], which led the authors to view them as expressions of one underlying process. Emotional symptoms were the best [[3]] of problematic BFRBs, and bullying showed a dose–response pattern. However, since the survey was cross-sectional, it cannot prove [[4]]."
+       }
+      ],
+      "items": [
+       {
+        "a": [
+         "continuum"
+        ],
+        "ref": "B",
+        "ev": "the behaviours exist along a continuum, from routine grooming to clinically impairing conditions",
+        "zh": "B 段：exist along a continuum, from routine grooming to clinically impairing conditions ↔ lie on a ___ that runs from everyday grooming to serious conditions → continuum（連續光譜）。"
+       },
+       {
+        "a": [
+         "overlapped"
+        ],
+        "ref": "D",
+        "ev": "Perhaps more revealing was how often the behaviours overlapped",
+        "zh": "D 段：how often the behaviours overlapped ↔ the behaviours often ___ → overlapped（重疊、同時出現）。注意時態用過去式。"
+       },
+       {
+        "a": [
+         "predictor"
+        ],
+        "ref": "E",
+        "ev": "The strongest predictor of problematic BFRBs, however, was the level of internalising symptoms",
+        "zh": "E 段：the strongest predictor ↔ the best ___；internalising symptoms ↔ emotional symptoms → predictor（預測因子）。"
+       },
+       {
+        "a": [
+         "causality"
+        ],
+        "ref": "F",
+        "ev": "Because the survey was cross-sectional, it cannot establish causality",
+        "zh": "F 段：cannot establish causality ↔ cannot prove ___ → causality（因果關係）。"
+       }
+      ]
+     }
+    ]
+   },
+   "vocab": [
+    {
+     "word": "harmless",
+     "pos": "adj.",
+     "def": "not able or likely to cause damage or injury",
+     "zh": "無害的",
+     "example": "Most of these spiders are completely harmless.",
+     "match": [
+      "harmless"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "widespread",
+     "pos": "adj.",
+     "def": "existing or happening in many places or among many people",
+     "zh": "普遍的；廣泛的",
+     "example": "There is widespread concern about screen time.",
+     "match": [
+      "widespread"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "sharply",
+     "pos": "adv.",
+     "def": "suddenly and by a large amount; clearly",
+     "zh": "急劇地；明顯地",
+     "example": "Results varied sharply between schools.",
+     "match": [
+      "sharply"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "unrecognised",
+     "pos": "adj.",
+     "def": "not noticed or acknowledged",
+     "zh": "未被察覺的；未被承認的",
+     "example": "Many cases of depression go unrecognised.",
+     "match": [
+      "unrecognised"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "companion study",
+     "pos": "n.",
+     "def": "a related piece of research published alongside a main study",
+     "zh": "配套研究；姊妹研究",
+     "example": "A companion study examined the same patients a year later.",
+     "match": [
+      "companion study"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "stigma",
+     "pos": "n.",
+     "def": "strong feelings of disapproval that society has about something",
+     "zh": "污名；恥辱",
+     "example": "The campaign aims to reduce the stigma around mental illness.",
+     "match": [
+      "stigma"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "unmet need",
+     "pos": "n.",
+     "def": "a need for help or services that is not being provided",
+     "zh": "未被滿足的需求",
+     "example": "The survey revealed a large unmet need for counselling.",
+     "match": [
+      "unmet need"
+     ],
+     "src": "聽力"
+    },
+    {
+     "word": "compulsive",
+     "pos": "adj.",
+     "def": "difficult to stop or control",
+     "zh": "強迫性的；難以克制的",
+     "example": "He became a compulsive gambler.",
+     "match": [
+      "compulsive"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "predominance",
+     "pos": "n.",
+     "def": "the state of being greater in number or importance",
+     "zh": "優勢；佔多數",
+     "example": "There is a predominance of women in the nursing profession.",
+     "match": [
+      "predominance"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "discrepancy",
+     "pos": "n.",
+     "def": "a difference between things that should be the same",
+     "zh": "差異；不一致",
+     "example": "There is a discrepancy between the two sets of figures.",
+     "match": [
+      "discrepancies"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "conceptualise",
+     "pos": "v.",
+     "def": "to form an idea or way of thinking about something",
+     "zh": "概念化；把……理解為",
+     "example": "Intelligence can be conceptualised in several ways.",
+     "match": [
+      "conceptualised"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "gradient",
+     "pos": "n.",
+     "def": "a gradual, steady change in amount from one level to another",
+     "zh": "梯度；漸變（程度的遞增）",
+     "example": "There is a clear social gradient in health outcomes.",
+     "match": [
+      "gradient"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "persist",
+     "pos": "v.",
+     "def": "to continue to exist",
+     "zh": "持續存在",
+     "example": "The gap persisted even after controlling for income.",
+     "match": [
+      "persisted"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "cohort",
+     "pos": "n.",
+     "def": "a group of people studied together, often born or recruited at the same time",
+     "zh": "（研究中的）群體；同期群",
+     "example": "The cohort was followed for ten years.",
+     "match": [
+      "cohort"
+     ],
+     "src": "閱讀"
+    },
+    {
+     "word": "contend",
+     "pos": "v.",
+     "def": "to state or argue that something is true",
+     "zh": "主張；聲稱",
+     "example": "Critics contend that the policy is unfair.",
+     "match": [
+      "contend"
+     ],
+     "src": "閱讀"
+    }
+   ],
+   "audio": {
+    "src": "audio/2026-11-22-2.mp3",
+    "times": [
+     [
+      0.36,
+      9.26
+     ],
+     [
+      9.6,
+      10.65
+     ],
+     [
+      11.43,
+      20.7
+     ],
+     [
+      21.0,
+      27.41
+     ],
+     [
+      27.68,
+      33.53
+     ],
+     [
+      33.93,
+      39.39
+     ],
+     [
+      40.17,
+      41.94
+     ],
+     [
+      42.34,
+      49.62
+     ],
+     [
+      49.95,
+      57.84
+     ],
+     [
+      58.62,
+      61.12
+     ],
+     [
+      61.41,
+      68.39
+     ],
+     [
+      68.6,
+      71.53
+     ],
+     [
+      71.79,
+      79.58
+     ],
+     [
+      79.97,
+      87.68
+     ],
+     [
+      88.46,
+      91.63
+     ],
+     [
+      91.9,
+      98.69
+     ],
+     [
+      99.01,
+      102.16
+     ],
+     [
+      102.94,
+      105.95
+     ],
+     [
+      106.23,
+      113.29
+     ],
+     [
+      113.62,
+      121.38
+     ],
+     [
+      121.62,
+      129.39
+     ],
+     [
+      130.17,
+      131.58
+     ],
+     [
+      131.91,
+      141.3
+     ],
+     [
+      141.64,
+      148.16
+     ],
+     [
+      148.47,
+      157.4
+     ],
+     [
+      157.7,
+      166.88
+     ],
+     [
+      167.66,
+      171.93
+     ],
+     [
+      172.25,
+      177.94
+     ],
+     [
+      178.29,
+      182.45
+     ],
+     [
+      183.23,
+      185.34
+     ],
+     [
+      185.67,
+      192.42
+     ],
+     [
+      192.67,
+      197.75
+     ],
+     [
+      198.04,
+      203.19
+     ],
+     [
+      203.4,
+      205.23
+     ]
+    ],
+    "duration": 205.9,
+    "voice": "en-AU-WilliamMultilingualNeural",
+    "rate": "-2%",
+    "accent": "🇦🇺 Australian English · William · male",
+    "words": "audio/2026-11-22-2-words/"
+   }
+  }
+ ]
+};
+/*DATA_END*/
+(function(){
+"use strict";
+const gid=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+const fmtC=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+/* ================= generic exam engine ================= */
+const norm=s=>String(s).toLowerCase().trim().replace(/^\$\s*/,"").replace(/\s*%$/,"").replace(/[.,;!?]+$/,"").replace(/\s+/g," ");
+const BANDS={
+ R:[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]],
+ L:[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]};
+function bandOf(kind,raw,total){
+  const s40=Math.round(raw/total*40);let b=2;
+  for(const [m,v] of BANDS[kind]){if(s40>=m){b=v;break}}
+  return {s40,b:b.toFixed(1)};
+}
+function buildTest(o){
+  const K=o.P+o.kind; // o:{kind,groups,st,root,sheet,sheetInfo,result,submitBtn,resetBtn,onSubmit,onReset,total}
+  const Qs=[];const kind=o.kind;
+  const html=o.groups.map((g,gi)=>{
+    let h=`<div class="grp" data-g="${gi}"><div class="gh">${esc(g.title)}</div><div class="gi">${g.instruction.map(md).join("\n")}</div>`;
+    if(g.type==="blanks"){
+      h+=`<div class="notes${g.bullets?"":" plain"}">`+(g.heading?`<div class="nt">${esc(g.heading)}</div>`:"");
+      g.lines.forEach(l=>{
+        if(l.h)h+=`<div class="nh">${esc(l.h)}</div>`;
+        else h+=`<div class="nl">`+esc(l.t).replace(/\[\[(\d+)\]\]/g,(m,k)=>{const n=g.from+ +k-1;return `<input class="bl" id="${K}q${n}" data-n="${n}" type="text" placeholder="${n}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Question ${n}">`})+`</div>`;
+      });
+      h+=`</div>`;
+      g.items.forEach((it,i)=>Qs.push({n:g.from+i,g,it,gi}));
+    }else{
+      g.items.forEach((it,i)=>{
+        const n=g.from+i;Qs.push({n,g,it,gi});
+        h+=`<div class="qi" id="${K}q${n}"><span class="qn">${n}</span><div class="qt">${esc(it.q)}`;
+        if(g.type==="mc")h+=it.options.map((op,j)=>`<label class="mcopt"><input type="radio" name="${K}r${n}" data-n="${n}" value="${j}"> <b>${"ABCD"[j]}.</b> ${esc(op)}</label>`).join("");
+        h+=`</div>`;
+        if(g.type==="match")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option>${g.options.map(x=>`<option>${x}</option>`).join("")}</select>`;
+        if(g.type==="tfng")h+=`<select data-n="${n}" aria-label="Question ${n}"><option value="">–</option><option value="True">TRUE</option><option value="False">FALSE</option><option value="Not Given">NOT GIVEN</option></select>`;
+        h+=`</div>`;
+      });
+    }
+    h+=`<div class="review" id="${K}rv${gi}"></div></div>`;
+    return h;
+  }).join("");
+  o.root.innerHTML=html;
+  const ans=o.st.ans;
+  const q=n=>Qs.find(x=>x.n===n);
+  const correct=(x,v)=>{
+    if(v===undefined||v==="")return false;
+    if(x.g.type==="mc")return +v===x.it.a;
+    if(x.g.type==="blanks")return x.it.a.map(norm).includes(norm(v));
+    return String(v)===x.it.a;
+  };
+  const shownAns=x=>x.g.type==="mc"?"ABCD"[x.it.a]:x.g.type==="blanks"?x.it.a[0]:x.it.a;
+  const field=n=>{
+    return o.root.querySelector(`#${K}q${n} select, input.bl[data-n="${n}"]`)||o.root.querySelector(`input[data-n="${n}"]`);
+  };
+  function renderSheet(){
+    o.sheet.innerHTML=Qs.map(x=>{
+      const v=ans[x.n];let t=v===undefined||v===""?"—":(x.g.type==="mc"?"ABCD"[+v]:v);
+      const cls=o.st.done?(correct(x,v)?"right":"wrong"):(v===undefined||v===""?"empty":"");
+      return `<div class="cell ${cls}" data-n="${x.n}" title="${esc(t)}"><b>${x.n}</b>${esc(t)}</div>`;
+    }).join("");
+    const n=Qs.filter(x=>ans[x.n]!==undefined&&ans[x.n]!=="").length;
+    o.sheetInfo.textContent=`已作答 ${n} / ${Qs.length}`;
+  }
+  o.sheet.onclick=e=>{const c=e.target.closest(".cell");if(!c)return;const el=document.getElementById(K+"q"+c.dataset.n);if(el){el.scrollIntoView({block:"center",behavior:"smooth"});const f=field(+c.dataset.n);if(f&&!f.disabled)f.focus({preventScroll:true})}};
+  o.root.addEventListener("input",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  o.root.addEventListener("change",e=>{const t=e.target;if(!t.dataset||!t.dataset.n||o.st.done)return;ans[t.dataset.n]=t.value;o.save();renderSheet()});
+  function restore(){
+    Qs.forEach(x=>{
+      const v=ans[x.n];if(v===undefined)return;
+      if(x.g.type==="mc"){const r=o.root.querySelector(`input[name="${K}r${x.n}"][value="${v}"]`);if(r)r.checked=true}
+      else{const f=field(x.n);if(f)f.value=v}
+    });
+  }
+  function review(){
+    o.groups.forEach((g,gi)=>{
+      const box=document.getElementById(`${K}rv${gi}`);
+      box.innerHTML=Qs.filter(x=>x.gi===gi).map(x=>{
+        const v=ans[x.n],ok=correct(x,v);
+        const mine=v===undefined||v===""?"（未作答）":(x.g.type==="mc"?"ABCD"[+v]:v);
+        const f=x.g.type==="blanks"?document.querySelector(`#${K}q${x.n}`):o.root.querySelector(`#${K}q${x.n} select`);
+        if(f){f.classList.remove("right","wrong");f.classList.add(ok?"right":"wrong")}
+        const loc=x.it.si!==undefined?`<button class="btn ps" data-si="${x.it.si}">▶ 聽這句</button>`:(x.it.ref?`（段落 ${esc(x.it.ref)}）`:"");
+        return `<div class="rc ${ok?"right":"wrong"}"><b>Q${x.n} ${ok?"✔":"✘"}</b> 你的答案：${esc(mine)}${ok?"":`　｜　正確答案：<b>${esc(shownAns(x))}</b>`}<div>${esc(x.it.zh)}</div>${x.it.ev?`<q>${esc(x.it.ev)}</q>`:""}${loc}</div>`;
+      }).join("");
+    });
+  }
+  function lock(on){o.root.querySelectorAll("input,select").forEach(e=>e.disabled=on)}
+  function result(){
+    const raw=Qs.filter(x=>correct(x,ans[x.n])).length,bd=bandOf(kind,raw,Qs.length);
+    o.result.innerHTML=`<div class="result"><div class="score">${raw} / ${Qs.length}</div><div class="band">約 Band ${bd.b}</div>
+      <p class="muted">換算為 40 題約 ${bd.s40}/40（依 IELTS ${kind==="R"?"Academic Reading":"Listening"} 對照表等比例推估，僅供參考）</p>${o.extra?o.extra(raw,Qs.length):""}</div>`;
+    return raw;
+  }
+  function finish(){
+    o.st.done=true;o.save();lock(true);review();renderSheet();const raw=result();
+    o.submitBtn.disabled=true;if(o.onSubmit)o.onSubmit(raw);
+  }
+  o.submitBtn.onclick=()=>{
+    if(o.st.done)return;
+    const left=Qs.filter(x=>ans[x.n]===undefined||ans[x.n]==="").length;
+    if(left&&!o.force&&!confirm(`還有 ${left} 題未作答，確定要提交嗎？`))return;
+    finish();
+  };
+  o.resetBtn.onclick=()=>{
+    Object.keys(ans).forEach(k=>delete ans[k]);o.st.done=false;o.save();
+    o.root.innerHTML=html;o.submitBtn.disabled=false;o.result.innerHTML="";o.force=false;renderSheet();if(o.onReset)o.onReset();
+  };
+  restore();renderSheet();
+  o.submitBtn.disabled=false;o.result.innerHTML="";
+  if(o.st.done){lock(true);review();renderSheet();result();o.submitBtn.disabled=true}
+  o.api={finish:()=>{o.force=true;if(!o.st.done)finish()},Qs,score:()=>Qs.filter(x=>correct(x,ans[x.n])).length,total:Qs.length};
+  return o.api;
+}
+
+/* ================= one story (Listening + Reading + Vocab) ================= */
+function initStory(S,idx,root,P,hooks){
+const $=id=>document.getElementById(P+id);
+const changed=hooks.changed;
+const KEY="ielts-news:v2:"+DATA.id+(idx?":s"+(idx+1):"");   // story 1 keeps the original key => old progress survives
+let store={};try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+store.known=store.known||[];store.L=store.L||{ans:{},done:false};store.R=store.R||{ans:{},done:false,hl:[]};store.mode=store.mode||"exam";
+const SENTS=[].concat(...S.script);
+function guardOthers(){return hooks.guard(idx)}
+/* ================= LISTENING ================= */
+const au=$("au");au.src=S.audio.src;
+const TM=S.audio.times;
+const L=S.listening;
+let mode=store.mode,phase="idle",cdH=null,stopAt=null;
+$("lTitle").textContent=L.title;
+$("lMeta").textContent=`${SENTS.length} sentences · ${fmtT(S.audio.duration)}`;
+// resolve evidence sentence for each listening item
+L.groups.forEach(g=>g.items.forEach(it=>{if(it.ref!==undefined){const i=SENTS.findIndex(s=>s.includes(it.ref));if(i>=0)it.si=i}}));
+let Ltest=null;
+function mountL(){
+  Ltest=buildTest({P,save,kind:"L",groups:L.groups,st:store.L,root:$("lQs"),sheet:$("lSheet"),sheetInfo:$("lSheetInfo"),result:$("lResult"),
+    submitBtn:$("lSubmit"),resetBtn:$("lReset"),
+    extra:()=>mode==="exam"?`<p class="muted">考試模式下音檔只會播放一次；想再聽請切換到「練習模式」，並對照逐字稿檢討。</p>`:"",
+    P,onSubmit:()=>{clearCd();if(mode==="exam")au.pause();setPhase("done");changed()},onReset:()=>{au.pause();au.currentTime=0;setPhase("idle");refreshL();changed()}});
+}
+function status(html,cd){$("lStatus").innerHTML=html+`<span class="cd" id="lCd">${cd||""}</span>`}
+function clearCd(){if(cdH){clearInterval(cdH);cdH=null}}
+function countdown(sec,cb){
+  clearCd();let left=sec;const set=()=>{const e=$("lCd");if(e)e.textContent=fmtC(left)};set();
+  cdH=setInterval(()=>{left--;set();if(left<=0){clearCd();cb()}},1000);
+  countdown.skip=()=>{clearCd();cb()};
+}
+function setPhase(p){
+  phase=p;
+  if(mode==="exam"){
+    if(p==="idle"){status("Section 4 – you will hear a lecture. Before the recording starts you have 30 seconds to look at the questions; after it ends you have 30 seconds to check your answers. The recording will be played <b>once only</b>.");}
+    if(p==="pre")status("You now have 30 seconds to look at Questions 31 to 40.");
+    if(p==="play")status("Now listen carefully and answer Questions 31 to 40. <i>(Playing once only)</i>");
+    if(p==="post")status("That is the end of the recording. You now have 30 seconds to check your answers.");
+    if(p==="done")status(store.L.done?"Finished. 請查看下方成績與解析；現在可切換到「練習模式」重聽並對照逐字稿。":"Time is up. 請按下「提交答案」。");
+  }
+  refreshL();
+}
+function refreshL(){
+  const exam=mode==="exam",done=store.L.done;
+  $("mExam").setAttribute("aria-pressed",exam);$("mPrac").setAttribute("aria-pressed",!exam);
+  $("examCtl").hidden=!exam||done;$("pracCtl").hidden=exam&&!done;
+  $("examBar").hidden=!(exam&&!done&&(phase==="play"));
+  $("btnStart").hidden=phase!=="idle";$("btnSkip").hidden=!(phase==="pre"||phase==="post");
+  $("btnStart").disabled=phase!=="idle";
+  $("transCard").hidden=!(done||!exam);
+  if(!exam){status("Practice mode – you can pause, replay, change speed and drag the progress bar. Answers are not timed.")}
+
+}
+function startExam(){
+  if(!guardOthers())return;
+  // unlock audio on iOS/Safari within the user gesture
+  au.muted=true;const p=au.play();
+  const un=()=>{au.pause();au.currentTime=0;au.muted=false};
+  if(p&&p.then)p.then(un).catch(()=>{au.muted=false});else un();
+  au.playbackRate=1;$("btnStart").textContent="▶ 開始考試";setPhase("pre");
+  countdown(30,()=>{
+    setPhase("play");au.currentTime=0;
+    const pr=au.play();if(pr&&pr.catch)pr.catch(()=>{status("瀏覽器擋住了自動播放，請按下方按鈕開始播放。");$("btnStart").hidden=false;$("btnStart").disabled=false;$("btnStart").textContent="▶ 播放錄音";$("btnStart").onclick=()=>{au.play();$("btnStart").hidden=true;$("btnStart").onclick=startExam}});
+  });
+}
+$("btnStart").onclick=startExam;
+$("btnSkip").onclick=()=>{if(countdown.skip)countdown.skip()};
+function setMode(m){
+  if(m===mode)return;
+  if(m==="practice"&&phase!=="idle"&&phase!=="done"&&!store.L.done&&!confirm("切換到練習模式會中止目前的考試流程，確定嗎？"))return;
+  clearCd();au.pause();au.currentTime=0;mode=m;store.mode=m;save();phase=m==="exam"?(store.L.done?"done":"idle"):"idle";
+  setPhase(phase);
+}
+$("mExam").onclick=()=>setMode("exam");$("mPrac").onclick=()=>setMode("practice");
+
+/* playback UI */
+let curSent=-1;
+function sentAt(t){let r=-1;for(let i=0;i<TM.length;i++){if(TM[i][0]<=t+0.05)r=i;else break}return r}
+function paint(){
+  const t=au.currentTime,d=au.duration||S.audio.duration;
+  $("plBar").style.width=(100*t/d)+"%";$("exTime").textContent=fmtT(t)+" / "+fmtT(d);
+  $("tCur").textContent=fmtT(t);$("tDur").textContent=fmtT(d);
+  if(document.activeElement!==$("seek"))$("seek").value=Math.round(1000*t/d);
+  const si=au.paused&&t===0?-1:sentAt(t);
+  if(si!==curSent){curSent=si;
+    root.querySelectorAll(".sent").forEach((el,i)=>el.classList.toggle("cur",i===si));
+    $("plText").textContent=si>=0?`第 ${si+1} / ${SENTS.length} 句`:"";
+    const cur=root.querySelector(".sent.cur");
+    if(cur&&!$("transWrap").hidden){const r=cur.getBoundingClientRect();if(r.top<80||r.bottom>innerHeight-40)cur.scrollIntoView({block:"center",behavior:"smooth"})}
+  }
+  $("btnPlay").textContent=au.paused?"▶ 播放":"⏸ 暫停";
+}
+au.addEventListener("timeupdate",()=>{paint();if(stopAt!==null&&au.currentTime>=stopAt){au.pause();stopAt=null}});
+au.addEventListener("play",paint);au.addEventListener("pause",paint);
+au.addEventListener("loadedmetadata",paint);
+au.addEventListener("error",()=>{$("audioWarn").hidden=false});
+au.addEventListener("ended",()=>{
+  paint();
+  if(mode==="exam"&&phase==="play"){setPhase("post");countdown(30,()=>setPhase("done"))}
+});
+function playFrom(t,end){if(au.paused&&!guardOthers())return;stopAt=end===undefined?null:end;au.currentTime=t;au.playbackRate=+$("selRate").value;au.play()}
+$("btnPlay").onclick=()=>{if(au.paused){if(!guardOthers())return;au.playbackRate=+$("selRate").value;au.play()}else au.pause()};
+$("btnReplay").onclick=()=>{playFrom(0)};
+$("selRate").onchange=()=>{au.playbackRate=+$("selRate").value};
+$("seek").addEventListener("input",()=>{stopAt=null;au.currentTime=(au.duration||S.audio.duration)*$("seek").value/1000});
+root.addEventListener("click",e=>{
+  const b=e.target.closest(".ps");
+  if(b){const si=+b.dataset.si;au.playbackRate=1;playFrom(Math.max(0,TM[si][0]-0.15),TM[si][1]+0.2)}
+});
+
+/* transcript */
+const VR=(function(){
+  const items=[];
+  S.vocab.forEach((v,i)=>(v.match&&v.match.length?v.match:[v.word]).forEach(m=>items.push({m,i})));
+  items.sort((a,b)=>b.m.length-a.m.length);
+  return items.length?{re:new RegExp("(?<![A-Za-z])("+items.map(x=>x.m.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![A-Za-z])","gi"),items}:null;
+})();
+(function(){
+  const box=$("transcript");let gi=0;
+  S.script.forEach(para=>{
+    const p=document.createElement("p");p.style.margin="0 0 12px";
+    para.forEach(s=>{
+      const sp=document.createElement("span");sp.className="sent";sp.dataset.i=gi++;
+      let html="",last=0;
+      if(VR)s.replace(VR.re,(m,g,off)=>{html+=esc(s.slice(last,off));const it=VR.items.find(x=>x.m.toLowerCase()===m.toLowerCase());html+=`<span class="vw" data-v="${it?it.i:0}">${esc(m)}</span>`;last=off+m.length;return m});
+      html+=esc(s.slice(last));sp.innerHTML=html;p.appendChild(sp);p.appendChild(document.createTextNode(" "));
+    });
+    box.appendChild(p);
+  });
+})();
+$("transcript").addEventListener("click",e=>{
+  const vw=e.target.closest(".vw");
+  if(vw){const v=S.vocab[+vw.dataset.v];const d=$("defbox");d.hidden=false;
+    d.innerHTML=`<b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i><br>${esc(v.def)}<br><b style="color:var(--brand)">${esc(v.zh)}</b>`;return}
+  const se=e.target.closest(".sent");
+  if(se){const i=+se.dataset.i;au.playbackRate=+$("selRate").value;playFrom(Math.max(0,TM[i][0]-0.1))}
+});
+$("btnTrans").onclick=()=>{
+  const show=$("transWrap").hidden;$("transWrap").hidden=!show;
+  $("btnTrans").textContent=show?"隱藏逐字稿":"顯示逐字稿";$("btnTrans").setAttribute("aria-pressed",show);
+};
+mountL();
+phase=mode==="exam"?(store.L.done?"done":"idle"):"idle";
+setPhase(phase);paint();
+
+/* ================= READING ================= */
+const R=S.reading;
+$("tmSug").textContent=R.minutes;$("rdTitle").textContent=R.title;$("rdIntro").textContent=R.intro||"";
+(function(){
+  const box=$("passage");
+  R.passage.forEach((p,pi)=>{
+    const el=document.createElement("p");el.style.cssText="margin:0 0 14px;font-family:Georgia,'Times New Roman','Noto Serif TC',serif;font-size:1.04rem;line-height:1.85";
+    const lab=document.createElement("span");lab.className="lab";lab.textContent=p.label;el.id=P+"para"+p.label;el.appendChild(lab);
+    p.text.split(/(\s+)/).forEach((t,ti)=>{
+      if(!t)return;if(/^\s+$/.test(t)){el.appendChild(document.createTextNode(" "));return}
+      const w=document.createElement("span");w.className="w";w.textContent=t;const k=pi+"-"+ti;w.dataset.k=k;
+      if(store.R.hl.includes(k))w.classList.add("hl");el.appendChild(w);
+    });
+    box.appendChild(el);
+  });
+})();
+$("passage").addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  w.classList.toggle("hl");const k=w.dataset.k,i=store.R.hl.indexOf(k);
+  if(i>=0)store.R.hl.splice(i,1);else store.R.hl.push(k);save();
+});
+$("hlClear").onclick=()=>{store.R.hl=[];save();root.querySelectorAll(".w.hl").forEach(x=>x.classList.remove("hl"))};
+/* timer */
+const tm={running:false,left:R.minutes*60,elapsed:0,h:null};
+function tmRender(){$("tmShow").textContent=tm.left<=0?"Time up":fmtC(tm.left);$("tmShow").classList.toggle("late",tm.left<=60);
+  $("tmStart").textContent=tm.running?"…計時中":(tm.elapsed?"繼續":"開始計時");$("tmStart").disabled=tm.running||store.R.done||tm.left<=0}
+function stopTimer(){if(tm.h){clearInterval(tm.h);tm.h=null}tm.running=false;tmRender()}
+function tmReset(){stopTimer();tm.left=R.minutes*60;tm.elapsed=0;tmRender()}
+$("tmStart").onclick=()=>{if(tm.running||tm.left<=0)return;tm.running=true;
+  tm.h=setInterval(()=>{tm.left--;tm.elapsed++;if(tm.left<=0){tm.left=0;stopTimer();Rtest.api&&Rtest.api.finish()}tmRender()},1000);tmRender()};
+$("tmPause").onclick=stopTimer;
+const Rtest={api:null};
+function mountR(){
+  Rtest.api=buildTest({P,save,kind:"R",groups:R.groups,st:store.R,root:$("rQs"),sheet:$("rSheet"),sheetInfo:$("rSheetInfo"),result:$("rResult"),
+    submitBtn:$("rSubmit"),resetBtn:$("rReset"),
+    extra:()=>tm.elapsed?`<p class="muted">用時 ${fmtC(tm.elapsed)}（建議 ${R.minutes} 分鐘）</p>`:"",
+    onSubmit:()=>{stopTimer();changed()},onReset:()=>{tmReset();changed()}});
+}
+mountR();tmRender();
+
+/* ================= VOCAB ================= */
+const V=S.vocab;let fc=0;
+const wordAudio=i=>S.audio.words?S.audio.words+String(i).padStart(2,"0")+".mp3":null;
+function renderCard(){
+  const v=V[fc];if(!v)return;$("flip").classList.remove("on");
+  $("fcWord").textContent=v.word;$("fcPos").textContent=v.pos;$("fcSrc").textContent=v.src?"出處：" + v.src:"";
+  const known=store.known.includes(v.word);
+  $("fcBack").innerHTML=`<div><b>${esc(v.word)}</b> <span class="pos">${esc(v.pos)}</span> ${known?'<span class="chip">已會</span>':""}</div><div>${esc(v.def)}</div><div class="zh">${esc(v.zh)}</div><div class="ex">“${esc(v.example)}”</div>`;
+  $("fcCount").textContent=`第 ${fc+1} / ${V.length} 張`;
+  const k=store.known.filter(w=>V.some(x=>x.word===w)).length;
+  $("fcKnown").textContent=`已會 ${k} / ${V.length}`;$("fcBar").style.width=100*k/V.length+"%";
+}
+$("flip").onclick=()=>$("flip").classList.toggle("on");
+$("fcPrev").onclick=()=>{fc=(fc-1+V.length)%V.length;renderCard()};
+$("fcNext").onclick=()=>{fc=(fc+1)%V.length;renderCard()};
+let wa=null;
+$("fcSpeak").onclick=()=>{const s=wordAudio(fc);if(!s)return;if(wa)wa.pause();wa=new Audio(s);wa.play().catch(()=>{})};
+if(!S.audio.words)$("fcSpeak").hidden=true;
+function mark(known){const w=V[fc].word,i=store.known.indexOf(w);
+  if(known&&i<0)store.known.push(w);if(!known&&i>=0)store.known.splice(i,1);save();renderCard();setTimeout(()=>{fc=(fc+1)%V.length;renderCard()},250)}
+$("fcYes").onclick=()=>mark(true);$("fcNo").onclick=()=>mark(false);
+$("fcReset").onclick=()=>{store.known=[];save();renderCard()};
+if(V.length)renderCard();
+$("vList").innerHTML=V.map((v,i)=>`<div class="rc" style="background:var(--brand-soft)"><b>${esc(v.word)}</b> <i class="muted">${esc(v.pos)}</i> <span class="chip" style="background:var(--card);color:var(--muted)">${esc(v.src||"")}</span><div>${esc(v.def)}</div><div><b style="color:var(--brand)">${esc(v.zh)}</b></div><div class="muted"><i>“${esc(v.example)}”</i></div></div>`).join("");
+return {store,au,pause:()=>{au.pause()},inExam:()=>phase==="pre"||phase==="play"||phase==="post",abortExam:()=>{clearCd();au.pause();au.currentTime=0;if(!store.L.done){setPhase("idle")}},
+  practiceMode:()=>mode==="practice",Ltest:()=>Ltest,Rtest:()=>Rtest.api,listenMin:()=>Math.ceil((S.audio.duration+60)/60),readMin:()=>S.reading.minutes};
+}
+
+/* ================= page glue: stories x sections ================= */
+const STORIES=DATA.stories, ST=[];
+const REVIEW_L=3, REVIEW_R=5;     // minutes allowed for reviewing answers (listening / reading)
+let curSec="listen", curStory=0;
+function accentLine(S){return S.audio.accent||S.audio.voice}
+(function header(){
+  const d=new Date(DATA.date+"T00:00:00");const wk=["日","一","二","三","四","五","六"];
+  gid("hDate").textContent=isNaN(d)?DATA.date:`${d.getFullYear()} 年 ${d.getMonth()+1} 月 ${d.getDate()} 日（星期${wk[d.getDay()]}）`;
+  const NS=STORIES.length,NUMZ=["零","一","兩","三","四"],NUME=["Zero","One","Two","Three","Four"];
+  gid("hTitle").textContent=`今日${NUMZ[NS]||NS}篇新聞練習 · ${NUME[NS]||NS} ${NS===1?"story":"stories"}`;
+  if(DATA.note){gid("hNote").textContent=DATA.note;gid("hNote").hidden=false}
+  gid("hStories").innerHTML=STORIES.map((S,i)=>`<div><b>Story ${i+1}</b>${esc(S.title)}</div>`).join("");
+  if(NS<2){gid("storyNav").hidden=true;gid("storyNav").style.display="none"}
+  document.title="IELTS "+DATA.date+" | "+STORIES.map(s=>s.title.split(":")[0]).join(" / ");
+  gid("storyNav").innerHTML=STORIES.map((S,i)=>`<button role="tab" data-story="${i}" aria-selected="${i===0}"><b>Story ${i+1} · ${esc(S.topic||"")}</b><span>${esc(accentLine(S))}</span></button>`).join("");
+})();
+const hooks={changed:()=>plan(),guard:(idx)=>{
+  for(let j=0;j<ST.length;j++){ if(j===idx||!ST[j])continue;
+    if(ST[j].inExam()){ if(!confirm(`Story ${j+1} 的考試錄音仍在進行中。開始 Story ${idx+1} 會中止它，確定嗎？`))return false; ST[j].abortExam(); }
+    else ST[j].pause();
+  } return true;}};
+const tpl=gid("tpl").innerHTML;
+STORIES.forEach((S,i)=>{
+  const P="s"+(i+1)+"-";
+  const box=document.createElement("div");box.id=P+"root";box.innerHTML=tpl.replace(/\bid="([^"]+)"/g,(m,a)=>`id="${P}${a}"`);
+  gid("stories").appendChild(box);
+  ST[i]=initStory(S,i,box,P,hooks);
+});
+function scoreChip(kind,i){
+  const st=ST[i],t=kind==="L"?st.Ltest():st.Rtest(),done=kind==="L"?st.store.L.done:st.store.R.done;
+  return done&&t?`✔ ${t.score()}/${t.total}`:"";
+}
+function plan(){
+  const lm=STORIES.map((S,i)=>ST[i].listenMin()),rm=STORIES.map((S,i)=>ST[i].readMin());
+  const commute=lm.reduce((a,b)=>a+b+REVIEW_L,0),brk=rm.reduce((a,b)=>a+b+REVIEW_R,0);
+  const chip=(sec,i,label)=>{const k=sec==="listen"?"L":"R",sc=scoreChip(k,i);
+    return `<button class="chip2${sc?" done":""}" data-go="${sec}:${i}">${label} ${sc}</button>`};
+  const NS=STORIES.length,one=NS===1,nm=["一","兩","三","四"][NS-1]||NS;
+  const lchain=STORIES.map((S,i)=>`Story ${i+1} 聽力（${i===0?`考試流程：閱題 30 秒 + 錄音 ${fmtT(S.audio.duration)} + 檢查 30 秒 ≈ `:"≈ "}${lm[i]} 分）→ 核對答案 ${REVIEW_L} 分`).join(" →\n    ");
+  const rdet=one?`限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（≈ ${rm[0]+REVIEW_R} 分）。`
+    :`每篇限時 ${rm[0]} 分鐘 + 檢討約 ${REVIEW_R} 分鐘（${STORIES.map((S,i)=>`Story ${i+1} ≈ ${rm[i]+REVIEW_R} 分`).join("、")}）。`;
+  gid("plan").innerHTML=`<summary style="cursor:pointer;font-weight:800;font-size:1.05rem">⏱ 今日時間規劃 <small class="muted" style="font-weight:400">共約 ${commute+brk} 分鐘，分兩段完成（點此收合／展開）</small></summary>
+  <div class="blk"><b class="h">🚇 通勤（約 ${commute} 分鐘）：只做聽力</b>
+    ${lchain}。若通勤還有餘裕：用「練習模式」重聽、看逐字稿，或翻單字卡。
+    <div class="chips">${STORIES.map((S,i)=>chip("listen",i,`🎧 Story ${i+1} 聽力`)).join("")}</div></div>
+  <div class="blk"><b class="h">☕ 休息時間（約 ${brk} 分鐘${one?"":"，可拆開做"}）：${nm}篇閱讀</b>
+    ${rdet}
+    <div class="chips">${STORIES.map((S,i)=>chip("read",i,`📖 Story ${i+1} 閱讀`)).join("")}</div></div>
+  <div class="tot">時間為估算：聽力含 30 秒閱題與 30 秒檢查；實際依作答與檢討速度而定。單字卡（${one?"":"每篇 "}${STORIES[0].vocab.length} 個）可零碎時間複習。</div>`;
+}
+function show(sec,story,noScroll){
+  curSec=sec;curStory=story;
+  document.querySelectorAll("#secNav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sec===sec));
+  document.querySelectorAll("#storyNav button").forEach(b=>b.setAttribute("aria-selected",+b.dataset.story===story));
+  ST.forEach((st,i)=>{
+    ["listen","read","vocab"].forEach(s=>{const el=gid("s"+(i+1)+"-"+s);el.hidden=!(i===story&&s===sec)});
+    if(st.practiceMode()&&!(i===story&&sec==="listen"))st.pause();
+  });
+  gid("wrap").classList.toggle("wide",sec==="read");
+  const S=STORIES[story],src=S.source,links=(src.links||[]).map(l=>`<li><a href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)} ↗</a></li>`).join("");
+  gid("storyHead").innerHTML=`<h2>Story ${story+1} · ${esc(S.title)}</h2><span class="acc">🎙 ${esc(accentLine(S))}</span><span class="muted">來源：<a href="${esc(src.url)}" target="_blank" rel="noopener noreferrer">${esc(src.name)} ↗</a></span>${links?`<details><summary class="muted">更多來源</summary><ul style="margin:4px 0 0;padding-left:18px">${links}</ul></details>`:""}`;
+  try{history.replaceState(null,"","#"+sec+"-"+(story+1))}catch(e){}
+  fixStick();
+}
+function fixStick(){const h=gid("stick").offsetHeight;document.documentElement.style.setProperty("--stk",h+"px")}
+document.querySelectorAll("#secNav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.sec,curStory)));
+document.querySelectorAll("#storyNav button").forEach(b=>b.addEventListener("click",()=>show(curSec,+b.dataset.story)));
+gid("plan").addEventListener("click",e=>{const c=e.target.closest("[data-go]");if(!c)return;const [s,i]=c.dataset.go.split(":");show(s,+i);gid("stick").scrollIntoView({behavior:"smooth"})});
+addEventListener("resize",fixStick);
+plan();
+const hm=(location.hash||"").match(/^#(listen|read|vocab)-(\d)$/);
+show(hm?hm[1]:"listen",hm&&STORIES[+hm[2]-1]?+hm[2]-1:0);
+setTimeout(fixStick,300);
+})();
+</script>
+<!-- refresh button (standalone/home-screen mode has no reload button) -->
+<style>
+.rfb{position:fixed;z-index:60;top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));width:32px;height:32px;margin:0;padding:0;border:1px solid rgba(127,127,127,.35);border-radius:50%;background:rgba(127,127,127,.14);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:inherit;font:400 18px/1 -apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.6;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+/* lesson pages: the sticky tab bar spans the top on narrow screens (and in wide Reading mode below 1260px) -> bottom-right there */
+.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+@media (min-width:840px){.rfb-l{top:calc(8px + env(safe-area-inset-top,0px));bottom:auto}}
+@media (min-width:840px) and (max-width:1259px){#wrap.wide~.rfb-l{top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px))}}
+.rfb:hover,.rfb:focus-visible,.rfb:active{opacity:1}
+</style>
+<button type="button" class="rfb rfb-l" id="rfb" aria-label="重新整理" title="重新整理">↻</button>
+<script>
+(function(){var b=document.getElementById("rfb");if(!b)return;b.addEventListener("click",function(){
+  var q=new URLSearchParams(location.search);q.delete("v");q.set("v",String(Date.now()));
+  location.replace(location.pathname+"?"+q.toString()+location.hash);
+});})();
+</script>
+</body>
+</html>
